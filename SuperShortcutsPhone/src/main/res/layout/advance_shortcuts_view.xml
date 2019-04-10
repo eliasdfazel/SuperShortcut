@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wholeAuto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light"
+    tools:context=".advanced.AdvanceShortcuts">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="37dp"
+        android:requiresFadingEdge="vertical"
+        android:scrollbarFadeDuration="270"
+        android:scrollbarSize="7dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:scrollbars="vertical"
+        android:smoothScrollbar="true"
+        android:verticalScrollbarPosition="left">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/categoryList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="5dp"
+                android:listSelector="@drawable/ripple_effect_list"
+                android:paddingTop="61dp"
+                android:saveEnabled="true" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/side_index"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_alignEnd="@id/listFav"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="83dp" />
+
+    <RelativeLayout
+        android:id="@+id/confirmLayout"
+        android:layout_width="140dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="63dp"
+            android:layout_height="63dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ripple_effect_confirm"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/confirmLayout"
+        android:layout_alignTop="@id/confirmLayout"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:shadowColor="@color/default_color_darker"
+        android:shadowRadius="10"
+        android:textColor="@color/default_color_darker"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:id="@+id/popupAnchorView"
+        android:layout_width="220dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="37dp"
+        android:background="@android:color/transparent"
+        android:gravity="bottom"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/shortcutInfo"
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/default_color"
+        android:gravity="center"
+        android:padding="1dp"
+        android:text="@string/shortcut"
+        android:textColor="@color/light"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/autoSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shortcutInfo"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/autoApps"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            android:background="@drawable/auto_apps_enable"
+            android:gravity="center"
+            android:text="@string/apps"
+            android:textColor="@color/light"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/autoSplit"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            android:background="@drawable/auto_apps_enable"
+            android:gravity="center"
+            android:text="@string/split"
+            android:textColor="@color/light"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/autoCategories"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:layout_weight="1"
+            android:background="@drawable/auto_categories_enable"
+            android:gravity="center"
+            android:text="@string/category"
+            android:textColor="@color/light"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/loadingSplash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/loadLogo"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_launcher" />
+
+        <ProgressBar
+            android:id="@+id/loadingProgressltr"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-15dp"
+            android:indeterminate="true"
+            android:indeterminateBehavior="cycle" />
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:padding="7dp"
+            android:shadowColor="@color/trans_dark"
+            android:shadowRadius="25"
+            android:text="@string/advanceTitle"
+            android:textColor="@color/darker"
+            android:textSize="43sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/prefs"
+        android:icon="@drawable/draw_pref"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="@string/pref" />
+
+</menu>

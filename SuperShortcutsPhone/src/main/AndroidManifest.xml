@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="net.geekstools.supershortcuts.PRO">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+
+    <application
+        android:allowBackup="true"
+        android:appCategory="productivity"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher_adaptive"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:resizeableActivity="true"
+        android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+        android:screenOrientation="sensorPortrait"
+        android:theme="@style/GeeksEmpire">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/default_color" />
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="28.0.0"
+            tools:replace="android:value" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="9b0354fa8241f4d8bb14ea59641166ccbd3583f6" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".Configurations"
+            android:resizeableActivity="true"
+            android:theme="@style/GeekySplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".normal.NormalAppSelectionList"
+            android:resizeableActivity="true"></activity>
+        <activity
+            android:name=".advanced.AdvanceShortcuts"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".advanced.AdvanceAppSelectionList" />
+        <activity
+            android:name=".advanced.LoadCategoryItems"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:resizeableActivity="true"
+            android:theme="@style/Transparent">
+            <intent-filter>
+                <action android:name="load_category_action" />
+                <action android:name="load_category_action_shortcut" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".split.SplitShortcuts"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".split.SplitAppSelectionList" />
+        <activity
+            android:name=".split.SplitTransparentPair"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
+            android:theme="@style/Transparent">
+            <intent-filter>
+                <action android:name="load_split_action_pair" />
+                <action android:name="load_split_action_pair_shortcut" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".split.SplitTransparentSingle"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:noHistory="true"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
+            android:theme="@style/Transparent">
+            <intent-filter>
+                <action android:name="load_split_action_single" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Util.SettingGUI"
+            android:label="@string/pref">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="geeksempire.net"
+                    android:pathPrefix="/FAQ/super.html"
+                    android:scheme="http" />
+                <data
+                    android:host="geeksempire.net"
+                    android:pathPrefix="/FAQ/super.html"
+                    android:scheme="https" />
+                <!-- adb shell am start -W -a android.intent.action.VIEW -d "http://g33kstools.blogspot.com/p/createshortcuts.html" net.geekstools.floatshort.PRO -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DeepLinkedShortcuts"
+            android:theme="@style/Transparent">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.geeksempire.net"
+                    android:pathPrefix="/FAQ/super.html"
+                    android:scheme="https" />
+                <!-- https://www.geeksempire.net/FAQ/super.html/test_1540666270698%20%7C%20Split -->
+                <!-- adb shell am start -W -a android.intent.action.VIEW -d "https//...." net.geekstools.floatshort.PRO -->
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".split.SplitScreenService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/split_screen_config" />
+        </service>
+        <service android:name=".LicenseValidator" />
+        <service
+            android:name=".CloudNotificationHandler"
+            android:icon="@drawable/ic_launcher">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>

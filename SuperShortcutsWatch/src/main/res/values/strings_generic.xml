@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="integerVersionCodeNewUpdateWear" translatable="false">integer_version_code_new_update_wear</string>
+    <string name="stringVersionNameNewUpdateWear" translatable="false">string_version_name_new_update_wear</string>
+    <string name="stringUpcomingChangeLogWear" translatable="false">string_upcoming_change_log_wear</string>
+
+    <string name="BETAintegerVersionCodeNewUpdateWear" translatable="false">beta_integer_version_code_new_update_wear</string>
+    <string name="BETAstringVersionNameNewUpdateWear" translatable="false">beta_string_version_name_new_update_wear</string>
+    <string name="BETAstringUpcomingChangeLogWear" translatable="false">beta_string_upcoming_change_log_wear</string>
+
+</resources>

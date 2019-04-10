@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/facebook"
+        android:icon="@drawable/draw_facebook"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/like" />
+
+</menu>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/backtemp"
+        android:bottom="2dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:top="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/dark" />
+            <corners android:radius="9dp" />
+        </shape>
+    </item>
+</layer-list>

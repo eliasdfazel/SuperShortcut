@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>integer_version_code_new_update_phone</key>
+        <value>0</value>
+    </entry>
+    <entry>
+        <key>string_version_name_new_update_phone</key>
+        <value>ZERO</value>
+    </entry>
+    <entry>
+        <key>string_upcoming_change_log_phone</key>
+        <value>
+            New Features Available | Click Here to See…!
+        </value>
+    </entry>
+    <entry>
+        <key>string_upcoming_change_log_summary_phone</key>
+        <value>
+            New Features Available | Click Here to See…!
+        </value>
+    </entry>
+    <!-- BETA -->
+    <entry>
+        <key>beta_integer_version_code_new_update_phone</key>
+        <value>0</value>
+    </entry>
+    <entry>
+        <key>beta_string_version_name_new_update_phone</key>
+        <value>ZERO</value>
+    </entry>
+    <entry>
+        <key>beta_string_upcoming_change_log_phone</key>
+        <value>
+            New Features Available | Click Here to See…!
+        </value>
+    </entry>
+    <entry>
+        <key>beta_string_upcoming_change_log_summary_phone</key>
+        <value>
+            New Features Available | Click Here to See…!
+        </value>
+    </entry>
+    <!-- Floating Shortcuts -->
+    <entry>
+        <key>boolean_new_floating_shortcuts_pref_desc</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>string_floating_shortcuts_pref_desc</key>
+        <value>
+            Quickly Switch between Apps by Unlimited Floating Shortcuts
+        </value>
+    </entry>
+</defaultsMap>

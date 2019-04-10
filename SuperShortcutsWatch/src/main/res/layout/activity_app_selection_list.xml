@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wholeAuto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".normal.NormalAppSelectionList">
+
+    <ScrollView
+        android:id="@+id/scrollListFav"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listFav"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@drawable/draw_divider"
+                android:dividerHeight="2dp"
+                android:fadingEdge="vertical"
+                android:fadingEdgeLength="13dp"
+                android:isScrollContainer="false"
+                android:listSelector="@drawable/ripple_effect_list"
+                android:nestedScrollingEnabled="false"
+                android:paddingStart="5dp"
+                android:paddingTop="39dp"
+                android:paddingEnd="23dp"
+                android:paddingBottom="37dp"
+                android:requiresFadingEdge="vertical"
+                android:saveEnabled="true"
+                android:scrollbars="none" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/supportView"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/draw_support"
+        android:visibility="invisible" />
+
+    <ScrollView
+        android:layout_width="27dp"
+        android:layout_height="113dp"
+        android:layout_alignEnd="@id/scrollListFav"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="13dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="23dp"
+        android:requiresFadingEdge="vertical">
+
+        <LinearLayout
+            android:id="@+id/side_index"
+            android:layout_width="27dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/confirmLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="13dp"
+        android:background="@android:color/transparent"
+        android:gravity="center">
+
+        <net.geekstools.supershortcuts.PRO.normal.ui.ConfirmButton
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ripple_effect_confirm"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/confirmLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:shadowColor="@color/default_color_darker"
+        android:shadowRadius="7"
+        android:textColor="@color/default_color_darker"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:id="@+id/popupAnchorView"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_above="@id/confirmLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="37dp"
+        android:background="@android:color/transparent"
+        android:gravity="bottom"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/tempIcon"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:id="@+id/loadingSplash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/loadLogo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_launcher" />
+
+        <ProgressBar
+            android:id="@+id/loadingProgressltr"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-17dp"
+            android:indeterminate="true"
+            android:indeterminateBehavior="cycle" />
+    </RelativeLayout>
+
+</RelativeLayout>
