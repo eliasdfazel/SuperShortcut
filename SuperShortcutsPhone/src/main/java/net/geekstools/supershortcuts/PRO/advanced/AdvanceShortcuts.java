@@ -339,7 +339,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         });
 
         try {
-            if (!BuildConfig.DEBUG && functionsClass.networkConnection()) {
+            if (functionsClass.networkConnection()) {
                 firebaseAuth.addAuthStateListener(
                         new FirebaseAuth.AuthStateListener() {
                             @Override

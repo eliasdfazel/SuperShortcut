@@ -425,7 +425,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         });
 
         try {
-            if (!BuildConfig.DEBUG && functionsClass.networkConnection()) {
+            if (functionsClass.networkConnection()) {
                 firebaseAuth.addAuthStateListener(
                         new FirebaseAuth.AuthStateListener() {
                             @Override

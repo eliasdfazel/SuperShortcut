@@ -338,7 +338,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
         });
 
         try {
-            if (!BuildConfig.DEBUG && functionsClass.networkConnection()) {
+            if (functionsClass.networkConnection()) {
                 firebaseAuth.addAuthStateListener(
                         new FirebaseAuth.AuthStateListener() {
                             @Override
