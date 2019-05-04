@@ -128,10 +128,10 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.advanceShortcutsMaxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getResources().getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getResources().getColor(R.color.light) + "'>" + PublicVariable.advanceShortcutsMaxAppShortcuts + "</font></b></small>"));
+            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.advanceShortcutsMaxAppShortcuts + "</font></b></small>"));
         } else {
             limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".categorySuperSelected");
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getResources().getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getResources().getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>"));
+            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>"));
             PublicVariable.advanceShortcutsMaxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
         }
 
@@ -157,14 +157,14 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
-        wholeAuto.setBackgroundColor(getResources().getColor(R.color.light));
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.default_color)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getResources().getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>"));
+        wholeAuto.setBackgroundColor(getColor(R.color.light));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
+        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>"));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.default_color));
-        window.setNavigationBarColor(getResources().getColor(R.color.light));
+        window.setStatusBarColor(getColor(R.color.default_color));
+        window.setNavigationBarColor(getColor(R.color.light));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
@@ -177,7 +177,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         counterView.bringToFront();
 
         loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgressltr);
-        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
+        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(context.getString(R.string.counterActionAdvanceShortcuts));
@@ -195,10 +195,10 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                     if (functionsClass.mixShortcuts() == true) {
                         PublicVariable.advanceShortcutsMaxAppShortcuts
                                 = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getResources().getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getResources().getColor(R.color.light) + "'>" + PublicVariable.advanceShortcutsMaxAppShortcuts + "</font></b></small>"));
+                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.advanceShortcutsMaxAppShortcuts + "</font></b></small>"));
                     } else {
                         limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".categorySuperSelected");
-                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getResources().getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getResources().getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>"));
+                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>"));
                         PublicVariable.advanceShortcutsMaxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
                     }
                 }
@@ -206,7 +206,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         };
         context.registerReceiver(counterReceiver, intentFilter);
 
-        RippleDrawable drawApps = (RippleDrawable) getResources().getDrawable(R.drawable.auto_apps_enable);
+        RippleDrawable drawApps = (RippleDrawable) getDrawable(R.drawable.auto_apps_enable);
         GradientDrawable backApps = (GradientDrawable) drawApps.findDrawableByLayerId(R.id.category_item);
         GradientDrawable backAppsRipple = (GradientDrawable) drawApps.findDrawableByLayerId(android.R.id.mask);
         backApps.setColor(getColor(R.color.default_color_darker));
@@ -214,7 +214,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         drawApps.setColor(ColorStateList.valueOf(getColor(R.color.default_color)));
         apps.setBackground(drawApps);
 
-        RippleDrawable drawSplit = (RippleDrawable) getResources().getDrawable(R.drawable.auto_split_enable);
+        RippleDrawable drawSplit = (RippleDrawable) getDrawable(R.drawable.auto_split_enable);
         GradientDrawable backSplit = (GradientDrawable) drawSplit.findDrawableByLayerId(R.id.category_item);
         GradientDrawable backSplitRipple = (GradientDrawable) drawSplit.findDrawableByLayerId(android.R.id.mask);
         backSplit.setColor(getColor(R.color.default_color_darker));
@@ -222,7 +222,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         drawSplit.setColor(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
         split.setBackground(drawSplit);
 
-        RippleDrawable drawCategories = (RippleDrawable) getResources().getDrawable(R.drawable.auto_categories_enable);
+        RippleDrawable drawCategories = (RippleDrawable) getDrawable(R.drawable.auto_categories_enable);
         GradientDrawable backCategories = (GradientDrawable) drawCategories.findDrawableByLayerId(R.id.category_item);
         GradientDrawable backCategoriesRipple = (GradientDrawable) drawCategories.findDrawableByLayerId(android.R.id.mask);
         backCategories.setColor(getColor(R.color.default_color));
@@ -250,26 +250,32 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            firebaseRemoteConfig.activateFetched();
-                            if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-                                getActionBar().setDisplayHomeAsUpEnabled(true);
-                                LayerDrawable layerDrawableNewUpdate = (LayerDrawable) getDrawable(R.drawable.ic_update);
-                                BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.ic_launcher_back_layer);
-                                gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_light));
+                            firebaseRemoteConfig.activate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean aBoolean) {
+                                    if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
+                                        getActionBar().setDisplayHomeAsUpEnabled(true);
+                                        LayerDrawable layerDrawableNewUpdate = (LayerDrawable) getDrawable(R.drawable.ic_update);
+                                        BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.ic_launcher_back_layer);
+                                        gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_light));
 
-                                Bitmap tempBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate);
-                                Bitmap scaleBitmap = Bitmap.createScaledBitmap(tempBitmap, tempBitmap.getWidth() / 4, tempBitmap.getHeight() / 4, false);
-                                Drawable logoDrawable = new BitmapDrawable(getResources(), scaleBitmap);
-                                activity.getActionBar().setHomeAsUpIndicator(logoDrawable);
+                                        Bitmap tempBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate);
+                                        Bitmap scaleBitmap = Bitmap.createScaledBitmap(tempBitmap, tempBitmap.getWidth() / 4, tempBitmap.getHeight() / 4, false);
+                                        Drawable logoDrawable = new BitmapDrawable(getResources(), scaleBitmap);
+                                        activity.getActionBar().setHomeAsUpIndicator(logoDrawable);
 
-                                functionsClass.notificationCreator(
-                                        getString(R.string.updateAvailable),
-                                        firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
-                                        (int) firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey())
-                                );
-                            } else {
-                            }
+                                        functionsClass.notificationCreator(
+                                                getString(R.string.updateAvailable),
+                                                firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
+                                                (int) firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey())
+                                        );
+                                    } else {
+
+                                    }
+                                }
+                            });
                         } else {
+
                         }
                     }
                 });

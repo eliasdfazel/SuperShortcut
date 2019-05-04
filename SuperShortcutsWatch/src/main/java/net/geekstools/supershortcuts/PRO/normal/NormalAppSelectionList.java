@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
@@ -109,7 +110,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
         popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
         indexView = (LinearLayout) findViewById(R.id.side_index);
         wholeAuto = (RelativeLayout) findViewById(R.id.wholeAuto);
-        wholeAuto.setBackgroundColor(getResources().getColor(R.color.light));
+        wholeAuto.setBackgroundColor(getColor(R.color.light));
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();
@@ -131,7 +132,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
         counterView.bringToFront();
 
         ProgressBar loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgressltr);
-        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
+        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(context.getString(R.string.loadOffline));
@@ -219,12 +220,18 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            firebaseRemoteConfig.activateFetched();
-                            if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-                                Toast.makeText(getApplicationContext(), getString(R.string.updateAvailable), Toast.LENGTH_LONG).show();
-                            } else {
-                            }
+                            firebaseRemoteConfig.activate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean aBoolean) {
+                                    if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
+                                        Toast.makeText(getApplicationContext(), getString(R.string.updateAvailable), Toast.LENGTH_LONG).show();
+                                    } else {
+
+                                    }
+                                }
+                            });
                         } else {
+
                         }
                     }
                 });
@@ -458,7 +465,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            LayerDrawable drawIndex = (LayerDrawable) getResources().getDrawable(R.drawable.draw_index);
+            LayerDrawable drawIndex = (LayerDrawable) getDrawable(R.drawable.draw_index);
             GradientDrawable backIndex = (GradientDrawable) drawIndex.findDrawableByLayerId(R.id.backtemp);
             backIndex.setColor(Color.TRANSPARENT);
 

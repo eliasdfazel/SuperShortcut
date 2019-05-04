@@ -27,7 +27,7 @@
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:focusable="true"
         android:gravity="center"
-        android:hint="@string/typeCategoryName"
+        android:hint="@string/typeSplitName"
         android:imeOptions="actionDone"
         android:maxLines="1"
         android:padding="5dp"

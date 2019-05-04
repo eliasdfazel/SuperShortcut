@@ -37,6 +37,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
@@ -86,14 +87,14 @@ public class SettingGUI extends FragmentActivity {
         functionsClass = new FunctionsClass(context, activity);
         functionsClass.ChangeLog(false);
 
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.default_color_darker)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getResources().getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>"));
-        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getResources().getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>"));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
+        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>"));
+        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>"));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.default_color_darker));
-        window.setNavigationBarColor(getResources().getColor(R.color.light));
+        window.setStatusBarColor(getColor(R.color.default_color_darker));
+        window.setNavigationBarColor(getColor(R.color.light));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
@@ -370,19 +371,25 @@ public class SettingGUI extends FragmentActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            firebaseRemoteConfig.activateFetched();
-                            if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-                                functionsClass.upcomingChangeLog(
-                                        SettingGUI.this,
-                                        firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
-                                        String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
-                                );
-                            } else {
-                            }
-                            if (firebaseRemoteConfig.getBoolean("boolean_new_floating_shortcuts_pref_desc")) {
-                                prefDescFloating.setText(Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc")));
-                            }
+                            firebaseRemoteConfig.activate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean aBoolean) {
+                                    if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
+                                        functionsClass.upcomingChangeLog(
+                                                SettingGUI.this,
+                                                firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
+                                                String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
+                                        );
+                                    } else {
+
+                                    }
+                                    if (firebaseRemoteConfig.getBoolean("boolean_new_floating_shortcuts_pref_desc")) {
+                                        prefDescFloating.setText(Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc")));
+                                    }
+                                }
+                            });
                         } else {
+
                         }
                     }
                 });
@@ -504,9 +511,9 @@ public class SettingGUI extends FragmentActivity {
 
     /********************Functions*************************/
     public void shareAll() {
-        String shareText = getResources().getString(R.string.invitation_title) +
-                "\n" + getResources().getString(R.string.invitation_message) +
-                "\n" + getResources().getString(R.string.link_play_store) + getPackageName();
+        String shareText = getString(R.string.invitation_title) +
+                "\n" + getString(R.string.invitation_message) +
+                "\n" + getString(R.string.link_play_store) + getPackageName();
         Intent s = new Intent(Intent.ACTION_SEND);
         s.putExtra(Intent.EXTRA_TEXT, shareText);
         s.setType("text/plain");

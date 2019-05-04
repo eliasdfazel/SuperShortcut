@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.firebase.FirebaseApp;
 
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.advanced.AdvanceShortcuts;
@@ -27,6 +28,8 @@ public class Configurations extends Activity {
                 .disabled(BuildConfig.DEBUG)
                 .build();
         Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+        FirebaseApp.initializeApp(getApplicationContext());
+
         functionsClass = new FunctionsClass(getApplicationContext(), Configurations.this);
 
         try {

@@ -8,6 +8,7 @@
     tools:context=".advanced.AdvanceShortcuts">
 
     <ScrollView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="@android:color/transparent"
@@ -43,7 +44,7 @@
         android:id="@+id/side_index"
         android:layout_width="30dp"
         android:layout_height="match_parent"
-        android:layout_alignEnd="@id/listFav"
+        android:layout_alignEnd="@id/list"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:orientation="vertical"

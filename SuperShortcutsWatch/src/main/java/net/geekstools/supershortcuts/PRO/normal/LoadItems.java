@@ -11,7 +11,9 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
@@ -39,8 +41,11 @@ public class LoadItems extends WearableActivity {
                 .disabled(BuildConfig.DEBUG)
                 .build();
         Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
+        FirebaseApp.initializeApp(getApplicationContext());
+
         setContentView(R.layout.anchor_show_ui);
         setAmbientEnabled();
+
         functionsClass = new FunctionsClass(getApplicationContext(), LoadItems.this);
 
         wholeLow = (RelativeLayout) findViewById(R.id.wholeLow);
@@ -70,12 +75,18 @@ public class LoadItems extends WearableActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                firebaseRemoteConfig.activateFetched();
-                                if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-                                    Toast.makeText(getApplicationContext(), getString(R.string.updateAvailable), Toast.LENGTH_LONG).show();
-                                } else {
-                                }
+                                firebaseRemoteConfig.activate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean aBoolean) {
+                                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
+                                            Toast.makeText(getApplicationContext(), getString(R.string.updateAvailable), Toast.LENGTH_LONG).show();
+                                        } else {
+
+                                        }
+                                    }
+                                });
                             } else {
+
                             }
                         }
                     });

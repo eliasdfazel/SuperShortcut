@@ -275,8 +275,8 @@ public class FunctionsClass {
     /*Checkpoint Function*/
     public void dialogueLicense() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Day);
-        alertDialog.setTitle(Html.fromHtml(context.getResources().getString(R.string.license_title)));
-        alertDialog.setMessage(Html.fromHtml(context.getResources().getString(R.string.license_msg)));
+        alertDialog.setTitle(Html.fromHtml(context.getString(R.string.license_title)));
+        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.license_msg)));
         alertDialog.setIcon(R.drawable.ic_launcher);
         alertDialog.setCancelable(false);
 
@@ -606,13 +606,13 @@ public class FunctionsClass {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.toast_view, null);
 
-            LayerDrawable drawToast = (LayerDrawable) context.getResources().getDrawable(R.drawable.toast_background);
+            LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
             GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
 
             TextView textView = (TextView) layout.findViewById(R.id.toastText);
             textView.setText(Html.fromHtml(toastContent));
             textView.setBackground(drawToast);
-            textView.setShadowLayer(0.02f, 2, 2, context.getResources().getColor(R.color.trans_dark_high));
+            textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
 
 
             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 0);
@@ -642,7 +642,7 @@ public class FunctionsClass {
         navDrawerItemsSaved.add(new NavDrawerItem(
                 context.getString(R.string.edit_advanced_shortcut) + " " + categoryName,
                 context.getPackageName(),
-                context.getResources().getDrawable(R.drawable.draw_pref)));
+                context.getDrawable(R.drawable.draw_pref)));
         ListPopupWindow listPopupWindow = new ListPopupWindow(activity);
         ItemListAdapter lowerListAdapter = new ItemListAdapter(activity, context, navDrawerItemsSaved, listPopupWindow);
         listPopupWindow.setAdapter(lowerListAdapter);

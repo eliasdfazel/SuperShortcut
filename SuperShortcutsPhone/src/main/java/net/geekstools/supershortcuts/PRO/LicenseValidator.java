@@ -88,12 +88,12 @@ public class LicenseValidator extends Service {
         notificationManager.createNotificationChannel(notificationChannel);
 
         Notification.Builder mBuilder = new Notification.Builder(getApplicationContext());
-        mBuilder.setColor(getResources().getColor(R.color.default_color));
+        mBuilder.setColor(getColor(R.color.default_color));
         mBuilder.setContentTitle(getString(R.string.license_info));
         mBuilder.setContentText(getString(R.string.license_info_desc));
-        mBuilder.setContentTitle(Html.fromHtml("<b><font color='" + getResources().getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info) + "</font></b>"));
-        mBuilder.setContentText(Html.fromHtml("<font color='" + getResources().getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info_desc) + "</font>"));
-        mBuilder.setTicker(getResources().getString(R.string.license_validating));
+        mBuilder.setContentTitle(Html.fromHtml("<b><font color='" + getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info) + "</font></b>"));
+        mBuilder.setContentText(Html.fromHtml("<font color='" + getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info_desc) + "</font>"));
+        mBuilder.setTicker(getString(R.string.license_validating));
         mBuilder.setSmallIcon(R.drawable.ic_notification);
         mBuilder.setAutoCancel(false);
         mBuilder.setProgress(0, 0, true);
@@ -104,12 +104,12 @@ public class LicenseValidator extends Service {
 
     protected Notification bindServiceLOW() {
         Notification.Builder mBuilder = new Notification.Builder(getApplicationContext());
-        mBuilder.setColor(getResources().getColor(R.color.default_color));
+        mBuilder.setColor(getColor(R.color.default_color));
         mBuilder.setContentTitle(getString(R.string.license_info));
         mBuilder.setContentText(getString(R.string.license_info_desc));
-        mBuilder.setContentTitle(Html.fromHtml("<b><font color='" + getResources().getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info) + "</font></b>"));
-        mBuilder.setContentText(Html.fromHtml("<font color='" + getResources().getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info_desc) + "</font>"));
-        mBuilder.setTicker(getResources().getString(R.string.license_validating));
+        mBuilder.setContentTitle(Html.fromHtml("<b><font color='" + getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info) + "</font></b>"));
+        mBuilder.setContentText(Html.fromHtml("<font color='" + getColor(R.color.default_color_darker) + "'>" + getString(R.string.license_info_desc) + "</font>"));
+        mBuilder.setTicker(getString(R.string.license_validating));
         mBuilder.setSmallIcon(R.drawable.ic_notification);
         mBuilder.setAutoCancel(false);
         mBuilder.setProgress(0, 0, true);

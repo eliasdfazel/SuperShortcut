@@ -48,7 +48,7 @@ public class AdvanceConfirmButton extends Button
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(context.getString(R.string.visibilityActionAdvance))) {
-                    AdvanceConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ripple_effect_confirm));
+                    AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
                     if (!AdvanceConfirmButton.this.isShown()) {
                         AdvanceConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
                         AdvanceConfirmButton.this.setVisibility(VISIBLE);
@@ -87,7 +87,7 @@ public class AdvanceConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            AdvanceConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);
@@ -98,7 +98,7 @@ public class AdvanceConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            AdvanceConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);
@@ -109,7 +109,7 @@ public class AdvanceConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            AdvanceConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);

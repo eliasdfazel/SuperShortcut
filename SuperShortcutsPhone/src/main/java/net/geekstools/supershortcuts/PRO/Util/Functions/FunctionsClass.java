@@ -1353,7 +1353,7 @@ public class FunctionsClass {
             navDrawerItemsSaved.add(new NavDrawerItem(
                     context.getString(R.string.edit_advanced_shortcut) + " " + categoryName.replace(".CategorySelected", "").split("_")[0],
                     context.getPackageName(),
-                    context.getResources().getDrawable(R.drawable.draw_pref)));
+                    context.getDrawable(R.drawable.draw_pref)));
             ListPopupWindow listPopupWindow = new ListPopupWindow(activity);
             CategoryItemListAdapter lowerListAdapter = new CategoryItemListAdapter(activity, context, navDrawerItemsSaved, listPopupWindow);
             listPopupWindow.setAdapter(lowerListAdapter);
@@ -1702,7 +1702,7 @@ public class FunctionsClass {
     public void AccessibilityService(final Activity activity) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
-                Html.fromHtml("<font color='" + context.getResources().getColor(R.color.default_color) + "'>" +
+                Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
                         context.getString(R.string.splitTitle) + "</font>"));
         alertDialog.setMessage(Html.fromHtml(context.getString(R.string.observeDesc)));
         alertDialog.setIcon(context.getDrawable(R.drawable.ic_launcher));
@@ -1729,7 +1729,7 @@ public class FunctionsClass {
     public void AccessibilityService() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
-                Html.fromHtml("<font color='" + context.getResources().getColor(R.color.default_color) + "'>" +
+                Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
                         context.getString(R.string.splitTitle) + "</font>"));
         alertDialog.setMessage(Html.fromHtml(context.getString(R.string.observeDesc)));
         alertDialog.setIcon(context.getDrawable(R.drawable.ic_launcher));
@@ -1755,7 +1755,7 @@ public class FunctionsClass {
     public void UsageAccess(final Switch prefSwitch) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
-                Html.fromHtml("<font color='" + context.getResources().getColor(R.color.default_color) + "'>" +
+                Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
                         context.getString(R.string.smartTitle) + "</font>"));
         alertDialog.setMessage(Html.fromHtml(context.getString(R.string.smartPermission)));
         alertDialog.setIcon(context.getDrawable(R.drawable.ic_launcher));
@@ -1792,8 +1792,8 @@ public class FunctionsClass {
 
     public void dialogueLicense() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
-        alertDialog.setTitle(Html.fromHtml(context.getResources().getString(R.string.license_title)));
-        alertDialog.setMessage(Html.fromHtml(context.getResources().getString(R.string.license_msg)));
+        alertDialog.setTitle(Html.fromHtml(context.getString(R.string.license_title)));
+        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.license_msg)));
         alertDialog.setIcon(R.drawable.ic_launcher);
         alertDialog.setCancelable(false);
 
@@ -2359,7 +2359,7 @@ public class FunctionsClass {
         Notification.Builder mBuilder = new Notification.Builder(context);
         mBuilder.setContentTitle(Html.fromHtml("<b><font color='" + context.getColor(R.color.default_color) + "'>" + titleText + "</font></b>"));
         mBuilder.setContentText(Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" + contentText + "</font>"));
-        mBuilder.setTicker(context.getResources().getString(R.string.app_name));
+        mBuilder.setTicker(context.getString(R.string.app_name));
         mBuilder.setSmallIcon(R.drawable.ic_notification);
         mBuilder.setAutoCancel(true);
         mBuilder.setColor(context.getColor(R.color.default_color));
@@ -2393,14 +2393,14 @@ public class FunctionsClass {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
                 View layout = inflater.inflate(R.layout.toast_view, null);
 
-                LayerDrawable drawToast = (LayerDrawable) context.getResources().getDrawable(R.drawable.toast_background);
+                LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
                 GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
                 backToast.setColor(toastColor);
 
                 TextView textView = (TextView) layout.findViewById(R.id.toastText);
                 textView.setText(Html.fromHtml("<small>" + toastContent + "</small>"));
                 textView.setBackground(drawToast);
-                textView.setShadowLayer(0.02f, 2, 2, context.getResources().getColor(R.color.trans_dark_high));
+                textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
 
                 int yOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 57, context.getResources().getDisplayMetrics());
 
@@ -2423,14 +2423,14 @@ public class FunctionsClass {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
                 View layout = inflater.inflate(R.layout.toast_view, null);
 
-                LayerDrawable drawToast = (LayerDrawable) context.getResources().getDrawable(R.drawable.toast_background);
+                LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
                 GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
                 backToast.setColor(toastColor);
 
                 TextView textView = (TextView) layout.findViewById(R.id.toastText);
                 textView.setText(Html.fromHtml("<small>" + toastContent + "</small>"));
                 textView.setBackground(drawToast);
-                textView.setShadowLayer(0.02f, 2, 2, context.getResources().getColor(R.color.trans_dark_high));
+                textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
                 textView.setTextColor(textColor);
 
                 int yOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 57, context.getResources().getDisplayMetrics());
@@ -2453,15 +2453,15 @@ public class FunctionsClass {
             View layout = inflater.inflate(R.layout.toast_view, null/*(ViewGroup) activity.findViewById(R.id.toastView)*/);
 
             LayerDrawable drawToast = null;
-            drawToast = (LayerDrawable) context.getResources().getDrawable(R.drawable.toast_background);
+            drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
             GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
 
             TextView textView = (TextView) layout.findViewById(R.id.toastText);
             textView.setText(Html.fromHtml("<small>" + toastContent + "</small>"));
-            backToast.setColor(context.getResources().getColor(R.color.trans_dark));
+            backToast.setColor(context.getColor(R.color.trans_dark));
             textView.setBackground(drawToast);
-            textView.setTextColor(context.getResources().getColor(R.color.light));
-            textView.setShadowLayer(0.02f, 2, 2, context.getResources().getColor(R.color.light_trans_high));
+            textView.setTextColor(context.getColor(R.color.light));
+            textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.light_trans_high));
 
             Toast toast = new Toast(context);
             toast.setGravity(Gravity.FILL_HORIZONTAL | gravity, 0, 0);

@@ -48,7 +48,7 @@ public class SplitConfirmButton extends Button
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(context.getString(R.string.visibilityActionSplit))) {
-                    SplitConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ripple_effect_confirm));
+                    SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
                     if (!SplitConfirmButton.this.isShown()) {
                         SplitConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
                         SplitConfirmButton.this.setVisibility(VISIBLE);
@@ -87,7 +87,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);
@@ -98,7 +98,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);
@@ -109,7 +109,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);

@@ -47,7 +47,7 @@ public class ConfirmButton extends Button
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(context.getString(R.string.visibilityAction))) {
-                    ConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ripple_effect_confirm));
+                    ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
                     if (!ConfirmButton.this.isShown()) {
                         ConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
                         ConfirmButton.this.setVisibility(VISIBLE);
@@ -86,7 +86,7 @@ public class ConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);
@@ -97,7 +97,7 @@ public class ConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);
@@ -108,7 +108,7 @@ public class ConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getResources().getDrawable(R.drawable.ic_cancel_stable_dark));
+                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
                         }
                     }
                 }, 200);

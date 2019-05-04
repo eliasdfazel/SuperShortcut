@@ -119,15 +119,15 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
-        wholeAuto.setBackgroundColor(getResources().getColor(R.color.light));
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.default_color_darker)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getResources().getColor(R.color.light) + "'>"
+        wholeAuto.setBackgroundColor(getColor(R.color.light));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
+        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>"
                 + PublicVariable.categoryName.split("_")[0] + "</font>"));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.default_color_darker));
-        window.setNavigationBarColor(getResources().getColor(R.color.light));
+        window.setStatusBarColor(getColor(R.color.default_color_darker));
+        window.setNavigationBarColor(getColor(R.color.light));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
@@ -144,7 +144,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         counterView.bringToFront();
 
         ProgressBar loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgressltr);
-        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
+        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(context.getString(R.string.counterActionAdvance));
@@ -443,7 +443,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            LayerDrawable drawIndex = (LayerDrawable) getResources().getDrawable(R.drawable.draw_index);
+            LayerDrawable drawIndex = (LayerDrawable) getDrawable(R.drawable.draw_index);
             GradientDrawable backIndex = (GradientDrawable) drawIndex.findDrawableByLayerId(R.id.backtemp);
             backIndex.setColor(Color.TRANSPARENT);
 
@@ -460,7 +460,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
             }
 
             PublicVariable.advMaxAppShortcuts = appName.size();
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getResources().getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getResources().getColor(R.color.light) + "'>" + PublicVariable.advMaxAppShortcuts + "</font></b></small>"));
+            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.advMaxAppShortcuts + "</font></b></small>"));
 
         }
     }

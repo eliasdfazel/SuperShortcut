@@ -38,6 +38,7 @@
     <string name="split">SPLIT</string>
     <string name="category">CATEGORY</string>
     <string name="typeCategoryName">First Type Category Name</string>
+    <string name="typeSplitName">First Type Split Name</string>
     <string name="grant">Grant Permission</string>
     <string name="split_service_desc">
         Split Super Shortcuts ᴾᴿᴼ | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
