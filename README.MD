@@ -4,7 +4,25 @@
  <br /> 
 Simply Click on Apps to Select & then Click on Confirm Button ✔️ to Create the Super Shortcut, then Move It to Wherever you Like...
 & Swipe Up on Confirm Button ✔️ to See Selected Apps. <br /> 
- <br /> 
+<br/>
+[In The News]<br/>
+🌟 Xda-Developers.com<br/>
+Super Shortcut uses Android 7.1.1’s App Shortcuts to Declutter the Homescreen<br/>
+🌟 PhoneArena.com<br/>
+App shortcuts not enough? Make your wallpaper shine through with Super Shortcuts<br/>
+🌟 AndroidHeadlines.com<br/>
+Super Shortcut Is A Unique Way To Clear Screen Clutter<br/>
+🌟 PhoneDog.com<br/>
+Top 10 Android Apps of July 2017! | 1. Super Shortcut<br/>
+🌟 AndroidWorld.nl<br/>
+Super Shortcut verzamelt apps op een plek op je homescreen<br/>
+🌟 TuttoAndroid.net<br/>
+Super Shortcut Pro permette di eseguire le app più utilizzate con un unico pulsante<br/>
+🌟 Mobiflip.de<br/>
+Super Shortcut ermöglicht schnellen Zugriff auf Favoriten-Apps<br/>
+🌟 TudoCelular.com<br/>
+Conheça o Super Shortcut, app que tira todo o potencial do Android 7.1.1<br/>
+<br/>
 Features <br /> 
 🔵 Category Shortcuts: Select Multiple Apps for Each Popup Shortcut (Press & Hold to Add it on Home Screen) <br /> 
 🔵 Split Shortcuts: Create Pair of Apps to Open them Simultaneously in Multi-Window (Press & Hold to Add it on Home Screen) <br /> 
