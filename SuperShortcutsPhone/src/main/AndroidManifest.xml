@@ -58,7 +58,20 @@
         </activity>
         <activity
             android:name=".normal.NormalAppSelectionList"
-            android:resizeableActivity="true"></activity>
+            android:resizeableActivity="true" />
+        <activity
+            android:name=".normal.MediatedActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
+            android:excludeFromRecents="true"
+            android:theme="@style/Transparent">
+            <intent-filter>
+                <action android:name="MEDIATED_ACTIVITY_PRO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".advanced.AdvanceShortcuts"
             android:resizeableActivity="true"

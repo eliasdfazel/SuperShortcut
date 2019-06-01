@@ -393,7 +393,7 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                             int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                             switch (selectedPosition) {
                                 case 0:
-                                    functionsClass.addToSuperShortcus(navDrawerItems.get(position).getCategory());
+                                    functionsClass.addToSuperShortcuts(navDrawerItems.get(position).getCategory());
                                     break;
                                 case 1:
                                     functionsClass.splitToDesktop(navDrawerItems.get(position).getCategory());

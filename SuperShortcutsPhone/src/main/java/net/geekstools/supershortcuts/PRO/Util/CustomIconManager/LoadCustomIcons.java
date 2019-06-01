@@ -11,6 +11,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -36,12 +39,17 @@ public class LoadCustomIcons {
     private List<Bitmap> mBackImages = new ArrayList<Bitmap>();
     private Bitmap mMaskImage = null;
     private Bitmap mFrontImage = null;
+    public Bitmap backIconMask = null;
     private float mFactor = 1.0f;
     private int totalIcons;
+
+    FunctionsClass functionsClass;
 
     public LoadCustomIcons(Context context, String iconsPackageName) {
         this.context = context;
         this.packageNameIconPack = iconsPackageName;
+
+        functionsClass = new FunctionsClass(context);
     }
 
     public void load() {
@@ -73,6 +81,8 @@ public class LoadCustomIcons {
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     if (eventType == XmlPullParser.START_TAG) {
                         if (xpp.getName().equals("iconback")) {
+                            backIconMask = loadBitmap(xpp.getAttributeValue(0));
+
                             for (int i = 0; i < xpp.getAttributeCount(); i++) {
                                 if (xpp.getAttributeName(i).startsWith("img")) {
                                     String drawableName = xpp.getAttributeValue(i);
@@ -136,6 +146,34 @@ public class LoadCustomIcons {
         return null;
     }
 
+    private Bitmap loadBitmap(String appPackageName, String drawableName) {
+        int id = iconPackres.getIdentifier(drawableName, "drawable", packageNameIconPack);
+        if (id > 0) {
+            Drawable bitmap = iconPackres.getDrawable(id, iconPackres.newTheme());
+            if (bitmap instanceof BitmapDrawable) {
+                return ((BitmapDrawable) bitmap).getBitmap();
+            } else {
+                return functionsClass.drawableToBitmap(bitmap);
+            }
+        } else {
+            try {
+                Drawable iconback = functionsClass.bitmapToDrawable(backIconMask);
+                Drawable appIcon = functionsClass.appIconDrawable(appPackageName);
+                LayerDrawable layerDrawableIcon = new LayerDrawable(new Drawable[]{
+                        iconback,
+                        appIcon
+                });
+                layerDrawableIcon.setLayerInset(1, 77, 77, 77, 77);
+
+                return functionsClass.drawableToBitmap(layerDrawableIcon);
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                return null;
+            }
+        }
+    }
+
     private Drawable loadDrawable(String drawableName) {
         int id = iconPackres.getIdentifier(drawableName, "drawable", packageNameIconPack);
         if (id > 0) {
@@ -181,32 +219,36 @@ public class LoadCustomIcons {
         if (!iconsLoaded) {
             load();
         }
-        PackageManager pm = context.getPackageManager();
-        Intent launchIntent = pm.getLaunchIntentForPackage(appPackageName);
-        String componentName = null;
-        if (launchIntent != null)
-            componentName = pm.getLaunchIntentForPackage(appPackageName).getComponent().toString();
-        String drawable = mapPackagesDrawables.get(componentName);
-        if (drawable != null) {
-            Bitmap BMP = loadBitmap(drawable);
-            if (BMP == null) {
-                return generateBitmap(appPackageName, defaultBitmap);
+        try {
+            PackageManager pm = context.getPackageManager();
+            Intent launchIntent = pm.getLaunchIntentForPackage(appPackageName);
+            String componentName = null;
+            if (launchIntent != null)
+                componentName = pm.getLaunchIntentForPackage(appPackageName).getComponent().toString();
+            String drawable = mapPackagesDrawables.get(componentName);
+            if (drawable != null) {
+                Bitmap BMP = loadBitmap(appPackageName, drawable);
+                if (BMP == null) {
+                    return defaultBitmap;
+                } else {
+                    return BMP;
+                }
             } else {
-                return BMP;
-            }
-        } else {
-            // try to get a resource with the component filename
-            if (componentName != null) {
-                int start = componentName.indexOf("{") + 1;
-                int end = componentName.indexOf("}", start);
-                if (end > start) {
-                    drawable = componentName.substring(start, end).toLowerCase(Locale.getDefault()).replace(".", "_").replace("/", "_");
-                    if (iconPackres.getIdentifier(drawable, "drawable", packageNameIconPack) > 0)
-                        return loadBitmap(drawable);
+                // try to get a resource with the component filename
+                if (componentName != null) {
+                    int start = componentName.indexOf("{") + 1;
+                    int end = componentName.indexOf("}", start);
+                    if (end > start) {
+                        drawable = componentName.substring(start, end).toLowerCase(Locale.getDefault()).replace(".", "_").replace("/", "_");
+                        if (iconPackres.getIdentifier(drawable, "drawable", packageNameIconPack) > 0)
+                            return loadBitmap(appPackageName, drawable);
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return generateBitmap(appPackageName, defaultBitmap);
+        return defaultBitmap;
     }
 
     public int getTotalIcons() {
@@ -278,10 +320,6 @@ public class LoadCustomIcons {
             mCanvas.drawBitmap(mFrontImage, 0, 0, null);
         }
 
-        // store the bitmap in cache
-//            BitmapCache.getInstance(context).putBitmap(key, result);
-
-        // return it
         return result;
     }
 }

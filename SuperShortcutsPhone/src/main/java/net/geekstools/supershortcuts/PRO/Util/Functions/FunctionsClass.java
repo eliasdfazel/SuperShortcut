@@ -66,6 +66,7 @@ import net.geekstools.supershortcuts.PRO.Util.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
 import net.geekstools.supershortcuts.PRO.advanced.LoadCategoryItems;
 import net.geekstools.supershortcuts.PRO.advanced.nav.CategoryItemListAdapter;
+import net.geekstools.supershortcuts.PRO.normal.MediatedActivity;
 import net.geekstools.supershortcuts.PRO.split.SplitScreenService;
 import net.geekstools.supershortcuts.PRO.split.SplitTransparentPair;
 
@@ -90,11 +91,9 @@ public class FunctionsClass {
     int API;
     Activity activity;
     Context context;
-    PackageManager packageManager;
 
     String[] categoryNamesSelected, SplitNamesSelected;
     LayerDrawable drawCategory;
-    boolean justUpdate;
 
     LoadCustomIcons loadCustomIcons;
 
@@ -109,9 +108,8 @@ public class FunctionsClass {
         API = Build.VERSION.SDK_INT;
     }
 
-    public void addToSuperShortcus(String fileName) {
+    public void addToSuperShortcuts(String fileName) {
         try {
-            final PackageManager manager = context.getPackageManager();
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
             shortcutManager.removeAllDynamicShortcuts();
@@ -119,6 +117,11 @@ public class FunctionsClass {
 
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
+
+            if (loadCustomIcons()) {
+                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+                loadCustomIcons.load();
+            }
 
             int maxLoop;
             if (appShortcuts.size() > context.getSystemService(ShortcutManager.class).getMaxShortcutCountPerActivity()) {
@@ -128,14 +131,16 @@ public class FunctionsClass {
             }
             for (int i = 0; i < maxLoop; i++) {
                 try {
-                    Intent intent = manager.getLaunchIntentForPackage(appShortcuts.get(i));
-                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    Intent intent = new Intent(context, MediatedActivity.class);
+                    intent.setAction("MEDIATED_ACTIVITY_PRO");
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("PackageName", appShortcuts.get(i));
 
                     ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, String.valueOf(i))
                             .setShortLabel(appName(appShortcuts.get(i)))
                             .setLongLabel(appName(appShortcuts.get(i)))
-                            .setIcon(Icon.createWithBitmap(appIconBitmap(appShortcuts.get(i))))
+                            .setIcon(Icon.createWithBitmap(getAppIconBitmapCustomIcon(appShortcuts.get(i))))
                             .setIntent(intent)
                             .setRank(i)
                             .build();
@@ -211,12 +216,12 @@ public class FunctionsClass {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                        Intent intent = new Intent();
-                        intent.setPackage(packageName);
-                        intent.setClassName(packageName, className);
-                        intent.setAction(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        Intent intent = new Intent(context, MediatedActivity.class);
+                        intent.setAction("MEDIATED_ACTIVITY_PRO");
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("PackageName", packageName);
+                        intent.putExtra("ClassName", className);
 
                         ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, (appShortcuts.get(i)))
                                 .setShortLabel(activityLabel(activityInfo))
@@ -274,12 +279,12 @@ public class FunctionsClass {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                        Intent intent = new Intent();
-                        intent.setPackage(packageName);
-                        intent.setClassName(packageName, className);
-                        intent.setAction(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        Intent intent = new Intent(context, MediatedActivity.class);
+                        intent.setAction("MEDIATED_ACTIVITY_PRO");
+                        intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("PackageName", packageName);
+                        intent.putExtra("ClassName", className);
 
                         ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, (appShortcuts.get(i)))
                                 .setShortLabel(activityLabel(activityInfo))
@@ -609,12 +614,12 @@ public class FunctionsClass {
                         try {
                             ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                            Intent intent = new Intent();
-                            intent.setPackage(packageName);
-                            intent.setClassName(packageName, className);
-                            intent.setAction(Intent.ACTION_MAIN);
-                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                            Intent intent = new Intent(context, MediatedActivity.class);
+                            intent.setAction("MEDIATED_ACTIVITY_PRO");
+                            intent.addCategory(Intent.CATEGORY_DEFAULT);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("PackageName", packageName);
+                            intent.putExtra("ClassName", className);
 
                             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, (lineShortcuts.get(i)))
                                     .setShortLabel(activityLabel(activityInfo))
@@ -818,12 +823,12 @@ public class FunctionsClass {
                         try {
                             ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                            Intent intent = new Intent();
-                            intent.setPackage(packageName);
-                            intent.setClassName(packageName, className);
-                            intent.setAction(Intent.ACTION_MAIN);
-                            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                            Intent intent = new Intent(context, MediatedActivity.class);
+                            intent.setAction("MEDIATED_ACTIVITY_PRO");
+                            intent.addCategory(Intent.CATEGORY_DEFAULT);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("PackageName", packageName);
+                            intent.putExtra("ClassName", className);
 
                             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, (lineShortcuts.get(i)))
                                     .setShortLabel(activityLabel(activityInfo))
@@ -2237,6 +2242,10 @@ public class FunctionsClass {
         }
 
         return bitmap;
+    }
+
+    public Drawable bitmapToDrawable(Bitmap bitmap) {
+        return new BitmapDrawable(context.getResources(), bitmap);
     }
 
     public void openApplication(String packageName) {

@@ -398,7 +398,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                             int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                             switch (selectedPosition) {
                                 case 0:
-                                    functionsClass.addToSuperShortcus(navDrawerItems.get(position).getCategory());
+                                    functionsClass.addToSuperShortcuts(navDrawerItems.get(position).getCategory());
                                     break;
                                 case 1:
                                     functionsClass.categoryToDesktop(navDrawerItems.get(position).getCategory());
