@@ -1349,11 +1349,16 @@ public class FunctionsClass {
             ArrayList<NavDrawerItem> navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
             navDrawerItemsSaved.clear();
             for (String packageName : readFileLine(categoryName)) {
-                navDrawerItemsSaved.add(new NavDrawerItem(
-                        appName(packageName),
-                        packageName,
-                        loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
-                ));
+                if (appInstalledOrNot(packageName)) {
+                    navDrawerItemsSaved.add(new NavDrawerItem(
+                            appName(packageName),
+                            packageName,
+                            loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
+                    ));
+                } else {
+                    context.deleteFile(packageName + "." + categoryName);
+                    removeLine(categoryName, packageName);
+                }
             }
             navDrawerItemsSaved.add(new NavDrawerItem(
                     context.getString(R.string.edit_advanced_shortcut) + " " + categoryName.replace(".CategorySelected", "").split("_")[0],

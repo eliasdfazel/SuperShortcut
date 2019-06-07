@@ -19,7 +19,6 @@ public class MediatedActivity extends Activity {
         }
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
         finish();

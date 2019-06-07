@@ -63,13 +63,8 @@ public class CategoryItemListAdapter extends BaseAdapter {
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.iconItem);
         TextView textAppName = (TextView) convertView.findViewById(R.id.itemAppName);
 
-        if (functionsClass.appInstalledOrNot(navDrawerItems.get(position).getPackageName())) {
-            imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-            textAppName.setText(navDrawerItems.get(position).getAppName());
-        } else {
-            context.deleteFile(navDrawerItems.get(position).getPackageName() + "." + navDrawerItems.get(position).getCategory());
-            functionsClass.removeLine(navDrawerItems.get(position).getCategory(), navDrawerItems.get(position).getPackageName());
-        }
+        imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
+        textAppName.setText(navDrawerItems.get(position).getAppName());
 
         items.setOnClickListener(new View.OnClickListener() {
             @Override
