@@ -61,9 +61,9 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
     RecyclerView recyclerView;
     ProgressBar progressBar;
 
-    HorizontalScrollView floatingWidgetDemo;
-    LinearLayout floatingWidgetDemoList;
-    TextView floatingWidgetDemoDescription;
+    HorizontalScrollView mixShortcutsDemo;
+    LinearLayout mixShortcutsDemoList;
+    TextView mixShortcutsDemoDescription;
 
     SkusAdapter skusAdapter;
 
@@ -95,32 +95,32 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
 
         recyclerView = (RecyclerView) root.findViewById(R.id.list);
         progressBar = (ProgressBar) root.findViewById(R.id.progress_circular);
-        floatingWidgetDemo = (HorizontalScrollView) root.findViewById(R.id.floatingWidgetDemo);
-        floatingWidgetDemoList = (LinearLayout) root.findViewById(R.id.floatingWidgetDemoList);
-        floatingWidgetDemoDescription = (TextView) root.findViewById(R.id.floatingWidgetDemoDescription);
+        mixShortcutsDemo = (HorizontalScrollView) root.findViewById(R.id.mixShortcutsDemo);
+        mixShortcutsDemoList = (LinearLayout) root.findViewById(R.id.mixShortcutsDemoList);
+        mixShortcutsDemoDescription = (TextView) root.findViewById(R.id.mixShortcutsDemoDescription);
 
         root.findViewById(R.id.backgroundFull).setBackgroundColor(context.getColor(R.color.light));
 
         onManagerReady((BillingProvider) activity);
 
-        floatingWidgetDemoDescription.setText(Html.fromHtml(getString(R.string.mixDemoDescriptions)));
-        floatingWidgetDemoDescription.setTextColor(context.getColor(R.color.light));
+        mixShortcutsDemoDescription.setText(Html.fromHtml(getString(R.string.mixDemoDescriptions)));
+        mixShortcutsDemoDescription.setTextColor(context.getColor(R.color.dark));
 
         FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
         firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-                floatingWidgetDemoDescription.setText(Html.fromHtml(firebaseRemoteConfig.getString("floating_widgets_description")));
-                screenshotsNumber = (int) firebaseRemoteConfig.getLong("floating_widgets_demo_screenshots");
+                mixShortcutsDemoDescription.setText(Html.fromHtml(firebaseRemoteConfig.getString("mix_shortcuts_description")));
+                screenshotsNumber = (int) firebaseRemoteConfig.getLong("mix_shortcuts_demo_screenshots");
 
                 for (int i = 1; i <= screenshotsNumber; i++) {
-                    String sceenshotFileName = "FloatingWidgetsDemo" + i + ".png";
+                    String sceenshotFileName = "MixShortcutssDemo" + i + ".png";
                     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                     StorageReference firebaseStorageReference = firebaseStorage.getReference();
                     StorageReference storageReference = firebaseStorageReference
-                            //gs://floating-shortcuts-pro.appspot.com/Assets/Images/Screenshots/FloatingWidgets/IAP.Demo/FloatingWidgetsDemo1.png
-                            .child("Assets/Images/Screenshots/FloatingWidgets/IAP.Demo/" + sceenshotFileName);
+                            //gs://XXX.appspot.com/Assets/Images/Screenshots/MixShortcuts/IAP.Demo/FloatingWidgetsDemo1.png
+                            .child("Assets/Images/Screenshots/MixShortcuts/IAP.Demo/" + sceenshotFileName);
                     storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri screenshotURI) {
@@ -167,13 +167,13 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals("LOAD_SCREENSHOTS")) {
                     for (int i = 1; i <= screenshotsNumber; i++) {
-                        RelativeLayout demoLayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.floating_widgets_demo_item, null);
-                        ImageView floatingWidgetsDemoItem = (ImageView) demoLayout.findViewById(R.id.floatingWidgetsDemoItem);
+                        RelativeLayout demoLayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.mix_shortcuts_demo_item, null);
+                        ImageView mixShortcutsDemoItem = (ImageView) demoLayout.findViewById(R.id.mixShortcutsDemoItem);
 
-                        floatingWidgetsDemoItem.setImageDrawable(mapIndexDrawable.get(i));
-                        floatingWidgetsDemoItem.setOnClickListener(AcquireFragment.this);
-                        floatingWidgetsDemoItem.setTag(mapIndexURI.get(i));
-                        floatingWidgetDemoList.addView(demoLayout);
+                        mixShortcutsDemoItem.setImageDrawable(mapIndexDrawable.get(i));
+                        mixShortcutsDemoItem.setOnClickListener(AcquireFragment.this);
+                        mixShortcutsDemoItem.setTag(mapIndexURI.get(i));
+                        mixShortcutsDemoList.addView(demoLayout);
                     }
                 }
             }

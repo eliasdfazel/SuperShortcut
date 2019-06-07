@@ -92,7 +92,7 @@ public class BillingManager implements PurchasesUpdatedListener {
         switch (billingResponse) {
             case BillingClient.BillingResponse.ITEM_ALREADY_OWNED: {
 
-                functionsClass.savePreference(".PurchasedItem", "FloatingWidgets", true);
+                functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
 
                 break;
             }
@@ -116,7 +116,7 @@ public class BillingManager implements PurchasesUpdatedListener {
                 e.printStackTrace();
             }
         } else {
-            functionsClass.savePreference(".PurchasedItem", "FloatingWidgets", false);
+            functionsClass.savePreference(".PurchasedItem", "MixShortcuts", false);
         }
     }
 

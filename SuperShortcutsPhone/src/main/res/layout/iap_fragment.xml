@@ -36,7 +36,7 @@
                 android:scrollbars="none" />
 
             <TextView
-                android:id="@+id/floatingWidgetDemoDescription"
+                android:id="@+id/mixShortcutsDemoDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/list"
@@ -46,10 +46,10 @@
                 android:paddingEnd="17dp" />
 
             <HorizontalScrollView
-                android:id="@+id/floatingWidgetDemo"
+                android:id="@+id/mixShortcutsDemo"
                 android:layout_width="match_parent"
                 android:layout_height="480dp"
-                android:layout_below="@id/floatingWidgetDemoDescription"
+                android:layout_below="@id/mixShortcutsDemoDescription"
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="3dp"
                 android:paddingStart="11dp"
@@ -62,7 +62,7 @@
                 android:requiresFadingEdge="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/floatingWidgetDemoList"
+                    android:id="@+id/mixShortcutsDemoList"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal" />
