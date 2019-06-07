@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/backgroundFull"
+    android:background="@color/light">
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="@style/Widget.AppCompat.ProgressBar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="51dp"
+            android:paddingStart="13dp"
+            android:paddingEnd="13dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdge="vertical"
+                android:fadingEdgeLength="37dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:smoothScrollbar="true"
+                android:scrollbars="none" />
+
+            <TextView
+                android:id="@+id/floatingWidgetDemoDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/list"
+                android:layout_marginTop="27dp"
+                android:layout_marginBottom="7dp"
+                android:paddingStart="17dp"
+                android:paddingEnd="17dp" />
+
+            <HorizontalScrollView
+                android:id="@+id/floatingWidgetDemo"
+                android:layout_width="match_parent"
+                android:layout_height="480dp"
+                android:layout_below="@id/floatingWidgetDemoDescription"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:paddingStart="11dp"
+                android:paddingEnd="11dp"
+                android:scrollbars="none"
+                android:fadeScrollbars="true"
+                android:cacheColorHint="@android:color/transparent"
+                android:fadingEdge="horizontal"
+                android:fadingEdgeLength="37dp"
+                android:requiresFadingEdge="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/floatingWidgetDemoList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

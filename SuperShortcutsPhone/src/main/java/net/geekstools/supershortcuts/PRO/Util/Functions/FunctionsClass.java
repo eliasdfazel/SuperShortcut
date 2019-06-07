@@ -38,7 +38,6 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.TextUtils;
@@ -52,6 +51,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -2613,5 +2614,11 @@ public class FunctionsClass {
             versionCodeKey = context.getString(R.string.stringUpcomingChangeLogSummaryPhone);
         }
         return versionCodeKey;
+    }
+
+    /*In-App Purchase*/
+    public boolean mixShortcutssPurchased() {
+
+        return readPreference(".PurchasedItem", "MixShortcuts", false);
     }
 }

@@ -16,10 +16,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -36,6 +32,11 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -46,6 +47,7 @@ import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
+import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.CustomIconsThemeAdapter;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.RecycleViewSmoothLayout;
@@ -167,21 +169,26 @@ public class SettingGUI extends FragmentActivity {
         mixView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    functionsClass.deleteSelectedFiles();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
-                    mixSwitch.setChecked(false);
-                    editor.putBoolean("mixShortcuts", false);
-                    editor.apply();
-                } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
-                    mixSwitch.setChecked(true);
-                    editor.putBoolean("mixShortcuts", true);
-                    editor.apply();
+                if (functionsClass.mixShortcutssPurchased()) {
+                    try {
+                        functionsClass.deleteSelectedFiles();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
+                        mixSwitch.setChecked(false);
+                        editor.putBoolean("mixShortcuts", false);
+                        editor.apply();
+                    } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
+                        mixSwitch.setChecked(true);
+                        editor.putBoolean("mixShortcuts", true);
+                        editor.apply();
+                    }
+                } else {
+                    startActivity(new Intent(getApplicationContext(), InAppBilling.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 }
             }
         });

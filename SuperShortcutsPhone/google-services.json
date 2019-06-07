@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "675774672524-5nek7t1jhvj3qnccm9mlk3qvhm10jtqb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.geekstools.supershortcuts.PRO",
+            "certificate_hash": "c4f7ba6ff825ee77e200fa6c3edc4a749be7baac"
+          }
+        },
+        {
           "client_id": "675774672524-d9mku0lj042tobau11bmvp43fm7ucur3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "675774672524-00b0qd58be878eogk26nclopjrlsmok2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

@@ -9,7 +9,7 @@
         By This App you can Replace Several Home Screen Shortcuts to One… Quick Access to Apps &amp; Enjoy your Wallpapers!
     </string>
 
-
+    <string name="error" translatable="false">Error Occurred</string>
     <string name="buy" translatable="false">Purchase</string>
     <string name="free" translatable="false">Free Edition</string>
     <string name="contact" translatable="false">Contact me</string>

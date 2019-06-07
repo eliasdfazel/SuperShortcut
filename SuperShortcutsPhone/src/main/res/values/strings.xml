@@ -62,5 +62,16 @@
                <small>Go to Preferences to Disable it</small>
        ]]>
     </string>
+    <string name="mixDemoDescriptions">
+        <![CDATA[
+            🔵 <b><big>Mix Shortcuts</big></b> | ... <br/>
+            &bull; ...<br/>
+            &bull; ...<br/>
+            &bull; ...<br/>
+        ]]>
+    </string>
+
+    <string name="purchase">Purchase 💸</string>
+    <string name="restorePurchase">ℹ Click To Restore The Item ℹ</string>
 
 </resources>
