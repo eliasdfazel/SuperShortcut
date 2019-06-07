@@ -33,11 +33,15 @@ public class Configurations extends Activity {
         functionsClass = new FunctionsClass(getApplicationContext(), Configurations.this);
 
         try {
-            functionsClass.savePreference(".BETA", "isBetaTester", true);
-            functionsClass.savePreference(".BETA", "installedVersionCode", functionsClass.appVersionCode(getPackageName()));
-            functionsClass.savePreference(".BETA", "installedVersionName", functionsClass.appVersionName(getPackageName()));
-            functionsClass.savePreference(".BETA", "deviceModel", functionsClass.getDeviceName());
-            functionsClass.savePreference(".BETA", "userRegion", functionsClass.getCountryIso());
+            functionsClass.savePreference(".UserInformation", "isBetaTester", functionsClass.appVersionName(getPackageName()).contains("[BETA]") ? true : false);
+            functionsClass.savePreference(".UserInformation", "installedVersionCode", functionsClass.appVersionCode(getPackageName()));
+            functionsClass.savePreference(".UserInformation", "installedVersionName", functionsClass.appVersionName(getPackageName()));
+            functionsClass.savePreference(".UserInformation", "deviceModel", functionsClass.getDeviceName());
+            functionsClass.savePreference(".UserInformation", "userRegion", functionsClass.getCountryIso());
+
+            if (functionsClass.appVersionName(getPackageName()).contains("[BETA]")) {
+                functionsClass.saveDefaultPreference("JoinedBetaProgrammer", true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

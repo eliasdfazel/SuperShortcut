@@ -33,17 +33,20 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
-import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
@@ -56,6 +59,7 @@ import net.geekstools.supershortcuts.PRO.normal.NormalAppSelectionList;
 import net.geekstools.supershortcuts.PRO.split.SplitShortcuts;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SettingGUI extends FragmentActivity {
 
@@ -90,8 +94,8 @@ public class SettingGUI extends FragmentActivity {
         functionsClass.ChangeLog(false);
 
         getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>"));
-        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>"));
+        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -127,6 +131,41 @@ public class SettingGUI extends FragmentActivity {
 
         prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
         customIconDesc.setText(functionsClass.loadCustomIcons() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
+
+        if (!functionsClass.mixShortcutssPurchased()) {
+            BillingClient billingClient = BillingClient.newBuilder(SettingGUI.this).setListener(new PurchasesUpdatedListener() {
+                @Override
+                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+
+                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+
+                    } else {
+
+                    }
+
+                }
+            }).build();
+            billingClient.startConnection(new BillingClientStateListener() {
+                @Override
+                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
+                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
+                        for (Purchase purchase : purchases) {
+                            System.out.println("*** Purchased Item: " + purchase + " ***");
+                            if (purchase.getSku().equals("mix.shortcuts")) {
+                                functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onBillingServiceDisconnected() {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -295,7 +334,7 @@ public class SettingGUI extends FragmentActivity {
 
                 final Dialog dialog = new Dialog(SettingGUI.this);
                 dialog.setContentView(R.layout.custom_icons);
-                dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.dark) + "'>" + getString(R.string.customIconTitle) + "</font>"));
+                dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.dark) + "'>" + getString(R.string.customIconTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
                 dialog.getWindow().setAttributes(layoutParams);
                 dialog.getWindow().getDecorView().setBackgroundColor(getColor(R.color.light));
                 dialog.setCancelable(true);
@@ -367,12 +406,7 @@ public class SettingGUI extends FragmentActivity {
     public void onResume() {
         super.onResume();
         firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .build();
-        firebaseRemoteConfig.setConfigSettings(configSettings);
         firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
-
         firebaseRemoteConfig.fetch(0)
                 .addOnCompleteListener(SettingGUI.this, new OnCompleteListener<Void>() {
                     @Override
@@ -391,7 +425,7 @@ public class SettingGUI extends FragmentActivity {
 
                                     }
                                     if (firebaseRemoteConfig.getBoolean("boolean_new_floating_shortcuts_pref_desc")) {
-                                        prefDescFloating.setText(Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc")));
+                                        prefDescFloating.setText(Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc"), Html.FROM_HTML_MODE_LEGACY));
                                     }
                                 }
                             });

@@ -103,7 +103,7 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
 
         onManagerReady((BillingProvider) activity);
 
-        mixShortcutsDemoDescription.setText(Html.fromHtml(getString(R.string.mixDemoDescriptions)));
+        mixShortcutsDemoDescription.setText(Html.fromHtml(getString(R.string.mixDemoDescriptions), Html.FROM_HTML_MODE_LEGACY));
         mixShortcutsDemoDescription.setTextColor(context.getColor(R.color.dark));
 
         FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
@@ -111,7 +111,7 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
         firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
             @Override
             public void onSuccess(Boolean aBoolean) {
-                mixShortcutsDemoDescription.setText(Html.fromHtml(firebaseRemoteConfig.getString("mix_shortcuts_description")));
+                mixShortcutsDemoDescription.setText(Html.fromHtml(firebaseRemoteConfig.getString("mix_shortcuts_description"), Html.FROM_HTML_MODE_LEGACY));
                 screenshotsNumber = (int) firebaseRemoteConfig.getLong("mix_shortcuts_demo_screenshots");
 
                 for (int i = 1; i <= screenshotsNumber; i++) {

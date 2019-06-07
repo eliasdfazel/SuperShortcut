@@ -70,7 +70,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -116,7 +115,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
     RelativeLayout wholeAuto, confirmLayout;
     LinearLayout indexView, autoSelect;
     RelativeLayout loadingSplash;
-    TextView desc, counterView, shortcutInfo;
+    TextView desc, counterView;
     ImageView tempIcon, loadIcon;
     Button apps, split, categories;
     ProgressBar loadingBarLTR;
@@ -142,7 +141,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
     @Override
     protected void onCreate(Bundle Saved) {
         super.onCreate(Saved);
-        setContentView(R.layout.activity_app_selection_list);
+        setContentView(R.layout.normal_app_selection);
 
         simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
         functionsClass = new FunctionsClass(getApplicationContext(), this);
@@ -150,10 +149,10 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.maxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.maxAppShortcuts + "</font></b></small>"));
+            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.maxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
         } else {
             limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".autoSuper");
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>"));
+            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
             PublicVariable.maxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
         }
         context = getApplicationContext();
@@ -172,8 +171,6 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();
         autoSelect = (LinearLayout) findViewById(R.id.autoSelect);
-        shortcutInfo = (TextView) findViewById(R.id.shortcutInfo);
-        shortcutInfo.bringToFront();
         apps = (Button) findViewById(R.id.autoApps);
         split = (Button) findViewById(R.id.autoSplit);
         categories = (Button) findViewById(R.id.autoCategories);
@@ -187,7 +184,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
 
         wholeAuto.setBackgroundColor(getColor(R.color.light));
         getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>"));
+        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -283,10 +280,10 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                     if (functionsClass.mixShortcuts() == true) {
                         PublicVariable.maxAppShortcuts
                                 = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.maxAppShortcuts + "</font></b></small>"));
+                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.maxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                     } else {
                         limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".autoSuper");
-                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>"));
+                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                         PublicVariable.maxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
                     }
                 } else if (intent.getAction().equals(getString(R.string.license))) {
@@ -336,12 +333,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         super.onResume();
         try {
             firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-            FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                    .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                    .build();
-            firebaseRemoteConfig.setConfigSettings(configSettings);
             firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
-
             firebaseRemoteConfig.fetch(0)
                     .addOnCompleteListener(NormalAppSelectionList.this, new OnCompleteListener<Void>() {
                         @Override
@@ -427,21 +419,31 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
 
         try {
             if (functionsClass.networkConnection()) {
-                firebaseAuth.addAuthStateListener(
-                        new FirebaseAuth.AuthStateListener() {
-                            @Override
-                            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
-                                if (user == null) {
-                                    functionsClass.savePreference(".BETA", "testerEmail", null);
+                try {
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    firebaseUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                                @Override
+                                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    if (user == null) {
+                                        functionsClass.savePreference(".UserInformation", "userEmail", null);
+                                    } else {
 
-                                } else {
+                                    }
+
+
                                 }
-                            }
+                            });
                         }
-                );
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                if (functionsClass.readPreference(".BETA", "isBetaTester", false) && functionsClass.readPreference(".BETA", "testerEmail", null) == null) {
+                if (functionsClass.readPreference(".UserInformation", "userEmail", null) == null) {
                     GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                             .requestIdToken(getString(R.string.webClientId))
                             .requestEmail()
@@ -575,31 +577,31 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 666) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                GoogleSignInAccount googleSignInAccount = task.getResult(ApiException.class);
+                Task<GoogleSignInAccount> googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+                GoogleSignInAccount googleSignInAccount = googleSignInAccountTask.getResult(ApiException.class);
+
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
                 firebaseAuth.signInWithCredential(authCredential)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onComplete(@NonNull final Task<AuthResult> task) {
+                            public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                     if (firebaseUser != null) {
-                                        functionsClass.savePreference(".BETA", "testerEmail", firebaseUser.getEmail());
+                                        functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.getEmail());
 
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 try {
-                                                    File betaFile = new File("/data/data/" + getPackageName() + "/shared_prefs/.BETA.xml");
+                                                    File betaFile = new File("/data/data/" + getPackageName() + "/shared_prefs/.UserInformation.xml");
                                                     Uri uriBetaFile = Uri.fromFile(betaFile);
                                                     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
-                                                    StorageReference storageReference = firebaseStorage.getReference("/betaTesters/" + "API" + functionsClass.returnAPI() + "/" +
-                                                            functionsClass.readPreference(".BETA", "testerEmail", null));
+                                                    StorageReference storageReference = firebaseStorage.getReference("/Users/" + "API" + functionsClass.returnAPI() + "/" +
+                                                            functionsClass.readPreference(".UserInformation", "userEmail", null));
                                                     UploadTask uploadTask = storageReference.putFile(uriBetaFile);
 
                                                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -610,11 +612,9 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                         @Override
                                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                            System.out.println("Firebase Activities Done Successfully");
                                                             functionsClass.Toast(getString(R.string.alphaTitle), getColor(R.color.light), getColor(R.color.dark), Gravity.BOTTOM, true);
                                                         }
                                                     });
-
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -622,6 +622,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                         }, 333);
                                     }
                                 } else {
+
                                 }
                             }
                         });
@@ -639,7 +640,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         if (functionsClass.UsageAccessEnabled()) {
             loadingBarLTR.setVisibility(View.INVISIBLE);
             loadIcon.setImageDrawable(getDrawable(R.drawable.draw_smart));
-            desc.setText(Html.fromHtml(getString(R.string.smartInfo)));
+            desc.setText(Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY));
 
             try {
                 functionsClass.deleteSelectedFiles();
@@ -757,7 +758,6 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
             }
 
             if (!PublicVariable.firstLoad) {
-                shortcutInfo.setVisibility(View.VISIBLE);
                 autoSelect.setVisibility(View.VISIBLE);
             }
         }
@@ -827,41 +827,26 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    final Animation slideDown_text = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_button);
                     final Animation slideDown_select = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_button);
                     if (PublicVariable.firstLoad) {
-                        shortcutInfo.startAnimation(slideDown_text);
                         PublicVariable.firstLoad = false;
+
+                        autoSelect.startAnimation(slideDown_select);
+                        slideDown_select.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                autoSelect.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                            }
+                        });
                     }
-                    slideDown_text.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            shortcutInfo.setVisibility(View.VISIBLE);
-                            autoSelect.startAnimation(slideDown_select);
-                            slideDown_select.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    autoSelect.setVisibility(View.VISIBLE);
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
-                    });
 
                     Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
                     loadingSplash.setVisibility(View.INVISIBLE);

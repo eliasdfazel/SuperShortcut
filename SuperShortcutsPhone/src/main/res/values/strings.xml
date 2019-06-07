@@ -34,9 +34,12 @@
     <string name="splitTitle">Split Super Shortcuts ᴾᴿᴼ</string>
     <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
     <string name="shortcut">SHORTCUTS</string>
-    <string name="apps">APP</string>
-    <string name="split">SPLIT</string>
-    <string name="category">CATEGORY</string>
+    <string name="apps">App</string>
+    <string name="split">Split</string>
+    <string name="category">Category</string>
+    <string name="appsEnable">App Shortcuts</string>
+    <string name="splitEnable">Split Shortcuts</string>
+    <string name="categoryEnable">Category Shortcuts</string>
     <string name="typeCategoryName">First Type Category Name</string>
     <string name="typeSplitName">First Type Split Name</string>
     <string name="grant">Grant Permission</string>

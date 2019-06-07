@@ -123,7 +123,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         wholeAuto.setBackgroundColor(getColor(R.color.light));
         getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>"
-                + PublicVariable.categoryName.split("_")[0] + "</font>"));
+                + PublicVariable.categoryName.split("_")[0] + "</font>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -461,7 +461,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
             }
 
             PublicVariable.advMaxAppShortcuts = appName.size();
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.advMaxAppShortcuts + "</font></b></small>"));
+            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.advMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
 
         }
     }

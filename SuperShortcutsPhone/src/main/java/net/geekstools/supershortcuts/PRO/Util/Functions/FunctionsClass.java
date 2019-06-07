@@ -1714,8 +1714,8 @@ public class FunctionsClass {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
                 Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
-                        context.getString(R.string.splitTitle) + "</font>"));
-        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.observeDesc)));
+                        context.getString(R.string.splitTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.observeDesc), Html.FROM_HTML_MODE_LEGACY));
         alertDialog.setIcon(context.getDrawable(R.drawable.ic_launcher));
         alertDialog.setCancelable(true);
         alertDialog.setPositiveButton(context.getString(R.string.grant), new DialogInterface.OnClickListener() {
@@ -1741,8 +1741,8 @@ public class FunctionsClass {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
                 Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
-                        context.getString(R.string.splitTitle) + "</font>"));
-        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.observeDesc)));
+                        context.getString(R.string.splitTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.observeDesc), Html.FROM_HTML_MODE_LEGACY));
         alertDialog.setIcon(context.getDrawable(R.drawable.ic_launcher));
         alertDialog.setCancelable(true);
         alertDialog.setPositiveButton(context.getString(R.string.grant), new DialogInterface.OnClickListener() {
@@ -1767,8 +1767,8 @@ public class FunctionsClass {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
                 Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
-                        context.getString(R.string.smartTitle) + "</font>"));
-        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.smartPermission)));
+                        context.getString(R.string.smartTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.smartPermission), Html.FROM_HTML_MODE_LEGACY));
         alertDialog.setIcon(context.getDrawable(R.drawable.ic_launcher));
         alertDialog.setCancelable(true);
         alertDialog.setPositiveButton(context.getString(R.string.grant), new DialogInterface.OnClickListener() {
@@ -1803,8 +1803,8 @@ public class FunctionsClass {
 
     public void dialogueLicense() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
-        alertDialog.setTitle(Html.fromHtml(context.getString(R.string.license_title)));
-        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.license_msg)));
+        alertDialog.setTitle(Html.fromHtml(context.getString(R.string.license_title), Html.FROM_HTML_MODE_LEGACY));
+        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.license_msg), Html.FROM_HTML_MODE_LEGACY));
         alertDialog.setIcon(R.drawable.ic_launcher);
         alertDialog.setCancelable(false);
 
@@ -1909,45 +1909,42 @@ public class FunctionsClass {
     }
 
     public void ChangeLog(boolean showDialogue) {
-        if (returnAPI() > 22) {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
-            ;
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
 
-            alertDialog.setTitle(Html.fromHtml(context.getString(R.string.whatsnew)));
-            alertDialog.setMessage(Html.fromHtml(context.getString(R.string.changelog)));
-            alertDialog.setIcon(R.drawable.ic_launcher);
-            alertDialog.setCancelable(true);
-            alertDialog.setPositiveButton(context.getString(R.string.like), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_facebook_app)))
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                }
-            });
-            alertDialog.setNeutralButton(context.getString(R.string.shareit), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int i) {
-                    dialog.dismiss();
-                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_play_store) + context.getPackageName()))
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                }
-            });
-            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    saveFile(".Updated", String.valueOf(appVersionCode(context.getPackageName())));
-                    dialog.dismiss();
-                }
-            });
+        alertDialog.setTitle(Html.fromHtml(context.getString(R.string.whatsnew), Html.FROM_HTML_MODE_LEGACY));
+        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.changelog), Html.FROM_HTML_MODE_LEGACY));
+        alertDialog.setIcon(R.drawable.ic_launcher);
+        alertDialog.setCancelable(true);
+        alertDialog.setPositiveButton(context.getString(R.string.like), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_facebook_app)))
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
+        alertDialog.setNeutralButton(context.getString(R.string.shareit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                dialog.dismiss();
+                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_play_store) + context.getPackageName()))
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                saveFile(".Updated", String.valueOf(appVersionCode(context.getPackageName())));
+                dialog.dismiss();
+            }
+        });
 
-            if (showDialogue == true) {
+        if (showDialogue == true) {
+            alertDialog.show();
+        } else if (!context.getFileStreamPath(".Updated").exists()) {
+            alertDialog.show();
+        } else {
+            if (appVersionCode(context.getPackageName()) > Integer.parseInt(readFile(".Updated"))) {
                 alertDialog.show();
-            } else if (!context.getFileStreamPath(".Updated").exists()) {
-                alertDialog.show();
-            } else {
-                if (appVersionCode(context.getPackageName()) > Integer.parseInt(readFile(".Updated"))) {
-                    alertDialog.show();
-                }
             }
         }
     }
@@ -1956,8 +1953,8 @@ public class FunctionsClass {
         if (returnAPI() > 22) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
 
-            alertDialog.setTitle(Html.fromHtml("<small>" + context.getString(R.string.whatsnew) + " | " + versionCode + "</small>"));
-            alertDialog.setMessage(Html.fromHtml(updateInfo));
+            alertDialog.setTitle(Html.fromHtml("<small>" + context.getString(R.string.whatsnew) + " | " + versionCode + "</small>", Html.FROM_HTML_MODE_LEGACY));
+            alertDialog.setMessage(Html.fromHtml(updateInfo, Html.FROM_HTML_MODE_LEGACY));
 
             LayerDrawable layerDrawableNewUpdate = (LayerDrawable) context.getDrawable(R.drawable.ic_update);
             BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.ic_launcher_back_layer);
@@ -2372,8 +2369,8 @@ public class FunctionsClass {
     public void notificationCreator(String titleText, String contentText, int notificationId) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder mBuilder = new Notification.Builder(context);
-        mBuilder.setContentTitle(Html.fromHtml("<b><font color='" + context.getColor(R.color.default_color) + "'>" + titleText + "</font></b>"));
-        mBuilder.setContentText(Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" + contentText + "</font>"));
+        mBuilder.setContentTitle(Html.fromHtml("<b><font color='" + context.getColor(R.color.default_color) + "'>" + titleText + "</font></b>", Html.FROM_HTML_MODE_LEGACY));
+        mBuilder.setContentText(Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" + contentText + "</font>", Html.FROM_HTML_MODE_LEGACY));
         mBuilder.setTicker(context.getString(R.string.app_name));
         mBuilder.setSmallIcon(R.drawable.ic_notification);
         mBuilder.setAutoCancel(true);
@@ -2413,7 +2410,7 @@ public class FunctionsClass {
                 backToast.setColor(toastColor);
 
                 TextView textView = (TextView) layout.findViewById(R.id.toastText);
-                textView.setText(Html.fromHtml("<small>" + toastContent + "</small>"));
+                textView.setText(Html.fromHtml("<small>" + toastContent + "</small>", Html.FROM_HTML_MODE_LEGACY));
                 textView.setBackground(drawToast);
                 textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
 
@@ -2443,7 +2440,7 @@ public class FunctionsClass {
                 backToast.setColor(toastColor);
 
                 TextView textView = (TextView) layout.findViewById(R.id.toastText);
-                textView.setText(Html.fromHtml("<small>" + toastContent + "</small>"));
+                textView.setText(Html.fromHtml("<small>" + toastContent + "</small>", Html.FROM_HTML_MODE_LEGACY));
                 textView.setBackground(drawToast);
                 textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
                 textView.setTextColor(textColor);
@@ -2472,7 +2469,7 @@ public class FunctionsClass {
             GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
 
             TextView textView = (TextView) layout.findViewById(R.id.toastText);
-            textView.setText(Html.fromHtml("<small>" + toastContent + "</small>"));
+            textView.setText(Html.fromHtml("<small>" + toastContent + "</small>", Html.FROM_HTML_MODE_LEGACY));
             backToast.setColor(context.getColor(R.color.trans_dark));
             textView.setBackground(drawToast);
             textView.setTextColor(context.getColor(R.color.light));
@@ -2576,9 +2573,13 @@ public class FunctionsClass {
     }
 
     /*Firebase Remote Config*/
+    public boolean joinedBetaProgram() {
+        return readDefaultPreference("JoinedBetaProgrammer", false);
+    }
+
     public String versionCodeRemoteConfigKey() {
         String versionCodeKey = null;
-        if (readPreference(".BETA", "isBetaTester", false)) {
+        if (joinedBetaProgram()) {
             versionCodeKey = context.getString(R.string.BETAintegerVersionCodeNewUpdatePhone);
         } else {
             versionCodeKey = context.getString(R.string.integerVersionCodeNewUpdatePhone);
@@ -2588,7 +2589,7 @@ public class FunctionsClass {
 
     public String versionNameRemoteConfigKey() {
         String versionCodeKey = null;
-        if (readPreference(".BETA", "isBetaTester", false)) {
+        if (joinedBetaProgram()) {
             versionCodeKey = context.getString(R.string.BETAstringVersionNameNewUpdatePhone);
         } else {
             versionCodeKey = context.getString(R.string.stringVersionNameNewUpdatePhone);
@@ -2598,7 +2599,7 @@ public class FunctionsClass {
 
     public String upcomingChangeLogRemoteConfigKey() {
         String versionCodeKey = null;
-        if (readPreference(".BETA", "isBetaTester", false)) {
+        if (joinedBetaProgram()) {
             versionCodeKey = context.getString(R.string.BETAstringUpcomingChangeLogPhone);
         } else {
             versionCodeKey = context.getString(R.string.stringUpcomingChangeLogPhone);
@@ -2608,7 +2609,7 @@ public class FunctionsClass {
 
     public String upcomingChangeLogSummaryConfigKey() {
         String versionCodeKey = null;
-        if (readPreference(".BETA", "isBetaTester", false)) {
+        if (joinedBetaProgram()) {
             versionCodeKey = context.getString(R.string.BETAstringUpcomingChangeLogSummaryPhone);
         } else {
             versionCodeKey = context.getString(R.string.stringUpcomingChangeLogSummaryPhone);
