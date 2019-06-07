@@ -46,6 +46,7 @@ import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Util.IAP.billing.BillingProvider;
 import net.geekstools.supershortcuts.PRO.Util.IAP.skulist.SkusAdapter;
 import net.geekstools.supershortcuts.PRO.Util.IAP.skulist.row.SkuRowData;
+import net.geekstools.supershortcuts.PRO.Util.SettingGUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,6 +186,7 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
             public boolean onKey(DialogInterface dialog, int keyCode, android.view.KeyEvent event) {
                 if ((keyCode == android.view.KeyEvent.KEYCODE_BACK)) {
                     requestManager.pauseAllRequests();
+                    startActivity(new Intent(getContext(), SettingGUI.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     activity.finish();
                 }
                 return true;

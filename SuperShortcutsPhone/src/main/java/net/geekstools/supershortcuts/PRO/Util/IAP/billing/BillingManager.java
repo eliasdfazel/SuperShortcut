@@ -16,6 +16,7 @@
 package net.geekstools.supershortcuts.PRO.Util.IAP.billing;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Util.SettingGUI;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -110,7 +112,7 @@ public class BillingManager implements PurchasesUpdatedListener {
         if (responseCode == 7) {
             try {
                 functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
-
+                activity.startActivity(new Intent(activity, SettingGUI.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 activity.finish();
             } catch (NullPointerException e) {
                 e.printStackTrace();

@@ -30,7 +30,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -612,7 +611,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                         @Override
                                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                            functionsClass.Toast(getString(R.string.alphaTitle), getColor(R.color.light), getColor(R.color.dark), Gravity.BOTTOM, true);
+
                                                         }
                                                     });
                                                 } catch (Exception e) {
