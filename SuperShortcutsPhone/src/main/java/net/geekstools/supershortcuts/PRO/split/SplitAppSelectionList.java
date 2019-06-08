@@ -1,5 +1,6 @@
 package net.geekstools.supershortcuts.PRO.split;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
@@ -23,6 +24,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,6 +36,7 @@ import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -62,12 +65,13 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
     Context context;
     FunctionsClass functionsClass;
 
+    ScrollView nestedScrollView, nestedIndexScrollView;
     ListPopupWindow listPopupWindow;
     RelativeLayout popupAnchorView;
     RelativeLayout wholeAuto, confirmLayout;
     LinearLayout indexView;
     RelativeLayout loadingSplash;
-    TextView desc, counterView;
+    TextView desc, counterView, popupIndex;
     ImageView tempIcon, loadIcon;
 
     RecyclerView recyclerView;
@@ -76,6 +80,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
 
     List<String> appName;
     Map<String, Integer> mapIndex;
+    Map<Integer, String> mapRangeIndex;
     ArrayList<NavDrawerItem> navDrawerItems, navDrawerItemsSaved;
     SplitSavedListAdapter splitSavedListAdapter;
 
@@ -110,7 +115,9 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
         tempIcon = (ImageView) findViewById(R.id.tempIcon);
         tempIcon.bringToFront();
         popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
+        nestedIndexScrollView = (ScrollView) findViewById(R.id.nestedIndexScrollView);
         indexView = (LinearLayout) findViewById(R.id.side_index);
+        popupIndex = (TextView) findViewById(R.id.popupIndex);
         wholeAuto = (RelativeLayout) findViewById(R.id.wholeAuto);
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
@@ -119,6 +126,9 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
         recyclerView = (RecyclerView) findViewById(R.id.listFav);
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
+
+        nestedScrollView = (ScrollView) findViewById(R.id.scrollListFav);
+        nestedScrollView.setSmoothScrollingEnabled(true);
 
         wholeAuto.setBackgroundColor(getColor(R.color.light));
         getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
@@ -138,6 +148,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
         navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
         appName = new ArrayList<String>();
         mapIndex = new LinkedHashMap<String, Integer>();
+        mapRangeIndex = new LinkedHashMap<Integer, String>();
 
         Typeface face = Typeface.createFromAsset(getAssets(), "upcil.ttf");
         desc.setTypeface(face);
@@ -269,15 +280,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view instanceof TextView) {
-            final TextView selectedIndex = (TextView) view;
-            recyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    recyclerView.smoothScrollToPosition(mapIndex.get(selectedIndex.getText().toString()));
-                }
-            });
-        }
+
     }
 
     @Override
@@ -458,9 +461,104 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
                 textView.setBackground(drawIndex);
                 textView.setText(index.toUpperCase());
                 textView.setTextColor(getColor(R.color.dark));
-                textView.setOnClickListener(SplitAppSelectionList.this);
                 indexView.addView(textView);
             }
+
+            TextView finalTextView = textView;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int upperRange = (int) (indexView.getY() - finalTextView.getHeight());
+                    for (int i = 0; i < indexView.getChildCount(); i++) {
+                        String indexText = ((TextView) indexView.getChildAt(i)).getText().toString();
+                        int indexRange = (int) (indexView.getChildAt(i).getY() + indexView.getY() + finalTextView.getHeight());
+                        for (int jRange = upperRange; jRange <= (indexRange); jRange++) {
+                            mapRangeIndex.put(jRange, indexText);
+                        }
+
+                        upperRange = indexRange;
+                    }
+
+                    setupFastScrollingIndexing();
+                }
+            }, 700);
         }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void setupFastScrollingIndexing() {
+        Drawable popupIndexBackground = getDrawable(R.drawable.ic_launcher_balloon).mutate();
+        popupIndexBackground.setTint(getColor(R.color.default_color_darker));
+        popupIndex.setBackground(popupIndexBackground);
+
+        nestedIndexScrollView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
+        nestedIndexScrollView.setVisibility(View.VISIBLE);
+
+        float popupIndexOffsetY = PublicVariable.statusBarHeight + PublicVariable.actionBarHeight + PublicVariable.navigationBarHeight + functionsClass.DpToInteger(7);
+        nestedIndexScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        String indexText = mapRangeIndex.get((((int) motionEvent.getY())));
+
+                        if (indexText != null) {
+                            popupIndex.setY(motionEvent.getRawY() - popupIndexOffsetY);
+                            popupIndex.setText(indexText);
+                            popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
+                            popupIndex.setVisibility(View.VISIBLE);
+                        }
+
+                        break;
+                    }
+                    case MotionEvent.ACTION_MOVE: {
+                        String indexText = mapRangeIndex.get(((int) motionEvent.getY()));
+
+                        if (indexText != null) {
+                            if (!popupIndex.isShown()) {
+                                popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
+                                popupIndex.setVisibility(View.VISIBLE);
+                            }
+                            popupIndex.setY(motionEvent.getRawY() - popupIndexOffsetY);
+                            popupIndex.setText(indexText);
+
+                            try {
+                                nestedScrollView.smoothScrollTo(
+                                        0,
+                                        ((int) recyclerView.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY()) - functionsClass.DpToInteger(7)
+                                );
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            if (popupIndex.isShown()) {
+                                popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out));
+                                popupIndex.setVisibility(View.INVISIBLE);
+                            }
+                        }
+
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        if (popupIndex.isShown()) {
+                            try {
+                                nestedScrollView.smoothScrollTo(
+                                        0,
+                                        ((int) recyclerView.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY()) - functionsClass.DpToInteger(7)
+                                );
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out));
+                            popupIndex.setVisibility(View.INVISIBLE);
+                        }
+
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
     }
 }

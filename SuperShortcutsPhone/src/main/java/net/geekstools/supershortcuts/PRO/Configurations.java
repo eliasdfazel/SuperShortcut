@@ -5,12 +5,14 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.FirebaseApp;
 
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.advanced.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.normal.NormalAppSelectionList;
 import net.geekstools.supershortcuts.PRO.split.SplitShortcuts;
@@ -29,6 +31,19 @@ public class Configurations extends Activity {
                 .build();
         Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
         FirebaseApp.initializeApp(getApplicationContext());
+
+        TypedValue tv = new TypedValue();
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            PublicVariable.actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        PublicVariable.statusBarHeight = result;
+
+        PublicVariable.navigationBarHeight = getResources().getDimensionPixelSize(getResources().getIdentifier("navigation_bar_height", "dimen", "android"));
 
         functionsClass = new FunctionsClass(getApplicationContext(), Configurations.this);
 

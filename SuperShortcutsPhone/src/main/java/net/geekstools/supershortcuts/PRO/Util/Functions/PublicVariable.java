@@ -29,6 +29,10 @@ public class PublicVariable {
     public static int SplitMaxAppShortcuts;
     public static int SplitMaxAppShortcutsCounter;
 
+    public static int actionBarHeight;
+    public static int statusBarHeight;
+    public static int navigationBarHeight;
+
     public static float confirmButtonX, confirmButtonY;
 
     public static boolean firstLoad = true;

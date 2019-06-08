@@ -2485,6 +2485,10 @@ public class FunctionsClass {
         }
     }
 
+    public int DpToInteger(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    }
+
     /*Index*/
     public void IndexAppInfo(final String setAppIndex, String setAppIndexUrl) throws Exception {
         Indexable articleToIndex = new Indexable.Builder()

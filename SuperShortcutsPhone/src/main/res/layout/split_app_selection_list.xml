@@ -7,38 +7,62 @@
     android:background="@android:color/white"
     tools:context=".normal.NormalAppSelectionList">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listFav"
+    <ScrollView
+        android:id="@+id/scrollListFav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:cacheColorHint="@android:color/transparent"
-        android:divider="@drawable/draw_divider"
-        android:dividerHeight="2dp"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="37dp"
-        android:listSelector="@drawable/ripple_effect_list"
-        android:paddingStart="9dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="30dp"
         android:requiresFadingEdge="vertical"
-        android:saveEnabled="true"
         android:scrollbarFadeDuration="270"
         android:scrollbarSize="7dp"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbarThumbVertical="@drawable/scrollbar"
         android:scrollbars="vertical"
         android:smoothScrollbar="true"
-        android:verticalScrollbarPosition="left" />
+        android:verticalScrollbarPosition="left">
 
-    <LinearLayout
-        android:id="@+id/side_index"
-        android:layout_width="30dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listFav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/draw_divider"
+                android:dividerHeight="2dp"
+                android:isScrollContainer="false"
+                android:listSelector="@drawable/ripple_effect_list"
+                android:nestedScrollingEnabled="false"
+                android:paddingStart="9dp"
+                android:paddingTop="7dp"
+                android:paddingEnd="30dp"
+                android:saveEnabled="true" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/nestedIndexScrollView"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignEnd="@id/listFav"
+        android:layout_alignEnd="@id/scrollListFav"
+        android:foregroundGravity="center_vertical"
         android:background="@android:color/transparent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="83dp" />
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:id="@+id/side_index"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:background="@android:color/transparent"
+            android:orientation="vertical" />
+    </ScrollView>
 
     <RelativeLayout
         android:id="@+id/confirmLayout"
@@ -92,6 +116,18 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="15dp"
         android:padding="9dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/popupIndex"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_toStartOf="@id/nestedIndexScrollView"
+        android:gravity="center"
+        android:textColor="@color/light"
+        android:textSize="29sp"
+        android:typeface="monospace"
+        android:background="@drawable/ic_launcher_balloon"
         android:visibility="invisible" />
 
     <RelativeLayout

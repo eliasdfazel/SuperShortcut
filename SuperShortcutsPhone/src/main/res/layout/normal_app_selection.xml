@@ -44,20 +44,23 @@
     </ScrollView>
 
     <ScrollView
+        android:id="@+id/nestedIndexScrollView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignEnd="@id/scrollListFav"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:foregroundGravity="center_vertical">
+        android:foregroundGravity="center_vertical"
+        android:background="@android:color/transparent"
+        android:visibility="invisible">
 
         <LinearLayout
             android:id="@+id/side_index"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
             android:background="@android:color/transparent"
-            android:gravity="center_horizontal"
             android:orientation="vertical" />
     </ScrollView>
 
@@ -161,6 +164,18 @@
             android:textColor="@color/light"
             android:textSize="12sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/popupIndex"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_toStartOf="@id/nestedIndexScrollView"
+        android:gravity="center"
+        android:textColor="@color/light"
+        android:textSize="29sp"
+        android:typeface="monospace"
+        android:background="@drawable/ic_launcher_balloon"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:id="@+id/loadingSplash"

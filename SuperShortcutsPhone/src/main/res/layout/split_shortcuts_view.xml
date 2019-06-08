@@ -40,16 +40,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/side_index"
-        android:layout_width="30dp"
-        android:layout_height="match_parent"
-        android:layout_alignEnd="@id/list"
-        android:background="@android:color/transparent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="83dp" />
-
     <RelativeLayout
         android:id="@+id/confirmLayout"
         android:layout_width="140dp"
