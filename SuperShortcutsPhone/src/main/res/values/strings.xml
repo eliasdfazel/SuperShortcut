@@ -31,6 +31,8 @@
     <string name="mixTitle">Mix Shortcuts</string>
     <string name="mixDesc">Combine App/Category/Split Shortcuts</string>
     <string name="mixHint">Mix Shortcuts | Combine App/Category/Split Shortcuts</string>
+    <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
+    <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
     <string name="splitTitlePref">Split Shortcuts</string>
     <string name="splitTitle">Split Super Shortcuts ᴾᴿᴼ</string>
     <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
@@ -68,7 +70,7 @@
     </string>
     <string name="mixDemoDescriptions">
         <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts Extra Features <br/>
+            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
             💠 <big>Combine App/Split/Category Shortcuts Together</big> 💠 <br/>
             &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
             &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>

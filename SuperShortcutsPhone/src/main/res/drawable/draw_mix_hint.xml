@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/backtemp">
         <shape android:shape="oval">
-            <solid android:color="@color/default_color_light" />
+            <solid android:color="@color/red" />
         </shape>
     </item>
 
-    <item android:drawable="@drawable/w_mix"></item>
+    <item android:drawable="@drawable/w_mix" />
 </layer-list>

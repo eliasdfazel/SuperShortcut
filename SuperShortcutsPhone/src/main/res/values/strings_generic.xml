@@ -35,9 +35,11 @@
     <string name="whatsnew" translatable="false">What\'s New…</string>
     <string name="changelog" translatable="false">
         <![CDATA[
-            🔵 <b>UI Improvement</b><br/>
+            🔵 <b><big>Mix Shortcuts 💠</big></b><br/>
+            &bull; Combine App/Split/Category Shortcuts Together<br/>
+            &bull; Go to Preferences ⚙ to Enable It.<br/>
             🔵 <b>Theme of Icons (Package of Icons)</b><br/>
-            &bull; Go to Preference ⚙ to Select your Preferred Package of Icons<br/>
+            &bull; Go to Preference ⚙ to Select your Favorite Package of Icons<br/>
             🔴 <b>Remove All</b><br/>
             &bull; If Any Issue Occurred, Press & Hold on Confirm Button ✔️ to Remove All Selected Shortcuts <br/>
             <br/><br/>

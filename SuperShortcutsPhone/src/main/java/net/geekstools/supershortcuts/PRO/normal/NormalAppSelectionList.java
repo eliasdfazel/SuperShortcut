@@ -80,6 +80,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import net.geekstools.supershortcuts.PRO.BuildConfig;
+import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.LicenseValidator;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.CustomIconManager.LoadCustomIcons;
@@ -125,6 +126,8 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
     ImageView tempIcon, loadIcon;
     Button apps, split, categories;
     ProgressBar loadingBarLTR;
+
+    MenuItem mixShortcutsMenuItem;
 
     List<String> indexAppName;
     Map<String, Integer> mapIndex;
@@ -544,6 +547,27 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.selection_menu, menu);
+
+        mixShortcutsMenuItem = menu.findItem(R.id.mixShortcuts);
+
+        if (functionsClass.mixShortcutssPurchased()) {
+            if (functionsClass.mixShortcuts()) {
+                LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
+                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                backDrawMixHint.setTint(getColor(R.color.default_color_light));
+
+                mixShortcutsMenuItem.setIcon(drawMixHint);
+                mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
+            } else {
+                LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
+                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                backDrawMixHint.setTint(getColor(R.color.dark));
+
+                mixShortcutsMenuItem.setIcon(drawMixHint);
+                mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsDisable));
+            }
+        }
+
         return true;
     }
 
@@ -577,6 +601,9 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                         editor.putBoolean("mixShortcuts", true);
                         editor.apply();
                     }
+
+                    Intent intent = new Intent(getApplicationContext(), Configurations.class);
+                    startActivity(intent, ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, android.R.anim.fade_out).toBundle());
                 } else {
                     startActivity(new Intent(getApplicationContext(), InAppBilling.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -665,6 +692,22 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                                             System.out.println("*** Purchased Item: " + purchase + " ***");
                                                             if (purchase.getSku().equals("mix.shortcuts")) {
                                                                 functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
+
+                                                                if (functionsClass.mixShortcuts()) {
+                                                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
+                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                                                                    backDrawMixHint.setTint(getColor(R.color.default_color_light));
+
+                                                                    mixShortcutsMenuItem.setIcon(drawMixHint);
+                                                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
+                                                                } else {
+                                                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
+                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                                                                    backDrawMixHint.setTint(getColor(R.color.dark));
+
+                                                                    mixShortcutsMenuItem.setIcon(drawMixHint);
+                                                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsDisable));
+                                                                }
                                                             }
                                                         }
                                                     }
