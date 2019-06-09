@@ -532,11 +532,11 @@ public class FunctionsClass {
                     }
                 } else if (lineShortcuts.get(i).contains(".SplitSelected")) {
                     try {
-                        String[] packegesName = readFileLine(lineShortcuts.get(i));
+                        String[] packagesName = readFileLine(lineShortcuts.get(i));
                         Intent intent = new Intent(context, SplitTransparentPair.class);
-                        intent.putExtra("packages", packegesName);
+                        intent.putExtra("packages", packagesName);
                         intent.putExtra("categoryName", lineShortcuts.get(i));
-                        intent.setAction("load_split_action");
+                        intent.setAction("load_split_action_pair");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         switch (i) {
@@ -563,7 +563,7 @@ public class FunctionsClass {
                         }
 
                         try {
-                            drawCategory.setDrawableByLayerId(R.id.one, getAppIconDrawableCustomIcon(packegesName[0]));
+                            drawCategory.setDrawableByLayerId(R.id.one, getAppIconDrawableCustomIcon(packagesName[0]));
                         } catch (Exception e) {
                             drawCategory.setDrawableByLayerId(R.id.one, null);
                         }
@@ -581,7 +581,7 @@ public class FunctionsClass {
                         }
 
                         try {
-                            drawCategory.setDrawableByLayerId(R.id.four, getAppIconDrawableCustomIcon(packegesName[1]));
+                            drawCategory.setDrawableByLayerId(R.id.four, getAppIconDrawableCustomIcon(packagesName[1]));
                         } catch (Exception e) {
                             drawCategory.setDrawableByLayerId(R.id.four, null);
                         }
@@ -745,7 +745,7 @@ public class FunctionsClass {
                         Intent intent = new Intent(context, SplitTransparentPair.class);
                         intent.putExtra("packages", packegesName);
                         intent.putExtra("categoryName", lineShortcuts.get(i));
-                        intent.setAction("load_split_action");
+                        intent.setAction("load_split_action_pair");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         switch (i) {
@@ -2414,7 +2414,7 @@ public class FunctionsClass {
                 textView.setBackground(drawToast);
                 textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
 
-                int yOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 57, context.getResources().getDisplayMetrics());
+                int yOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 34, context.getResources().getDisplayMetrics());
 
                 toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.TOP, 0, activity.getActionBar().getHeight() + yOffset);
                 toast.setDuration(Toast.LENGTH_LONG);
