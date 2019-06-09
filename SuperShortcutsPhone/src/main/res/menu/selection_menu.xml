@@ -4,7 +4,13 @@
         android:id="@+id/prefs"
         android:icon="@drawable/draw_pref"
         android:orderInCategory="2"
-        android:showAsAction="always"
-        android:title="@string/pref" />
+        android:title="@string/pref"
+        android:showAsAction="always" />
 
+    <item
+        android:id="@+id/mixShortcuts"
+        android:icon="@drawable/draw_mix_hint"
+        android:orderInCategory="1"
+        android:title="@string/mixHint"
+        android:showAsAction="always" />
 </menu>

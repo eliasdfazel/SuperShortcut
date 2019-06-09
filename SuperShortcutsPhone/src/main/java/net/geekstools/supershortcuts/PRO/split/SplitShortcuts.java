@@ -71,6 +71,7 @@ import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
+import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.RecycleViewSmoothLayout;
 import net.geekstools.supershortcuts.PRO.Util.SettingGUI;
@@ -124,6 +125,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
 
         simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
         functionsClass = new FunctionsClass(getApplicationContext(), this);
+        functionsClass.ChangeLog(false);
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.SplitShortcutsMaxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
@@ -471,6 +473,28 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                 startActivity(new Intent(getApplicationContext(), SettingGUI.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.up_down, android.R.anim.fade_out).toBundle());
                 finish();
+                break;
+            }
+            case R.id.mixShortcuts: {
+                if (functionsClass.mixShortcutssPurchased()) {
+                    try {
+                        functionsClass.deleteSelectedFiles();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
+                        editor.putBoolean("mixShortcuts", false);
+                        editor.apply();
+                    } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
+                        editor.putBoolean("mixShortcuts", true);
+                        editor.apply();
+                    }
+                } else {
+                    startActivity(new Intent(getApplicationContext(), InAppBilling.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
                 break;
             }
             case android.R.id.home: {

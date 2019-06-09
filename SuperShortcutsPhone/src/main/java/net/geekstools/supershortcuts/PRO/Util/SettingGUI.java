@@ -312,13 +312,13 @@ public class SettingGUI extends FragmentActivity {
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareTwitter();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_twitter))));
             }
         });
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareFacebook();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook))));
             }
         });
 
@@ -360,6 +360,8 @@ public class SettingGUI extends FragmentActivity {
                 defaultTheme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        sendBroadcast(new Intent("CUSTOM_DIALOGUE_DISMISS"));
+
                         functionsClass.saveDefaultPreference("customIcon", getPackageName());
                         customIconIcon.setImageDrawable(getDrawable(R.drawable.draw_pref_custom_icon));
                         dialog.dismiss();
@@ -559,13 +561,5 @@ public class SettingGUI extends FragmentActivity {
         s.putExtra(Intent.EXTRA_TEXT, shareText);
         s.setType("text/plain");
         startActivity(s);
-    }
-
-    private void shareTwitter() {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_twitter))));
-    }
-
-    private void shareFacebook() {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook))));
     }
 }
