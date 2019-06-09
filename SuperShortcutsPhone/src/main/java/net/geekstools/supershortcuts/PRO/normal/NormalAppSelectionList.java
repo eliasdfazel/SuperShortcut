@@ -51,10 +51,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -636,6 +641,41 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                                 }
                                             }
                                         }, 333);
+
+                                        if (!functionsClass.mixShortcutssPurchased()) {
+                                            BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
+                                                @Override
+                                                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+                                                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+
+                                                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+
+                                                    } else {
+
+                                                    }
+
+                                                }
+                                            }).build();
+                                            billingClient.startConnection(new BillingClientStateListener() {
+                                                @Override
+                                                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
+                                                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                                                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
+                                                        for (Purchase purchase : purchases) {
+                                                            System.out.println("*** Purchased Item: " + purchase + " ***");
+                                                            if (purchase.getSku().equals("mix.shortcuts")) {
+                                                                functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onBillingServiceDisconnected() {
+
+                                                }
+                                            });
+                                        }
                                     }
                                 } else {
 
