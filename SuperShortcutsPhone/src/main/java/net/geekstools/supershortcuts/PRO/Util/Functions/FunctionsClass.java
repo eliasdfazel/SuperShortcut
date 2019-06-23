@@ -154,7 +154,7 @@ public class FunctionsClass {
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (context.getSystemService(ShortcutManager.class).getDynamicShortcuts().size() == countLine(fileName)) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
-                appToDesktop(appShortcuts);
+                appToDesktop();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +163,11 @@ public class FunctionsClass {
 
     public void clearDynamicShortcuts() throws NullPointerException {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(VibrationEffect.createOneShot(250, 250));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(250, 250));
+        } else {
+            vibrator.vibrate(150);
+        }
 
         ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
         shortcutManager.removeAllDynamicShortcuts();
@@ -241,7 +245,7 @@ public class FunctionsClass {
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (shortcutManager.getDynamicShortcuts().size() == countLine(".autoSuper")) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
-                appToDesktop(appShortcuts);
+                appToDesktop();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -368,72 +372,8 @@ public class FunctionsClass {
         return packageName + ".Super";
     }
 
-    public void appToDesktop(List<String> packages) {
-        if (returnAPI() >= 26) {
-            /*ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, context.getPackageName() + SystemClock.currentThreadTimeMillis())
-                    .setShortLabel(context.getString(R.string.app_name))
-                    .setLongLabel(context.getString(R.string.app_name))
-                    .setIcon(Icon.createWithAdaptiveBitmap(shortcutApp))
-                    .setIntent(differentIntent)
-                    .build();
-
-            context.getSystemService(ShortcutManager.class).requestPinShortcut(shortcutInfo, null);*/
-            Toast(context.getString(R.string.cautionShortcutsHome), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
-        } else {
-            Intent differentIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
-
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
-                loadCustomIcons.load();
-            }
-
-            Drawable forNull = context.getDrawable(R.drawable.ic_launcher);
-            forNull.setAlpha(0);
-            LayerDrawable drawCategory
-                    = (LayerDrawable) context.getDrawable(R.drawable.app_shortcuts);
-            try {
-                drawCategory.setDrawableByLayerId(R.id.one, getAppIconDrawableCustomIcon(packages.get(0)));
-            } catch (Exception e) {
-                drawCategory.setDrawableByLayerId(R.id.one, forNull);
-            }
-
-            try {
-                drawCategory.setDrawableByLayerId(R.id.two, getAppIconDrawableCustomIcon(packages.get(1)));
-            } catch (Exception e) {
-                drawCategory.setDrawableByLayerId(R.id.two, forNull);
-            }
-
-            try {
-                drawCategory.setDrawableByLayerId(R.id.three, getAppIconDrawableCustomIcon(packages.get(2)));
-            } catch (Exception e) {
-                drawCategory.setDrawableByLayerId(R.id.three, forNull);
-            }
-
-            try {
-                drawCategory.setDrawableByLayerId(R.id.four, getAppIconDrawableCustomIcon(packages.get(3)));
-            } catch (Exception e) {
-                drawCategory.setDrawableByLayerId(R.id.four, forNull);
-            }
-
-            final Bitmap shortcutApp = Bitmap
-                    .createBitmap(drawCategory.getIntrinsicWidth(), drawCategory.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            drawCategory.setBounds(0, 0, drawCategory.getIntrinsicWidth(), drawCategory.getIntrinsicHeight());
-            drawCategory.draw(new Canvas(shortcutApp));
-
-            Intent removeIntent = new Intent();
-            removeIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, differentIntent);
-            removeIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, context.getString(R.string.app_name));
-            removeIntent.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
-            context.sendBroadcast(removeIntent);
-
-            Intent addIntent = new Intent();
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, differentIntent);
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, context.getString(R.string.app_name));
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutApp);
-            addIntent.putExtra("duplicate", true);
-            addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-            context.sendBroadcast(addIntent);
-        }
+    public void appToDesktop() {
+        Toast(context.getString(R.string.cautionShortcutsHome), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
     }
 
     /*Mix*/
@@ -1107,14 +1047,7 @@ public class FunctionsClass {
         drawCategory.setBounds(0, 0, drawCategory.getIntrinsicWidth(), drawCategory.getIntrinsicHeight());
         drawCategory.draw(new Canvas(shortcutApp));
 
-        if (returnAPI() < 26) {
-            Intent addIntent = new Intent();
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, differentIntent);
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, splitName.split("_")[0]);
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutApp);
-            addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-            context.sendBroadcast(addIntent);
-        } else {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, splitName)
                     .setShortLabel(splitName.split("_")[0])
                     .setLongLabel(splitName.split("_")[0])
@@ -1123,6 +1056,13 @@ public class FunctionsClass {
                     .build();
 
             context.getSystemService(ShortcutManager.class).requestPinShortcut(shortcutInfo, null);
+        } else {
+            Intent addIntent = new Intent();
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, differentIntent);
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, splitName.split("_")[0]);
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutApp);
+            addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+            context.sendBroadcast(addIntent);
         }
     }
 
@@ -1338,6 +1278,7 @@ public class FunctionsClass {
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (context.getSystemService(ShortcutManager.class).getDynamicShortcuts().size() == countLine(".categorySuperSelected")) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.light), context.getColor(R.color.default_color_darker), Gravity.BOTTOM, true);
+                Toast(context.getString(R.string.cautionShortcutsHome), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1433,14 +1374,7 @@ public class FunctionsClass {
         drawCategory.draw(new Canvas(shortcutApp));
 
 
-        if (returnAPI() < 26) {
-            Intent addIntent = new Intent();
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, differentIntent);
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, categoryName.split("_")[0]);
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutApp);
-            addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-            context.sendBroadcast(addIntent);
-        } else {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             ShortcutInfo shortcutInfo = new ShortcutInfo.Builder(context, categoryName)
                     .setShortLabel(categoryName.split("_")[0])
                     .setLongLabel(categoryName.split("_")[0])
@@ -1449,6 +1383,13 @@ public class FunctionsClass {
                     .build();
 
             context.getSystemService(ShortcutManager.class).requestPinShortcut(shortcutInfo, null);
+        } else {
+            Intent addIntent = new Intent();
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, differentIntent);
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, categoryName.split("_")[0]);
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutApp);
+            addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+            context.sendBroadcast(addIntent);
         }
     }
 
@@ -2220,23 +2161,27 @@ public class FunctionsClass {
             Drawable drawableIcon = iconDrawable;
             if (drawableIcon instanceof BitmapDrawable) {
                 bitmap = ((BitmapDrawable) drawableIcon).getBitmap();
-            } else if (drawableIcon instanceof AdaptiveIconDrawable) {
-                Drawable backgroundDrawable = ((AdaptiveIconDrawable) drawableIcon).getBackground();
-                Drawable foregroundDrawable = ((AdaptiveIconDrawable) drawableIcon).getForeground();
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (drawableIcon instanceof AdaptiveIconDrawable) {
+                    Drawable backgroundDrawable = ((AdaptiveIconDrawable) drawableIcon).getBackground();
+                    Drawable foregroundDrawable = ((AdaptiveIconDrawable) drawableIcon).getForeground();
 
-                Drawable[] drawables = new Drawable[2];
-                drawables[0] = backgroundDrawable;
-                drawables[0].setAlpha(0);
-                drawables[1] = foregroundDrawable;
+                    Drawable[] drawables = new Drawable[2];
+                    drawables[0] = backgroundDrawable;
+                    drawables[0].setAlpha(0);
+                    drawables[1] = foregroundDrawable;
 
-                LayerDrawable layerDrawable = new LayerDrawable(drawables);
-                int width = layerDrawable.getIntrinsicWidth();
-                int height = layerDrawable.getIntrinsicHeight();
+                    LayerDrawable layerDrawable = new LayerDrawable(drawables);
+                    int width = layerDrawable.getIntrinsicWidth();
+                    int height = layerDrawable.getIntrinsicHeight();
 
-                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bitmap);
-                layerDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-                layerDrawable.draw(canvas);
+                    bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(bitmap);
+                    layerDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                    layerDrawable.draw(canvas);
+                } else {
+                    bitmap = Bitmap.createBitmap(drawableIcon.getIntrinsicWidth(), drawableIcon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                }
             } else {
                 bitmap = Bitmap.createBitmap(drawableIcon.getIntrinsicWidth(), drawableIcon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
             }

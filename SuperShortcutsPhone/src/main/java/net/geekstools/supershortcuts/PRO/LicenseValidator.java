@@ -5,9 +5,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.text.Html;
+
+import androidx.annotation.RequiresApi;
 
 import com.google.android.vending.licensing.AESObfuscator;
 import com.google.android.vending.licensing.LicenseChecker;
@@ -37,10 +40,10 @@ public class LicenseValidator extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
-        if (functionsClass.returnAPI() < 26) {
-            startForeground(111, bindServiceLOW());
-        } else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForeground(111, bindServiceHIGH());
+        } else {
+            startForeground(111, bindServiceLOW());
         }
 
         String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -82,6 +85,7 @@ public class LicenseValidator extends Service {
         licenseChecker.onDestroy();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected Notification bindServiceHIGH() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationChannel notificationChannel = new NotificationChannel(getPackageName(), getString(R.string.app_name), NotificationManager.IMPORTANCE_MIN);
