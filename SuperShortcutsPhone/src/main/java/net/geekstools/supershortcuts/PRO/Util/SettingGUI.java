@@ -153,9 +153,8 @@ public class SettingGUI extends FragmentActivity {
                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                         for (Purchase purchase : purchases) {
                             System.out.println("*** Purchased Item: " + purchase + " ***");
-                            if (purchase.getSku().equals("mix.shortcuts")) {
-                                functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
-                            }
+
+                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                         }
                     }
                 }
@@ -476,7 +475,6 @@ public class SettingGUI extends FragmentActivity {
     @Override
     public void onPause() {
         super.onPause();
-        finish();
     }
 
     @Override
@@ -508,7 +506,16 @@ public class SettingGUI extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.pref_menu, menu);
+        inflater.inflate(R.menu.preferences_menu, menu);
+
+        MenuItem gift = menu.findItem(R.id.donate);
+
+        if (!functionsClass.alreadyDonated()) {
+
+        } else {
+            gift.setVisible(false);
+        }
+
         return true;
     }
 
@@ -522,6 +529,11 @@ public class SettingGUI extends FragmentActivity {
         switch (item.getItemId()) {
             case R.id.facebook: {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook_app))));
+                break;
+            }
+            case R.id.donate: {
+                startActivity(new Intent(getApplicationContext(), InAppBilling.class));
+
                 break;
             }
             case android.R.id.home: {

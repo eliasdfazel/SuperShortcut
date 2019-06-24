@@ -104,62 +104,64 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
 
         onManagerReady((BillingProvider) activity);
 
-        mixShortcutsDemoDescription.setText(Html.fromHtml(getString(R.string.mixDemoDescriptions), Html.FROM_HTML_MODE_LEGACY));
-        mixShortcutsDemoDescription.setTextColor(context.getColor(R.color.dark));
+        if (!functionsClass.mixShortcutssPurchased()) {
+            mixShortcutsDemoDescription.setText(Html.fromHtml(getString(R.string.mixDemoDescriptions), Html.FROM_HTML_MODE_LEGACY));
+            mixShortcutsDemoDescription.setTextColor(context.getColor(R.color.dark));
 
-        FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
-        firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
-            @Override
-            public void onSuccess(Boolean aBoolean) {
-                mixShortcutsDemoDescription.setText(Html.fromHtml(firebaseRemoteConfig.getString("mix_shortcuts_description"), Html.FROM_HTML_MODE_LEGACY));
-                screenshotsNumber = (int) firebaseRemoteConfig.getLong("mix_shortcuts_demo_screenshots");
+            FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+            firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
+            firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                @Override
+                public void onSuccess(Boolean aBoolean) {
+                    mixShortcutsDemoDescription.setText(Html.fromHtml(firebaseRemoteConfig.getString("mix_shortcuts_description"), Html.FROM_HTML_MODE_LEGACY));
+                    screenshotsNumber = (int) firebaseRemoteConfig.getLong("mix_shortcuts_demo_screenshots");
 
-                for (int i = 1; i <= screenshotsNumber; i++) {
-                    String sceenshotFileName = "MixShortcutssDemo" + i + ".png";
-                    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-                    StorageReference firebaseStorageReference = firebaseStorage.getReference();
-                    StorageReference storageReference = firebaseStorageReference
-                            //gs://XXX.appspot.com/Assets/Images/Screenshots/MixShortcuts/IAP.Demo/FloatingWidgetsDemo1.png
-                            .child("Assets/Images/Screenshots/MixShortcuts/IAP.Demo/" + sceenshotFileName);
-                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri screenshotURI) {
-                            requestManager.load(screenshotURI)
-                                    .addListener(new RequestListener<Drawable>() {
-                                        @Override
-                                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                            return false;
-                                        }
-
-                                        @Override
-                                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                            glideLoadCounter++;
-
-                                            String beforeToken = screenshotURI.toString().split("\\?alt=media&token=")[0];
-                                            int drawableIndex = Integer.parseInt(String.valueOf(beforeToken.charAt(beforeToken.length() - 5)));
-
-                                            mapIndexDrawable.put(drawableIndex, resource);
-                                            mapIndexURI.put(drawableIndex, screenshotURI);
-
-                                            if (screenshotsNumber == glideLoadCounter) {
-                                                new Handler().postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        context.sendBroadcast(new Intent("LOAD_SCREENSHOTS"));
-                                                    }
-                                                }, 113);
+                    for (int i = 1; i <= screenshotsNumber; i++) {
+                        String sceenshotFileName = "MixShortcutssDemo" + i + ".png";
+                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                        StorageReference firebaseStorageReference = firebaseStorage.getReference();
+                        StorageReference storageReference = firebaseStorageReference
+                                //gs://XXX.appspot.com/Assets/Images/Screenshots/MixShortcuts/IAP.Demo/FloatingWidgetsDemo1.png
+                                .child("Assets/Images/Screenshots/MixShortcuts/IAP.Demo/" + sceenshotFileName);
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri screenshotURI) {
+                                requestManager.load(screenshotURI)
+                                        .addListener(new RequestListener<Drawable>() {
+                                            @Override
+                                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                                return false;
                                             }
 
-                                            return false;
-                                        }
-                                    })
-                                    .submit();
-                        }
-                    });
+                                            @Override
+                                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                                glideLoadCounter++;
+
+                                                String beforeToken = screenshotURI.toString().split("\\?alt=media&token=")[0];
+                                                int drawableIndex = Integer.parseInt(String.valueOf(beforeToken.charAt(beforeToken.length() - 5)));
+
+                                                mapIndexDrawable.put(drawableIndex, resource);
+                                                mapIndexURI.put(drawableIndex, screenshotURI);
+
+                                                if (screenshotsNumber == glideLoadCounter) {
+                                                    new Handler().postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            context.sendBroadcast(new Intent("LOAD_SCREENSHOTS"));
+                                                        }
+                                                    }, 113);
+                                                }
+
+                                                return false;
+                                            }
+                                        })
+                                        .submit();
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("LOAD_SCREENSHOTS");
@@ -256,6 +258,11 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
                             List<SkuRowData> skuRowDataList = new ArrayList<>();
                             for (SkuDetails skuDetails : skuDetailsList) {
                                 if (skuDetails.getSku().equals("mix.shortcuts") && functionsClass.mixShortcutssPurchased()) {
+
+                                    continue;
+                                }
+
+                                if (skuDetails.getSku().equals("donation") && functionsClass.alreadyDonated()) {
 
                                     continue;
                                 }

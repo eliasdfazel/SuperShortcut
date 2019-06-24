@@ -52,7 +52,7 @@ public class BillingManager implements PurchasesUpdatedListener {
 
     static {
         SKUS = new HashMap<>();
-        SKUS.put(BillingClient.SkuType.INAPP, Arrays.asList("mix.shortcuts"));
+        SKUS.put(BillingClient.SkuType.INAPP, Arrays.asList("donation", "mix.shortcuts"));
     }
 
     public List<String> getSkus(@BillingClient.SkuType String type) {
@@ -90,35 +90,20 @@ public class BillingManager implements PurchasesUpdatedListener {
                 .setAccountId(UserEmailAddress)
                 .build();
 
-        int billingResponse = billingClient.launchBillingFlow(activity, billingFlowParams);
-        switch (billingResponse) {
-            case BillingClient.BillingResponse.ITEM_ALREADY_OWNED: {
-
-                functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
-
-                break;
-            }
-        }
-
-        return billingResponse;
+        return billingClient.launchBillingFlow(activity, billingFlowParams);
     }
 
     @Override
     public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
-
         //ResponseCode 7 = Item Owned
         Log.d(TAG, "onPurchasesUpdated() Response: " + responseCode);
-
         if (responseCode == 7) {
-            try {
-                functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
-                activity.startActivity(new Intent(activity, SettingGUI.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            if (functionsClass.mixShortcutssPurchased() && functionsClass.alreadyDonated()) {
+                activity.startActivity(new Intent(activity, SettingGUI.class));
                 activity.finish();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
             }
         } else {
-            functionsClass.savePreference(".PurchasedItem", "MixShortcuts", false);
+
         }
     }
 

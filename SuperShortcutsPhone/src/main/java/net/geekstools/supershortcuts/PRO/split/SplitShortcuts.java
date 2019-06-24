@@ -609,8 +609,9 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                                                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                                                         for (Purchase purchase : purchases) {
                                                             System.out.println("*** Purchased Item: " + purchase + " ***");
+
+                                                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                                                             if (purchase.getSku().equals("mix.shortcuts")) {
-                                                                functionsClass.savePreference(".PurchasedItem", "MixShortcuts", true);
 
                                                                 if (functionsClass.mixShortcuts()) {
                                                                     LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);

@@ -7,4 +7,11 @@
         android:showAsAction="always"
         android:title="@string/like" />
 
+    <item
+        android:id="@+id/donate"
+        android:icon="@drawable/draw_gift"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/donate" />
+
 </menu>

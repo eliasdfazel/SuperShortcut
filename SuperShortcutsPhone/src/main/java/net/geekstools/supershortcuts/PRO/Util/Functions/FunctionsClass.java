@@ -2584,6 +2584,11 @@ public class FunctionsClass {
     /*In-App Purchase*/
     public boolean mixShortcutssPurchased() {
 
-        return readPreference(".PurchasedItem", "MixShortcuts", false);
+        return readPreference(".PurchasedItem", "mix.shortcuts", false);
+    }
+
+    public boolean alreadyDonated() {
+
+        return readPreference(".PurchasedItem", "donation", false);
     }
 }

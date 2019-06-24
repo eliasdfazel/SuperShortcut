@@ -27,8 +27,10 @@
             <RelativeLayout
                 android:id="@+id/smartView"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:background="@drawable/card_divider_prefs"
                 android:clickable="true">
 
@@ -83,9 +85,11 @@
             <RelativeLayout
                 android:id="@+id/splitView"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/smartView"
                 android:layout_marginTop="2dp"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:background="@drawable/card_divider_prefs"
                 android:clickable="true">
 
@@ -140,9 +144,11 @@
             <RelativeLayout
                 android:id="@+id/mixView"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/splitView"
                 android:layout_marginTop="2dp"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:background="@drawable/card_prefs"
                 android:clickable="true">
 
@@ -197,9 +203,11 @@
             <RelativeLayout
                 android:id="@+id/customIconView"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/mixView"
                 android:layout_marginTop="2dp"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:background="@drawable/card_prefs"
                 android:clickable="true">
 
@@ -243,9 +251,11 @@
             <RelativeLayout
                 android:id="@+id/newsView"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/customIconView"
                 android:layout_marginTop="2dp"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:background="@drawable/card_divider_prefs"
                 android:clickable="true">
 
@@ -275,9 +285,11 @@
             <RelativeLayout
                 android:id="@+id/supportView"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/newsView"
                 android:layout_marginTop="2dp"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:background="@drawable/card_prefs"
                 android:clickable="true">
 
@@ -320,9 +332,11 @@
             <RelativeLayout
                 android:id="@+id/floatingView"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/supportView"
                 android:layout_marginTop="11dp"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
                 android:background="@drawable/card_divider_prefs"
                 android:clickable="true">
 
