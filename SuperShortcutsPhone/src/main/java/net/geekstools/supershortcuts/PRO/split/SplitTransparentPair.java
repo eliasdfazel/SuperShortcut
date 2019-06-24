@@ -39,7 +39,7 @@ public class SplitTransparentPair extends Activity {
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
 
             final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
-            if (!functionsClass.AccessibilityServiceEnabled()) {
+            if (!functionsClass.AccessibilityServiceEnabled() && !functionsClass.SettingServiceRunning(SplitScreenService.class)) {
                 functionsClass.AccessibilityService(this);
             } else {
                 AccessibilityEvent event = AccessibilityEvent.obtain();

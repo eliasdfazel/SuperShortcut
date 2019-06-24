@@ -1,6 +1,7 @@
 package net.geekstools.supershortcuts.PRO.Util.Functions;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.AppOpsManager;
@@ -2340,6 +2341,20 @@ public class FunctionsClass {
         mBuilder.addAction(builderActionNotification.build());
         mBuilder.setContentIntent(newUpdatePendingIntent);
         notificationManager.notify(notificationId, mBuilder.build());
+    }
+
+    public boolean SettingServiceRunning(Class aClass) {
+        try {
+            ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(Integer.MAX_VALUE)) {
+                if (aClass.getName().equals(service.service.getClassName())) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /*UI*/
