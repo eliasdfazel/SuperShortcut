@@ -469,7 +469,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
 
         mixShortcutsMenuItem = menu.findItem(R.id.mixShortcuts);
 
-        if (functionsClass.mixShortcutssPurchased()) {
+        if (functionsClass.mixShortcutsPurchased()) {
             if (functionsClass.mixShortcuts()) {
                 LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
                 Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
@@ -505,7 +505,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                 break;
             }
             case R.id.mixShortcuts: {
-                if (functionsClass.mixShortcutssPurchased()) {
+                if (functionsClass.mixShortcutsPurchased()) {
                     try {
                         functionsClass.deleteSelectedFiles();
                     } catch (Exception e) {
@@ -588,7 +588,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                                             }
                                         }, 333);
 
-                                        if (!functionsClass.mixShortcutssPurchased()) {
+                                        if (!functionsClass.mixShortcutsPurchased()) {
                                             BillingClient billingClient = BillingClient.newBuilder(SplitShortcuts.this).setListener(new PurchasesUpdatedListener() {
                                                 @Override
                                                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {

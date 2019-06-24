@@ -98,7 +98,7 @@ public class BillingManager implements PurchasesUpdatedListener {
         //ResponseCode 7 = Item Owned
         Log.d(TAG, "onPurchasesUpdated() Response: " + responseCode);
         if (responseCode == 7) {
-            if (functionsClass.mixShortcutssPurchased() && functionsClass.alreadyDonated()) {
+            if (functionsClass.mixShortcutsPurchased() && functionsClass.alreadyDonated()) {
                 activity.startActivity(new Intent(activity, SettingGUI.class));
                 activity.finish();
             }

@@ -104,7 +104,7 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
 
         onManagerReady((BillingProvider) activity);
 
-        if (!functionsClass.mixShortcutssPurchased()) {
+        if (!functionsClass.mixShortcutsPurchased()) {
             mixShortcutsDemoDescription.setText(Html.fromHtml(getString(R.string.mixDemoDescriptions), Html.FROM_HTML_MODE_LEGACY));
             mixShortcutsDemoDescription.setTextColor(context.getColor(R.color.dark));
 
@@ -257,7 +257,7 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
                         if (responseCode == BillingClient.BillingResponse.OK && skuDetailsList != null) {
                             List<SkuRowData> skuRowDataList = new ArrayList<>();
                             for (SkuDetails skuDetails : skuDetailsList) {
-                                if (skuDetails.getSku().equals("mix.shortcuts") && functionsClass.mixShortcutssPurchased()) {
+                                if (skuDetails.getSku().equals("mix.shortcuts") && functionsClass.mixShortcutsPurchased()) {
 
                                     continue;
                                 }

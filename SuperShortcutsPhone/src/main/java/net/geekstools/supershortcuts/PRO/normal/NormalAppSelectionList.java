@@ -550,7 +550,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
 
         mixShortcutsMenuItem = menu.findItem(R.id.mixShortcuts);
 
-        if (functionsClass.mixShortcutssPurchased()) {
+        if (functionsClass.mixShortcutsPurchased()) {
             if (functionsClass.mixShortcuts()) {
                 LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
                 Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
@@ -586,7 +586,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                 break;
             }
             case R.id.mixShortcuts: {
-                if (functionsClass.mixShortcutssPurchased()) {
+                if (functionsClass.mixShortcutsPurchased()) {
                     try {
                         functionsClass.deleteSelectedFiles();
                     } catch (Exception e) {
@@ -669,7 +669,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                             }
                                         }, 333);
 
-                                        if (!functionsClass.mixShortcutssPurchased()) {
+                                        if (!functionsClass.mixShortcutsPurchased()) {
                                             BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
                                                 @Override
                                                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {

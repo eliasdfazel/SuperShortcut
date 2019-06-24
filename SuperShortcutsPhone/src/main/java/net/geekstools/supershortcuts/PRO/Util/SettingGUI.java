@@ -132,7 +132,7 @@ public class SettingGUI extends FragmentActivity {
         prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
         customIconDesc.setText(functionsClass.loadCustomIcons() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
 
-        if (!functionsClass.mixShortcutssPurchased()) {
+        if (!functionsClass.mixShortcutsPurchased()) {
             BillingClient billingClient = BillingClient.newBuilder(SettingGUI.this).setListener(new PurchasesUpdatedListener() {
                 @Override
                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -207,7 +207,7 @@ public class SettingGUI extends FragmentActivity {
         mixView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (functionsClass.mixShortcutssPurchased()) {
+                if (functionsClass.mixShortcutsPurchased()) {
                     try {
                         functionsClass.deleteSelectedFiles();
                     } catch (Exception e) {
