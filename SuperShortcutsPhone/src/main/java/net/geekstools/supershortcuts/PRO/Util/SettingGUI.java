@@ -49,6 +49,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.CustomIconsThemeAdapter;
@@ -132,7 +133,7 @@ public class SettingGUI extends FragmentActivity {
         prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
         customIconDesc.setText(functionsClass.loadCustomIcons() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
 
-        if (!functionsClass.mixShortcutsPurchased()) {
+        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
             BillingClient billingClient = BillingClient.newBuilder(SettingGUI.this).setListener(new PurchasesUpdatedListener() {
                 @Override
                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -152,7 +153,7 @@ public class SettingGUI extends FragmentActivity {
                     if (billingResponseCode == BillingClient.BillingResponse.OK) {
                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                         for (Purchase purchase : purchases) {
-                            System.out.println("*** Purchased Item: " + purchase + " ***");
+                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
 
                             functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                         }

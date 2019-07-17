@@ -212,7 +212,7 @@ public class FunctionsClass {
                 maxLoop = appShortcuts.size();
             }
             for (int i = 0; i < maxLoop; i++) {
-                System.out.println(appShortcuts.get(i));
+                FunctionsClassDebug.Companion.PrintDebug(appShortcuts.get(i));
                 String packageName = appShortcuts.get(i).split("\\|")[0];
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (appInstalledOrNot(packageName) == false) {
@@ -275,7 +275,7 @@ public class FunctionsClass {
                 maxLoop = appShortcuts.size();
             }
             for (int i = 0; i < maxLoop; i++) {
-                System.out.println(appShortcuts.get(i));
+                FunctionsClassDebug.Companion.PrintDebug(appShortcuts.get(i));
                 String packageName = appShortcuts.get(i).split("\\|")[0];
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (appInstalledOrNot(packageName) == false) {
@@ -2460,13 +2460,13 @@ public class FunctionsClass {
         updateTask.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                System.out.println("INDEX Update Indexed ::: " + /*setAppIndex*/articleToIndex.toString());
+                FunctionsClassDebug.Companion.PrintDebug("INDEX Update Indexed ::: " + /*setAppIndex*/articleToIndex.toString());
             }
         });
         updateTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                System.out.println("INDEX Fail Update ::: ");
+                FunctionsClassDebug.Companion.PrintDebug("INDEX Fail Update ::: ");
                 e.printStackTrace();
             }
         });
@@ -2475,13 +2475,13 @@ public class FunctionsClass {
         startTask.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                System.out.println("INDEX Start Indexed ::: " + setAppIndex);
+                FunctionsClassDebug.Companion.PrintDebug("INDEX Start Indexed ::: " + setAppIndex);
             }
         });
         startTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                System.out.println("INDEX Fail Start ::: ");
+                FunctionsClassDebug.Companion.PrintDebug("INDEX Fail Start ::: ");
                 e.printStackTrace();
             }
         });

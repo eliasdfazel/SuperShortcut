@@ -46,6 +46,7 @@ import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.RecycleViewSmoothLayout;
@@ -341,7 +342,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
                 if (functionsClass.loadCustomIcons()) {
                     loadCustomIcons.load();
                     if (BuildConfig.DEBUG) {
-                        System.out.println("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
+                        FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
                     }
                 }
 

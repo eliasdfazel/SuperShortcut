@@ -58,6 +58,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -85,6 +86,7 @@ import net.geekstools.supershortcuts.PRO.LicenseValidator;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
@@ -339,6 +341,53 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         loadDataOff();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        if (functionsClass.alreadyDonated()) {
+            BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
+                @Override
+                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+
+                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+
+                    } else {
+
+                    }
+
+                }
+            }).build();
+            billingClient.startConnection(new BillingClientStateListener() {
+                @Override
+                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
+                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
+                        for (Purchase purchase : purchases) {
+                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
+
+
+                            if (purchase.getSku().equals("donation")) {
+                                ConsumeResponseListener consumeResponseListener = new ConsumeResponseListener() {
+                                    @Override
+                                    public void onConsumeResponse(@BillingClient.BillingResponse int responseCode, String outToken) {
+                                        if (responseCode == BillingClient.BillingResponse.OK) {
+                                            FunctionsClassDebug.Companion.PrintDebug("*** Consumed Item: " + outToken + " ***");
+
+                                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), false);
+                                        }
+                                    }
+                                };
+                                billingClient.consumeAsync(purchase.getPurchaseToken(), consumeResponseListener);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onBillingServiceDisconnected() {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -532,7 +581,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
     public void onSwipe(int direction) {
         switch (direction) {
             case SimpleGestureFilterSwitch.SWIPE_LEFT:
-                System.out.println("Swipe Left");
+                FunctionsClassDebug.Companion.PrintDebug("Swipe Left");
                 try {
                     functionsClass.overrideBackPress(SplitShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
@@ -669,7 +718,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                             }
                                         }, 333);
 
-                                        if (!functionsClass.mixShortcutsPurchased()) {
+                                        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
                                             BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
                                                 @Override
                                                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -689,7 +738,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                                     if (billingResponseCode == BillingClient.BillingResponse.OK) {
                                                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                                                         for (Purchase purchase : purchases) {
-                                                            System.out.println("*** Purchased Item: " + purchase + " ***");
+                                                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
 
                                                             functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                                                             if (purchase.getSku().equals("mix.shortcuts")) {
@@ -874,7 +923,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                 if (functionsClass.loadCustomIcons()) {
                     loadCustomIcons.load();
                     if (BuildConfig.DEBUG) {
-                        System.out.println("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
+                        FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
                     }
                 }
 
@@ -1072,7 +1121,7 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                 }
                 for (ResolveInfo resolveInfo : resolveInfos) {
                     if (BuildConfig.DEBUG) {
-                        System.out.println("*** CustomIconPackages ::: " + resolveInfo.activityInfo.packageName);
+                        FunctionsClassDebug.Companion.PrintDebug("*** CustomIconPackages ::: " + resolveInfo.activityInfo.packageName);
                     }
                     PublicVariable.customIconsPackages.add(resolveInfo.activityInfo.packageName);
                 }

@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
 
 android {
@@ -11,8 +13,8 @@ android {
         minSdkVersion 25
         targetSdkVersion 28
 
-        versionCode 156
-        versionName "5.500.500.156_"
+        versionCode 158
+        versionName "5.500.500.158_"
 
         wearAppUnbundled true
     }
@@ -53,20 +55,26 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.google.android.material:material:1.1.0-alpha08'
 
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
-    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.google.firebase:firebase-appindexing:19.0.0'
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
     implementation 'com.google.firebase:firebase-config:18.0.0'
-    implementation 'com.google.firebase:firebase-auth:18.0.0'
-    implementation 'com.google.firebase:firebase-storage:18.0.0'
+    implementation 'com.google.firebase:firebase-auth:18.1.0'
+    implementation 'com.google.firebase:firebase-storage:18.1.0'
 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
+    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.41'
+
     /*3rd Party Library*/
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 }
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}

@@ -51,6 +51,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -76,6 +77,7 @@ import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
@@ -239,6 +241,53 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
         loadSplitData();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        if (functionsClass.alreadyDonated()) {
+            BillingClient billingClient = BillingClient.newBuilder(SplitShortcuts.this).setListener(new PurchasesUpdatedListener() {
+                @Override
+                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+
+                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+
+                    } else {
+
+                    }
+
+                }
+            }).build();
+            billingClient.startConnection(new BillingClientStateListener() {
+                @Override
+                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
+                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
+                        for (Purchase purchase : purchases) {
+                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
+
+
+                            if (purchase.getSku().equals("donation")) {
+                                ConsumeResponseListener consumeResponseListener = new ConsumeResponseListener() {
+                                    @Override
+                                    public void onConsumeResponse(@BillingClient.BillingResponse int responseCode, String outToken) {
+                                        if (responseCode == BillingClient.BillingResponse.OK) {
+                                            FunctionsClassDebug.Companion.PrintDebug("*** Consumed Item: " + outToken + " ***");
+
+                                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), false);
+                                        }
+                                    }
+                                };
+                                billingClient.consumeAsync(purchase.getPurchaseToken(), consumeResponseListener);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onBillingServiceDisconnected() {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -441,7 +490,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
     public void onSwipe(int direction) {
         switch (direction) {
             case SimpleGestureFilterSwitch.SWIPE_LEFT:
-                System.out.println("Swipe Left");
+                FunctionsClassDebug.Companion.PrintDebug("Swipe Left");
                 try {
                     functionsClass.overrideBackPress(AdvanceShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
@@ -451,7 +500,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
 
                 break;
             case SimpleGestureFilterSwitch.SWIPE_RIGHT:
-                System.out.println("Swipe Right");
+                FunctionsClassDebug.Companion.PrintDebug("Swipe Right");
                 try {
                     functionsClass.overrideBackPress(NormalAppSelectionList.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
@@ -588,7 +637,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                                             }
                                         }, 333);
 
-                                        if (!functionsClass.mixShortcutsPurchased()) {
+                                        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
                                             BillingClient billingClient = BillingClient.newBuilder(SplitShortcuts.this).setListener(new PurchasesUpdatedListener() {
                                                 @Override
                                                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -608,7 +657,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                                                     if (billingResponseCode == BillingClient.BillingResponse.OK) {
                                                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                                                         for (Purchase purchase : purchases) {
-                                                            System.out.println("*** Purchased Item: " + purchase + " ***");
+                                                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
 
                                                             functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                                                             if (purchase.getSku().equals("mix.shortcuts")) {
@@ -899,7 +948,7 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                 }
                 for (ResolveInfo resolveInfo : resolveInfos) {
                     if (BuildConfig.DEBUG) {
-                        System.out.println("*** CustomIconPackages ::: " + resolveInfo.activityInfo.packageName);
+                        FunctionsClassDebug.Companion.PrintDebug("*** CustomIconPackages ::: " + resolveInfo.activityInfo.packageName);
                     }
                     PublicVariable.customIconsPackages.add(resolveInfo.activityInfo.packageName);
                 }

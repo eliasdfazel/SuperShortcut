@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.advanced.LoadCategoryItems;
 import net.geekstools.supershortcuts.PRO.split.SplitTransparentPair;
 
@@ -24,7 +25,7 @@ public class DeepLinkedShortcuts extends Activity {
             String incomingURI = getIntent().getDataString();
 
             shortcutInfo = incomingURI.substring(incomingURI.lastIndexOf(htmlSlash) + 1);
-            System.out.println("Shortcut Name >> " + shortcutInfo);
+            FunctionsClassDebug.Companion.PrintDebug("Shortcut Name >> " + shortcutInfo);
             shortcutName = shortcutInfo.split(htmlSymbol)[0];
             shortcutType = shortcutInfo.split(htmlSymbol)[1];
             if (shortcutType.equals("Category")) {

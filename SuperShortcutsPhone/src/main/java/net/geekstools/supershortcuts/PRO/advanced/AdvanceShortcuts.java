@@ -51,6 +51,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -76,6 +77,7 @@ import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
@@ -240,6 +242,53 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
         loadCategoryData();
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        if (functionsClass.alreadyDonated()) {
+            BillingClient billingClient = BillingClient.newBuilder(AdvanceShortcuts.this).setListener(new PurchasesUpdatedListener() {
+                @Override
+                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+
+                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+
+                    } else {
+
+                    }
+
+                }
+            }).build();
+            billingClient.startConnection(new BillingClientStateListener() {
+                @Override
+                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
+                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
+                        for (Purchase purchase : purchases) {
+                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
+
+
+                            if (purchase.getSku().equals("donation")) {
+                                ConsumeResponseListener consumeResponseListener = new ConsumeResponseListener() {
+                                    @Override
+                                    public void onConsumeResponse(@BillingClient.BillingResponse int responseCode, String outToken) {
+                                        if (responseCode == BillingClient.BillingResponse.OK) {
+                                            FunctionsClassDebug.Companion.PrintDebug("*** Consumed Item: " + outToken + " ***");
+
+                                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), false);
+                                        }
+                                    }
+                                };
+                                billingClient.consumeAsync(purchase.getPurchaseToken(), consumeResponseListener);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onBillingServiceDisconnected() {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -441,7 +490,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
     public void onSwipe(int direction) {
         switch (direction) {
             case SimpleGestureFilterSwitch.SWIPE_RIGHT:
-                System.out.println("Swipe Right");
+                FunctionsClassDebug.Companion.PrintDebug("Swipe Right");
                 try {
                     functionsClass.overrideBackPress(SplitShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
@@ -578,7 +627,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                                             }
                                         }, 333);
 
-                                        if (!functionsClass.mixShortcutsPurchased()) {
+                                        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
                                             BillingClient billingClient = BillingClient.newBuilder(AdvanceShortcuts.this).setListener(new PurchasesUpdatedListener() {
                                                 @Override
                                                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -598,7 +647,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                                                     if (billingResponseCode == BillingClient.BillingResponse.OK) {
                                                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                                                         for (Purchase purchase : purchases) {
-                                                            System.out.println("*** Purchased Item: " + purchase + " ***");
+                                                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
 
                                                             functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                                                             if (purchase.getSku().equals("mix.shortcuts")) {
@@ -889,7 +938,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                 }
                 for (ResolveInfo resolveInfo : resolveInfos) {
                     if (BuildConfig.DEBUG) {
-                        System.out.println("*** CustomIconPackages ::: " + resolveInfo.activityInfo.packageName);
+                        FunctionsClassDebug.Companion.PrintDebug("*** CustomIconPackages ::: " + resolveInfo.activityInfo.packageName);
                     }
                     PublicVariable.customIconsPackages.add(resolveInfo.activityInfo.packageName);
                 }

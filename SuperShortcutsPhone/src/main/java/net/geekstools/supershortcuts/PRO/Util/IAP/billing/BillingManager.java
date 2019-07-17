@@ -31,7 +31,7 @@ import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
-import net.geekstools.supershortcuts.PRO.Util.SettingGUI;
+import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -82,6 +82,7 @@ public class BillingManager implements PurchasesUpdatedListener {
 
             }
         });
+
     }
 
     public int startPurchaseFlow(SkuDetails skuDetails, String skuId, String billingType) {
@@ -97,14 +98,9 @@ public class BillingManager implements PurchasesUpdatedListener {
     public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
         //ResponseCode 7 = Item Owned
         Log.d(TAG, "onPurchasesUpdated() Response: " + responseCode);
-        if (responseCode == 7) {
-            if (functionsClass.mixShortcutsPurchased() && functionsClass.alreadyDonated()) {
-                activity.startActivity(new Intent(activity, SettingGUI.class));
-                activity.finish();
-            }
-        } else {
 
-        }
+        activity.finish();
+        activity.startActivity(new Intent(activity.getApplicationContext(), InAppBilling.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
     public void querySkuDetailsAsync(@BillingClient.SkuType final String itemType, final List<String> skuList, final SkuDetailsResponseListener listener) {
