@@ -388,6 +388,58 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                 }
             });
         }
+
+        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
+            BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
+                @Override
+                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+
+                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+
+                    } else {
+
+                    }
+
+                }
+            }).build();
+            billingClient.startConnection(new BillingClientStateListener() {
+                @Override
+                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
+                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
+                        for (Purchase purchase : purchases) {
+                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
+
+                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
+                            if (purchase.getSku().equals("mix.shortcuts")) {
+
+                                if (functionsClass.mixShortcuts()) {
+                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
+                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                                    backDrawMixHint.setTint(getColor(R.color.default_color_light));
+
+                                    mixShortcutsMenuItem.setIcon(drawMixHint);
+                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
+                                } else {
+                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
+                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                                    backDrawMixHint.setTint(getColor(R.color.dark));
+
+                                    mixShortcutsMenuItem.setIcon(drawMixHint);
+                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsDisable));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onBillingServiceDisconnected() {
+
+                }
+            });
+        }
     }
 
     @Override
