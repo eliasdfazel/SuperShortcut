@@ -31,23 +31,25 @@ import java.util.ArrayList;
 
 public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdapter.ViewHolder> {
 
-    FunctionsClass functionsClass;
-    ImageView tempIcon;
-    float fromX, fromY, toX, toY, dpHeight, dpWidth;
-    int animationType;
-    CheckBox[] autoChoice;
-    View view;
-    ViewHolder viewHolder;
     private Context context;
     private Activity activity;
+
+    FunctionsClass functionsClass;
+
+    ImageView tempIcon;
+    View view;
+    ViewHolder viewHolder;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
+
+    float fromX, fromY, toX, toY, dpHeight, dpWidth;
+    int animationType;
 
     public SelectionListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 
-        autoChoice = new CheckBox[navDrawerItems.size()];
         functionsClass = new FunctionsClass(context, activity);
         tempIcon = (ImageView) activity.findViewById(R.id.tempIcon);
 
@@ -72,18 +74,17 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
         RelativeLayout item = viewHolderBinder.item;
         ImageView imgIcon = viewHolderBinder.imgIcon;
         TextView txtDesc = viewHolderBinder.txtDesc;
-        autoChoice[position] = viewHolderBinder.autoChoice;
 
         imgIcon.setImageDrawable(navDrawerItems.get(position).getIcon());
         txtDesc.setText(navDrawerItems.get(position).getDesc());
 
         final String pack = navDrawerItems.get(position).getTitle();
         File autoFile = context.getFileStreamPath(pack + ".Super");
-        autoChoice[position].setChecked(false);
+        viewHolderBinder.autoChoice.setChecked(false);
         if (autoFile.exists()) {
-            autoChoice[position].setChecked(true);
+            viewHolderBinder.autoChoice.setChecked(true);
         } else {
-            autoChoice[position].setChecked(false);
+            viewHolderBinder.autoChoice.setChecked(false);
         }
 
         item.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +109,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                             context.deleteFile(
                                     navDrawerItems.get(position).getTitle() + ".Super");
                             functionsClass.removeLine(".autoSuper", navDrawerItems.get(position).getTitle());
-                            autoChoice[position].setChecked(false);
+                            viewHolderBinder.autoChoice.setChecked(false);
                             context.sendBroadcast(new Intent(context.getString(R.string.counterAction)));
 
                             context.sendBroadcast(new Intent(context.getString(R.string.savedActionHide)));
@@ -121,7 +122,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                                 functionsClass.saveFileAppendLine(
                                         ".autoSuper",
                                         navDrawerItems.get(position).getTitle());
-                                autoChoice[position].setChecked(true);
+                                viewHolderBinder.autoChoice.setChecked(true);
 
                                 TranslateAnimation translateAnimation =
                                         new TranslateAnimation(animationType, fromX,
@@ -166,7 +167,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                 return true;
             }
         });
-        autoChoice[position].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked == true) {

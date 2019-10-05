@@ -29,24 +29,27 @@ import java.util.ArrayList;
 
 public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelectionListAdapter.ViewHolder> {
 
-    FunctionsClass functionsClass;
-    ImageView tempIcon;
-    float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
-    int animationType;
-    CheckBox[] autoChoice;
-    View view;
-    ViewHolder viewHolder;
-    LoadCustomIcons loadCustomIcons;
     private Context context;
     private Activity activity;
+
+    FunctionsClass functionsClass;
+
+    ImageView tempIcon;
+    View view;
+    ViewHolder viewHolder;
+
+    LoadCustomIcons loadCustomIcons;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
+
+    float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
+    int animationType;
 
     public SplitSelectionListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 
-        autoChoice = new CheckBox[navDrawerItems.size()];
         functionsClass = new FunctionsClass(context, activity);
         tempIcon = (ImageView) activity.findViewById(R.id.tempIcon);
 
@@ -78,16 +81,15 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
         viewHolderBinder.txtDesc.setText(navDrawerItems.get(position).getAppName());
 
         try {
-            autoChoice[position] = viewHolderBinder.autoChoice;
             final String pack = navDrawerItems.get(position).getPackageName();
             File autoFile = context.getFileStreamPath(pack + PublicVariable.categoryName);
-            autoChoice[position].setChecked(false);
+            viewHolderBinder.autoChoice.setChecked(false);
             if (autoFile.exists()) {
-                autoChoice[position].setChecked(true);
+                viewHolderBinder.autoChoice.setChecked(true);
             } else {
-                autoChoice[position].setChecked(false);
+                viewHolderBinder.autoChoice.setChecked(false);
             }
-            autoChoice[position].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     if (isChecked == true) {
@@ -118,7 +120,7 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                             context.deleteFile(pack + PublicVariable.categoryName);
                             functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
                             try {
-                                autoChoice[position].setChecked(false);
+                                viewHolderBinder.autoChoice.setChecked(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -133,7 +135,7 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                                 functionsClass.saveFileAppendLine(
                                         PublicVariable.categoryName, pack);
                                 try {
-                                    autoChoice[position].setChecked(true);
+                                    viewHolderBinder.autoChoice.setChecked(true);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

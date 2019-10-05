@@ -408,7 +408,7 @@ public class SettingGUI extends FragmentActivity {
     public void onResume() {
         super.onResume();
         firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
+        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
         firebaseRemoteConfig.fetch(0)
                 .addOnCompleteListener(SettingGUI.this, new OnCompleteListener<Void>() {
                     @Override

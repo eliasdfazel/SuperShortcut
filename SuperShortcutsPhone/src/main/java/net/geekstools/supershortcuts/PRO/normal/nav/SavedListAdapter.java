@@ -20,9 +20,11 @@ import java.util.ArrayList;
 
 public class SavedListAdapter extends BaseAdapter {
 
-    FunctionsClass functionsClass;
     private Context context;
     private Activity activity;
+
+    FunctionsClass functionsClass;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
 
     public SavedListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {

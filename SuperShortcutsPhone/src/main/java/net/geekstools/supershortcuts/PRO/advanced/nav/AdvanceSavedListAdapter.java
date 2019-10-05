@@ -21,9 +21,11 @@ import java.util.ArrayList;
 
 public class AdvanceSavedListAdapter extends BaseAdapter {
 
-    FunctionsClass functionsClass;
     private Context context;
     private Activity activity;
+
+    FunctionsClass functionsClass;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
 
     public AdvanceSavedListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {

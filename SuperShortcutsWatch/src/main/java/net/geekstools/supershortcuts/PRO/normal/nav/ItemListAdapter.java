@@ -21,10 +21,13 @@ import java.util.ArrayList;
 
 public class ItemListAdapter extends BaseAdapter {
 
-    FunctionsClass functionsClass;
     private Context context;
     private Activity activity;
+
+    FunctionsClass functionsClass;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
+
     private ListPopupWindow listPopupWindow;
 
     public ItemListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems, ListPopupWindow listPopupWindow) {

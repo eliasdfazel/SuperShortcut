@@ -36,31 +36,27 @@ import java.util.ArrayList;
 
 public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAdapter.ViewHolder> {
 
-    FunctionsClass functionsClass;
-    RelativeLayout item;
-    LinearLayout[] selectedApps;
-    CheckBox[] autoChoice;
-    EditText[] categoryName;
-    ImageView[] addApps;
-    ImageView imageView;
-    RelativeLayout freqLayout;
-    String endEdited = "", endFocus = "";
-    View view;
-    ViewHolder viewHolder;
-    LoadCustomIcons loadCustomIcons;
     private Context context;
     private Activity activity;
+
+    FunctionsClass functionsClass;
+
+    ImageView imageView;
+    RelativeLayout freqLayout;
+    View view;
+    ViewHolder viewHolder;
+
+    LoadCustomIcons loadCustomIcons;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
+
+    String endEdited = "", endFocus = "";
 
     public SplitShortcutsAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 
-        selectedApps = new LinearLayout[navDrawerItems.size()];
-        autoChoice = new CheckBox[navDrawerItems.size()];
-        categoryName = new EditText[navDrawerItems.size()];
-        addApps = new ImageView[navDrawerItems.size()];
         functionsClass = new FunctionsClass(context, activity);
 
         if (functionsClass.loadCustomIcons()) {
@@ -78,55 +74,48 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
 
     @Override
     public void onBindViewHolder(SplitShortcutsAdapter.ViewHolder viewHolderBinder, final int position) {
-        item = viewHolderBinder.item;
-        selectedApps[position] = viewHolderBinder.selectedApps;
-        categoryName[position] = viewHolderBinder.categoryName;
-        categoryName[position].bringToFront();
-        autoChoice[position] = viewHolderBinder.autoChoice;
-        addApps[position] = viewHolderBinder.addApps;
-        addApps[position].bringToFront();
 
         final String category = navDrawerItems.get(position).getCategory();
         final String[] packages = navDrawerItems.get(position).getPackageNames();
 
         try {
-            categoryName[position].setText(navDrawerItems.get(position).getCategory().split("_")[0]);
+            viewHolderBinder.categoryName.setText(navDrawerItems.get(position).getCategory().split("_")[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (category.equals(context.getPackageName())) {
             try {
-                categoryName[position].setText("");
-                autoChoice[position].setChecked(false);
-                addApps[position].setVisibility(View.INVISIBLE);
-                selectedApps[position].removeAllViews();
+                viewHolderBinder.categoryName.setText("");
+                viewHolderBinder.autoChoice.setChecked(false);
+                viewHolderBinder.addApps.setVisibility(View.INVISIBLE);
+                viewHolderBinder.selectedApps.removeAllViews();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             File autoFile = context.getFileStreamPath(category);
             if (autoFile.exists() && autoFile.isFile()) {
-                selectedApps[position].removeAllViews();
-                selectedApps[position].setVisibility(View.VISIBLE);
+                viewHolderBinder.selectedApps.removeAllViews();
+                viewHolderBinder.selectedApps.setVisibility(View.VISIBLE);
                 for (int i = 0; i < packages.length; i++) {
                     freqLayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.split_selected_apps_item, null);
                     imageView = (ImageView) freqLayout.findViewById(R.id.appSelectedItem);
                     imageView.setImageDrawable(functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packages[i], functionsClass.appIconDrawable(packages[i])) : functionsClass.appIconDrawable(packages[i]));
-                    selectedApps[position].addView(freqLayout);
-                    addApps[position].setVisibility(View.VISIBLE);
+                    viewHolderBinder.selectedApps.addView(freqLayout);
+                    viewHolderBinder.addApps.setVisibility(View.VISIBLE);
                 }
             }
 
             File autoFileSelected = context.getFileStreamPath(functionsClass.splitNameSelected(category));
-            autoChoice[position].setChecked(false);
+            viewHolderBinder.autoChoice.setChecked(false);
             if (autoFileSelected.exists() && autoFileSelected.isFile()) {
-                autoChoice[position].setChecked(true);
+                viewHolderBinder.autoChoice.setChecked(true);
             } else {
-                autoChoice[position].setChecked(false);
+                viewHolderBinder.autoChoice.setChecked(false);
             }
         }
 
-        categoryName[position].setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        viewHolderBinder.categoryName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -183,7 +172,7 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                 return true;
             }
         });
-        categoryName[position].addTextChangedListener(new TextWatcher() {
+        viewHolderBinder.categoryName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -195,12 +184,12 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
             @Override
             public void afterTextChanged(Editable editable) {
                 endEdited = editable.toString();
-                if (addApps[position].isShown()) {
-                    addApps[position].setVisibility(View.INVISIBLE);
+                if (viewHolderBinder.addApps.isShown()) {
+                    viewHolderBinder.addApps.setVisibility(View.INVISIBLE);
                 }
             }
         });
-        selectedApps[position].setOnClickListener(new View.OnClickListener() {
+        viewHolderBinder.selectedApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (endFocus.length() > 0) {
@@ -264,7 +253,7 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                 }
             }
         });
-        addApps[position].setOnClickListener(new View.OnClickListener() {
+        viewHolderBinder.addApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!navDrawerItems.get(position).getCategory().equals(context.getPackageName())) {
@@ -339,7 +328,7 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                             if (functionsClass.mixShortcuts() == true) {
                                 functionsClass.removeLine(".mixShortcuts", PublicVariable.categoryNameSelected);
                             }
-                            autoChoice[position].setChecked(false);
+                            viewHolderBinder.autoChoice.setChecked(false);
                             context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplitShortcuts)));
                             context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcutsSplit)));
                         } else {
@@ -352,7 +341,7 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                                     functionsClass.saveFileAppendLine(".SplitSuperSelected", PublicVariable.categoryNameSelected);
                                     functionsClass.saveFileAppendLine(".mixShortcuts", PublicVariable.categoryNameSelected);
 
-                                    autoChoice[position].setChecked(true);
+                                    viewHolderBinder.autoChoice.setChecked(true);
                                     context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplitShortcuts)));
                                     context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcutsSplit)));
                                 }
@@ -364,7 +353,7 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                                     }
                                     functionsClass.saveFileAppendLine(".SplitSuperSelected", PublicVariable.categoryNameSelected);
 
-                                    autoChoice[position].setChecked(true);
+                                    viewHolderBinder.autoChoice.setChecked(true);
                                     context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplitShortcuts)));
                                     context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcutsSplit)));
                                 }
@@ -432,7 +421,7 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
             }
         });
 
-        autoChoice[position].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked == true) {

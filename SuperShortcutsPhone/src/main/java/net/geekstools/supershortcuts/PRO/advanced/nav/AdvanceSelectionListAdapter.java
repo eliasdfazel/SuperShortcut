@@ -29,24 +29,26 @@ import java.util.ArrayList;
 
 public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSelectionListAdapter.ViewHolder> {
 
+    private Context context;
+    private Activity activity;
+
     FunctionsClass functionsClass;
+
     ImageView tempIcon;
-    float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
-    int animationType;
-    CheckBox[] autoChoice;
     View view;
     ViewHolder viewHolder;
     LoadCustomIcons loadCustomIcons;
-    private Context context;
-    private Activity activity;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
+
+    float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
+    int animationType;
 
     public AdvanceSelectionListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 
-        autoChoice = new CheckBox[navDrawerItems.size()];
         functionsClass = new FunctionsClass(context, activity);
         tempIcon = (ImageView) activity.findViewById(R.id.tempIcon);
 
@@ -76,18 +78,17 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
         RelativeLayout item = viewHolderBinder.item;
         ImageView imgIcon = viewHolderBinder.imgIcon;
         TextView txtDesc = viewHolderBinder.txtDesc;
-        autoChoice[position] = viewHolderBinder.autoChoice;
 
         imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
         txtDesc.setText(navDrawerItems.get(position).getAppName());
 
         final String pack = navDrawerItems.get(position).getPackageName();
         File autoFile = context.getFileStreamPath(pack + PublicVariable.categoryName);
-        autoChoice[position].setChecked(false);
+        viewHolderBinder.autoChoice.setChecked(false);
         if (autoFile.exists()) {
-            autoChoice[position].setChecked(true);
+            viewHolderBinder.autoChoice.setChecked(true);
         } else {
-            autoChoice[position].setChecked(false);
+            viewHolderBinder.autoChoice.setChecked(false);
         }
 
         viewHolderBinder.item.setOnTouchListener(new View.OnTouchListener() {
@@ -103,7 +104,7 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
                         if (autoFile.exists()) {
                             context.deleteFile(pack + PublicVariable.categoryName);
                             functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
-                            autoChoice[position].setChecked(false);
+                            viewHolderBinder.autoChoice.setChecked(false);
                             context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
 
                             context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideAdvance)));
@@ -114,7 +115,7 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
                                         pack + PublicVariable.categoryName, pack);
                                 functionsClass.saveFileAppendLine(
                                         PublicVariable.categoryName, pack);
-                                autoChoice[position].setChecked(true);
+                                viewHolderBinder.autoChoice.setChecked(true);
 
                                 TranslateAnimation translateAnimation =
                                         new TranslateAnimation(animationType, fromX,
@@ -152,7 +153,7 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
                 return true;
             }
         });
-        autoChoice[position].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked == true) {

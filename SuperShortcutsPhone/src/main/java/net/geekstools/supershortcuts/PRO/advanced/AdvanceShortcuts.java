@@ -347,7 +347,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
     public void onResume() {
         super.onResume();
         firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
+        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
         firebaseRemoteConfig.fetch(0)
                 .addOnCompleteListener(AdvanceShortcuts.this, new OnCompleteListener<Void>() {
                     @Override

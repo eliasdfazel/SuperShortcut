@@ -22,10 +22,13 @@ import java.util.ArrayList;
 
 public class CategoryItemListAdapter extends BaseAdapter {
 
-    FunctionsClass functionsClass;
     private Context context;
     private Activity activity;
+
+    FunctionsClass functionsClass;
+
     private ArrayList<NavDrawerItem> navDrawerItems;
+
     private ListPopupWindow listPopupWindow;
 
     public CategoryItemListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems, ListPopupWindow listPopupWindow) {
