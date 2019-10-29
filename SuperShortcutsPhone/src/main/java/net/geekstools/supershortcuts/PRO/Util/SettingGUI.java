@@ -133,7 +133,7 @@ public class SettingGUI extends FragmentActivity {
         prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
         customIconDesc.setText(functionsClass.loadCustomIcons() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
 
-        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
+        if (!functionsClass.mixShortcutsPurchased()) {
             BillingClient billingClient = BillingClient.newBuilder(SettingGUI.this).setListener(new PurchasesUpdatedListener() {
                 @Override
                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -151,6 +151,8 @@ public class SettingGUI extends FragmentActivity {
                 @Override
                 public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
                     if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                        functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
+
                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                         for (Purchase purchase : purchases) {
                             FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");

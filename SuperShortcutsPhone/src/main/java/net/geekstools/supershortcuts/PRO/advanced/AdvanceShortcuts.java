@@ -265,7 +265,6 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                         for (Purchase purchase : purchases) {
                             FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
 
-
                             if (purchase.getSku().equals("donation")) {
                                 ConsumeResponseListener consumeResponseListener = new ConsumeResponseListener() {
                                     @Override
@@ -290,7 +289,7 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
             });
         }
 
-        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
+        if (!functionsClass.mixShortcutsPurchased()) {
             BillingClient billingClient = BillingClient.newBuilder(AdvanceShortcuts.this).setListener(new PurchasesUpdatedListener() {
                 @Override
                 public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
@@ -308,13 +307,14 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                 @Override
                 public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
                     if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                        functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
+
                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                         for (Purchase purchase : purchases) {
                             FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
 
                             functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                             if (purchase.getSku().equals("mix.shortcuts")) {
-
                                 if (functionsClass.mixShortcuts()) {
                                     LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
                                     Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
@@ -697,13 +697,14 @@ public class AdvanceShortcuts extends Activity implements View.OnClickListener, 
                                                 @Override
                                                 public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
                                                     if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                                                        functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
+
                                                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                                                         for (Purchase purchase : purchases) {
                                                             FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
 
                                                             functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
                                                             if (purchase.getSku().equals("mix.shortcuts")) {
-
                                                                 if (functionsClass.mixShortcuts()) {
                                                                     LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
                                                                     Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
