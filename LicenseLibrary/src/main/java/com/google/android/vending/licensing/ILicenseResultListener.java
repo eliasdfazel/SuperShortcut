@@ -1,4 +1,14 @@
 /*
+ * Copyright © 2019 By Geeks Empire.
+ *
+ * Created by Elias Fazel on 11/11/19 7:22 PM
+ * Last modified 11/11/19 7:21 PM
+ *
+ * Licensed Under MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+/*
  * This file is auto-generated.  DO NOT MODIFY.
  * Original file: aidl/ILicenseResultListener.aidl
  */

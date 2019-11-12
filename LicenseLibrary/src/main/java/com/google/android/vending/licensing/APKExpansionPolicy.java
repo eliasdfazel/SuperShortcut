@@ -1,20 +1,14 @@
-package com.google.android.vending.licensing;
-
 /*
- * Copyright (C) 2012 The Android Open Source Project
+ * Copyright © 2019 By Geeks Empire.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Created by Elias Fazel on 11/11/19 7:22 PM
+ * Last modified 11/11/19 7:21 PM
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Licensed Under MIT License.
+ * https://opensource.org/licenses/MIT
  */
+
+package com.google.android.vending.licensing;
 
 import android.content.Context;
 import android.content.SharedPreferences;
