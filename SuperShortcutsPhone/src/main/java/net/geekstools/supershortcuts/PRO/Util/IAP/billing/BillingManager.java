@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 1/3/20 6:28 PM
+ * Last modified 1/3/20 6:27 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
@@ -60,11 +61,11 @@ public class BillingManager implements PurchasesUpdatedListener {
 
         functionsClass = new FunctionsClass(activity.getApplicationContext(), activity);
 
-        billingClient = BillingClient.newBuilder(this.activity).setListener(this).build();
+        billingClient = BillingClient.newBuilder(this.activity).setListener(this).enablePendingPurchases().build();
         billingClient.startConnection(new BillingClientStateListener() {
             @Override
-            public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponse) {
-                if (billingResponse == BillingClient.BillingResponse.OK) {
+            public void onBillingSetupFinished(BillingResult billingResult) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
 
                 } else {
 
@@ -79,7 +80,7 @@ public class BillingManager implements PurchasesUpdatedListener {
 
     }
 
-    public int startPurchaseFlow(SkuDetails skuDetails, String skuId, String billingType) {
+    public BillingResult startPurchaseFlow(SkuDetails skuDetails, String skuId, String billingType) {
         BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
                 .setSkuDetails(skuDetails)
                 .setAccountId(UserEmailAddress)
@@ -89,9 +90,9 @@ public class BillingManager implements PurchasesUpdatedListener {
     }
 
     @Override
-    public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+    public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
         //ResponseCode 7 = Item Owned
-        Log.d(TAG, "onPurchasesUpdated() Response: " + responseCode);
+        Log.d(TAG, "onPurchasesUpdated() Response: " + billingResult.getResponseCode());
 
         activity.finish();
         activity.startActivity(new Intent(activity.getApplicationContext(), InAppBilling.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -101,8 +102,8 @@ public class BillingManager implements PurchasesUpdatedListener {
         SkuDetailsParams skuDetailsParams = SkuDetailsParams.newBuilder().setSkusList(skuList).setType(itemType).build();
         billingClient.querySkuDetailsAsync(skuDetailsParams, new SkuDetailsResponseListener() {
             @Override
-            public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
-                listener.onSkuDetailsResponse(responseCode, skuDetailsList);
+            public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+                listener.onSkuDetailsResponse(billingResult, skuDetailsList);
             }
         });
     }

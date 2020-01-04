@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 1/3/20 6:28 PM
+ * Last modified 1/3/20 6:14 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -68,6 +68,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ConsumeParams;
 import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
@@ -355,21 +357,21 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         if (functionsClass.alreadyDonated()) {
             BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
                 @Override
-                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
-                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+                public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
+                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
 
-                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+                    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
 
                     } else {
 
                     }
 
                 }
-            }).build();
+            }).enablePendingPurchases().build();
             billingClient.startConnection(new BillingClientStateListener() {
                 @Override
-                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
-                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                public void onBillingSetupFinished(BillingResult billingResult) {
+                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
                         for (Purchase purchase : purchases) {
                             FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
@@ -377,15 +379,18 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                             if (purchase.getSku().equals("donation")) {
                                 ConsumeResponseListener consumeResponseListener = new ConsumeResponseListener() {
                                     @Override
-                                    public void onConsumeResponse(@BillingClient.BillingResponse int responseCode, String outToken) {
-                                        if (responseCode == BillingClient.BillingResponse.OK) {
+                                    public void onConsumeResponse(BillingResult billingResult, String outToken) {
+                                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                                             FunctionsClassDebug.Companion.PrintDebug("*** Consumed Item: " + outToken + " ***");
 
                                             functionsClass.savePreference(".PurchasedItem", purchase.getSku(), false);
                                         }
                                     }
                                 };
-                                billingClient.consumeAsync(purchase.getPurchaseToken(), consumeResponseListener);
+
+                                ConsumeParams.Builder consumeParams = ConsumeParams.newBuilder();
+                                consumeParams.setPurchaseToken(purchase.getPurchaseToken());
+                                billingClient.consumeAsync(consumeParams.build(), consumeResponseListener);
                             }
                         }
                     }
@@ -401,21 +406,21 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
         if (!functionsClass.mixShortcutsPurchased()) {
             BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
                 @Override
-                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
-                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+                public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
+                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
 
-                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+                    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
 
                     } else {
 
                     }
 
                 }
-            }).build();
+            }).enablePendingPurchases().build();
             billingClient.startConnection(new BillingClientStateListener() {
                 @Override
-                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
-                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                public void onBillingSetupFinished(BillingResult billingResult) {
+                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                         functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
 
                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
@@ -783,21 +788,21 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
                                         if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
                                             BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
                                                 @Override
-                                                public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
-                                                    if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+                                                public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
+                                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
 
-                                                    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
+                                                    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
 
                                                     } else {
 
                                                     }
 
                                                 }
-                                            }).build();
+                                            }).enablePendingPurchases().build();
                                             billingClient.startConnection(new BillingClientStateListener() {
                                                 @Override
-                                                public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
-                                                    if (billingResponseCode == BillingClient.BillingResponse.OK) {
+                                                public void onBillingSetupFinished(BillingResult billingResult) {
+                                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                                                         functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
 
                                                         List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
