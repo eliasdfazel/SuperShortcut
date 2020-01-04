@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 1/3/20 8:24 PM
+ * Last modified 1/3/20 7:36 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -71,7 +71,6 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
 
         if (functionsClass.loadCustomIcons()) {
             loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
-            loadCustomIcons.load();
         }
     }
 

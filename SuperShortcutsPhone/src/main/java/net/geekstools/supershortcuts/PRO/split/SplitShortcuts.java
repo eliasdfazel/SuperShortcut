@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 1/3/20 6:28 PM
- * Last modified 1/3/20 6:20 PM
+ * Created by Elias Fazel on 1/3/20 8:24 PM
+ * Last modified 1/3/20 7:36 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -88,6 +88,7 @@ import com.google.firebase.storage.UploadTask;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.R;
+import net.geekstools.supershortcuts.PRO.Util.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
@@ -135,6 +136,8 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
     boolean resetAdapter = false;
 
     SimpleGestureFilterSwitch simpleGestureFilterSwitch;
+
+    LoadCustomIcons loadCustomIcons;
 
     FirebaseRemoteConfig firebaseRemoteConfig;
 
@@ -770,6 +773,8 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
     }
 
     public void loadSplitData() {
+        loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
+
         LoadInstalledCustomIcons loadInstalledCustomIcons = new LoadInstalledCustomIcons();
         loadInstalledCustomIcons.execute();
 
@@ -908,6 +913,13 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
                 splitShortcutsAdapter = new SplitShortcutsAdapter(activity, context, navDrawerItems);
             } else {
                 try {
+                    if (functionsClass.loadCustomIcons()) {
+                        loadCustomIcons.load();
+                        if (BuildConfig.DEBUG) {
+                            FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
+                        }
+                    }
+
                     appData = functionsClass.readFileLine(".SplitSuper");
                     navDrawerItems = new ArrayList<NavDrawerItem>();
                     for (int navItem = 0; navItem < appData.length; navItem++) {

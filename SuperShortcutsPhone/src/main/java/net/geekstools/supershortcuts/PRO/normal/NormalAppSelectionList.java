@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 1/3/20 6:28 PM
- * Last modified 1/3/20 6:14 PM
+ * Created by Elias Fazel on 1/3/20 8:24 PM
+ * Last modified 1/3/20 7:33 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -158,8 +158,10 @@ public class NormalAppSelectionList extends Activity implements View.OnClickList
 
     SimpleGestureFilterSwitch simpleGestureFilterSwitch;
 
-    FirebaseRemoteConfig firebaseRemoteConfig;
     LoadCustomIcons loadCustomIcons;
+
+    FirebaseRemoteConfig firebaseRemoteConfig;
+
     private FirebaseAuth firebaseAuth;
 
     @Override

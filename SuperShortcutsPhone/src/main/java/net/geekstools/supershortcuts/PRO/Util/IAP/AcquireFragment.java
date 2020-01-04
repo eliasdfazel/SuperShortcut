@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 1/3/20 8:24 PM
+ * Last modified 1/3/20 7:56 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.bumptech.glide.Glide;
@@ -263,8 +264,8 @@ public class AcquireFragment extends DialogFragment implements View.OnClickListe
                 inAppSkus,
                 new SkuDetailsResponseListener() {
                     @Override
-                    public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
-                        if (responseCode == BillingClient.BillingResponse.OK && skuDetailsList != null) {
+                    public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> skuDetailsList) {
+                        if (billingResult.getResponseCode()== BillingClient.BillingResponseCode.OK && skuDetailsList != null) {
                             List<SkuRowData> skuRowDataList = new ArrayList<>();
                             for (SkuDetails skuDetails : skuDetailsList) {
                                 if (skuDetails.getSku().equals("mix.shortcuts") && functionsClass.mixShortcutsPurchased()) {

@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 1/3/20 8:24 PM
+ * Last modified 1/3/20 7:24 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -84,20 +84,28 @@ public class ItemListAdapter extends BaseAdapter {
         items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (navDrawerItems.get(position).getDesc().contains(context.getString(R.string.edit_advanced_shortcut))) {
-                    context.startActivity(new Intent(context, NormalAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                    return;
+                try {
+                    if (navDrawerItems.get(position).getDesc().contains(context.getString(R.string.edit_advanced_shortcut))) {
+                        context.startActivity(new Intent(context, NormalAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    } else {
+                        String packageName = navDrawerItems.get(position).getTitle();
+                        functionsClass.openApplication(packageName);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                String packageName = navDrawerItems.get(position).getTitle();
-                functionsClass.openApplication(packageName);
                 listPopupWindow.dismiss();
             }
         });
         items.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                String packageName = navDrawerItems.get(position).getTitle();
-                functionsClass.goToSettingInfo(packageName);
+                try {
+                    String packageName = navDrawerItems.get(position).getTitle();
+                    functionsClass.goToSettingInfo(packageName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         });

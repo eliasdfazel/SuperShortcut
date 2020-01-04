@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 1/3/20 8:24 PM
+ * Last modified 1/3/20 8:10 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -107,6 +107,8 @@ class LicenseValidator {
                 Log.e(TAG, "Could not Base64-decode signature.");
                 handleInvalidResponse();
                 return;
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
 
             // Parse and validate response.
