@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 2/22/20 3:30 PM
+ * Last modified 2/22/20 2:54 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -78,7 +78,7 @@ import net.geekstools.supershortcuts.PRO.Util.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Util.NavAdapter.NavDrawerItem;
 import net.geekstools.supershortcuts.PRO.advanced.LoadCategoryItems;
 import net.geekstools.supershortcuts.PRO.advanced.nav.CategoryItemListAdapter;
-import net.geekstools.supershortcuts.PRO.normal.MediatedActivity;
+import net.geekstools.supershortcuts.PRO.normal.AppShortcutsMediatedActivity;
 import net.geekstools.supershortcuts.PRO.split.SplitScreenService;
 import net.geekstools.supershortcuts.PRO.split.SplitTransparentPair;
 
@@ -143,7 +143,7 @@ public class FunctionsClass {
             }
             for (int i = 0; i < maxLoop; i++) {
                 try {
-                    Intent intent = new Intent(context, MediatedActivity.class);
+                    Intent intent = new Intent(context, AppShortcutsMediatedActivity.class);
                     intent.setAction("MEDIATED_ACTIVITY_PRO");
                     intent.addCategory(Intent.CATEGORY_DEFAULT);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -232,7 +232,7 @@ public class FunctionsClass {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                        Intent intent = new Intent(context, MediatedActivity.class);
+                        Intent intent = new Intent(context, AppShortcutsMediatedActivity.class);
                         intent.setAction("MEDIATED_ACTIVITY_PRO");
                         intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -295,7 +295,7 @@ public class FunctionsClass {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                        Intent intent = new Intent(context, MediatedActivity.class);
+                        Intent intent = new Intent(context, AppShortcutsMediatedActivity.class);
                         intent.setAction("MEDIATED_ACTIVITY_PRO");
                         intent.addCategory(Intent.CATEGORY_DEFAULT);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -566,7 +566,7 @@ public class FunctionsClass {
                         try {
                             ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                            Intent intent = new Intent(context, MediatedActivity.class);
+                            Intent intent = new Intent(context, AppShortcutsMediatedActivity.class);
                             intent.setAction("MEDIATED_ACTIVITY_PRO");
                             intent.addCategory(Intent.CATEGORY_DEFAULT);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -775,7 +775,7 @@ public class FunctionsClass {
                         try {
                             ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
 
-                            Intent intent = new Intent(context, MediatedActivity.class);
+                            Intent intent = new Intent(context, AppShortcutsMediatedActivity.class);
                             intent.setAction("MEDIATED_ACTIVITY_PRO");
                             intent.addCategory(Intent.CATEGORY_DEFAULT);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright © 2019 By Geeks Empire.
+  ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 11/11/19 7:22 PM
-  ~ Last modified 11/11/19 7:21 PM
+  ~ Created by Elias Fazel on 2/22/20 3:30 PM
+  ~ Last modified 2/22/20 3:06 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -30,10 +30,10 @@
         android:appCategory="productivity"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher_adaptive"
+        android:roundIcon="@mipmap/ic_launcher_adaptive_round"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:resizeableActivity="true"
-        android:roundIcon="@mipmap/ic_launcher_adaptive_round"
         android:screenOrientation="sensorPortrait"
         android:theme="@style/GeeksEmpire">
         <meta-data
@@ -58,6 +58,8 @@
             android:required="false" />
 
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".Configurations"
             android:resizeableActivity="true"
             android:theme="@style/GeekySplash">
@@ -68,10 +70,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".normal.NormalAppSelectionList"
             android:resizeableActivity="true" />
         <activity
-            android:name=".normal.MediatedActivity"
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:name=".normal.AppShortcutsMediatedActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
@@ -84,11 +90,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".advanced.AdvanceShortcuts"
             android:resizeableActivity="true"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".advanced.AdvanceAppSelectionList" />
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:name=".advanced.AdvanceAppSelectionList" />
+        <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".advanced.LoadCategoryItems"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -104,11 +117,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".split.SplitShortcuts"
             android:resizeableActivity="true"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".split.SplitAppSelectionList" />
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:name=".split.SplitAppSelectionList" />
+        <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".split.SplitTransparentPair"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
@@ -125,6 +145,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".split.SplitTransparentSingle"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
@@ -140,6 +162,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".Util.SettingGUI"
             android:label="@string/pref">
             <intent-filter
@@ -162,6 +186,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".DeepLinkedShortcuts"
             android:theme="@style/Transparent">
             <intent-filter
@@ -181,6 +207,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:icon="@mipmap/ic_launcher_adaptive"
+            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".Util.IAP.InAppBilling"
             android:theme="@style/GeeksEmpire.Material.IAP.DARK">
             <intent-filter>
