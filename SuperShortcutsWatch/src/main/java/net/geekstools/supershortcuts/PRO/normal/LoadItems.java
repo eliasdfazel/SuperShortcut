@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel on 3/7/20 9:41 AM
+ * Last modified 3/7/20 8:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -76,12 +76,11 @@ public class LoadItems extends WearableActivity {
 
             firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
             FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                    .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                    .setFetchTimeoutInSeconds(0)
                     .build();
-            firebaseRemoteConfig.setConfigSettings(configSettings);
-            firebaseRemoteConfig.setDefaults(R.xml.remote_config_default);
-
-            firebaseRemoteConfig.fetch(0)
+            firebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+            firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
+            firebaseRemoteConfig.fetch()
                     .addOnCompleteListener(LoadItems.this, new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

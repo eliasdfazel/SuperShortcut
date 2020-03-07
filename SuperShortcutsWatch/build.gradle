@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 2/22/20 3:30 PM
- * Last modified 2/22/20 2:53 PM
+ * Created by Elias Fazel on 3/7/20 9:41 AM
+ * Last modified 3/7/20 8:11 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,11 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -21,7 +26,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 29
 
-        versionCode 173
+        versionCode 177
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
     }
 
@@ -80,18 +85,25 @@ static def getDateDay() {
 dependencies {
     implementation project(':LicenseLibrary')
 
+
     compileOnly 'com.google.android.wearable:wearable:2.5.0'
+    implementation 'androidx.wear:wear:1.0.0'
+
 
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.preference:preference-ktx:1.1.0'
 
+
     implementation 'com.google.android.support:wearable:2.5.0'
     implementation 'com.google.android.gms:play-services-wearable:17.0.0'
 
-    implementation 'com.google.firebase:firebase-core:17.2.2'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
-    implementation 'com.google.firebase:firebase-config:19.1.1'
+
+    implementation 'com.google.firebase:firebase-core:17.2.3'
+    implementation 'com.google.firebase:firebase-messaging:20.1.2'
+    implementation 'com.google.firebase:firebase-config:19.1.2'
 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70"
 }
-apply plugin: 'com.google.gms.google-services'
