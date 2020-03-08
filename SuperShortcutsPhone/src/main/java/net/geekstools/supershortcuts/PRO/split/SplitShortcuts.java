@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 1/3/20 8:24 PM
- * Last modified 1/3/20 7:36 PM
+ * Created by Elias Fazel on 3/8/20 11:40 AM
+ * Last modified 3/8/20 11:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -55,6 +55,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,8 +63,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.ConsumeParams;
-import com.android.billingclient.api.ConsumeResponseListener;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -85,6 +84,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import net.geekstools.floatshort.PRO.Util.IAP.Util.PurchasesCheckpoint;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.R;
@@ -109,7 +109,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SplitShortcuts extends Activity implements View.OnClickListener, SimpleGestureFilterSwitch.SimpleGestureListener {
+public class SplitShortcuts extends AppCompatActivity implements View.OnClickListener, SimpleGestureFilterSwitch.SimpleGestureListener {
 
     Activity activity;
     Context context;
@@ -257,108 +257,8 @@ public class SplitShortcuts extends Activity implements View.OnClickListener, Si
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if (functionsClass.alreadyDonated()) {
-            BillingClient billingClient = BillingClient.newBuilder(SplitShortcuts.this).setListener(new PurchasesUpdatedListener() {
-                @Override
-                public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
-
-                    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
-
-                    } else {
-
-                    }
-
-                }
-            }).enablePendingPurchases().build();
-            billingClient.startConnection(new BillingClientStateListener() {
-                @Override
-                public void onBillingSetupFinished(BillingResult billingResult) {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
-                        for (Purchase purchase : purchases) {
-                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
-
-
-                            if (purchase.getSku().equals("donation")) {
-                                ConsumeResponseListener consumeResponseListener = new ConsumeResponseListener() {
-                                    @Override
-                                    public void onConsumeResponse(BillingResult billingResult, String outToken) {
-                                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                                            FunctionsClassDebug.Companion.PrintDebug("*** Consumed Item: " + outToken + " ***");
-
-                                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), false);
-                                        }
-                                    }
-                                };
-
-                                ConsumeParams.Builder consumeParams = ConsumeParams.newBuilder();
-                                consumeParams.setPurchaseToken(purchase.getPurchaseToken());
-                                billingClient.consumeAsync(consumeParams.build(), consumeResponseListener);
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onBillingServiceDisconnected() {
-
-                }
-            });
-        }
-
-        if (!functionsClass.mixShortcutsPurchased()) {
-            BillingClient billingClient = BillingClient.newBuilder(SplitShortcuts.this).setListener(new PurchasesUpdatedListener() {
-                @Override
-                public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
-
-                    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
-
-                    } else {
-
-                    }
-
-                }
-            }).enablePendingPurchases().build();
-            billingClient.startConnection(new BillingClientStateListener() {
-                @Override
-                public void onBillingSetupFinished(BillingResult billingResult) {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                        functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
-
-                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
-                        for (Purchase purchase : purchases) {
-                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
-
-                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
-                            if (purchase.getSku().equals("mix.shortcuts")) {
-                                if (functionsClass.mixShortcuts()) {
-                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
-                                    backDrawMixHint.setTint(getColor(R.color.default_color_light));
-
-                                    mixShortcutsMenuItem.setIcon(drawMixHint);
-                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
-                                } else {
-                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
-                                    backDrawMixHint.setTint(getColor(R.color.dark));
-
-                                    mixShortcutsMenuItem.setIcon(drawMixHint);
-                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsDisable));
-                                }
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onBillingServiceDisconnected() {
-
-                }
-            });
-        }
+        //In-App Billing
+        new PurchasesCheckpoint(SplitShortcuts.this).trigger();
     }
 
     @Override

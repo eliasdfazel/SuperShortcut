@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel on 3/8/20 11:40 AM
+  ~ Last modified 3/8/20 11:25 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<resources>
+    <string name="app_name">Super Shortcuts</string>
+    <string name="pref">Preferences</string>
+    <string name="done">Done</string>
+    <string name="edit_advanced_shortcut">Edit: </string>
+    <string name="option">Option for </string>
+    <string name="deleteCategory">Delete</string>
+    <string name="addSuper">Add to Super Shortcut</string>
+    <string name="addToDesktop">Add to Home Screen</string>
+    <string name="not_install">The Application is Not Available</string>
+    <string name="maximum">Estimated Amount&#8194; </string>
+    <string name="license_validating">Retrieving License Information from Google Play Store</string>
+    <string name="floatingTitle">Float It 🎈 </string>
+    <string name="floatingDesc">Quickly Switch Apps by Unlimited Floating Shortcuts</string>
+    <string name="smartTitle">Smart Pick</string>
+    <string name="smartDesc">I Will Select Essential Apps</string>
+    <string name="customIconTitle">Theme of Icons</string>
+    <string name="customIconDesc">Click to Select Package of Icons</string>
+    <string name="defaultTheme">Set Default Theme of Icons</string>
+    <string name="cautionShortcutsHome">Move Super Shortcuts Icon to Home Screen</string>
+    <string name="smartPermission">
+        <![CDATA[
+                <br/>
+                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
+                <br/><br/>
+                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
+                <br/>
+        ]]>
+    </string>
+    <string name="advanceTitle">Category Shortcuts</string>
+    <string name="mixTitle">Mix Shortcuts</string>
+    <string name="mixDesc">Combine App/Category/Split Shortcuts</string>
+    <string name="mixHint">Mix Shortcuts | Combine App/Category/Split Shortcuts</string>
+    <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
+    <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
+    <string name="splitTitlePref">Split Shortcuts</string>
+    <string name="splitTitle">Split Super Shortcuts ᴾᴿᴼ</string>
+    <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
+    <string name="shortcut">SHORTCUTS</string>
+    <string name="apps">App</string>
+    <string name="split">Split</string>
+    <string name="category">Category</string>
+    <string name="appsEnable">App Shortcuts</string>
+    <string name="splitEnable">Split Shortcuts</string>
+    <string name="categoryEnable">Category Shortcuts</string>
+    <string name="typeCategoryName">First Type Category Name</string>
+    <string name="typeSplitName">First Type Split Name</string>
+    <string name="grant">Grant Permission</string>
+    <string name="split_service_desc">
+        Split Super Shortcuts ᴾᴿᴼ | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+    </string>
+    <string name="split_service_summary">
+        Split Super Shortcuts ᴾᴿᴼ | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)
+    </string>
+    <string name="observeDesc">
+        <![CDATA[
+                <br/>
+                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)<br/><br/>
+                ♿ <b>How it Helps People with Disability</b>?<br/>
+                It is Difficult for People with Disability to Open an App Or Switch Between Apps.<br/>
+                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.<br/>
+        ]]>
+    </string>
+
+    <string name="smartInfo">
+      <![CDATA[
+               <b><p>Apps Selected by Smart Pick</p></b>
+               <small>Go to Preferences to Disable it</small>
+       ]]>
+    </string>
+    <string name="mixDemoDescriptions">
+        <![CDATA[
+            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
+            💠 <big>Combine App/Split/Category Shortcuts Together</big> 💠 <br/>
+            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
+            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
+            &bull; <b>Category Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+        ]]>
+    </string>
+
+    <string name="purchase"> Purchase 💸 </string>
+    <string name="donate"> Send Gift 🎁 </string>
+    <string name="restorePurchase">ℹ Click To Restore The Item ℹ</string>
+    <string name="thanks">Thanks in Advance 🙏 </string>
+</resources>

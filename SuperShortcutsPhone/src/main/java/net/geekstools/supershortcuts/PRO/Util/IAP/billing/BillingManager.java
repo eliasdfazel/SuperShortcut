@@ -1,22 +1,18 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 1/3/20 6:28 PM
- * Last modified 1/3/20 6:27 PM
+ * Created by Elias Fazel on 3/8/20 11:40 AM
+ * Last modified 3/8/20 11:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 package net.geekstools.supershortcuts.PRO.Util.IAP.billing;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
-
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
@@ -25,8 +21,9 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 
+import net.geekstools.floatshort.PRO.Util.IAP.Util.PurchasesCheckpoint;
 import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
-import net.geekstools.supershortcuts.PRO.Util.IAP.InAppBilling;
+import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClassDebug;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,7 +36,7 @@ public class BillingManager implements PurchasesUpdatedListener {
     FunctionsClass functionsClass;
 
     private BillingClient billingClient;
-    private Activity activity;
+    private AppCompatActivity appCompatActivity;
 
     String UserEmailAddress = null;
 
@@ -50,34 +47,21 @@ public class BillingManager implements PurchasesUpdatedListener {
         SKUS.put(BillingClient.SkuType.INAPP, Arrays.asList("donation", "mix.shortcuts"));
     }
 
+    public static final String iapDonation = "donation";
+    public static final String iapMixShortcuts = "mix.shortcuts";
+
     public List<String> getSkus(@BillingClient.SkuType String type) {
         return SKUS.get(type);
     }
 
-    public BillingManager(Activity activity, String UserEmailAddress) {
+    public BillingManager(AppCompatActivity appCompatActivity, String UserEmailAddress) {
 
-        this.activity = activity;
+        this.appCompatActivity = appCompatActivity;
         this.UserEmailAddress = UserEmailAddress;
 
-        functionsClass = new FunctionsClass(activity.getApplicationContext(), activity);
+        functionsClass = new FunctionsClass(appCompatActivity.getApplicationContext(), appCompatActivity);
 
-        billingClient = BillingClient.newBuilder(this.activity).setListener(this).enablePendingPurchases().build();
-        billingClient.startConnection(new BillingClientStateListener() {
-            @Override
-            public void onBillingSetupFinished(BillingResult billingResult) {
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onBillingServiceDisconnected() {
-
-            }
-        });
-
+        billingClient = new PurchasesCheckpoint(appCompatActivity).trigger();
     }
 
     public BillingResult startPurchaseFlow(SkuDetails skuDetails, String skuId, String billingType) {
@@ -86,16 +70,16 @@ public class BillingManager implements PurchasesUpdatedListener {
                 .setAccountId(UserEmailAddress)
                 .build();
 
-        return billingClient.launchBillingFlow(activity, billingFlowParams);
+        return billingClient.launchBillingFlow(appCompatActivity, billingFlowParams);
     }
 
-    @Override
-    public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
-        //ResponseCode 7 = Item Owned
-        Log.d(TAG, "onPurchasesUpdated() Response: " + billingResult.getResponseCode());
 
-        activity.finish();
-        activity.startActivity(new Intent(activity.getApplicationContext(), InAppBilling.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    @Override
+    public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> list) {
+        //ResponseCode 7 = Item Owned
+        FunctionsClassDebug.Companion.PrintDebug("*** Purchases Updated Response: " + billingResult.getResponseCode() + " ***");
+
+        new PurchasesCheckpoint(appCompatActivity).trigger();
     }
 
     public void querySkuDetailsAsync(@BillingClient.SkuType final String itemType, final List<String> skuList, final SkuDetailsResponseListener listener) {
