@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 2/22/20 3:30 PM
-  ~ Last modified 2/22/20 3:06 PM
+  ~ Created by Elias Fazel on 3/8/20 1:00 PM
+  ~ Last modified 3/8/20 11:48 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -73,7 +73,8 @@
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".normal.NormalAppSelectionList"
-            android:resizeableActivity="true" />
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
@@ -94,7 +95,8 @@
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".advanced.AdvanceShortcuts"
             android:resizeableActivity="true"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
@@ -121,7 +123,8 @@
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".split.SplitShortcuts"
             android:resizeableActivity="true"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 3/8/20 11:40 AM
- * Last modified 3/8/20 11:40 AM
+ * Created by Elias Fazel on 3/8/20 1:00 PM
+ * Last modified 3/8/20 1:00 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,9 +28,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.RippleDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -46,7 +44,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -74,6 +71,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -111,7 +109,7 @@ import java.util.Set;
 
 public class SplitShortcuts extends AppCompatActivity implements View.OnClickListener, SimpleGestureFilterSwitch.SimpleGestureListener {
 
-    Activity activity;
+    AppCompatActivity activity;
     Context context;
     FunctionsClass functionsClass;
 
@@ -122,9 +120,10 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
     RelativeLayout wholeAuto, confirmLayout, loadingSplash;
     LinearLayout autoSelect;
     TextView desc, counterView;
-    ImageView loadIcon;
-    Button confirmButton, apps, split, categories;
+    ImageView loadIcon, confirmButton;
     ProgressBar loadingBarLTR;
+
+    MaterialButton apps, split, categories;
 
     MenuItem mixShortcutsMenuItem;
 
@@ -154,10 +153,10 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.SplitShortcutsMaxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+            getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
         } else {
             limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".SplitSuperSelected");
-            getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+            getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
             PublicVariable.SplitShortcutsMaxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
         }
 
@@ -171,19 +170,20 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();
-        confirmButton = (Button) findViewById(R.id.confirmButton);
+        confirmButton = (ImageView) findViewById(R.id.confirmButton);
         autoSelect = (LinearLayout) findViewById(R.id.autoSelect);
-        apps = (Button) findViewById(R.id.autoApps);
-        split = (Button) findViewById(R.id.autoSplit);
-        categories = (Button) findViewById(R.id.autoCategories);
+
+        apps = (MaterialButton) findViewById(R.id.autoApps);
+        split = (MaterialButton) findViewById(R.id.autoSplit);
+        categories = (MaterialButton) findViewById(R.id.autoCategories);
 
         recyclerView = (RecyclerView) findViewById(R.id.categoryList);
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
         wholeAuto.setBackgroundColor(getColor(R.color.light));
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -219,39 +219,19 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                     if (functionsClass.mixShortcuts() == true) {
                         PublicVariable.SplitShortcutsMaxAppShortcuts
                                 = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                     } else {
                         limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".SplitSuperSelected");
-                        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                     }
                 }
             }
         };
         context.registerReceiver(counterReceiver, intentFilter);
 
-        RippleDrawable drawApps = (RippleDrawable) getDrawable(R.drawable.auto_apps_enable);
-        GradientDrawable backApps = (GradientDrawable) drawApps.findDrawableByLayerId(R.id.category_item);
-        GradientDrawable backAppsRipple = (GradientDrawable) drawApps.findDrawableByLayerId(android.R.id.mask);
-        backApps.setColor(getColor(R.color.default_color_darker));
-        backAppsRipple.setColor(getColor(R.color.default_color));
-        drawApps.setColor(ColorStateList.valueOf(getColor(R.color.default_color)));
-        apps.setBackground(drawApps);
-
-        RippleDrawable drawSplit = (RippleDrawable) getDrawable(R.drawable.auto_split_enable);
-        GradientDrawable backSplit = (GradientDrawable) drawSplit.findDrawableByLayerId(R.id.category_item);
-        GradientDrawable backSplitRipple = (GradientDrawable) drawSplit.findDrawableByLayerId(android.R.id.mask);
-        backSplit.setColor(getColor(R.color.default_color));
-        backSplitRipple.setColor(getColor(R.color.default_color_darker));
-        drawSplit.setColor(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
-        split.setBackground(drawSplit);
-
-        RippleDrawable drawCategories = (RippleDrawable) getDrawable(R.drawable.auto_categories_enable);
-        GradientDrawable backCategories = (GradientDrawable) drawCategories.findDrawableByLayerId(R.id.category_item);
-        GradientDrawable backCategoriesRipple = (GradientDrawable) drawCategories.findDrawableByLayerId(android.R.id.mask);
-        backCategories.setColor(getColor(R.color.default_color_darker));
-        backCategoriesRipple.setColor(getColor(R.color.default_color));
-        drawCategories.setColor(ColorStateList.valueOf(getColor(R.color.default_color)));
-        categories.setBackground(drawCategories);
+        apps.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
+        split.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color)));
+        categories.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
 
         loadSplitData();
 
@@ -275,7 +255,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                                 @Override
                                 public void onSuccess(Boolean aBoolean) {
                                     if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-                                        getActionBar().setDisplayHomeAsUpEnabled(true);
+                                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                                         LayerDrawable layerDrawableNewUpdate = (LayerDrawable) getDrawable(R.drawable.ic_update);
                                         BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.ic_launcher_back_layer);
                                         gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_light));
@@ -283,7 +263,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                                         Bitmap tempBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate);
                                         Bitmap scaleBitmap = Bitmap.createScaledBitmap(tempBitmap, tempBitmap.getWidth() / 4, tempBitmap.getHeight() / 4, false);
                                         Drawable logoDrawable = new BitmapDrawable(getResources(), scaleBitmap);
-                                        activity.getActionBar().setHomeAsUpIndicator(logoDrawable);
+                                        activity.getSupportActionBar().setHomeAsUpIndicator(logoDrawable);
 
                                         functionsClass.notificationCreator(
                                                 getString(R.string.updateAvailable),
