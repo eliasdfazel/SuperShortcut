@@ -1,8 +1,8 @@
 <!--
-  ~ Copyright © 2019 By Geeks Empire.
+  ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 11/11/19 7:22 PM
-  ~ Last modified 11/11/19 7:21 PM
+  ~ Created by Elias Fazel on 3/9/20 9:19 AM
+  ~ Last modified 3/9/20 9:18 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -42,6 +42,8 @@
         ]]>
     </string>
 
+    <string name="translatorTitle" translatable="false">🌎🌍🌏 Translated With 💖 By... </string>
+
     <string name="whatsnew" translatable="false">What\'s New…</string>
     <string name="changelog" translatable="false">
         <![CDATA[
@@ -60,7 +62,7 @@
     <string name="supportTitle" translatable="false">Support Center</string>
     <string name="supportDesc" translatable="false">Help &amp; Feedback</string>
     <string name="newupdate" translatable="false">Install Update</string>
-    <string name="updateAvailable">New Update Available | Click Here to Install…!</string>
+    <string name="updateAvailable" translatable="false">New Update Available | Click Here to Install…!</string>
     <string name="rate" translatable="false">Please Rate &amp; Write Review</string>
     <string name="support" translatable="false">Support@GeeksEmpire.net</string>
     <string name="feedback_tag" translatable="false">Super Shortcuts ᴾᴿᴼ Direct Help | Feedback</string>
@@ -69,7 +71,8 @@
     <string name="link_twitter" translatable="false">https://twitter.com/GeeksEmpire</string>
     <string name="link_facebook" translatable="false">https://www.facebook.com/GeeksEmpire</string>
     <string name="link_facebook_app" translatable="false">https://www.facebook.com/SuperShortcuts</string>
-    <string name="link_xda" translatable="false">https://goo.gl/hXXTTQ</string>
+    <string name="link_xda" translatable="false">https://play.google.com/store/apps/details?id=net.geekstools.floatshort.PRO</string>
+    <string name="link_xda_translator" translatable="false">https://forum.xda-developers.com/showpost.php?p=72735816&amp;postcount=4</string>
     <string name="link_play_store" translatable="false">https://play.google.com/store/apps/details?id=</string>
     <string name="link_floating_shortcuts" translatable="false">https://play.google.com/store/apps/details?id=net.geekstools.floatshort.PRO</string>
     <string name="link_alpha" translatable="false">https://play.google.com/apps/testing/net.geekstools.supershortcuts.PRO</string>
@@ -117,6 +120,6 @@
     <string name="BETAstringUpcomingChangeLogPhone" translatable="false">beta_string_upcoming_change_log_phone</string>
     <string name="BETAstringUpcomingChangeLogSummaryPhone" translatable="false">beta_string_upcoming_change_log_summary_phone</string>
 
-    <string name="webClientId">675774672524-00b0qd58be878eogk26nclopjrlsmok2.apps.googleusercontent.com</string>
+    <string name="webClientId" translatable="false">675774672524-00b0qd58be878eogk26nclopjrlsmok2.apps.googleusercontent.com</string>
 
 </resources>

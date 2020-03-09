@@ -1,96 +1,97 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 3/8/20 11:40 AM
-  ~ Last modified 3/8/20 11:25 AM
+  ~ Created by Elias Fazel on 3/9/20 9:19 AM
+  ~ Last modified 3/9/20 8:49 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
   -->
 
 <resources>
+
     <string name="app_name">Super Shortcuts</string>
-    <string name="pref">Preferences</string>
-    <string name="done">Done</string>
-    <string name="edit_advanced_shortcut">Edit: </string>
-    <string name="option">Option for </string>
-    <string name="deleteCategory">Delete</string>
-    <string name="addSuper">Add to Super Shortcut</string>
-    <string name="addToDesktop">Add to Home Screen</string>
-    <string name="not_install">The Application is Not Available</string>
-    <string name="maximum">Estimated Amount&#8194; </string>
-    <string name="license_validating">Retrieving License Information from Google Play Store</string>
+    <string name="pref">Einstellungen</string>
+    <string name="done">Abgeschlossen!</string>
+    <string name="edit_advanced_shortcut">Bearbeiten: </string>
+    <string name="option">Option für </string>
+    <string name="deleteCategory">Löschen</string>
+    <string name="addSuper">Zu Super Shortcut hinzufügen</string>
+    <string name="addToDesktop">Zum Startbildschirm hinzufügen</string>
+    <string name="not_install">Die App ist nicht verfügbar</string>
+    <string name="maximum">Geschätzt &#8194; </string>
+    <string name="license_validating">Lizenzüberprüfung via Google Play</string>
     <string name="floatingTitle">Float It 🎈 </string>
-    <string name="floatingDesc">Quickly Switch Apps by Unlimited Floating Shortcuts</string>
-    <string name="smartTitle">Smart Pick</string>
-    <string name="smartDesc">I Will Select Essential Apps</string>
-    <string name="customIconTitle">Theme of Icons</string>
-    <string name="customIconDesc">Click to Select Package of Icons</string>
-    <string name="defaultTheme">Set Default Theme of Icons</string>
-    <string name="cautionShortcutsHome">Move Super Shortcuts Icon to Home Screen</string>
+    <string name="floatingDesc">Wechselte schnell Apps mit Unlimited Floating Shortcuts</string>
+    <string name="smartTitle">Intelligente Auswahl</string>
+    <string name="smartDesc">Es werden nur wichtige Apps gewählt</string>
+    <string name="customIconTitle">Design der Icons</string>
+    <string name="customIconDesc">Klicke um ein Icon-Paket zu wählen</string>
+    <string name="defaultTheme">Als standard Icon-Design festlegen</string>
+    <string name="cautionShortcutsHome">Super Shortcuts Icon auf dem Startbildschirm hinzufügen</string>
     <string name="smartPermission">
         <![CDATA[
                 <br/>
-                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
+                Diese Berechtigung berechtigt die App auf eine Liste der meist genutzen Apps zuzugreifen und sie als <b>Super Shortcuts</b> zu speichern.
                 <br/><br/>
-                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
+                <small>Nach dem Aktivieren der Berechtigung: App neustarten und auf die <b>Abgeschlossem!</b> Meldung warten.</small>
                 <br/>
         ]]>
     </string>
-    <string name="advanceTitle">Category Shortcuts</string>
+    <string name="advanceTitle">Kategorie Shortcuts</string>
     <string name="mixTitle">Mix Shortcuts</string>
-    <string name="mixDesc">Combine App/Category/Split Shortcuts</string>
-    <string name="mixHint">Mix Shortcuts | Combine App/Category/Split Shortcuts</string>
-    <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
-    <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
+    <string name="mixDesc">Kombinierte App/Category/Split Shortcuts</string>
+    <string name="mixHint">Mix Shortcuts | Kombinierte App/Category/Split Shortcuts</string>
+    <string name="mixShortcutsEnable">Mix Shortcuts | Aktiviert</string>
+    <string name="mixShortcutsDisable">Mix Shortcuts | Deaktiviert</string>
     <string name="splitTitlePref">Split Shortcuts</string>
     <string name="splitTitle">Split Super Shortcuts ᴾᴿᴼ</string>
-    <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
+    <string name="splitPermission">Die Bedienungshilfe-Services berechtigt die App Multi-Fenster zu nutzen</string>
     <string name="shortcut">SHORTCUTS</string>
     <string name="apps">App</string>
     <string name="split">Split</string>
-    <string name="category">Category</string>
+    <string name="category">Kategorie</string>
     <string name="appsEnable">App Shortcuts</string>
     <string name="splitEnable">Split Shortcuts</string>
-    <string name="categoryEnable">Category Shortcuts</string>
-    <string name="typeCategoryName">First Type Category Name</string>
-    <string name="typeSplitName">First Type Split Name</string>
+    <string name="categoryEnable">Kategorie Shortcuts</string>
+    <string name="typeCategoryName">Erstmaliger Kategoriename </string>
+    <string name="typeSplitName">Erstmaliger Splitname</string>
     <string name="grant">Grant Permission</string>
     <string name="split_service_desc">
-        Split Super Shortcuts ᴾᴿᴼ | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+        Split Super Shortcuts ᴾᴿᴼ | Diese Berechtigung berechtigt die App Multi-Fenster zu nutzen &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen (Android 7 &amp; höher)\n\nâ™¿ Wie hilft die App Behinderten?\nIt Es ist für Behinderte unter Umständen schwer eine App zu öffnen oder zwischen Apps zu wechseln. Die Bedienhilfe-Services erlauben der App den Multi-Fenster Modus zu starten.
     </string>
     <string name="split_service_summary">
-        Split Super Shortcuts ᴾᴿᴼ | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)
+        Split Super Shortcuts ᴾᴿᴼ | Diese Berechtigung erlaubt der App den Multi-Fenster Modus zu starten. &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen (Android 7 &amp; höher)
     </string>
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)<br/><br/>
-                ♿ <b>How it Helps People with Disability</b>?<br/>
-                It is Difficult for People with Disability to Open an App Or Switch Between Apps.<br/>
-                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.<br/>
+                Diese Berechtigung erlaubt der App den Multi-Fenster Modus zu starten. &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen.<br/>(<big>Android 7 & höher</big>)<br/><br/>
+                ♿ <b>Wie hilft es Behinderten</b>?<br/>
+                Es ist für Behinderte unter Umständen schwer eine App zu öffnen oder zwischen Apps zu wechseln.<br/>
+                Daher verwendet die App die Bedienhilfe-Services um den Multi-Fenster Modus zu nutzen.<br/>
         ]]>
     </string>
 
     <string name="smartInfo">
       <![CDATA[
-               <b><p>Apps Selected by Smart Pick</p></b>
-               <small>Go to Preferences to Disable it</small>
+               <b><p>Durch die intelligente Auswahl gewählte Apps</p></b>
+               <small>Kann in den Einstellungen deaktiviert werden.</small>
        ]]>
     </string>
     <string name="mixDemoDescriptions">
         <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
-            💠 <big>Combine App/Split/Category Shortcuts Together</big> 💠 <br/>
-            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
-            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
-            &bull; <b>Category Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Ersetzte mehrere Shortcuts und Ordner durch einen Super Shortcut mit erweiterter Funktionalität<br/>
+            🔵 <big>Kombiniere App/Split/Category Shortcuts</big> 💠 <br/>
+            &bull; <b>App Shortcuts</b>: Öffne eine App durch Super Shortcut<br/>
+            &bull; <b>Split Shortcuts</b>: Zwei Apps im Split-Screen Modus gleichzeitig öffnen (Multi-Fenster)<br/>
+            &bull; <b>Kategorie Shortcuts</b>: Öffne eine Liste der Apps von Super Shortcut (Apps antippen und halten um sie im Split-Screen Modus zu öffnen)<br/>
         ]]>
     </string>
 
-    <string name="purchase"> Purchase 💸 </string>
-    <string name="donate"> Send Gift 🎁 </string>
-    <string name="restorePurchase">ℹ Click To Restore The Item ℹ</string>
-    <string name="thanks">Thanks in Advance 🙏 </string>
+    <string name="purchase"> Kaufen 💸  </string>
+    <string name="donate"> Freiwillige Spende 🎁 </string>
+    <string name="restorePurchase">ℹ Käufe Wiederherstellen ℹ</string>
+    <string name="thanks">Danke im voraus 🙏 </string>
+
 </resources>

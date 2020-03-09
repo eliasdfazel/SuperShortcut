@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 1/3/20 6:28 PM
- * Last modified 1/3/20 6:25 PM
+ * Created by Elias Fazel on 3/9/20 9:19 AM
+ * Last modified 3/9/20 9:12 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -79,7 +79,7 @@ public class SettingGUI extends FragmentActivity {
     Activity activity;
     Context context;
 
-    RelativeLayout smartView, splitView, mixView, customIconView, supportView, newsView,
+    RelativeLayout smartView, splitView, mixView, customIconView, supportView, newsView, translatorView,
             floatingView;
     ImageView customIconIcon,
             prefIconNews;
@@ -123,6 +123,7 @@ public class SettingGUI extends FragmentActivity {
         customIconView = (RelativeLayout) findViewById(R.id.customIconView);
         supportView = (RelativeLayout) findViewById(R.id.supportView);
         newsView = (RelativeLayout) findViewById(R.id.newsView);
+        translatorView = (RelativeLayout) findViewById(R.id.translatorView);
         floatingView = (RelativeLayout) findViewById(R.id.floatingView);
 
         customIconIcon = (ImageView) findViewById(R.id.customIconIcon);
@@ -300,6 +301,13 @@ public class SettingGUI extends FragmentActivity {
                     }
                 });
                 builder.show();
+            }
+        });
+
+        translatorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda_translator))));
             }
         });
 
