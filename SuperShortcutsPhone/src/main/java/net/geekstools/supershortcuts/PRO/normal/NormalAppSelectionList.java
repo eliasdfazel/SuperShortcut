@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 3/8/20 1:00 PM
- * Last modified 3/8/20 1:00 PM
+ * Created by Elias Fazel on 4/14/20 9:27 PM
+ * Last modified 4/14/20 9:27 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -34,7 +34,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,7 +75,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -86,9 +84,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import net.geekstools.floatshort.PRO.Util.IAP.Util.PurchasesCheckpoint;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
@@ -109,7 +104,6 @@ import net.geekstools.supershortcuts.PRO.normal.nav.SavedListAdapter;
 import net.geekstools.supershortcuts.PRO.normal.nav.SelectionListAdapter;
 import net.geekstools.supershortcuts.PRO.split.SplitShortcuts;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -637,35 +631,6 @@ public class NormalAppSelectionList extends AppCompatActivity implements View.On
                                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                     if (firebaseUser != null) {
                                         functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.getEmail());
-
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    File betaFile = new File("/data/data/" + getPackageName() + "/shared_prefs/.UserInformation.xml");
-                                                    Uri uriBetaFile = Uri.fromFile(betaFile);
-                                                    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-
-                                                    StorageReference storageReference = firebaseStorage.getReference("/Users/" + "API" + functionsClass.returnAPI() + "/" +
-                                                            functionsClass.readPreference(".UserInformation", "userEmail", null));
-                                                    UploadTask uploadTask = storageReference.putFile(uriBetaFile);
-
-                                                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception exception) {
-                                                            exception.printStackTrace();
-                                                        }
-                                                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                                        @Override
-                                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                                                        }
-                                                    });
-                                                } catch (Exception e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }, 333);
 
                                         if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
                                             BillingClient billingClient = BillingClient.newBuilder(NormalAppSelectionList.this).setListener(new PurchasesUpdatedListener() {
