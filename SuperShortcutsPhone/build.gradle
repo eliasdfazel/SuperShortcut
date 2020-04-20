@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/20/20 2:06 AM
+ * Last modified 4/20/20 2:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -37,7 +37,15 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+            manifestPlaceholders = [enableCrashReporting: "true"]
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+
+            manifestPlaceholders = [enableCrashReporting: "false"]
         }
     }
 
@@ -46,25 +54,22 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     flavorDimensions "SuperShortcuts"
     productFlavors {
-        releaseProConfig {
+        productionConfiguration {
             dimension "SuperShortcuts"
 
             versionNameSuffix '[PRO][Android][Phone]'
         }
-        betaProConfig {
+        betaConfiguration {
             dimension "SuperShortcuts"
 
             versionNameSuffix '[PRO][Android][Phone][BETA]'
         }
-    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE-FIREBASE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/DEPENDENCIES'
     }
 }
 
