@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 11:29 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:apps="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/waitingView"
+            android:layout_width="321dp"
+            android:layout_height="321dp"
+            android:padding="33dp"
+
+            apps:layout_constraintTop_toTopOf="parent"
+            apps:layout_constraintBottom_toBottomOf="parent"
+            apps:layout_constraintStart_toStartOf="parent"
+            apps:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemTitleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:gravity="center_vertical"
+            android:text="@string/app_name"
+            android:textSize="57sp"
+            android:fontFamily="@font/upcil"
+
+            apps:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemDescriptionView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:textSize="17sp"
+            android:linksClickable="true"
+            android:autoLink="web"
+            android:textColorLink="@color/default_color_light"
+
+            apps:layout_constraintTop_toBottomOf="@id/itemTitleView"/>
+
+        <include
+            layout="@layout/in_app_billing_purchase_button"
+
+            android:id="@+id/centerPurchaseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+
+            apps:layout_constraintTop_toBottomOf="@id/itemDescriptionView"/>
+
+        <HorizontalScrollView
+            android:id="@+id/itemScreenshotsView"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:scrollbars="none"
+            android:cacheColorHint="@android:color/transparent"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="13dp"
+            android:requiresFadingEdge="horizontal"
+
+            apps:layout_constraintTop_toBottomOf="@id/centerPurchaseButton">
+
+            <LinearLayout
+                android:id="@+id/itemScreenshotsListView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <include
+            layout="@layout/in_app_billing_purchase_button"
+
+            android:id="@+id/bottomPurchaseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+
+            apps:layout_constraintTop_toBottomOf="@id/itemScreenshotsView"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

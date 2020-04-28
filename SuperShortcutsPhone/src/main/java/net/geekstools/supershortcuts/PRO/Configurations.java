@@ -1,8 +1,8 @@
 /*
- * Copyright © 2019 By Geeks Empire.
+ * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/11/19 7:22 PM
- * Last modified 11/11/19 7:21 PM
+ * Created by Elias Fazel
+ * Last modified 4/28/20 12:00 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,17 +17,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.TypedValue;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.FirebaseApp;
 
-import net.geekstools.supershortcuts.PRO.Util.Functions.FunctionsClass;
-import net.geekstools.supershortcuts.PRO.Util.Functions.PublicVariable;
-import net.geekstools.supershortcuts.PRO.advanced.AdvanceShortcuts;
-import net.geekstools.supershortcuts.PRO.normal.NormalAppSelectionList;
-import net.geekstools.supershortcuts.PRO.split.SplitShortcuts;
-
-import io.fabric.sdk.android.Fabric;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppSelectionList;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 
 public class Configurations extends Activity {
 
@@ -36,10 +32,6 @@ public class Configurations extends Activity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
-                .build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build());
         FirebaseApp.initializeApp(getApplicationContext());
 
         TypedValue tv = new TypedValue();

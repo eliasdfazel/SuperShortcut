@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 3/9/20 9:19 AM
-  ~ Last modified 3/9/20 9:18 AM
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 11:54 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -10,13 +10,23 @@
 
 <resources>
 
+    <string name="purchaseFlowDisrupted" translatable="false">Purchase Flow Disrupted</string>
+    <string name="retry" translatable="false">Retry Now</string>
+
     <string name="like" translatable="false">Follow App Page</string>
-    <string name="shareit" translatable="false">Rate &amp; Share</string>
+    <string name="share" translatable="false">Share With Friends</string>
     <string name="invitation_title" translatable="false">
         *Install Super Shortcut App*
     </string>
     <string name="invitation_message" translatable="false">
         By This App you can Replace Several Home Screen Shortcuts to One… Quick Access to Apps &amp; Enjoy your Wallpapers!
+    </string>
+
+    <string name="shareTitle" translatable="false">
+        #FloatIt To Become Master Of Multitasking ⚡
+    </string>
+    <string name="shareSummary" translatable="false">
+        Only One Click to Switch Apps by Floating Shortcuts, Floating Folders &amp; Floating Widgets | By @GeeksEmpire
     </string>
 
     <string name="error" translatable="false">Error Occurred</string>
@@ -63,7 +73,7 @@
     <string name="supportDesc" translatable="false">Help &amp; Feedback</string>
     <string name="newupdate" translatable="false">Install Update</string>
     <string name="updateAvailable" translatable="false">New Update Available | Click Here to Install…!</string>
-    <string name="rate" translatable="false">Please Rate &amp; Write Review</string>
+    <string name="rate" translatable="false">Rate Me Five Star</string>
     <string name="support" translatable="false">Support@GeeksEmpire.net</string>
     <string name="feedback_tag" translatable="false">Super Shortcuts ᴾᴿᴼ Direct Help | Feedback</string>
     <string name="alphaTitle" translatable="false">Thanks for Joining Beta Program. Always Appreciate your Feedback!</string>
@@ -73,7 +83,7 @@
     <string name="link_facebook_app" translatable="false">https://www.facebook.com/SuperShortcuts</string>
     <string name="link_xda" translatable="false">https://play.google.com/store/apps/details?id=net.geekstools.floatshort.PRO</string>
     <string name="link_xda_translator" translatable="false">https://forum.xda-developers.com/showpost.php?p=72735816&amp;postcount=4</string>
-    <string name="link_play_store" translatable="false">https://play.google.com/store/apps/details?id=</string>
+    <string name="play_store_link" translatable="false">https://play.google.com/store/apps/details?id=</string>
     <string name="link_floating_shortcuts" translatable="false">https://play.google.com/store/apps/details?id=net.geekstools.floatshort.PRO</string>
     <string name="link_alpha" translatable="false">https://play.google.com/apps/testing/net.geekstools.supershortcuts.PRO</string>
 

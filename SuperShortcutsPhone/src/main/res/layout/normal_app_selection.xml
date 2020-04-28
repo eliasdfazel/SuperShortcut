@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 3/8/20 1:00 PM
-  ~ Last modified 3/8/20 12:46 PM
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 10:55 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".normal.NormalAppSelectionList">
+    tools:context=".ApplicationsShortcuts.NormalAppSelectionList">
 
     <ScrollView
         android:id="@+id/scrollListFav"
@@ -84,7 +84,7 @@
         android:background="@android:color/transparent"
         android:gravity="center">
 
-        <net.geekstools.supershortcuts.PRO.normal.ui.ConfirmButton
+        <net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.ui.ConfirmButton
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_centerInParent="true"
@@ -235,7 +235,7 @@
             android:layout_marginBottom="30dp"
             android:gravity="center"
             android:padding="7dp"
-            android:shadowColor="@color/trans_dark_high"
+            android:shadowColor="@color/dark_transparent_high"
             android:shadowRadius="19"
             android:text="@string/app_name"
             android:textColor="@color/darker"

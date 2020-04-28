@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 3/8/20 1:00 PM
-  ~ Last modified 3/8/20 12:52 PM
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 10:55 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light"
-    tools:context=".advanced.AdvanceShortcuts">
+    tools:context=".FoldersShortcuts.AdvanceShortcuts">
 
     <ScrollView
         android:id="@+id/list"
@@ -189,7 +189,7 @@
             android:layout_marginBottom="30dp"
             android:gravity="center"
             android:padding="7dp"
-            android:shadowColor="@color/trans_dark"
+            android:shadowColor="@color/dark_transparent"
             android:shadowRadius="25"
             android:text="@string/splitTitlePref"
             android:textColor="@color/darker"

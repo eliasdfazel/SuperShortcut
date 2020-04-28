@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 11:57 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:apps="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shareFloatIt"
+        android:layout_width="0dp"
+        android:layout_height="57dp"
+        android:layout_margin="11dp"
+        android:textAllCaps="false"
+        android:text="@string/share"
+        android:textSize="19sp"
+        android:textColor="@color/light"
+        android:textStyle="bold"
+        android:fontFamily="@font/upcil"
+
+        apps:layout_constraintTop_toTopOf="parent"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintWidth_percent="0.47"
+
+        apps:icon="@drawable/w_sharing"
+        apps:iconSize="19dp"
+        apps:iconTint="@color/light"
+        apps:iconGravity="start"
+        apps:rippleColor="@color/default_color"
+        apps:backgroundTint="@color/default_color_game"
+        apps:elevation="13dp"
+        apps:cornerRadius="51dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/rateFloatIt"
+        android:layout_width="0dp"
+        android:layout_height="57dp"
+        android:layout_margin="11dp"
+        android:textAllCaps="false"
+        android:text="@string/rate"
+        android:textSize="19sp"
+        android:textColor="@color/light"
+        android:textStyle="bold"
+        android:fontFamily="@font/upcil"
+
+        apps:layout_constraintTop_toTopOf="parent"
+        apps:layout_constraintEnd_toEndOf="parent"
+        apps:layout_constraintWidth_percent="0.47"
+
+        apps:icon="@drawable/w_rate"
+        apps:iconSize="19dp"
+        apps:iconTint="@color/light"
+        apps:iconGravity="end"
+        apps:rippleColor="@color/default_color"
+        apps:backgroundTint="@color/default_color_game"
+        apps:elevation="13dp"
+        apps:cornerRadius="51dp" />
+
+    <FrameLayout
+        android:id="@+id/fragmentPlaceHolder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+
+        apps:layout_constraintTop_toBottomOf="@id/shareFloatIt"
+        apps:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

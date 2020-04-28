@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright © 2019 By Geeks Empire.
+  ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 11/11/19 7:22 PM
-  ~ Last modified 11/11/19 7:21 PM
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 10:55 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -21,7 +21,7 @@
             <gradient
                 android:angle="270"
                 android:endColor="@color/light"
-                android:startColor="@color/trans_dark_high_twice" />
+                android:startColor="@color/dark_transparent_high_twice" />
         </shape>
     </item>
 

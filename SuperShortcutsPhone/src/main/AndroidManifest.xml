@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 3/8/20 1:00 PM
-  ~ Last modified 3/8/20 11:48 AM
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 11:37 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -72,13 +72,13 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".normal.NormalAppSelectionList"
+            android:name=".ApplicationsShortcuts.NormalAppSelectionList"
             android:resizeableActivity="true"
             android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".normal.AppShortcutsMediatedActivity"
+            android:name=".ApplicationsShortcuts.AppShortcutsMediatedActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
@@ -93,18 +93,18 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".advanced.AdvanceShortcuts"
+            android:name=".FoldersShortcuts.AdvanceShortcuts"
             android:resizeableActivity="true"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".advanced.AdvanceAppSelectionList" />
+            android:name=".FoldersShortcuts.AdvanceAppSelectionList" />
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".advanced.LoadCategoryItems"
+            android:name=".FoldersShortcuts.LoadCategoryItems"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/app_name"
@@ -121,18 +121,18 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".split.SplitShortcuts"
+            android:name=".SplitShortcuts.SplitShortcuts"
             android:resizeableActivity="true"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".split.SplitAppSelectionList" />
+            android:name=".SplitShortcuts.SplitAppSelectionList" />
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".split.SplitTransparentPair"
+            android:name=".SplitShortcuts.SplitTransparentPair"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -150,7 +150,7 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".split.SplitTransparentSingle"
+            android:name=".SplitShortcuts.SplitTransparentSingle"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -167,7 +167,7 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".Util.SettingGUI"
+            android:name=".Preferences.SettingGUI"
             android:label="@string/pref">
             <intent-filter
                 android:autoVerify="true"
@@ -191,7 +191,7 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".DeepLinkedShortcuts"
+            android:name=".Utils.RemoteTask.DeepLinkedShortcuts"
             android:theme="@style/Transparent">
             <intent-filter
                 android:autoVerify="true"
@@ -210,19 +210,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Utils.InAppStore.DigitalAssets.InitializeInAppBilling"
             android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".Util.IAP.InAppBilling"
             android:theme="@style/GeeksEmpire.Material.IAP.DARK">
             <intent-filter>
-                <action android:name="RESPONSE_OWNED" />
+                <action android:name="In_App_Store"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
         <service
-            android:name=".split.SplitScreenService"
+            android:name=".SplitShortcuts.SplitScreenService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -232,9 +231,9 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/split_screen_config" />
         </service>
-        <service android:name=".LicenseValidator" />
+        <service android:name=".Utils.RemoteProcess.LicenseValidator" />
         <service
-            android:name=".CloudNotificationHandler"
+            android:name=".Utils.RemoteProcess.CloudNotificationHandler"
             android:icon="@drawable/ic_launcher">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

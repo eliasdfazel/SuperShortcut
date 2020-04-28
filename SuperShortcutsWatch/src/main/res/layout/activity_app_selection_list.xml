@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright © 2019 By Geeks Empire.
+  ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 11/11/19 7:22 PM
-  ~ Last modified 11/11/19 7:21 PM
+  ~ Created by Elias Fazel
+  ~ Last modified 4/28/20 10:18 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".normal.NormalAppSelectionList">
+    tools:context=".ApplicationsShortcuts.NormalAppSelectionList">
 
     <ScrollView
         android:id="@+id/scrollListFav"
@@ -88,7 +88,7 @@
         android:background="@android:color/transparent"
         android:gravity="center">
 
-        <net.geekstools.supershortcuts.PRO.normal.ui.ConfirmButton
+        <net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.ui.ConfirmButton
             android:layout_width="37dp"
             android:layout_height="37dp"
             android:layout_centerInParent="true"
