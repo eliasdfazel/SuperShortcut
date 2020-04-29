@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 11:49 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -80,7 +80,7 @@ import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitScreenService;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitTransparentPair;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
-import net.geekstools.supershortcuts.PRO.Utils.CustomIconManager.LoadCustomIcons;
+import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;

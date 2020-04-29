@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 2:26 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -57,10 +57,10 @@ import net.geekstools.supershortcuts.PRO.FoldersShortcuts.nav.AdvanceSavedListAd
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.nav.AdvanceSelectionListAdapter;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
-import net.geekstools.supershortcuts.PRO.Utils.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
+import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 
 import java.util.ArrayList;
@@ -128,7 +128,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         nestedIndexScrollView = (ScrollView) findViewById(R.id.nestedIndexScrollView);
         indexView = (LinearLayout) findViewById(R.id.side_index);
         popupIndex = (TextView) findViewById(R.id.popupIndex);
-        wholeAuto = (RelativeLayout) findViewById(R.id.wholeAuto);
+        wholeAuto = (RelativeLayout) findViewById(R.id.MainView);
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();

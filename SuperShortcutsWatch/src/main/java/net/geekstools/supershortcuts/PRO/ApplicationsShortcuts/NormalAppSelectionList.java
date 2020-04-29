@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 11:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -53,8 +53,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.nav.SavedListAdapter;
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.nav.SelectionListAdapter;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedListAdapter;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.LicenseValidator;
 import net.geekstools.supershortcuts.PRO.R;

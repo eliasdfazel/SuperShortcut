@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 2:04 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -58,7 +58,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppSelectionList;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
@@ -509,9 +509,9 @@ public class SettingGUI extends FragmentActivity {
         super.onBackPressed();
         try {
             SharedPreferences sharedPreferences = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE);
-            String tabView = sharedPreferences.getString("TabsView", NormalAppSelectionList.class.getSimpleName());
-            if (tabView.equals(NormalAppSelectionList.class.getSimpleName())) {
-                startActivity(new Intent(getApplicationContext(), NormalAppSelectionList.class),
+            String tabView = sharedPreferences.getString("TabsView", NormalAppShortcutsSelectionList.class.getSimpleName());
+            if (tabView.equals(NormalAppShortcutsSelectionList.class.getSimpleName())) {
+                startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
             } else if (tabView.equals(SplitShortcuts.class.getSimpleName())) {
                 startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
@@ -521,7 +521,7 @@ public class SettingGUI extends FragmentActivity {
                 startActivity(new Intent(getApplicationContext(), AdvanceShortcuts.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
             } else {
-                startActivity(new Intent(getApplicationContext(), NormalAppSelectionList.class),
+                startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
             }
             this.finish();
@@ -571,9 +571,9 @@ public class SettingGUI extends FragmentActivity {
             case android.R.id.home: {
                 try {
                     SharedPreferences sharedPreferences = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE);
-                    String tabView = sharedPreferences.getString("TabsView", NormalAppSelectionList.class.getSimpleName());
-                    if (tabView.equals(NormalAppSelectionList.class.getSimpleName())) {
-                        startActivity(new Intent(getApplicationContext(), NormalAppSelectionList.class),
+                    String tabView = sharedPreferences.getString("TabsView", NormalAppShortcutsSelectionList.class.getSimpleName());
+                    if (tabView.equals(NormalAppShortcutsSelectionList.class.getSimpleName())) {
+                        startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
                     } else if (tabView.equals(SplitShortcuts.class.getSimpleName())) {
                         startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
@@ -583,7 +583,7 @@ public class SettingGUI extends FragmentActivity {
                         startActivity(new Intent(getApplicationContext(), AdvanceShortcuts.class),
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
                     } else {
-                        startActivity(new Intent(getApplicationContext(), NormalAppSelectionList.class),
+                        startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
                     }
                     this.finish();

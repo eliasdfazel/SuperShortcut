@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 11:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,7 +48,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.nav.ItemListAdapter;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.ItemListAdapter;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
 

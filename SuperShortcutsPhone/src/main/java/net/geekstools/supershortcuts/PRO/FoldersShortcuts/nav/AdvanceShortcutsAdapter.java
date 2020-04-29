@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 2:26 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -37,9 +37,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceAppSelectionList;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
-import net.geekstools.supershortcuts.PRO.Utils.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
+import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 
 import java.io.File;
 import java.util.ArrayList;

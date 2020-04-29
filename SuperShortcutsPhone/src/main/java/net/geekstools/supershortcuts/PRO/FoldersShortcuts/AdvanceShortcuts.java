@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 2:26 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -77,7 +77,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppSelectionList;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.nav.AdvanceShortcutsAdapter;
@@ -85,7 +85,6 @@ import net.geekstools.supershortcuts.PRO.Preferences.SettingGUI;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
-import net.geekstools.supershortcuts.PRO.Utils.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
@@ -93,6 +92,7 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Initiali
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint;
 import net.geekstools.supershortcuts.PRO.Utils.SimpleGestureFilterSwitch;
+import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 
 import java.util.ArrayList;
@@ -161,7 +161,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
         desc = (TextView) findViewById(R.id.desc);
         counterView = (TextView) findViewById(R.id.counter);
         loadIcon = (ImageView) findViewById(R.id.loadLogo);
-        wholeAuto = (RelativeLayout) findViewById(R.id.wholeAuto);
+        wholeAuto = (RelativeLayout) findViewById(R.id.MainView);
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();
@@ -317,7 +317,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(NormalAppSelectionList.class,
+                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
                 } catch (Exception e) {
                     e.printStackTrace();

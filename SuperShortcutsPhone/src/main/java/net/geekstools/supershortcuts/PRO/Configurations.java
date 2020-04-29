@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 2:23 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,13 +19,22 @@ import android.util.TypedValue;
 
 import com.google.firebase.FirebaseApp;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppSelectionList;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 
 public class Configurations extends Activity {
+
+    /*
+    *
+    *
+    *
+    * Add Google Sign In Here
+    *
+    *
+    * */
 
     FunctionsClass functionsClass;
 
@@ -64,9 +73,9 @@ public class Configurations extends Activity {
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE);
-        String tabView = sharedPreferences.getString("TabsView", NormalAppSelectionList.class.getSimpleName());
-        if (tabView.equals(NormalAppSelectionList.class.getSimpleName())) {
-            startActivity(new Intent(getApplicationContext(), NormalAppSelectionList.class),
+        String tabView = sharedPreferences.getString("TabsView", NormalAppShortcutsSelectionList.class.getSimpleName());
+        if (tabView.equals(NormalAppShortcutsSelectionList.class.getSimpleName())) {
+            startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),
                     ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, android.R.anim.fade_out).toBundle());
         } else if (tabView.equals(SplitShortcuts.class.getSimpleName())) {
             startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
@@ -76,7 +85,7 @@ public class Configurations extends Activity {
             startActivity(new Intent(getApplicationContext(), AdvanceShortcuts.class),
                     ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, android.R.anim.fade_out).toBundle());
         } else {
-            startActivity(new Intent(getApplicationContext(), NormalAppSelectionList.class),
+            startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),
                     ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, android.R.anim.fade_out).toBundle());
         }
         finish();

@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/28/20 10:55 AM
+  ~ Last modified 4/29/20 2:07 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -12,11 +12,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:apps="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/wholeAuto"
+    android:id="@+id/MainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".ApplicationsShortcuts.NormalAppSelectionList">
+    tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionList">
 
     <ScrollView
         android:id="@+id/scrollListFav"
@@ -54,27 +54,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <ScrollView
-        android:id="@+id/nestedIndexScrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignEnd="@id/scrollListFav"
-        android:foregroundGravity="center_vertical"
-        android:background="@android:color/transparent"
-        android:visibility="invisible">
-
-        <LinearLayout
-            android:id="@+id/side_index"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:background="@android:color/transparent"
-            android:orientation="vertical" />
-    </ScrollView>
-
     <RelativeLayout
         android:id="@+id/confirmLayout"
         android:layout_width="140dp"
@@ -84,7 +63,7 @@
         android:background="@android:color/transparent"
         android:gravity="center">
 
-        <net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.ui.ConfirmButton
+        <net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.ConfirmButton
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_centerInParent="true"
@@ -192,17 +171,14 @@
             apps:elevation="13dp"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/popupIndex"
-        android:layout_width="77dp"
-        android:layout_height="77dp"
-        android:layout_toStartOf="@id/nestedIndexScrollView"
-        android:gravity="center"
-        android:textColor="@color/light"
-        android:textSize="29sp"
-        android:typeface="monospace"
-        android:background="@drawable/ic_launcher_balloon"
-        android:visibility="invisible" />
+    <!-- Indexed Popup Fast Scroller  -->
+    <include
+        layout="@layout/fast_scroller_index_view"
+
+        android:id="@+id/fastScrollerIndexInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <!-- Indexed Popup Fast Scroller  -->
 
     <RelativeLayout
         android:id="@+id/loadingSplash"

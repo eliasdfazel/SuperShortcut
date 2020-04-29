@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 10:44 AM
+ * Last modified 4/29/20 2:26 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -22,8 +22,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 
 public class LoadCategoryItems extends Activity {
 
