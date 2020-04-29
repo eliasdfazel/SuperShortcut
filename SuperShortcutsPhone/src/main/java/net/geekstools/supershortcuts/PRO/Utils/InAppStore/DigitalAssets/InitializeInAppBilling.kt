@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/29/20 11:19 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -155,11 +155,13 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
             override fun onDismissed(transientBottomBar: Snackbar?, transitionEvent: Int) {
                 super.onDismissed(transientBottomBar, transitionEvent)
 
-                startActivity(Intent(applicationContext, InitializeInAppBilling::class.java).apply {
-                    putExtra(InitializeInAppBilling.Entry.PurchaseType, intent.getStringExtra(Entry.PurchaseType))
-                    putExtra(InitializeInAppBilling.Entry.ItemToPurchase, intent.getStringExtra(Entry.ItemToPurchase))
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.down_up, android.R.anim.fade_out).toBundle())
+                if (!this@InitializeInAppBilling.isFinishing) {
+                    startActivity(Intent(applicationContext, InitializeInAppBilling::class.java).apply {
+                        putExtra(InitializeInAppBilling.Entry.PurchaseType, intent.getStringExtra(Entry.PurchaseType))
+                        putExtra(InitializeInAppBilling.Entry.ItemToPurchase, intent.getStringExtra(Entry.ItemToPurchase))
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.down_up, android.R.anim.fade_out).toBundle())
+                }
             }
         })
 
