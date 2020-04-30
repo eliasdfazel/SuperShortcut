@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 4/30/20 7:15 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:apps="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialogueView"
+    android:layout_width="363dp"
+    android:layout_height="100dp"
+    android:gravity="center_vertical"
+    android:padding="11dp"
+    android:background="@drawable/dialogue_rounded_background">
+
+    <net.geeksempire.loadingspin.SpinKitView
+        apps:SpinKit_Style="ChasingDots"
+        apps:SpinKit_Color="@color/default_color_game"
+        android:id="@+id/waitLoading"
+        android:layout_width="97dp"
+        android:layout_height="97dp"
+        android:padding="11dp"
+        android:background="@android:color/transparent"/>
+
+    <TextView
+        android:id="@+id/waitTextTitle"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_toEndOf="@id/waitLoading"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:padding="3dp"
+        android:text="@string/signinTitle"
+        android:textColor="@color/dark"
+        android:textSize="19sp" />
+
+    <TextView
+        android:id="@+id/waitTextMessage"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_below="@id/waitTextTitle"
+        android:layout_toEndOf="@id/waitLoading"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:text="@string/signinMessage"
+        android:textColor="@color/dark"
+        android:textSize="12sp" />
+</RelativeLayout>

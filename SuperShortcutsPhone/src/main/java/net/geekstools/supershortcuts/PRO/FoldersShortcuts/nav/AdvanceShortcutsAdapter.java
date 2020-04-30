@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:25 AM
+ * Last modified 4/30/20 6:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -387,7 +387,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                     String[] categoryChoices = new String[]{
                             context.getString(R.string.addSuper),
                             context.getString(R.string.addToDesktop),
-                            context.getString(R.string.deleteCategory)
+                            context.getString(R.string.deleteFolder)
                     };
                     final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle(Html.fromHtml("<small>" + context.getString(R.string.option) + " " + "<b>" + navDrawerItems.get(position).getCategory().split("_")[0] + "</b></small>", Html.FROM_HTML_MODE_LEGACY));

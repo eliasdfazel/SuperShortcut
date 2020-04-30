@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/28/20 11:54 AM
+  ~ Last modified 4/30/20 6:50 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -12,6 +12,10 @@
 
     <string name="purchaseFlowDisrupted" translatable="false">Purchase Flow Disrupted</string>
     <string name="retry" translatable="false">Retry Now</string>
+
+    <string name="signinTitle" translatable="false">Welcome to Geeks Empire!</string>
+    <string name="signinMessage" translatable="false">Thanks for Joining to Our #SuperShortcuts 🦸‍♀️  Community.</string>
+    <string name="signinFinished" translatable="false"> ⚡ Become Master Of Multitasking ⚡ </string>
 
     <string name="like" translatable="false">Follow App Page</string>
     <string name="share" translatable="false">Share With Friends</string>
@@ -58,7 +62,7 @@
     <string name="changelog" translatable="false">
         <![CDATA[
             🔵 <b><big>Mix Shortcuts 💠</big></b><br/>
-            &bull; Combine App/Split/Category Shortcuts Together<br/>
+            &bull; Combine App/Split/Folder Shortcuts Together<br/>
             &bull; Go to Preferences ⚙ to Enable It.<br/>
             🔵 <b>Theme of Icons (Package of Icons)</b><br/>
             &bull; Go to Preference ⚙ to Select your Favorite Package of Icons<br/>

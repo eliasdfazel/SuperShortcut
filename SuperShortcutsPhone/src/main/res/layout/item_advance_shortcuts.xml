@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/28/20 10:55 AM
+  ~ Last modified 4/30/20 6:35 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -37,7 +37,7 @@
         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:focusable="true"
         android:gravity="center"
-        android:hint="@string/typeCategoryName"
+        android:hint="@string/typeFolderName"
         android:imeOptions="actionDone"
         android:maxLines="1"
         android:padding="5dp"

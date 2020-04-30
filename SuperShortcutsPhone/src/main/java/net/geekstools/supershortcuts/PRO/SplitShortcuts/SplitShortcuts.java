@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:31 AM
+ * Last modified 4/30/20 6:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -79,7 +79,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
-import net.geekstools.supershortcuts.PRO.Configurations;
+import net.geekstools.supershortcuts.PRO.EntryConfigurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
@@ -516,7 +516,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                         editor.apply();
                     }
 
-                    Intent intent = new Intent(getApplicationContext(), Configurations.class);
+                    Intent intent = new Intent(getApplicationContext(), EntryConfigurations.class);
                     startActivity(intent, ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, android.R.anim.fade_out).toBundle());
                 } else {
 

@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 3/9/20 9:19 AM
-  ~ Last modified 3/9/20 8:48 AM
+  ~ Created by Elias Fazel
+  ~ Last modified 4/30/20 6:35 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -15,7 +15,7 @@
     <string name="done">Done</string>
     <string name="edit_advanced_shortcut">Edit: </string>
     <string name="option">Option for </string>
-    <string name="deleteCategory">Delete</string>
+    <string name="deleteFolder">Delete</string>
     <string name="addSuper">Add to Super Shortcut</string>
     <string name="addToDesktop">Add to Home Screen</string>
     <string name="not_install">The Application is Not Available</string>
@@ -38,10 +38,10 @@
                 <br/>
         ]]>
     </string>
-    <string name="advanceTitle">Category Shortcuts</string>
+    <string name="advanceTitle">Folder Shortcuts</string>
     <string name="mixTitle">Mix Shortcuts</string>
-    <string name="mixDesc">Combine App/Category/Split Shortcuts</string>
-    <string name="mixHint">Mix Shortcuts | Combine App/Category/Split Shortcuts</string>
+    <string name="mixDesc">Combine App/Folder/Split Shortcuts</string>
+    <string name="mixHint">Mix Shortcuts | Combine App/Folder/Split Shortcuts</string>
     <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
     <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
     <string name="splitTitlePref">Split Shortcuts</string>
@@ -50,11 +50,11 @@
     <string name="shortcut">SHORTCUTS</string>
     <string name="apps">App</string>
     <string name="split">Split</string>
-    <string name="category">Category</string>
+    <string name="folder">Folder</string>
     <string name="appsEnable">App Shortcuts</string>
     <string name="splitEnable">Split Shortcuts</string>
-    <string name="categoryEnable">Category Shortcuts</string>
-    <string name="typeCategoryName">First Type Category Name</string>
+    <string name="folderEnable">Folder Shortcuts</string>
+    <string name="typeFolderName">First Type Folder Name</string>
     <string name="typeSplitName">First Type Split Name</string>
     <string name="grant">Grant Permission</string>
     <string name="split_service_desc">
@@ -82,10 +82,10 @@
     <string name="mixDemoDescriptions">
         <![CDATA[
             🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
-            💠 <big>Combine App/Split/Category Shortcuts Together</big> 💠 <br/>
+            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠 <br/>
             &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
             &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
-            &bull; <b>Category Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
         ]]>
     </string>
 
