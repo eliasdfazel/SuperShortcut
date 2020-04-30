@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:41 AM
+ * Last modified 4/30/20 6:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +38,7 @@ public class ConfirmButton extends Button
     public ConfirmButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        functionsClass = new FunctionsClass(context, (Activity) getContext());
+        functionsClass = new FunctionsClass(context);
         initConfirmButton();
     }
 

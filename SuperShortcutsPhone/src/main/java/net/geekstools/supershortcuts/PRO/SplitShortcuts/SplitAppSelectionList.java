@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 2:26 PM
+ * Last modified 4/30/20 6:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -112,7 +112,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
             e.printStackTrace();
         }
 
-        functionsClass = new FunctionsClass(getApplicationContext(), this);
+        functionsClass = new FunctionsClass(getApplicationContext());
         PublicVariable.SplitMaxAppShortcuts = 2;
 
         context = getApplicationContext();
@@ -281,7 +281,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
     public void onBackPressed() {
         super.onBackPressed();
         try {
-            functionsClass.overrideBackPress(SplitShortcuts.class,
+            functionsClass.overrideBackPress(SplitAppSelectionList.this, SplitShortcuts.class,
                     ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_down));
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,7 +309,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
         switch (item.getItemId()) {
             case android.R.id.home: {
                 try {
-                    functionsClass.overrideBackPress(SplitShortcuts.class,
+                    functionsClass.overrideBackPress(SplitAppSelectionList.this, SplitShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_down));
                 } catch (Exception e) {
                     e.printStackTrace();

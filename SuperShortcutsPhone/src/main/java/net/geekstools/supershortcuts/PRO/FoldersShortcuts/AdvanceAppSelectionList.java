@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 2:26 PM
+ * Last modified 4/30/20 6:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -113,7 +113,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
             e.printStackTrace();
         }
 
-        functionsClass = new FunctionsClass(getApplicationContext(), this);
+        functionsClass = new FunctionsClass(getApplicationContext());
 
         context = getApplicationContext();
         activity = this;
@@ -280,7 +280,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
     public void onBackPressed() {
         super.onBackPressed();
         try {
-            functionsClass.overrideBackPress(AdvanceShortcuts.class,
+            functionsClass.overrideBackPress(AdvanceAppSelectionList.this, AdvanceShortcuts.class,
                     ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_down));
         } catch (Exception e) {
             e.printStackTrace();
@@ -308,7 +308,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         switch (item.getItemId()) {
             case android.R.id.home: {
                 try {
-                    functionsClass.overrideBackPress(AdvanceShortcuts.class,
+                    functionsClass.overrideBackPress(AdvanceAppSelectionList.this, AdvanceShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_down));
                 } catch (Exception e) {
                     e.printStackTrace();

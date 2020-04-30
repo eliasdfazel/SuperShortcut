@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/30/20 6:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,8 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ui;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +20,6 @@ import android.view.MotionEvent;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
@@ -40,7 +37,7 @@ public class AdvanceConfirmButton extends Button
     public AdvanceConfirmButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        functionsClass = new FunctionsClass(context, (Activity) getContext());
+        functionsClass = new FunctionsClass(context);
         initConfirmButton();
     }
 
@@ -129,12 +126,12 @@ public class AdvanceConfirmButton extends Button
 
     @Override
     public void onSingleTapUp() {
-        try {
-            functionsClass.overrideBackPress(AdvanceShortcuts.class,
-                    ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, R.anim.go_down));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            functionsClass.overrideBackPress(AdvanceShortcuts.class,
+//                    ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, R.anim.go_down));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

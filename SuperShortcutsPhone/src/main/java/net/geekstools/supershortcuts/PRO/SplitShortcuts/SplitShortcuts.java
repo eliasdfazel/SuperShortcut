@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 2:26 PM
+ * Last modified 4/30/20 6:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -81,7 +81,7 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcut
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
-import net.geekstools.supershortcuts.PRO.Preferences.SettingGUI;
+import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.nav.SplitShortcutsAdapter;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
@@ -143,8 +143,8 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.split_shortcuts_view);
 
         simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
-        functionsClass = new FunctionsClass(getApplicationContext(), this);
-        functionsClass.ChangeLog(false);
+        functionsClass = new FunctionsClass(getApplicationContext());
+        functionsClass.ChangeLog(this, false);
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.SplitShortcutsMaxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
@@ -315,7 +315,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.class,
+                    functionsClass.overrideBackPress(SplitShortcuts.this, NormalAppShortcutsSelectionList.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -326,7 +326,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(AdvanceShortcuts.class,
+                    functionsClass.overrideBackPress(SplitShortcuts.this, AdvanceShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -438,7 +438,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             case SimpleGestureFilterSwitch.SWIPE_LEFT:
                 FunctionsClassDebug.Companion.PrintDebug("Swipe Left");
                 try {
-                    functionsClass.overrideBackPress(AdvanceShortcuts.class,
+                    functionsClass.overrideBackPress(SplitShortcuts.this, AdvanceShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -448,7 +448,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             case SimpleGestureFilterSwitch.SWIPE_RIGHT:
                 FunctionsClassDebug.Companion.PrintDebug("Swipe Right");
                 try {
-                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.class,
+                    functionsClass.overrideBackPress(SplitShortcuts.this, NormalAppShortcutsSelectionList.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -494,7 +494,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.prefs: {
-                startActivity(new Intent(getApplicationContext(), SettingGUI.class),
+                startActivity(new Intent(getApplicationContext(), PreferencesUI.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.up_down, android.R.anim.fade_out).toBundle());
                 finish();
                 break;

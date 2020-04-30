@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 2:26 PM
+ * Last modified 4/30/20 6:25 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -40,7 +40,7 @@ public class LoadCategoryItems extends Activity {
     protected void onCreate(Bundle saved) {
         super.onCreate(saved);
         setContentView(R.layout.category_show_ui);
-        functionsClass = new FunctionsClass(getApplicationContext(), LoadCategoryItems.this);
+        functionsClass = new FunctionsClass(getApplicationContext());
 
         intent = getIntent();
         if (intent != null) {
@@ -76,9 +76,9 @@ public class LoadCategoryItems extends Activity {
             @Override
             public void run() {
                 if (intent.getAction().equals("load_category_action")) {
-                    functionsClass.showPopupCategoryItem(popupAnchorView, categoryName.replace(".CategorySelected", ""), loadCustomIcons);
+                    functionsClass.showPopupCategoryItem(LoadCategoryItems.this, popupAnchorView, categoryName.replace(".CategorySelected", ""), loadCustomIcons);
                 } else if (intent.getAction().equals("load_category_action_shortcut")) {
-                    functionsClass.showPopupCategoryItem(popupAnchorView, categoryName, loadCustomIcons);
+                    functionsClass.showPopupCategoryItem(LoadCategoryItems.this, popupAnchorView, categoryName, loadCustomIcons);
                 }
             }
         }, 250);

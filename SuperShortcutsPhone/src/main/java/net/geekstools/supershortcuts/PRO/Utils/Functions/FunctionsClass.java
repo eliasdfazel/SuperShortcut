@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:49 AM
+ * Last modified 4/30/20 6:26 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -100,9 +100,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FunctionsClass {
 
-    int API;
-    Activity activity;
     Context context;
+
+    int API;
 
     String[] categoryNamesSelected, SplitNamesSelected;
     LayerDrawable drawCategory;
@@ -111,12 +111,7 @@ public class FunctionsClass {
 
     public FunctionsClass(Context context) {
         this.context = context;
-        API = Build.VERSION.SDK_INT;
-    }
 
-    public FunctionsClass(Context context, Activity activity) {
-        this.context = context;
-        this.activity = activity;
         API = Build.VERSION.SDK_INT;
     }
 
@@ -1296,7 +1291,7 @@ public class FunctionsClass {
         }
     }
 
-    public void showPopupCategoryItem(RelativeLayout popupAnchorView,
+    public void showPopupCategoryItem(Activity instanceOfActivity, RelativeLayout popupAnchorView,
                                       String categoryName, LoadCustomIcons loadCustomIcons) {
         try {
             ArrayList<NavDrawerItem> navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
@@ -1317,8 +1312,8 @@ public class FunctionsClass {
                     context.getString(R.string.edit_advanced_shortcut) + " " + categoryName.replace(".CategorySelected", "").split("_")[0],
                     context.getPackageName(),
                     context.getDrawable(R.drawable.draw_pref)));
-            ListPopupWindow listPopupWindow = new ListPopupWindow(activity);
-            CategoryItemListAdapter lowerListAdapter = new CategoryItemListAdapter(activity, context, navDrawerItemsSaved, listPopupWindow);
+            ListPopupWindow listPopupWindow = new ListPopupWindow(instanceOfActivity);
+            CategoryItemListAdapter lowerListAdapter = new CategoryItemListAdapter(instanceOfActivity, context, navDrawerItemsSaved, listPopupWindow);
             listPopupWindow.setAdapter(lowerListAdapter);
             listPopupWindow.setAnchorView(popupAnchorView);
             listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
@@ -1329,7 +1324,7 @@ public class FunctionsClass {
             listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
-                    activity.finish();
+                    instanceOfActivity.finish();
                 }
             });
         } catch (Exception e) {
@@ -1689,34 +1684,8 @@ public class FunctionsClass {
         alertDialog.show();
     }
 
-    public void AccessibilityService() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
-        alertDialog.setTitle(
-                Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
-                        context.getString(R.string.splitTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
-        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.observeDesc), Html.FROM_HTML_MODE_LEGACY));
-        alertDialog.setIcon(context.getDrawable(R.drawable.ic_launcher));
-        alertDialog.setCancelable(true);
-        alertDialog.setPositiveButton(context.getString(R.string.grant), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-
-                dialog.dismiss();
-            }
-        });
-        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-            }
-        });
-        alertDialog.show();
-    }
-
-    public void UsageAccess(final Switch prefSwitch) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
+    public void UsageAccess(Activity instanceOfActivity, final Switch prefSwitch) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(instanceOfActivity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
                 Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
                         context.getString(R.string.smartTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
@@ -1753,8 +1722,8 @@ public class FunctionsClass {
         return (mode == AppOpsManager.MODE_ALLOWED);
     }
 
-    public void dialogueLicense() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
+    public void dialogueLicense(Activity instanceOfActivity) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(instanceOfActivity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(Html.fromHtml(context.getString(R.string.license_title), Html.FROM_HTML_MODE_LEGACY));
         alertDialog.setMessage(Html.fromHtml(context.getString(R.string.license_msg), Html.FROM_HTML_MODE_LEGACY));
         alertDialog.setIcon(R.drawable.ic_launcher);
@@ -1765,7 +1734,7 @@ public class FunctionsClass {
                 dialog.dismiss();
                 Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.play_store_link) + context.getPackageName()));
                 r.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                activity.startActivity(r);
+                instanceOfActivity.startActivity(r);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -1773,7 +1742,7 @@ public class FunctionsClass {
                         Intent uninstallIntent =
                                 new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageUri);
                         uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        activity.startActivity(uninstallIntent);
+                        instanceOfActivity.startActivity(uninstallIntent);
                     }
                 }, 2333);
             }
@@ -1782,7 +1751,7 @@ public class FunctionsClass {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.play_store_link) + context.getPackageName().replace(".PRO", "")));
-                activity.startActivity(r);
+                instanceOfActivity.startActivity(r);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -1790,7 +1759,7 @@ public class FunctionsClass {
                         Intent uninstallIntent =
                                 new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageUri);
                         uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        activity.startActivity(uninstallIntent);
+                        instanceOfActivity.startActivity(uninstallIntent);
                     }
                 }, 2333);
             }
@@ -1802,7 +1771,7 @@ public class FunctionsClass {
                 String[] contactOption = new String[]{
                         "Send an Email",
                         "Contact via Forum"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(instanceOfActivity);
                 builder.setTitle(context.getString(R.string.supportTitle));
                 builder.setSingleChoiceItems(contactOption, 0, null);
                 builder.setCancelable(false);
@@ -1819,11 +1788,11 @@ public class FunctionsClass {
                             email.putExtra(Intent.EXTRA_TEXT, textMsg);
                             email.setType("message/*");
                             email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            activity.startActivity(Intent.createChooser(email, context.getString(R.string.feedback_tag)));
+                            instanceOfActivity.startActivity(Intent.createChooser(email, context.getString(R.string.feedback_tag)));
                         } else if (selectedPosition == 1) {
                             Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_xda)));
                             r.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            activity.startActivity(r);
+                            instanceOfActivity.startActivity(r);
                         }
                     }
                 });
@@ -1835,7 +1804,7 @@ public class FunctionsClass {
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        activity.finish();
+                        instanceOfActivity.finish();
                     }
                 });
                 builder.show();
@@ -1850,7 +1819,7 @@ public class FunctionsClass {
         try {
             alertDialog.show();
         } catch (Exception e) {
-            activity.finish();
+            instanceOfActivity.finish();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -1860,8 +1829,8 @@ public class FunctionsClass {
         }
     }
 
-    public void ChangeLog(boolean showDialogue) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
+    public void ChangeLog(Activity instanceOfActivity, boolean showDialogue) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(instanceOfActivity, R.style.GeeksEmpire_Dialogue_Light);
 
         alertDialog.setTitle(Html.fromHtml(context.getString(R.string.whatsnew), Html.FROM_HTML_MODE_LEGACY));
         alertDialog.setMessage(Html.fromHtml(context.getString(R.string.changelog), Html.FROM_HTML_MODE_LEGACY));
@@ -2218,7 +2187,7 @@ public class FunctionsClass {
                     i.addCategory(Intent.CATEGORY_LAUNCHER);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
-                activity.startActivity(i);
+                context.startActivity(i);
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(context, context.getString(R.string.not_install), Toast.LENGTH_LONG).show();
@@ -2241,19 +2210,22 @@ public class FunctionsClass {
         goToSettingInfo.addCategory(Intent.CATEGORY_DEFAULT);
         goToSettingInfo.setData(Uri.parse("package:" + packageName));
         goToSettingInfo.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        activity.startActivityForResult(goToSettingInfo, 1000);
+        goToSettingInfo.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(goToSettingInfo);
     }
 
-    public void overrideBackPress(Class returnClass) throws Exception {
+    public void overrideBackPress(Activity instanceOfActivity, Class returnClass) throws Exception {
         context.startActivity(new Intent(context, returnClass)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY));
-        activity.finish();
+
+        instanceOfActivity.finish();
     }
 
-    public void overrideBackPress(Class returnClass, ActivityOptions activityOptions) throws Exception {
+    public void overrideBackPress(Activity instanceOfActivity, Class returnClass, ActivityOptions activityOptions) throws Exception {
         context.startActivity(new Intent(context, returnClass)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY), activityOptions.toBundle());
-        activity.finish();
+
+        instanceOfActivity.finish();
     }
 
     public String getDeviceName() {
@@ -2386,7 +2358,7 @@ public class FunctionsClass {
 
                 int yOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 34, context.getResources().getDisplayMetrics());
 
-                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.TOP, 0, activity.getActionBar().getHeight() + yOffset);
+                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.TOP, 0, yOffset);
                 toast.setDuration(Toast.LENGTH_LONG);
                 toast.setView(layout);
                 toast.show();

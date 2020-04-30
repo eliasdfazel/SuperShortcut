@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 10:44 AM
+ * Last modified 4/30/20 6:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -39,8 +39,11 @@ public class PublicVariable {
     public static int SplitMaxAppShortcuts;
     public static int SplitMaxAppShortcutsCounter;
 
+    @Deprecated
     public static int actionBarHeight;
+    @Deprecated
     public static int statusBarHeight;
+    @Deprecated
     public static int navigationBarHeight;
 
     public static float confirmButtonX, confirmButtonY;

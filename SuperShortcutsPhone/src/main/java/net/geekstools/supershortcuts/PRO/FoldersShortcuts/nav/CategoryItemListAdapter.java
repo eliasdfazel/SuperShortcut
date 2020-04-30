@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 4/30/20 6:21 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -47,7 +47,7 @@ public class CategoryItemListAdapter extends BaseAdapter {
         this.navDrawerItems = navDrawerItems;
         this.listPopupWindow = listPopupWindow;
 
-        functionsClass = new FunctionsClass(context, activity);
+        functionsClass = new FunctionsClass(context);
     }
 
     @Override

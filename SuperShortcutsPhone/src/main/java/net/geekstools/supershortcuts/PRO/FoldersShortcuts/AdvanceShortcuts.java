@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 2:26 PM
+ * Last modified 4/30/20 6:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -81,7 +81,7 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcut
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.nav.AdvanceShortcutsAdapter;
-import net.geekstools.supershortcuts.PRO.Preferences.SettingGUI;
+import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
@@ -143,8 +143,8 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.advance_shortcuts_view);
 
         simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
-        functionsClass = new FunctionsClass(getApplicationContext(), this);
-        functionsClass.ChangeLog(false);
+        functionsClass = new FunctionsClass(getApplicationContext());
+        functionsClass.ChangeLog(AdvanceShortcuts.this, false);
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.advanceShortcutsMaxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
@@ -317,7 +317,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.class,
+                    functionsClass.overrideBackPress(AdvanceShortcuts.this, NormalAppShortcutsSelectionList.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -328,7 +328,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(SplitShortcuts.class,
+                    functionsClass.overrideBackPress(AdvanceShortcuts.this, SplitShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -439,7 +439,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
             case SimpleGestureFilterSwitch.SWIPE_RIGHT:
                 FunctionsClassDebug.Companion.PrintDebug("Swipe Right");
                 try {
-                    functionsClass.overrideBackPress(SplitShortcuts.class,
+                    functionsClass.overrideBackPress(AdvanceShortcuts.this, SplitShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -485,7 +485,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.prefs: {
-                startActivity(new Intent(getApplicationContext(), SettingGUI.class),
+                startActivity(new Intent(getApplicationContext(), PreferencesUI.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.up_down, android.R.anim.fade_out).toBundle());
                 finish();
                 break;

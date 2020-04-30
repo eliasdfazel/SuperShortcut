@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/29/20 2:23 PM
+  ~ Last modified 4/30/20 6:30 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -167,7 +167,7 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".Preferences.SettingGUI"
+            android:name=".Preferences.PreferencesUI"
             android:label="@string/pref">
             <intent-filter
                 android:autoVerify="true"

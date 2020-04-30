@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/28/20 11:40 AM
+  ~ Last modified 4/30/20 6:09 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -21,8 +21,12 @@
         <item name="android:colorPrimary">@color/default_color</item>
         <item name="android:colorPrimaryDark">@color/default_color</item>
         <item name="android:colorAccent">@color/default_color</item>
+
         <item name="android:colorControlActivated">@color/default_color</item>
+
         <item name="android:navigationBarColor">@color/default_color</item>
+        <item name="android:statusBarColor">@color/default_color</item>
+
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 

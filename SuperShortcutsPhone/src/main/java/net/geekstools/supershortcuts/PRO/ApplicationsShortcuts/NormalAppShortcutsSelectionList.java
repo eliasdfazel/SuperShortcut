@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 2:26 PM
+ * Last modified 4/30/20 6:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -90,7 +90,7 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.Selectio
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.Configurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
-import net.geekstools.supershortcuts.PRO.Preferences.SettingGUI;
+import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
@@ -164,8 +164,8 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
         setContentView(R.layout.normal_app_selection);
 
         simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
-        functionsClass = new FunctionsClass(getApplicationContext(), this);
-        functionsClass.ChangeLog(false);
+        functionsClass = new FunctionsClass(getApplicationContext());
+        functionsClass.ChangeLog(this, false);
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.maxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
@@ -310,7 +310,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                         PublicVariable.maxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
                     }
                 } else if (intent.getAction().equals(getString(R.string.license))) {
-                    functionsClass.dialogueLicense();
+                    functionsClass.dialogueLicense(NormalAppShortcutsSelectionList.this);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -404,7 +404,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(AdvanceShortcuts.class,
+                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.this, AdvanceShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -415,7 +415,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(SplitShortcuts.class,
+                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.this, SplitShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -517,7 +517,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
             case SimpleGestureFilterSwitch.SWIPE_LEFT:
                 FunctionsClassDebug.Companion.PrintDebug("Swipe Left");
                 try {
-                    functionsClass.overrideBackPress(SplitShortcuts.class,
+                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.this, SplitShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -563,7 +563,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.prefs: {
-                startActivity(new Intent(getApplicationContext(), SettingGUI.class),
+                startActivity(new Intent(getApplicationContext(), PreferencesUI.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.up_down, android.R.anim.fade_out).toBundle());
                 finish();
                 break;

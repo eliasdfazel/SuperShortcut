@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 2:04 PM
+ * Last modified 4/30/20 6:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -73,7 +73,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingGUI extends FragmentActivity {
+public class PreferencesUI extends FragmentActivity {
 
     FunctionsClass functionsClass;
     Activity activity;
@@ -102,8 +102,8 @@ public class SettingGUI extends FragmentActivity {
 
         activity = this;
         context = getApplicationContext();
-        functionsClass = new FunctionsClass(context, activity);
-        functionsClass.ChangeLog(false);
+        functionsClass = new FunctionsClass(context);
+        functionsClass.ChangeLog(PreferencesUI.this, false);
 
         getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
@@ -146,7 +146,7 @@ public class SettingGUI extends FragmentActivity {
         customIconDesc.setText(functionsClass.loadCustomIcons() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
 
         if (!functionsClass.mixShortcutsPurchased()) {
-            BillingClient billingClient = BillingClient.newBuilder(SettingGUI.this).setListener(new PurchasesUpdatedListener() {
+            BillingClient billingClient = BillingClient.newBuilder(PreferencesUI.this).setListener(new PurchasesUpdatedListener() {
                 @Override
                 public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
@@ -201,7 +201,7 @@ public class SettingGUI extends FragmentActivity {
                     startActivity(intent);
                     finish();
                 } else if (sharedPreferences.getBoolean("smartPick", false) == false) {
-                    functionsClass.UsageAccess(prefSwitch);
+                    functionsClass.UsageAccess(PreferencesUI.this, prefSwitch);
                 }
             }
         });
@@ -210,7 +210,7 @@ public class SettingGUI extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 if (!functionsClass.AccessibilityServiceEnabled()) {
-                    functionsClass.AccessibilityService();
+                    functionsClass.AccessibilityService(PreferencesUI.this);
                 } else {
                     Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -254,7 +254,7 @@ public class SettingGUI extends FragmentActivity {
         newsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                functionsClass.ChangeLog(true);
+                functionsClass.ChangeLog(PreferencesUI.this, true);
             }
         });
 
@@ -267,7 +267,7 @@ public class SettingGUI extends FragmentActivity {
                         "Contact via Forum",
                         "Join Beta Program",
                         "Rate & Write Review"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingGUI.this, R.style.GeeksEmpire_Dialogue_Light);
+                AlertDialog.Builder builder = new AlertDialog.Builder(PreferencesUI.this, R.style.GeeksEmpire_Dialogue_Light);
                 builder.setTitle(getString(R.string.supportTitle));
                 builder.setSingleChoiceItems(contactOption, 0, null);
                 builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -358,7 +358,7 @@ public class SettingGUI extends FragmentActivity {
                 layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 layoutParams.windowAnimations = android.R.style.Animation_Dialog;
 
-                final Dialog dialog = new Dialog(SettingGUI.this);
+                final Dialog dialog = new Dialog(PreferencesUI.this);
                 dialog.setContentView(R.layout.custom_icons);
                 dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.dark) + "'>" + getString(R.string.customIconTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
                 dialog.getWindow().setAttributes(layoutParams);
@@ -380,7 +380,7 @@ public class SettingGUI extends FragmentActivity {
                             functionsClass.appIconDrawable(packageName)
                     ));
                 }
-                CustomIconsThemeAdapter customIconsThemeAdapter = new CustomIconsThemeAdapter(SettingGUI.this, getApplicationContext(), navDrawerItems);
+                CustomIconsThemeAdapter customIconsThemeAdapter = new CustomIconsThemeAdapter(PreferencesUI.this, getApplicationContext(), navDrawerItems);
                 customIconList.setAdapter(customIconsThemeAdapter);
 
                 defaultTheme.setOnClickListener(new View.OnClickListener() {
@@ -436,7 +436,7 @@ public class SettingGUI extends FragmentActivity {
         firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
         firebaseRemoteConfig.fetch(0)
-                .addOnCompleteListener(SettingGUI.this, new OnCompleteListener<Void>() {
+                .addOnCompleteListener(PreferencesUI.this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -445,7 +445,7 @@ public class SettingGUI extends FragmentActivity {
                                 public void onSuccess(Boolean aBoolean) {
                                     if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
                                         functionsClass.upcomingChangeLog(
-                                                SettingGUI.this,
+                                                PreferencesUI.this,
                                                 firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
                                                 String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
                                         );
