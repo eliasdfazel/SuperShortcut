@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 7:18 AM
+ * Last modified 4/30/20 7:55 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -108,8 +108,6 @@ public class FunctionsClass {
     String[] categoryNamesSelected, SplitNamesSelected;
     LayerDrawable drawCategory;
 
-    LoadCustomIcons loadCustomIcons;
-
     public FunctionsClass(Context context) {
         this.context = context;
 
@@ -126,8 +124,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -206,8 +204,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -269,8 +267,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -332,8 +330,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -389,8 +387,8 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
             shortcutManager.removeAllDynamicShortcuts();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -599,8 +597,8 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
             shortcutManager.removeAllDynamicShortcuts();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -813,8 +811,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -922,8 +920,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -1028,8 +1026,8 @@ public class FunctionsClass {
 
         String[] packages = readFileLine(splitName);
 
-        if (loadCustomIcons()) {
-            loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+        if (customIconsEnable()) {
+            LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
             loadCustomIcons.load();
         }
 
@@ -1088,8 +1086,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -1195,8 +1193,8 @@ public class FunctionsClass {
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
 
-            if (loadCustomIcons()) {
-                loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            if (customIconsEnable()) {
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
                 loadCustomIcons.load();
             }
 
@@ -1302,7 +1300,7 @@ public class FunctionsClass {
                     navDrawerItemsSaved.add(new NavDrawerItem(
                             appName(packageName),
                             packageName,
-                            loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
+                            customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
                     ));
                 } else {
                     context.deleteFile(packageName + "." + categoryName);
@@ -1342,8 +1340,8 @@ public class FunctionsClass {
 
         String[] packages = readFileLine(categoryName);
 
-        if (loadCustomIcons()) {
-            loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+        if (customIconsEnable()) {
+            LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
             loadCustomIcons.load();
         }
 
@@ -2504,7 +2502,7 @@ public class FunctionsClass {
         return readDefaultPreference("customIcon", context.getPackageName());
     }
 
-    public boolean loadCustomIcons() {
+    public boolean customIconsEnable() {
         boolean doLoadCustomIcon = false;
         if (customIconPackageName().equals(context.getPackageName())) {
             doLoadCustomIcon = false;
@@ -2515,15 +2513,30 @@ public class FunctionsClass {
     }
 
     public Drawable getAppIconDrawableCustomIcon(String packageName) {
-        return loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName);
+        LoadCustomIcons loadCustomIcons = null;
+        if (customIconsEnable()) {
+            loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            loadCustomIcons.load();
+        }
+        return customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName);
     }
 
     public Bitmap getAppIconBitmapCustomIcon(String packageName) {
-        return loadCustomIcons() ? loadCustomIcons.getIconForPackage(packageName, appIconBitmap(packageName)) : appIconBitmap(packageName);
+        LoadCustomIcons loadCustomIcons = null;
+        if (customIconsEnable()) {
+            loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            loadCustomIcons.load();
+        }
+        return customIconsEnable() ? loadCustomIcons.getIconForPackage(packageName, appIconBitmap(packageName)) : appIconBitmap(packageName);
     }
 
     public Bitmap getAppIconBitmapCustomIcon(ActivityInfo activityInfo) {
-        return loadCustomIcons() ? loadCustomIcons.getIconForPackage(activityInfo.packageName, (activityIconBitmap(activityInfo))) : (activityIconBitmap(activityInfo));
+        LoadCustomIcons loadCustomIcons = null;
+        if (customIconsEnable()) {
+            loadCustomIcons = new LoadCustomIcons(context, customIconPackageName());
+            loadCustomIcons.load();
+        }
+        return customIconsEnable() ? loadCustomIcons.getIconForPackage(activityInfo.packageName, (activityIconBitmap(activityInfo))) : (activityIconBitmap(activityInfo));
     }
 
     /*AppShortcuts Mode*/

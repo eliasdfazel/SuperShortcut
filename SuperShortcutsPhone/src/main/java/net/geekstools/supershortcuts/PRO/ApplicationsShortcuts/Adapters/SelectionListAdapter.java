@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:24 AM
+ * Last modified 4/30/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -72,7 +72,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
         toY = PublicVariable.confirmButtonY;
         animationType = Animation.ABSOLUTE;
 
-        if (functionsClass.loadCustomIcons()) {
+        if (functionsClass.customIconsEnable()) {
             loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
         }
     }
@@ -171,7 +171,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                                                         animationType, toY);
                                         translateAnimation.setDuration((long) Math.abs(fromY));
 
-                                        tempIcon.setImageDrawable(functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packageName, navDrawerItems.get(position).getAppIcon()) : navDrawerItems.get(position).getAppIcon());
+                                        tempIcon.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, navDrawerItems.get(position).getAppIcon()) : navDrawerItems.get(position).getAppIcon());
                                         tempIcon.startAnimation(translateAnimation);
                                         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                             @Override
@@ -216,7 +216,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                                                         animationType, toY);
                                         translateAnimation.setDuration((long) Math.abs(fromY));
 
-                                        tempIcon.setImageDrawable(functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packageName, navDrawerItems.get(position).getAppIcon()) : navDrawerItems.get(position).getAppIcon());
+                                        tempIcon.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, navDrawerItems.get(position).getAppIcon()) : navDrawerItems.get(position).getAppIcon());
                                         tempIcon.startAnimation(translateAnimation);
                                         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                             @Override

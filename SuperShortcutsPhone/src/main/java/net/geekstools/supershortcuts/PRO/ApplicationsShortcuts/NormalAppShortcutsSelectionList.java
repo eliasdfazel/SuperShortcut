@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:37 AM
+ * Last modified 4/30/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -258,7 +258,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                                         functionsClass.activityLabel(activityInfo),
                                         packageName,
                                         className,
-                                        AppIcon = functionsClass.loadCustomIcons() ?
+                                        AppIcon = functionsClass.customIconsEnable() ?
                                                 loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(activityInfo))
                                                 :
                                                 functionsClass.activityIcon(activityInfo)
@@ -831,7 +831,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                 installedIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 List<ResolveInfo> applicationInfoList = packageManager.queryIntentActivities(installedIntent, 0);
 
-                if (functionsClass.loadCustomIcons()) {
+                if (functionsClass.customIconsEnable()) {
                     loadCustomIcons.load();
                     if (BuildConfig.DEBUG) {
                         FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
@@ -847,7 +847,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                                 className = resolveInfo.activityInfo.name;
                                 AppName = functionsClass.activityLabel(resolveInfo.activityInfo);
                                 indexAppName.add(AppName);
-                                AppIcon = functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.activityIcon(resolveInfo.activityInfo)) : functionsClass.activityIcon(resolveInfo.activityInfo);
+                                AppIcon = functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.activityIcon(resolveInfo.activityInfo)) : functionsClass.activityIcon(resolveInfo.activityInfo);
 
                                 navDrawerItems.add(new NavDrawerItem(
                                         AppName,

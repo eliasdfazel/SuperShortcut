@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:32 AM
+ * Last modified 4/30/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -143,7 +143,7 @@ public class PreferencesUI extends FragmentActivity {
         prefDescFloating = (TextView) findViewById(R.id.prefDescfloating);
 
         prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
-        customIconDesc.setText(functionsClass.loadCustomIcons() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
+        customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
 
         if (!functionsClass.mixShortcutsPurchased()) {
             BillingClient billingClient = BillingClient.newBuilder(PreferencesUI.this).setListener(new PurchasesUpdatedListener() {
@@ -408,9 +408,9 @@ public class PreferencesUI extends FragmentActivity {
                     @Override
                     public void onReceive(Context context, Intent intent) {
                         if (intent.getAction().equals("CUSTOM_DIALOGUE_DISMISS")) {
-                            customIconIcon.setImageDrawable(functionsClass.loadCustomIcons() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
-                            customIconDesc.setText(functionsClass.loadCustomIcons() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
-                            if (functionsClass.loadCustomIcons()) {
+                            customIconIcon.setImageDrawable(functionsClass.customIconsEnable() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
+                            customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
+                            if (functionsClass.customIconsEnable()) {
                                 if (functionsClass.mixShortcuts()) {
                                     functionsClass.addMixAppShortcutsCustomIconsPref();
                                 } else if (functionsClass.AppShortcutsMode().equals("AppShortcuts")) {
@@ -496,7 +496,7 @@ public class PreferencesUI extends FragmentActivity {
             mixSwitch.setChecked(false);
         }
 
-        customIconIcon.setImageDrawable(functionsClass.loadCustomIcons() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
+        customIconIcon.setImageDrawable(functionsClass.customIconsEnable() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
     }
 
     @Override

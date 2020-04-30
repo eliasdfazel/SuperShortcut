@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:30 AM
+ * Last modified 4/30/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -71,7 +71,7 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
         toY = PublicVariable.confirmButtonY;
         animationType = Animation.ABSOLUTE;
 
-        if (functionsClass.loadCustomIcons()) {
+        if (functionsClass.customIconsEnable()) {
             loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
             loadCustomIcons.load();
         }
@@ -158,7 +158,7 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                                 translateAnimation.setDuration((long) Math.abs(fromY));
 
 
-                                tempIcon.setImageDrawable(functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(navDrawerItems.get(position).getPackageName(), functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName())) : functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName()));
+                                tempIcon.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(navDrawerItems.get(position).getPackageName(), functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName())) : functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName()));
                                 tempIcon.startAnimation(translateAnimation);
                                 translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                     @Override

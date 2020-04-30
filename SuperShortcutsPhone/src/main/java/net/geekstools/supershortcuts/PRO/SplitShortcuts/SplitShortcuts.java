@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:37 AM
+ * Last modified 4/30/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -764,7 +764,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                 splitShortcutsAdapter = new SplitShortcutsAdapter(activity, context, navDrawerItems);
             } else {
                 try {
-                    if (functionsClass.loadCustomIcons()) {
+                    if (functionsClass.customIconsEnable()) {
                         loadCustomIcons.load();
                         if (BuildConfig.DEBUG) {
                             FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());

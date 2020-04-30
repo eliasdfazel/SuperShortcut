@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:35 AM
+ * Last modified 4/30/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -69,7 +69,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
 
         functionsClass = new FunctionsClass(context);
 
-        if (functionsClass.loadCustomIcons()) {
+        if (functionsClass.customIconsEnable()) {
             loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
         }
     }
@@ -114,7 +114,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                     freqLayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.selected_apps_item, null);
                     imageView = (ImageView) freqLayout.findViewById(R.id.appSelectedItem);
                     if (functionsClass.appInstalledOrNot(packages[i])) {
-                        imageView.setImageDrawable(functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(packages[i], functionsClass.appIconDrawable(packages[i])) : functionsClass.appIconDrawable(packages[i]));
+                        imageView.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packages[i], functionsClass.appIconDrawable(packages[i])) : functionsClass.appIconDrawable(packages[i]));
                     }
                     viewHolderBinder.selectedApps.addView(freqLayout);
                     viewHolderBinder.addApps.setVisibility(View.VISIBLE);

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:24 AM
+ * Last modified 4/30/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -186,7 +186,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
                             navDrawerItemsSaved.add(new NavDrawerItem(
                                     functionsClass.appName(aSavedLine),
                                     aSavedLine,
-                                    functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(aSavedLine, functionsClass.appIconDrawable(aSavedLine)) : functionsClass.appIconDrawable(aSavedLine)
+                                    functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(aSavedLine, functionsClass.appIconDrawable(aSavedLine)) : functionsClass.appIconDrawable(aSavedLine)
                             ));
                         }
                         advanceSavedListAdapter = new AdvanceSavedListAdapter(activity, context, navDrawerItemsSaved);
@@ -349,7 +349,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
                 PackageManager packageManager = getApplicationContext().getPackageManager();
                 List<ApplicationInfo> applicationInfoList = packageManager.getInstalledApplications(0);
 
-                if (functionsClass.loadCustomIcons()) {
+                if (functionsClass.customIconsEnable()) {
                     loadCustomIcons.load();
                     if (BuildConfig.DEBUG) {
                         FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
@@ -364,7 +364,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
                                 PackageName = applicationInfo.packageName;
                                 AppName = functionsClass.appName(PackageName);
                                 appName.add(AppName);
-                                AppIcon = functionsClass.loadCustomIcons() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.appIconDrawable(PackageName)) : functionsClass.appIconDrawable(PackageName);
+                                AppIcon = functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.appIconDrawable(PackageName)) : functionsClass.appIconDrawable(PackageName);
 
                                 navDrawerItems.add(new NavDrawerItem(AppName, PackageName, AppIcon));
                             } catch (Exception e) {
