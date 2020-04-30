@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 7:53 AM
+ * Last modified 4/30/20 8:25 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -121,12 +121,12 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         listPopupWindow = new ListPopupWindow(activity);
         desc = (TextView) findViewById(R.id.desc);
         counterView = (TextView) findViewById(R.id.counter);
-        loadIcon = (ImageView) findViewById(R.id.loadLogo);
+        loadIcon = (ImageView) findViewById(R.id.loadingLogo);
         tempIcon = (ImageView) findViewById(R.id.tempIcon);
         tempIcon.bringToFront();
         popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
         nestedIndexScrollView = (ScrollView) findViewById(R.id.nestedIndexScrollView);
-        indexView = (LinearLayout) findViewById(R.id.side_index);
+        indexView = (LinearLayout) findViewById(R.id.sideIndex);
         popupIndex = (TextView) findViewById(R.id.popupIndex);
         wholeAuto = (RelativeLayout) findViewById(R.id.MainView);
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
@@ -165,7 +165,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         counterView.setTypeface(face);
         counterView.bringToFront();
 
-        ProgressBar loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgressltr);
+        ProgressBar loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgress);
         loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();

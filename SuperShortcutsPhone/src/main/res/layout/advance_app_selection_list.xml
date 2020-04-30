@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/29/20 2:05 PM
+  ~ Last modified 4/30/20 8:25 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -63,7 +63,7 @@
         android:visibility="invisible">
 
         <LinearLayout
-            android:id="@+id/side_index"
+            android:id="@+id/sideIndex"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -147,14 +147,14 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/loadLogo"
+            android:id="@+id/loadingLogo"
             android:layout_width="170dp"
             android:layout_height="170dp"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_launcher" />
 
         <ProgressBar
-            android:id="@+id/loadingProgressltr"
+            android:id="@+id/loadingProgress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="33dp"

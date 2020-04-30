@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 7:55 AM
+ * Last modified 4/30/20 8:12 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -2240,6 +2240,11 @@ public class FunctionsClass {
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY), activityOptions.toBundle());
 
         instanceOfActivity.finish();
+    }
+
+    public void navigateToClass(Activity instanceOfActivity, Class returnClass, ActivityOptions activityOptions) {
+        Intent intentOverride = new Intent(context, returnClass);
+        instanceOfActivity.startActivity(intentOverride, activityOptions.toBundle());
     }
 
     public String getDeviceName() {
