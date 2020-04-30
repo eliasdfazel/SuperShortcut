@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 12:06 PM
+ * Last modified 4/30/20 2:20 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -87,6 +87,7 @@ import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter.SplitShortcutsAd
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
@@ -144,7 +145,9 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
 
         simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
         functionsClass = new FunctionsClass(getApplicationContext());
-        functionsClass.ChangeLog(this, false);
+
+        new FunctionsClassDialogues(SplitShortcuts.this, functionsClass).changeLog();
+
         if (functionsClass.mixShortcuts() == true) {
             PublicVariable.SplitShortcutsMaxAppShortcuts
                     = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
@@ -530,8 +533,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                 break;
             }
             case android.R.id.home: {
-                functionsClass.upcomingChangeLog(
-                        SplitShortcuts.this,
+                new FunctionsClassDialogues(SplitShortcuts.this, functionsClass).changeLogPreference(
                         firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
                         String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
                 );

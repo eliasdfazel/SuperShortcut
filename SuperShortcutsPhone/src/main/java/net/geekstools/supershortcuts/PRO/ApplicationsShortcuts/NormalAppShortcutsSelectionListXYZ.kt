@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:36 PM
+ * Last modified 4/30/20 2:45 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedApplicationsListAdapter
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.evaluateShortcutsInfo
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.loadInstalledAppsData
@@ -31,6 +31,7 @@ import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint
 import net.geekstools.supershortcuts.PRO.Utils.RemoteProcess.LicenseValidator
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons
@@ -49,6 +50,10 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
         FunctionsClass(applicationContext)
     }
 
+    private val functionsClassDialogues: FunctionsClassDialogues by lazy {
+        FunctionsClassDialogues(this@NormalAppShortcutsSelectionListXYZ, functionsClass)
+    }
+
     private val listPopupWindow: ListPopupWindow by lazy {
         ListPopupWindow(applicationContext)
     }
@@ -56,6 +61,8 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
     lateinit var recyclerViewLayoutManager: LinearLayoutManager
     lateinit var appSelectionListAdapter: RecyclerView.Adapter<SelectionListAdapter.ViewHolder>
     val installedAppsListItem: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
+
+    private val selectedAppsListItem: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
 
     var appsConfirmButton: AppsConfirmButton? = null
 
@@ -69,6 +76,10 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
 
     private val swipeGestureListener: SwipeGestureListener by lazy {
         SwipeGestureListener(applicationContext, this@NormalAppShortcutsSelectionListXYZ)
+    }
+
+    companion object {
+        const val NormalApplicationsShortcutsFile = ".autoSuper"
     }
 
     lateinit var normalAppSelectionBinding: NormalAppSelectionBinding
@@ -92,7 +103,7 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
         loadInstalledAppsData()
         /* Load Installed Applications */
 
-        functionsClass.ChangeLog(this@NormalAppShortcutsSelectionListXYZ, false)
+        functionsClassDialogues.changeLog()
 
         //In-App Billing
         PurchasesCheckpoint(this@NormalAppShortcutsSelectionListXYZ).trigger()
@@ -175,25 +186,27 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
     /*ConfirmButtonProcess*/
     override fun savedShortcutCounter() {
 
-        normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(".autoSuper").toString()
+        normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).toString()
     }
 
     override fun showSavedShortcutList() {
 
-        if (getFileStreamPath(".autoSuper").exists()
-                && functionsClass.countLine(".autoSuper") > 0) {
+        if (getFileStreamPath(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).exists()
+                && functionsClass.countLineInnerFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile) > 0) {
 
-            val savedApplicationsList: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
-            savedApplicationsList.clear()
+            selectedAppsListItem.clear()
 
-            val savedLine = functionsClass.readFileLine(".autoSuper")
+            val savedLine = functionsClass.readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)
             for (aSavedLine in savedLine) {
 
-                val packageName = aSavedLine.split("\\|").toTypedArray()[0]
-                val className = aSavedLine.split("\\|").toTypedArray()[1]
+                val aLineSplit = aSavedLine.split("|")
+
+                val packageName = aLineSplit[0]
+                val className = aLineSplit[1]
+
                 val activityInfo = packageManager.getActivityInfo(ComponentName(packageName, className), 0)
 
-                savedApplicationsList.add(AdapterItemsData(
+                selectedAppsListItem.add(AdapterItemsData(
                         functionsClass.activityLabel(activityInfo),
                         packageName,
                         className,
@@ -205,22 +218,24 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
                 ))
             }
 
-            val savedListAdapter = SavedApplicationsListAdapter(this@NormalAppShortcutsSelectionListXYZ,
+            val savedAppsListPopupAdapter = SavedAppsListPopupAdapter(
                     applicationContext,
-                    savedApplicationsList)
+                    functionsClass,
+                    selectedAppsListItem,
+                    this@NormalAppShortcutsSelectionListXYZ
+            )
 
-            listPopupWindow.setAdapter(savedListAdapter)
-            listPopupWindow.setBackgroundDrawable(null)
+            listPopupWindow.setAdapter(savedAppsListPopupAdapter)
             listPopupWindow.anchorView = normalAppSelectionBinding.popupAnchorView
-            listPopupWindow.width = android.widget.ListPopupWindow.WRAP_CONTENT
-            listPopupWindow.height = android.widget.ListPopupWindow.WRAP_CONTENT
+            listPopupWindow.width = ListPopupWindow.WRAP_CONTENT
+            listPopupWindow.height = ListPopupWindow.WRAP_CONTENT
             listPopupWindow.isModal = true
+            listPopupWindow.setBackgroundDrawable(null)
             listPopupWindow.setOnDismissListener {
 
                 appsConfirmButton?.makeItVisible()
             }
             listPopupWindow.show()
-
         }
     }
 

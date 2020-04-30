@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:01 PM
+ * Last modified 4/30/20 2:24 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -75,6 +75,7 @@ import com.google.firebase.appindexing.Indexable;
 import com.google.firebase.appindexing.builders.Actions;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.AppShortcutsMediatedActivity;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListXYZ;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.CategoryItemListAdapter;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadCategoryItems;
 import net.geekstools.supershortcuts.PRO.R;
@@ -198,7 +199,7 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
             shortcutManager.removeAllDynamicShortcuts();
-            List<String> appShortcuts = Arrays.asList(readFileLine(".autoSuper"));
+            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile));
 
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
@@ -220,7 +221,7 @@ public class FunctionsClass {
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (appInstalledOrNot(packageName) == false) {
                     context.deleteFile(appShortcuts.get(i) + ".Super");
-                    removeLine(".autoSuper", appShortcuts.get(i));
+                    removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, appShortcuts.get(i));
                 } else {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
@@ -247,7 +248,7 @@ public class FunctionsClass {
                 }
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
-            if (shortcutManager.getDynamicShortcuts().size() == countLine(".autoSuper")) {
+            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
                 appToDesktop();
             }
@@ -261,7 +262,7 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
             shortcutManager.removeAllDynamicShortcuts();
-            List<String> appShortcuts = Arrays.asList(readFileLine(".autoSuper"));
+            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile));
 
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
@@ -283,7 +284,7 @@ public class FunctionsClass {
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (appInstalledOrNot(packageName) == false) {
                     context.deleteFile(appShortcuts.get(i) + ".Super");
-                    removeLine(".autoSuper", appShortcuts.get(i));
+                    removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, appShortcuts.get(i));
                 } else {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
@@ -310,7 +311,7 @@ public class FunctionsClass {
                 }
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
-            if (shortcutManager.getDynamicShortcuts().size() == countLine(".autoSuper")) {
+            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.light), context.getColor(R.color.default_color_darker), Gravity.BOTTOM, true);
             }
         } catch (Exception e) {
@@ -553,7 +554,7 @@ public class FunctionsClass {
                     String className = lineShortcuts.get(i).split("\\|")[1];
                     if (!appInstalledOrNot(packageName)) {
                         context.deleteFile(lineShortcuts.get(i) + ".Super");
-                        removeLine(".autoSuper", lineShortcuts.get(i));
+                        removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
                         removeLine(".mixShortcuts", lineShortcuts.get(i));
                     } else {
                         try {
@@ -762,7 +763,7 @@ public class FunctionsClass {
                     String className = lineShortcuts.get(i).split("\\|")[1];
                     if (!appInstalledOrNot(packageName)) {
                         context.deleteFile(lineShortcuts.get(i) + ".Super");
-                        removeLine(".autoSuper", lineShortcuts.get(i));
+                        removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
                         removeLine(".mixShortcuts", lineShortcuts.get(i));
                     } else {
                         try {
@@ -1427,12 +1428,12 @@ public class FunctionsClass {
             }
             context.deleteFile(".mixShortcuts");
         }
-        if (context.getFileStreamPath(".autoSuper").exists()) {
-            String[] arrayContent = readFileLine(".autoSuper");
+        if (context.getFileStreamPath(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).exists()) {
+            String[] arrayContent = readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
             for (String lineContent : arrayContent) {
                 context.deleteFile(packageNameSelected(lineContent));
             }
-            context.deleteFile(".autoSuper");
+            context.deleteFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
         }
         if (context.getFileStreamPath(".categorySuperSelected").exists()) {
             String[] arrayContent = readFileLine(".categorySuperSelected");
@@ -1794,47 +1795,6 @@ public class FunctionsClass {
         }
     }
 
-    public void ChangeLog(Activity instanceOfActivity, boolean showDialogue) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(instanceOfActivity, R.style.GeeksEmpire_Dialogue_Light);
-
-        alertDialog.setTitle(Html.fromHtml(context.getString(R.string.whatsnew), Html.FROM_HTML_MODE_LEGACY));
-        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.changelog), Html.FROM_HTML_MODE_LEGACY));
-        alertDialog.setIcon(R.drawable.ic_launcher);
-        alertDialog.setCancelable(true);
-        alertDialog.setPositiveButton(context.getString(R.string.like), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_facebook_app)))
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
-        });
-        alertDialog.setNeutralButton(context.getString(R.string.share), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                dialog.dismiss();
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.play_store_link) + context.getPackageName()))
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
-        });
-        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                saveFile(".Updated", String.valueOf(appVersionCode(context.getPackageName())));
-                dialog.dismiss();
-            }
-        });
-
-        if (showDialogue == true) {
-            alertDialog.show();
-        } else if (!context.getFileStreamPath(".Updated").exists()) {
-            alertDialog.show();
-        } else {
-            if (appVersionCode(context.getPackageName()) > Integer.parseInt(readFile(".Updated"))) {
-                alertDialog.show();
-            }
-        }
-    }
-
     public void upcomingChangeLog(Activity activity, String updateInfo, String versionCode) {
         if (returnAPI() > 22) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
@@ -1848,7 +1808,7 @@ public class FunctionsClass {
 
             alertDialog.setIcon(layerDrawableNewUpdate);
             alertDialog.setCancelable(true);
-            alertDialog.setPositiveButton(context.getString(R.string.like), new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton(context.getString(R.string.followIt), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_facebook_app)))

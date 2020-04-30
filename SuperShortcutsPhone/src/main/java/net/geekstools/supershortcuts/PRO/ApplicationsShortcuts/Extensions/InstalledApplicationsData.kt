@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:32 PM
+ * Last modified 4/30/20 2:49 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,9 @@
 
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions
 
-import android.content.pm.ApplicationInfo
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -29,28 +31,31 @@ fun NormalAppShortcutsSelectionListXYZ.loadInstalledAppsData() = CoroutineScope(
 
     val listOfNewCharOfItemsForIndex: ArrayList<String> = ArrayList<String>()
 
-    val applicationInfoList = applicationContext.packageManager.getInstalledApplications(0) as ArrayList<ApplicationInfo>
-    Collections.sort(applicationInfoList, ApplicationInfo.DisplayNameComparator(packageManager))
+    val applicationInfoList = packageManager.queryIntentActivities(Intent().apply {
+        this.action = Intent.ACTION_MAIN
+        this.addCategory(Intent.CATEGORY_LAUNCHER)
+    }, PackageManager.GET_RESOLVED_FILTER)
+    val applicationInfoListSorted = applicationInfoList.sortedWith(ResolveInfo.DisplayNameComparator(packageManager))
 
-    applicationInfoList.forEach { applicationInfo ->
+    applicationInfoListSorted.forEach { resolveInfo ->
 
-        if (applicationContext.packageManager.getLaunchIntentForPackage((applicationInfo).packageName) != null) {
+        if (applicationContext.packageManager.getLaunchIntentForPackage((resolveInfo).activityInfo.packageName) != null) {
 
-            val packageName = applicationInfo.packageName
-            val appName = functionsClass.appName(packageName)
+            val packageName = resolveInfo.activityInfo.packageName
+            val className = resolveInfo.activityInfo.name
+            val appName = functionsClass.activityLabel(resolveInfo.activityInfo)
             val appIcon = if (functionsClass.customIconsEnable()) {
-                loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.appIconDrawable(packageName))
+                loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(resolveInfo.activityInfo))
             } else {
-                functionsClass.appIconDrawable(packageName)
+                functionsClass.activityIcon(resolveInfo.activityInfo)
             }
 
             listOfNewCharOfItemsForIndex.add(appName.substring(0, 1).toUpperCase(Locale.getDefault()))
 
-            println("********** " + appName)
-
             installedAppsListItem.add(AdapterItemsData(
                     appName,
                     packageName,
+                    className,
                     appIcon))
         }
     }
@@ -81,7 +86,7 @@ fun NormalAppShortcutsSelectionListXYZ.loadInstalledAppsData() = CoroutineScope(
 
             override fun onAnimationStart(animation: Animation) {
 
-                normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(".autoSuper").toString()
+                normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).toString()
             }
 
             override fun onAnimationEnd(animation: Animation) {

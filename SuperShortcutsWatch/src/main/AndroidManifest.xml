@@ -3,14 +3,13 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/28/20 10:44 AM
+  ~ Last modified 4/30/20 2:49 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="net.geekstools.supershortcuts.PRO">
 
     <uses-feature
@@ -36,6 +35,7 @@
         android:screenOrientation="sensorPortrait"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault.Light">
+
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
@@ -52,13 +52,10 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/default_color" />
+
         <meta-data
-            android:name="android.support.VERSION"
-            android:value="28.0.0"
-            tools:replace="android:value" />
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="9b0354fa8241f4d8bb14ea59641166ccbd3583f6" />
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="${enableCrashReporting}" />
 
         <uses-library
             android:name="org.apache.http.legacy"

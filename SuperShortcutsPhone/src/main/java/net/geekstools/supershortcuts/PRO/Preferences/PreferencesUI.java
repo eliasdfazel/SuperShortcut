@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 11:45 AM
+ * Last modified 4/30/20 2:49 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -44,7 +44,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,6 +65,7 @@ import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
@@ -73,7 +74,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreferencesUI extends FragmentActivity {
+public class PreferencesUI extends AppCompatActivity {
 
     FunctionsClass functionsClass;
     Activity activity;
@@ -103,7 +104,7 @@ public class PreferencesUI extends FragmentActivity {
         activity = this;
         context = getApplicationContext();
         functionsClass = new FunctionsClass(context);
-        functionsClass.ChangeLog(PreferencesUI.this, false);
+        new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog();
 
         getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
@@ -254,7 +255,8 @@ public class PreferencesUI extends FragmentActivity {
         newsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                functionsClass.ChangeLog(PreferencesUI.this, true);
+
+                new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog();
             }
         });
 
@@ -444,8 +446,7 @@ public class PreferencesUI extends FragmentActivity {
                                 @Override
                                 public void onSuccess(Boolean aBoolean) {
                                     if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-                                        functionsClass.upcomingChangeLog(
-                                                PreferencesUI.this,
+                                        new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLogPreference(
                                                 firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
                                                 String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
                                         );

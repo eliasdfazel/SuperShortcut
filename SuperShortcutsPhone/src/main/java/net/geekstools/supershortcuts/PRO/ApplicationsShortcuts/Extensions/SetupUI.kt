@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:28 PM
+ * Last modified 4/30/20 2:23 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -58,7 +58,7 @@ fun NormalAppShortcutsSelectionListXYZ.evaluateShortcutsInfo() {
 
     } else {
 
-        appShortcutLimitCounter = functionsClass.systemMaxAppShortcut - functionsClass.countLine(".autoSuper")
+        appShortcutLimitCounter = functionsClass.systemMaxAppShortcut - functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)
 
 //        supportActionBar!!.subtitle = Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
 

@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/30/20 6:50 AM
+  ~ Last modified 4/30/20 2:09 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -17,8 +17,9 @@
     <string name="signinMessage" translatable="false">Thanks for Joining to Our #SuperShortcuts 🦸‍♀️  Community.</string>
     <string name="signinFinished" translatable="false"> ⚡ Become Master Of Multitasking ⚡ </string>
 
-    <string name="like" translatable="false">Follow App Page</string>
-    <string name="share" translatable="false">Share With Friends</string>
+    <string name="betaUpdate" translatable="false">βeta Change Log</string>
+    <string name="followIt" translatable="false">Follow App Page</string>
+    <string name="shareIt" translatable="false">Rate &amp; Share</string>
     <string name="invitation_title" translatable="false">
         *Install Super Shortcut App*
     </string>

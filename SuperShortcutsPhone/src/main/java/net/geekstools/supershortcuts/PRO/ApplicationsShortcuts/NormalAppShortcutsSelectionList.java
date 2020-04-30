@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:01 PM
+ * Last modified 4/30/20 2:40 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -85,7 +85,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedApplicationsListAdapter;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.EntryConfigurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
@@ -95,6 +95,7 @@ import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
@@ -139,7 +140,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
     Map<String, Integer> mapIndex;
     Map<Integer, String> mapRangeIndex;
     ArrayList<AdapterItemsData> navDrawerItems, savedApplicationsList;
-    SavedApplicationsListAdapter savedApplicationsListAdapter;
+    SavedAppsListPopupAdapter savedAppsListPopupAdapter;
 
     String PackageName, className, AppName = "Application";
     Drawable AppIcon;
@@ -232,14 +233,14 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
 
                 } else if (intent.getAction().equals(context.getString(R.string.counterAction))) {
 
-                    counter.setText(String.valueOf(functionsClass.countLine(".autoSuper")));
+                    counter.setText(String.valueOf(functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)));
 
                 } else if (intent.getAction().equals(context.getString(R.string.savedAction))) {
 
-                    if (getFileStreamPath(".autoSuper").exists() && functionsClass.countLine(".autoSuper") > 0) {
+                    if (getFileStreamPath(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).exists() && functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile) > 0) {
                         savedApplicationsList.clear();
 
-                        String[] savedLine = functionsClass.readFileLine(".autoSuper");
+                        String[] savedLine = functionsClass.readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
                         for (String aSavedLine : savedLine) {
                             try {
                                 final String packageName = aSavedLine.split("\\|")[0];
@@ -259,14 +260,15 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                                 e.printStackTrace();
                             }
                         }
-                        savedApplicationsListAdapter = new SavedApplicationsListAdapter(NormalAppShortcutsSelectionList.this, context, savedApplicationsList);
+                     //   savedAppsListPopupAdapter = new SavedAppsListPopupAdapter(NormalAppShortcutsSelectionList.this, context, savedApplicationsList);
                         listPopupWindow = new ListPopupWindow(NormalAppShortcutsSelectionList.this);
-                        listPopupWindow.setAdapter(savedApplicationsListAdapter);
+                        listPopupWindow.setAdapter(savedAppsListPopupAdapter);
                         listPopupWindow.setAnchorView(popupAnchorView);
                         listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
                         listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
                         listPopupWindow.setModal(true);
                         listPopupWindow.setBackgroundDrawable(null);
+
                         listPopupWindow.show();
                         listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                             @Override
@@ -299,7 +301,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
 
                     } else {
 
-                        appShortcutLimitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".autoSuper");
+                        appShortcutLimitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
                         getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                         PublicVariable.maxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
 
@@ -597,8 +599,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                 break;
             }
             case android.R.id.home: {
-                functionsClass.upcomingChangeLog(
-                        NormalAppShortcutsSelectionList.this,
+                new FunctionsClassDialogues(NormalAppShortcutsSelectionList.this, functionsClass).changeLogPreference(
                         firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
                         String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
                 );
@@ -919,7 +920,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                     animation.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
-                            counter.setText(String.valueOf(functionsClass.countLine(".autoSuper")));
+                            counter.setText(String.valueOf(functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)));
                         }
 
                         @Override
@@ -932,7 +933,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                         }
                     });
 
-                    PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(".autoSuper");
+                    PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
                     resetAdapter = false;
                 }
             }, 100);

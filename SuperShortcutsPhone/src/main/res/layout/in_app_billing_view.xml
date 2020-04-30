@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/28/20 11:57 AM
+  ~ Last modified 4/30/20 2:09 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@
         android:layout_height="57dp"
         android:layout_margin="11dp"
         android:textAllCaps="false"
-        android:text="@string/share"
+        android:text="@string/shareIt"
         android:textSize="19sp"
         android:textColor="@color/light"
         android:textStyle="bold"

@@ -1,0 +1,173 @@
+/*
+ * Copyright © 2020 By Geeks Empire.
+ *
+ * Created by Elias Fazel
+ * Last modified 4/30/20 2:49 PM
+ *
+ * Licensed Under MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+package net.geekstools.supershortcuts.PRO.Utils.Functions
+
+import android.app.Dialog
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.text.Html
+import android.util.TypedValue
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.dialogue_message.*
+import net.geekstools.supershortcuts.PRO.BuildConfig
+import net.geekstools.supershortcuts.PRO.R
+import java.io.File
+
+class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsClass: FunctionsClass) {
+
+    fun changeLog() {
+        val layoutParams = WindowManager.LayoutParams()
+        val dialogueWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 370f, activity.resources.displayMetrics).toInt()
+        val dialogueHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 430f, activity.resources.displayMetrics).toInt()
+
+        layoutParams.width = dialogueWidth
+        layoutParams.height = dialogueHeight
+        layoutParams.windowAnimations = android.R.style.Animation_Dialog
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
+        layoutParams.dimAmount = 0.57f
+
+        val dialog = Dialog(activity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialogue_message)
+        dialog.window?.attributes = layoutParams
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.decorView?.setBackgroundColor(Color.TRANSPARENT)
+        dialog.setCancelable(true)
+
+        val dialogueView: View = dialog.findViewById<RelativeLayout>(R.id.dialogueView)
+        dialogueView.backgroundTintList = ColorStateList.valueOf(activity.getColor(R.color.light))
+
+        dialog.dialogueTitle.text = activity.getString(R.string.whatsnew)
+        dialog.dialogueMessage.text = Html.fromHtml(activity.getString(R.string.changelog))
+
+        dialog.rateIt.setBackgroundColor(activity.getColor(R.color.default_color))
+        dialog.followIt.setBackgroundColor(activity.getColor(R.color.default_color_darker))
+
+        dialog.dialogueTitle.setTextColor(activity.getColor(R.color.darker))
+        dialog.dialogueMessage.setTextColor(activity.getColor(R.color.dark))
+
+        dialog.rateIt.setTextColor(activity.getColor(R.color.light))
+        dialog.followIt.setTextColor(activity.getColor(R.color.light))
+
+        dialog.rateIt.setOnClickListener {
+            dialog.dismiss()
+
+            activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.play_store_link))))
+        }
+
+        dialog.followIt.setOnClickListener {
+            dialog.dismiss()
+
+            activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.link_facebook_app))))
+        }
+
+        dialog.setOnDismissListener {
+            functionsClass.saveFile(".Updated", functionsClass.appVersionCode(activity.packageName).toString())
+        }
+
+        if (!activity.getFileStreamPath(".Updated").exists()) {
+            dialog.show()
+        } else if (functionsClass.appVersionCode(activity.packageName) > functionsClass.readFile(".Updated").toInt()) {
+            dialog.show()
+            if (!BuildConfig.DEBUG && functionsClass.networkConnection()) {
+                FirebaseAuth.getInstance().addAuthStateListener {
+                    val user: FirebaseUser? = it.currentUser
+                    if (user == null) {
+                        functionsClass.savePreference(".UserInformation", "userEmail", null)
+                    } else {
+                        val betaFile = File("/data/data/" + activity.packageName + "/shared_prefs/.UserInformation.xml")
+                        val uriBetaFile = Uri.fromFile(betaFile)
+                        val firebaseStorage = FirebaseStorage.getInstance()
+
+                        val storageReference = firebaseStorage.getReference("/Users/" + "API" + functionsClass.returnAPI() + "/" +
+                                functionsClass.readPreference(".UserInformation", "userEmail", null))
+                        val uploadTask = storageReference.putFile(uriBetaFile)
+
+                        uploadTask.addOnFailureListener { exception -> exception.printStackTrace() }.addOnSuccessListener { FunctionsClassDebug.PrintDebug("Firebase Activities Done Successfully") }
+                    }
+                }
+            }
+        }
+    }
+
+    fun changeLogPreference(betaChangeLog: String, betaVersionCode: String) {
+        val layoutParams = WindowManager.LayoutParams()
+        val dialogueWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 370f, activity.resources.displayMetrics).toInt()
+        val dialogueHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 430f, activity.resources.displayMetrics).toInt()
+
+        layoutParams.width = dialogueWidth
+        layoutParams.height = dialogueHeight
+        layoutParams.windowAnimations = android.R.style.Animation_Dialog
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
+        layoutParams.dimAmount = 0.57f
+
+        val dialog = Dialog(activity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialogue_message)
+        dialog.window!!.attributes = layoutParams
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.decorView.setBackgroundColor(Color.TRANSPARENT)
+        dialog.setCancelable(true)
+
+        val dialogueView: View = dialog.findViewById<RelativeLayout>(R.id.dialogueView)
+        dialogueView.backgroundTintList = ColorStateList.valueOf(activity.getColor(R.color.light))
+
+        dialog.dialogueTitle.text = activity.getString(R.string.whatsnew)
+        dialog.dialogueMessage.text = Html.fromHtml(activity.getString(R.string.changelog))
+
+        dialog.rateIt.setBackgroundColor(activity.getColor(R.color.default_color))
+        dialog.followIt.setBackgroundColor(activity.getColor(R.color.default_color_darker))
+
+        dialog.dialogueTitle.setTextColor(activity.getColor(R.color.darker))
+        dialog.dialogueMessage.setTextColor(activity.getColor(R.color.dark))
+
+        dialog.rateIt.setTextColor(activity.getColor(R.color.light))
+        dialog.followIt.setTextColor(activity.getColor(R.color.light))
+
+        dialog.rateIt.text = if (betaChangeLog.contains(activity.packageName)) {
+            activity.getString(R.string.shareIt)
+        } else {
+            activity.getString(R.string.betaUpdate)
+        }
+        dialog.rateIt.setOnClickListener {
+            dialog.dismiss()
+
+            if (dialog.rateIt.text == activity.getString(R.string.shareIt)) {
+                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.play_store_link).toString() + activity.getPackageName()))
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            } else if (dialog.rateIt.text == activity.getString(R.string.betaUpdate)) {
+                functionsClass.upcomingChangeLog(activity, betaChangeLog, betaVersionCode)
+            }
+        }
+
+        dialog.followIt.setOnClickListener {
+            dialog.dismiss()
+
+            activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.link_facebook_app))))
+        }
+
+        dialog.setOnDismissListener {
+            functionsClass.saveFile(".Updated", functionsClass.appVersionCode(activity.packageName).toString())
+        }
+
+        dialog.show()
+    }
+}
