@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:01 PM
+ * Last modified 4/30/20 1:32 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,7 +29,7 @@ fun NormalAppShortcutsSelectionListXYZ.loadInstalledAppsData() = CoroutineScope(
 
     val listOfNewCharOfItemsForIndex: ArrayList<String> = ArrayList<String>()
 
-    applicationInfoList = applicationContext.packageManager.getInstalledApplications(0) as ArrayList<ApplicationInfo>
+    val applicationInfoList = applicationContext.packageManager.getInstalledApplications(0) as ArrayList<ApplicationInfo>
     Collections.sort(applicationInfoList, ApplicationInfo.DisplayNameComparator(packageManager))
 
     applicationInfoList.forEach { applicationInfo ->
@@ -45,6 +45,8 @@ fun NormalAppShortcutsSelectionListXYZ.loadInstalledAppsData() = CoroutineScope(
             }
 
             listOfNewCharOfItemsForIndex.add(appName.substring(0, 1).toUpperCase(Locale.getDefault()))
+
+            println("********** " + appName)
 
             installedAppsListItem.add(AdapterItemsData(
                     appName,

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:01 PM
+ * Last modified 4/30/20 1:28 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,6 +14,8 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.view.View
 import android.view.WindowManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListXYZ
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
@@ -23,6 +25,12 @@ fun NormalAppShortcutsSelectionListXYZ.setupUI() {
     normalAppSelectionBinding.autoApps.backgroundTintList = ColorStateList.valueOf(getColor(R.color.default_color))
     normalAppSelectionBinding.autoSplit.backgroundTintList = ColorStateList.valueOf(getColor(R.color.default_color_darker))
     normalAppSelectionBinding.autoCategories.backgroundTintList = ColorStateList.valueOf(getColor(R.color.default_color_darker))
+
+    normalAppSelectionBinding.temporaryFallingIcon.bringToFront()
+    normalAppSelectionBinding.confirmLayout.bringToFront()
+
+    recyclerViewLayoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+    normalAppSelectionBinding.recyclerViewApplicationsList.layoutManager = recyclerViewLayoutManager
 
     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

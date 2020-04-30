@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:01 PM
+ * Last modified 4/30/20 1:36 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,7 +11,6 @@
 package net.geekstools.supershortcuts.PRO.Utils.Functions
 
 import android.content.Context
-import java.io.File
 import java.nio.charset.Charset
 
 class FunctionsClassIO (private val context: Context) {
@@ -28,9 +27,10 @@ class FunctionsClassIO (private val context: Context) {
     }
 
     fun fileLinesCounter(fileName: String) : Int {
+        val file = context.getFileStreamPath(fileName)
 
-        return if (context.getFileStreamPath(fileName).exists()) {
-            File(fileName).readLines(Charset.defaultCharset()).size
+        return if (file.exists()) {
+            file.readLines(Charset.defaultCharset()).size
         } else {
             0
         }

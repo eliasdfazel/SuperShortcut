@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:01 PM
+ * Last modified 4/30/20 1:36 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,7 +12,6 @@ package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts
 
 import android.app.ActivityOptions
 import android.content.*
-import android.content.pm.ApplicationInfo
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
@@ -54,8 +53,7 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
         ListPopupWindow(applicationContext)
     }
 
-    private lateinit var recyclerViewLayoutManager: LinearLayoutManager
-    var applicationInfoList: ArrayList<ApplicationInfo> = ArrayList<ApplicationInfo>()
+    lateinit var recyclerViewLayoutManager: LinearLayoutManager
     lateinit var appSelectionListAdapter: RecyclerView.Adapter<SelectionListAdapter.ViewHolder>
     val installedAppsListItem: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
 

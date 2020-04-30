@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 1:01 PM
+ * Last modified 4/30/20 1:32 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -89,15 +89,6 @@ class SelectionListAdapter(private val context: Context,
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(viewHolderBinder: ViewHolder, position: Int) {
 
-
-
-
-
-        println(">>>>>>>>>>> " + adapterItemData[position].appName)
-
-
-
-
         viewHolderBinder.appIconView.setImageDrawable(adapterItemData[position].appIcon)
         viewHolderBinder.appNameView.text = adapterItemData[position].appName
 
@@ -127,7 +118,9 @@ class SelectionListAdapter(private val context: Context,
 
                     val packageName = adapterItemData[position].packageName
                     val className = adapterItemData[position].className
+
                     val autoFile = context.getFileStreamPath(functionsClass.appPackageNameClassName(packageName, className) + ".Super")
+
                     if (autoFile.exists()) {
                         context.deleteFile(functionsClass.appPackageNameClassName(packageName, className) + ".Super")
 
