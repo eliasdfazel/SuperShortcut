@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 8:18 AM
+ * Last modified 4/30/20 12:06 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -83,8 +83,8 @@ import net.geekstools.supershortcuts.PRO.EntryConfigurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.nav.SplitShortcutsAdapter;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter.SplitShortcutsAdapter;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
@@ -123,7 +123,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
     MenuItem mixShortcutsMenuItem;
 
     String[] appData;
-    ArrayList<NavDrawerItem> navDrawerItems;
+    ArrayList<AdapterItemsData> navDrawerItems;
 
     int limitCounter;
     BroadcastReceiver counterReceiver;
@@ -159,7 +159,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         activity = this;
 
         desc = (TextView) findViewById(R.id.desc);
-        counterView = (TextView) findViewById(R.id.counter);
+        counterView = (TextView) findViewById(R.id.app_selected_counter_view);
         loadIcon = (ImageView) findViewById(R.id.loadingLogo);
         wholeAuto = (RelativeLayout) findViewById(R.id.MainView);
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
@@ -188,7 +188,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
 
-        navDrawerItems = new ArrayList<NavDrawerItem>();
+        navDrawerItems = new ArrayList<AdapterItemsData>();
 
         Typeface face = Typeface.createFromAsset(getAssets(), "upcil.ttf");
         desc.setTypeface(face);
@@ -759,8 +759,8 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         @Override
         protected Void doInBackground(Void... params) {
             if (!getFileStreamPath(".SplitSuper").exists()) {
-                navDrawerItems = new ArrayList<NavDrawerItem>();
-                navDrawerItems.add(new NavDrawerItem(getPackageName(), new String[]{getPackageName()}));
+                navDrawerItems = new ArrayList<AdapterItemsData>();
+                navDrawerItems.add(new AdapterItemsData(getPackageName(), new String[]{getPackageName()}));
                 splitShortcutsAdapter = new SplitShortcutsAdapter(activity, context, navDrawerItems);
             } else {
                 try {
@@ -772,17 +772,17 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                     }
 
                     appData = functionsClass.readFileLine(".SplitSuper");
-                    navDrawerItems = new ArrayList<NavDrawerItem>();
+                    navDrawerItems = new ArrayList<AdapterItemsData>();
                     for (int navItem = 0; navItem < appData.length; navItem++) {
                         try {
-                            navDrawerItems.add(new NavDrawerItem(
+                            navDrawerItems.add(new AdapterItemsData(
                                     appData[navItem],
                                     functionsClass.readFileLine(appData[navItem])));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    navDrawerItems.add(new NavDrawerItem(getPackageName(), new String[]{getPackageName()}));
+                    navDrawerItems.add(new AdapterItemsData(getPackageName(), new String[]{getPackageName()}));
                     splitShortcutsAdapter = new SplitShortcutsAdapter(activity, context, navDrawerItems);
                     splitShortcutsAdapter.notifyDataSetChanged();
                 } catch (Exception e) {

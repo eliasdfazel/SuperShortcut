@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 10:44 AM
+ * Last modified 4/30/20 11:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,26 +12,26 @@ package net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData;
 
 import android.graphics.drawable.Drawable;
 
-public class NavDrawerItem {
+public class AdapterItemsData {
 
     String packageName, className, appName, category;
     String[] packageNames;
     Drawable appIcon;
 
-    public NavDrawerItem(String appName, String packageName, String className, Drawable appIcon) {
+    public AdapterItemsData(String appName, String packageName, String className, Drawable appIcon) {
         this.appName = appName;
         this.packageName = packageName;
         this.className = className;
         this.appIcon = appIcon;
     }
 
-    public NavDrawerItem(String appName, String packageName, Drawable appIcon) {
+    public AdapterItemsData(String appName, String packageName, Drawable appIcon) {
         this.appName = appName;
         this.packageName = packageName;
         this.appIcon = appIcon;
     }
 
-    public NavDrawerItem(String category, String[] packageNames) {
+    public AdapterItemsData(String category, String[] packageNames) {
         this.category = category;
         this.packageNames = packageNames;
     }

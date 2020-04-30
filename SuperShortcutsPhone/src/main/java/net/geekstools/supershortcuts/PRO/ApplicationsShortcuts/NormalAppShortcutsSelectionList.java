@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 8:25 AM
+ * Last modified 4/30/20 1:01 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -85,15 +85,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedListAdapter;
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedApplicationsListAdapter;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.EntryConfigurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
@@ -118,7 +117,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
 
     FunctionsClass functionsClass;
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerViewApplicationsList;
     RecyclerView.Adapter selectionListAdapter;
     LinearLayoutManager recyclerViewLayoutManager;
 
@@ -139,8 +138,8 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
     List<String> indexAppName;
     Map<String, Integer> mapIndex;
     Map<Integer, String> mapRangeIndex;
-    ArrayList<NavDrawerItem> navDrawerItems, navDrawerItemsSaved;
-    SavedListAdapter savedListAdapter;
+    ArrayList<AdapterItemsData> navDrawerItems, savedApplicationsList;
+    SavedApplicationsListAdapter savedApplicationsListAdapter;
 
     String PackageName, className, AppName = "Application";
     Drawable AppIcon;
@@ -164,9 +163,9 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
 
         listPopupWindow = new ListPopupWindow(NormalAppShortcutsSelectionList.this);
         loadingDescription = (TextView) findViewById(R.id.loadingDescription);
-        counter = (TextView) findViewById(R.id.counter);
+        counter = (TextView) findViewById(R.id.app_selected_counter_view);
         loadingLogo = (ImageView) findViewById(R.id.loadingLogo);
-        tempIcon = (ImageView) findViewById(R.id.tempIcon);
+        tempIcon = (ImageView) findViewById(R.id.temporary_falling_icon);
         tempIcon.bringToFront();
         popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
         nestedIndexScrollView = (ScrollView) findViewById(R.id.nestedIndexScrollView);
@@ -182,16 +181,17 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
         autoSplit = (MaterialButton) findViewById(R.id.autoSplit);
         autoCategories = (MaterialButton) findViewById(R.id.autoCategories);
 
-        recyclerView = (RecyclerView) findViewById(R.id.listFav);
+        recyclerViewApplicationsList = (RecyclerView) findViewById(R.id.recyclerViewApplicationsList);
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
-        recyclerView.setLayoutManager(recyclerViewLayoutManager);
+        recyclerViewApplicationsList.setLayoutManager(recyclerViewLayoutManager);
 
-        scrollListFav = (ScrollView) findViewById(R.id.scrollListFav);
+        scrollListFav = (ScrollView) findViewById(R.id.nestedScrollView);
         scrollListFav.setSmoothScrollingEnabled(true);
 
         MainView.setBackgroundColor(getColor(R.color.light));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -201,8 +201,8 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
 
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-        navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
+        navDrawerItems = new ArrayList<AdapterItemsData>();
+        savedApplicationsList = new ArrayList<AdapterItemsData>();
         indexAppName = new ArrayList<String>();
         mapIndex = new LinkedHashMap<String, Integer>();
         mapRangeIndex = new LinkedHashMap<Integer, String>();
@@ -227,19 +227,25 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(context.getString(R.string.loadOffline))) {
+
                     loadDataOff();
+
                 } else if (intent.getAction().equals(context.getString(R.string.counterAction))) {
+
                     counter.setText(String.valueOf(functionsClass.countLine(".autoSuper")));
+
                 } else if (intent.getAction().equals(context.getString(R.string.savedAction))) {
+
                     if (getFileStreamPath(".autoSuper").exists() && functionsClass.countLine(".autoSuper") > 0) {
-                        navDrawerItemsSaved.clear();
+                        savedApplicationsList.clear();
+
                         String[] savedLine = functionsClass.readFileLine(".autoSuper");
                         for (String aSavedLine : savedLine) {
                             try {
                                 final String packageName = aSavedLine.split("\\|")[0];
                                 final String className = aSavedLine.split("\\|")[1];
                                 ActivityInfo activityInfo = getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
-                                navDrawerItemsSaved.add(new NavDrawerItem(
+                                savedApplicationsList.add(new AdapterItemsData(
                                         functionsClass.activityLabel(activityInfo),
                                         packageName,
                                         className,
@@ -253,19 +259,15 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                                 e.printStackTrace();
                             }
                         }
-                        savedListAdapter = new SavedListAdapter(NormalAppShortcutsSelectionList.this, context, navDrawerItemsSaved);
+                        savedApplicationsListAdapter = new SavedApplicationsListAdapter(NormalAppShortcutsSelectionList.this, context, savedApplicationsList);
                         listPopupWindow = new ListPopupWindow(NormalAppShortcutsSelectionList.this);
-                        listPopupWindow.setAdapter(savedListAdapter);
+                        listPopupWindow.setAdapter(savedApplicationsListAdapter);
                         listPopupWindow.setAnchorView(popupAnchorView);
                         listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
                         listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
                         listPopupWindow.setModal(true);
                         listPopupWindow.setBackgroundDrawable(null);
-                        try {
-                            listPopupWindow.show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        listPopupWindow.show();
                         listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                             @Override
                             public void onDismiss() {
@@ -273,28 +275,38 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                             }
                         });
                     }
+
                 } else if (intent.getAction().equals(getString(R.string.savedActionHide))) {
-                    if (listPopupWindow.isShowing()) {
-                        listPopupWindow.dismiss();
-                    } else {
-                        listPopupWindow.dismiss();
-                    }
+
+                    listPopupWindow.dismiss();
+
                 } else if ((intent.getAction().equals(getString(R.string.checkboxAction)))) {
+
                     resetAdapter = true;
+
                     loadDataOff();
+
                     listPopupWindow.dismiss();
                     sendBroadcast(new Intent(getString(R.string.visibilityAction)));
+
                 } else if (intent.getAction().equals(getString(R.string.dynamicShortcuts))) {
-                    if (functionsClass.mixShortcuts() == true) {
+
+                    if (functionsClass.mixShortcuts()) {
+
                         PublicVariable.maxAppShortcuts
                                 = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
                         getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.maxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+
                     } else {
+
                         appShortcutLimitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".autoSuper");
                         getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                         PublicVariable.maxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
+
                     }
+
                 } else if (intent.getAction().equals(getString(R.string.license))) {
+
                     functionsClass.dialogueLicense(NormalAppShortcutsSelectionList.this);
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -302,6 +314,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                             stopService(new Intent(getApplicationContext(), LicenseValidator.class));
                         }
                     }, 1000);
+
                 }
             }
         };
@@ -373,7 +386,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
     public void onStart() {
         super.onStart();
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerViewApplicationsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -793,7 +806,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
             super.onPreExecute();
 
             try {
-                recyclerView.getRecycledViewPool().clear();
+                recyclerViewApplicationsList.getRecycledViewPool().clear();
 
                 navDrawerItems.clear();
                 indexAppName.clear();
@@ -834,7 +847,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                                 indexAppName.add(AppName);
                                 AppIcon = functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.activityIcon(resolveInfo.activityInfo)) : functionsClass.activityIcon(resolveInfo.activityInfo);
 
-                                navDrawerItems.add(new NavDrawerItem(
+                                navDrawerItems.add(new AdapterItemsData(
                                         AppName,
                                         PackageName,
                                         className,
@@ -849,7 +862,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                         e.printStackTrace();
                     }
                 }
-                selectionListAdapter = new SelectionListAdapter(NormalAppShortcutsSelectionList.this, getApplicationContext(), navDrawerItems);
+//                selectionListAdapter = new SelectionListAdapter(NormalAppShortcutsSelectionList.this, getApplicationContext(), navDrawerItems);
                 selectionListAdapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -866,8 +879,8 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                 return;
             }
 
-            recyclerView.setAdapter(selectionListAdapter);
-            registerForContextMenu(recyclerView);
+            recyclerViewApplicationsList.setAdapter(selectionListAdapter);
+            registerForContextMenu(recyclerViewApplicationsList);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -1076,7 +1089,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                             try {
                                 scrollListFav.smoothScrollTo(
                                         0,
-                                        ((int) recyclerView.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY()) - functionsClass.DpToInteger(37)
+                                        ((int) recyclerViewApplicationsList.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY()) - functionsClass.DpToInteger(37)
                                 );
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -1095,7 +1108,7 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
                             try {
                                 scrollListFav.smoothScrollTo(
                                         0,
-                                        ((int) recyclerView.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY())
+                                        ((int) recyclerViewApplicationsList.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY())
                                 );
                             } catch (Exception e) {
                                 e.printStackTrace();

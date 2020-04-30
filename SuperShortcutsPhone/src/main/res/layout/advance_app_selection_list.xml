@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/30/20 8:25 AM
+  ~ Last modified 4/30/20 12:06 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@
     tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionList">
 
     <ScrollView
-        android:id="@+id/scrollListFav"
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="@android:color/transparent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/listFav"
+                android:id="@+id/recyclerViewApplicationsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@drawable/draw_divider"
@@ -57,7 +57,7 @@
         android:id="@+id/nestedIndexScrollView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignEnd="@id/scrollListFav"
+        android:layout_alignEnd="@id/nestedScrollView"
         android:foregroundGravity="center_vertical"
         android:background="@android:color/transparent"
         android:visibility="invisible">
@@ -83,7 +83,7 @@
         android:background="@android:color/transparent"
         android:gravity="center">
 
-        <net.geekstools.supershortcuts.PRO.FoldersShortcuts.ui.AdvanceConfirmButton
+        <net.geekstools.supershortcuts.PRO.FoldersShortcuts.UI.AdvanceConfirmButton
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_centerInParent="true"
@@ -92,7 +92,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/counter"
+        android:id="@+id/app_selected_counter_view"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/confirmLayout"
@@ -118,7 +118,7 @@
         android:visibility="invisible" />
 
     <ImageView
-        android:id="@+id/tempIcon"
+        android:id="@+id/temporary_falling_icon"
         android:layout_width="57dp"
         android:layout_height="57dp"
         android:layout_alignParentEnd="true"

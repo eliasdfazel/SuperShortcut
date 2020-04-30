@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 8:25 AM
+ * Last modified 4/30/20 12:06 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -54,9 +54,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.nav.SplitSavedListAdapter;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.nav.SplitSelectionListAdapter;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter.SplitSavedListAdapter;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter.SplitSelectionListAdapter;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
@@ -91,7 +91,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
     List<String> appName;
     Map<String, Integer> mapIndex;
     Map<Integer, String> mapRangeIndex;
-    ArrayList<NavDrawerItem> navDrawerItems, navDrawerItemsSaved;
+    ArrayList<AdapterItemsData> navDrawerItems, navDrawerItemsSaved;
     SplitSavedListAdapter splitSavedListAdapter;
 
     String PackageName;
@@ -120,9 +120,9 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
 
         listPopupWindow = new ListPopupWindow(activity);
         desc = (TextView) findViewById(R.id.desc);
-        counterView = (TextView) findViewById(R.id.counter);
+        counterView = (TextView) findViewById(R.id.app_selected_counter_view);
         loadIcon = (ImageView) findViewById(R.id.loadingLogo);
-        tempIcon = (ImageView) findViewById(R.id.tempIcon);
+        tempIcon = (ImageView) findViewById(R.id.temporary_falling_icon);
         tempIcon.bringToFront();
         popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
         nestedIndexScrollView = (ScrollView) findViewById(R.id.nestedIndexScrollView);
@@ -133,11 +133,11 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();
 
-        recyclerView = (RecyclerView) findViewById(R.id.listFav);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewApplicationsList);
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
-        nestedScrollView = (ScrollView) findViewById(R.id.scrollListFav);
+        nestedScrollView = (ScrollView) findViewById(R.id.nestedScrollView);
         nestedScrollView.setSmoothScrollingEnabled(true);
 
         wholeAuto.setBackgroundColor(getColor(R.color.light));
@@ -154,8 +154,8 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
 
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-        navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
+        navDrawerItems = new ArrayList<AdapterItemsData>();
+        navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
         appName = new ArrayList<String>();
         mapIndex = new LinkedHashMap<String, Integer>();
         mapRangeIndex = new LinkedHashMap<Integer, String>();
@@ -184,7 +184,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
                         navDrawerItemsSaved.clear();
                         String[] savedLine = functionsClass.readFileLine(PublicVariable.categoryName);
                         for (String aSavedLine : savedLine) {
-                            navDrawerItemsSaved.add(new NavDrawerItem(
+                            navDrawerItemsSaved.add(new AdapterItemsData(
                                     functionsClass.appName(aSavedLine),
                                     aSavedLine,
                                     functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(aSavedLine, functionsClass.appIconDrawable(aSavedLine)) : functionsClass.appIconDrawable(aSavedLine)
@@ -368,7 +368,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
                                 appName.add(AppName);
                                 AppIcon = functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.appIconDrawable(PackageName)) : functionsClass.appIconDrawable(PackageName);
 
-                                navDrawerItems.add(new NavDrawerItem(AppName, PackageName, AppIcon));
+                                navDrawerItems.add(new AdapterItemsData(AppName, PackageName, AppIcon));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

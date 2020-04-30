@@ -2,19 +2,18 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:33 AM
+ * Last modified 4/30/20 11:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI;
+package net.geekstools.supershortcuts.PRO.FoldersShortcuts.UI;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -26,7 +25,7 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.SimpleGestureFilter;
 
-public class ConfirmButton extends Button
+public class AdvanceConfirmButton extends Button
         implements SimpleGestureFilter.SimpleGestureListener {
 
     FunctionsClass functionsClass;
@@ -35,14 +34,14 @@ public class ConfirmButton extends Button
     SimpleGestureFilter detector;
     BroadcastReceiver visibilityReceiver;
 
-    public ConfirmButton(Context context, AttributeSet attrs) {
+    public AdvanceConfirmButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         functionsClass = new FunctionsClass(context);
         initConfirmButton();
     }
 
-    public ConfirmButton(Context context) {
+    public AdvanceConfirmButton(Context context) {
         super(context);
     }
 
@@ -50,19 +49,19 @@ public class ConfirmButton extends Button
         detector = new SimpleGestureFilter(context, this);
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(context.getString(R.string.visibilityAction));
-        intentFilter.addAction(context.getString(R.string.animtaionAction));
+        intentFilter.addAction(context.getString(R.string.visibilityActionAdvance));
+        intentFilter.addAction(context.getString(R.string.animtaionActionAdvance));
         visibilityReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(context.getString(R.string.visibilityAction))) {
-                    ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
-                    if (!ConfirmButton.this.isShown()) {
-                        ConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
-                        ConfirmButton.this.setVisibility(VISIBLE);
+                if (intent.getAction().equals(context.getString(R.string.visibilityActionAdvance))) {
+                    AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
+                    if (!AdvanceConfirmButton.this.isShown()) {
+                        AdvanceConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
+                        AdvanceConfirmButton.this.setVisibility(VISIBLE);
                     }
-                } else if (intent.getAction().equals(context.getString(R.string.animtaionAction))) {
-                    ConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button));
+                } else if (intent.getAction().equals(context.getString(R.string.animtaionActionAdvance))) {
+                    AdvanceConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button));
                 }
             }
         };
@@ -90,35 +89,34 @@ public class ConfirmButton extends Button
             case SimpleGestureFilter.SWIPE_DOWN:
                 break;
             case SimpleGestureFilter.SWIPE_LEFT:
-                context.sendBroadcast(new Intent(context.getString(R.string.savedAction)));
+                context.sendBroadcast(new Intent(context.getString(R.string.savedActionAdvance)));
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                        if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
+                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
                 break;
             case SimpleGestureFilter.SWIPE_RIGHT:
-                context.sendBroadcast(new Intent(context.getString(R.string.savedAction)));
-
+                context.sendBroadcast(new Intent(context.getString(R.string.savedActionAdvance)));
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                        if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
+                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
                 break;
             case SimpleGestureFilter.SWIPE_UP:
-                context.sendBroadcast(new Intent(context.getString(R.string.savedAction)));
+                context.sendBroadcast(new Intent(context.getString(R.string.savedActionAdvance)));
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                        if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
+                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -128,29 +126,16 @@ public class ConfirmButton extends Button
 
     @Override
     public void onSingleTapUp() {
-        if (functionsClass.mixShortcuts() == true) {
-            functionsClass.addMixAppShortcuts();
-        } else {
-            functionsClass.addAppShortcuts();
-            SharedPreferences sharedPreferences = context.getSharedPreferences(".PopupShortcut", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("PopupShortcutMode", "AppShortcuts");
-            editor.apply();
-        }
+//        try {
+//            functionsClass.overrideBackPress(AdvanceShortcuts.class,
+//                    ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, R.anim.go_down));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
     public void onLongPress() {
-        try {
-            functionsClass.deleteSelectedFiles();
-
-            context.sendBroadcast(new Intent(context.getString(R.string.checkboxAction)));
-            context.sendBroadcast(new Intent(context.getString(R.string.counterAction)));
-            context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcuts)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        functionsClass.clearDynamicShortcuts();
+        //
     }
 }

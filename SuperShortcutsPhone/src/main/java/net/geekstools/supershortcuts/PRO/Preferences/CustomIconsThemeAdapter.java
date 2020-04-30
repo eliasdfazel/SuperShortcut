@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:30 AM
+ * Last modified 4/30/20 11:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -24,7 +24,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 
@@ -37,9 +37,9 @@ public class CustomIconsThemeAdapter extends RecyclerView.Adapter<CustomIconsThe
     ViewHolder viewHolder;
     private Context context;
     private Activity activity;
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<AdapterItemsData> navDrawerItems;
 
-    public CustomIconsThemeAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
+    public CustomIconsThemeAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;

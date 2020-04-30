@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:30 AM
+ * Last modified 4/30/20 11:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.nav;
+package net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,22 +23,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 
 import java.util.ArrayList;
 
-public class SplitSavedListAdapter extends BaseAdapter {
+public class AdvanceSavedListAdapter extends BaseAdapter {
 
     private Context context;
     private Activity activity;
 
     FunctionsClass functionsClass;
 
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<AdapterItemsData> navDrawerItems;
 
-    public SplitSavedListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
+    public AdvanceSavedListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
@@ -81,8 +81,8 @@ public class SplitSavedListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 context.deleteFile(navDrawerItems.get(position).getPackageName() + PublicVariable.categoryName);
                 functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
-                context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionSplit)));
-                context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplit)));
+                context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionAdvance)));
+                context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
             }
         });
 

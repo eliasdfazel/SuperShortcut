@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 7:53 AM
+ * Last modified 4/30/20 11:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -62,7 +62,7 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcut
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
@@ -371,10 +371,10 @@ public class PreferencesUI extends FragmentActivity {
                 RecycleViewSmoothLayout recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
                 customIconList.setLayoutManager(recyclerViewLayoutManager);
                 customIconList.removeAllViews();
-                final ArrayList<NavDrawerItem> navDrawerItems = new ArrayList<NavDrawerItem>();
+                final ArrayList<AdapterItemsData> navDrawerItems = new ArrayList<AdapterItemsData>();
                 navDrawerItems.clear();
                 for (String packageName : PublicVariable.customIconsPackages) {
-                    navDrawerItems.add(new NavDrawerItem(
+                    navDrawerItems.add(new AdapterItemsData(
                             functionsClass.appName(packageName),
                             packageName,
                             functionsClass.appIconDrawable(packageName)

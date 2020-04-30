@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 8:12 AM
+ * Last modified 4/30/20 1:01 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -75,12 +75,12 @@ import com.google.firebase.appindexing.Indexable;
 import com.google.firebase.appindexing.builders.Actions;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.AppShortcutsMediatedActivity;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.CategoryItemListAdapter;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadCategoryItems;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.nav.CategoryItemListAdapter;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitScreenService;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitTransparentPair;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 
 import java.io.BufferedReader;
@@ -90,7 +90,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1293,11 +1292,11 @@ public class FunctionsClass {
     public void showPopupCategoryItem(Activity instanceOfActivity, RelativeLayout popupAnchorView,
                                       String categoryName, LoadCustomIcons loadCustomIcons) {
         try {
-            ArrayList<NavDrawerItem> navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
+            ArrayList<AdapterItemsData> navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
             navDrawerItemsSaved.clear();
             for (String packageName : readFileLine(categoryName)) {
                 if (appInstalledOrNot(packageName)) {
-                    navDrawerItemsSaved.add(new NavDrawerItem(
+                    navDrawerItemsSaved.add(new AdapterItemsData(
                             appName(packageName),
                             packageName,
                             customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
@@ -1307,7 +1306,7 @@ public class FunctionsClass {
                     removeLine(categoryName, packageName);
                 }
             }
-            navDrawerItemsSaved.add(new NavDrawerItem(
+            navDrawerItemsSaved.add(new AdapterItemsData(
                     context.getString(R.string.edit_advanced_shortcut) + " " + categoryName.replace(".CategorySelected", "").split("_")[0],
                     context.getPackageName(),
                     context.getDrawable(R.drawable.draw_pref)));
@@ -1476,51 +1475,18 @@ public class FunctionsClass {
     }
 
     public String[] readFileLine(String fileName) {
-        String[] contentLine = null;
-        if (context.getFileStreamPath(fileName).exists()) {
-            try {
-                FileInputStream fileInputStream = new FileInputStream(context.getFileStreamPath(fileName));
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
-                int count = countLine(fileName);
-                contentLine = new String[count];
-                String line = "";
-                int i = 0;
-                while ((line = bufferedReader.readLine()) != null) {
-                    contentLine[i] = line;
-                    i++;
-                }
-                fileInputStream.close();
-                bufferedReader.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return contentLine;
+        return new FunctionsClassIO(context).readFileLines(fileName);
     }
 
     public String readFile(String fileName) {
-        String temp = "0";
 
-        File G = context.getFileStreamPath(fileName);
-        if (!G.exists()) {
-            temp = "0";
-        } else {
-            try {
-                FileInputStream fin = context.openFileInput(fileName);
-                BufferedReader br = new BufferedReader(new InputStreamReader(fin, "UTF-8"), 1024);
+        return new FunctionsClassIO(context).readFile(fileName);
+    }
 
-                int c;
-                temp = "";
-                while ((c = br.read()) != -1) {
-                    temp = temp + Character.toString((char) c);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    public int countLineInnerFile(String fileName) {
 
-        return temp;
+        return new FunctionsClassIO(context).fileLinesCounter(fileName);
     }
 
     public void removeLine(String fileName, String lineToRemove) {
@@ -2310,6 +2276,7 @@ public class FunctionsClass {
     }
 
     public int getSystemMaxAppShortcut() {
+
         return context.getSystemService(ShortcutManager.class).getMaxShortcutCountPerActivity();
     }
 

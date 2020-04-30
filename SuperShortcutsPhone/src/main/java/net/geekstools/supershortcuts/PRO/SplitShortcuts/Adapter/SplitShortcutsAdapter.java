@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 7:53 AM
+ * Last modified 4/30/20 11:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.nav;
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -36,7 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitAppSelectionList;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
@@ -58,11 +58,11 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
 
     LoadCustomIcons loadCustomIcons;
 
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<AdapterItemsData> navDrawerItems;
 
     String endEdited = "", endFocus = "";
 
-    public SplitShortcutsAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
+    public SplitShortcutsAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;

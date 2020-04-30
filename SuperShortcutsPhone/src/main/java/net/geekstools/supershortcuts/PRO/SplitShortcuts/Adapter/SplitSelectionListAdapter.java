@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 7:53 AM
+ * Last modified 4/30/20 12:21 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.nav;
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,7 +29,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
@@ -50,18 +50,18 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
 
     LoadCustomIcons loadCustomIcons;
 
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<AdapterItemsData> navDrawerItems;
 
     float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
     int animationType;
 
-    public SplitSelectionListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
+    public SplitSelectionListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
 
         functionsClass = new FunctionsClass(context);
-        tempIcon = (ImageView) activity.findViewById(R.id.tempIcon);
+        tempIcon = (ImageView) activity.findViewById(R.id.temporary_falling_icon);
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels;
@@ -210,8 +210,8 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
 
         public ViewHolder(View view) {
             super(view);
-            item = (RelativeLayout) view.findViewById(R.id.item);
-            imgIcon = (ImageView) view.findViewById(R.id.icon);
+            item = (RelativeLayout) view.findViewById(R.id.fullItemView);
+            imgIcon = (ImageView) view.findViewById(R.id.appIconView);
             txtDesc = (TextView) view.findViewById(R.id.desc);
             autoChoice = (CheckBox) view.findViewById(R.id.autoChoice);
         }

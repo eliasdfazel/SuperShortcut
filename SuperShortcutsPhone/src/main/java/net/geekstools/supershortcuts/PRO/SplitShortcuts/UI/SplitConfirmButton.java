@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:33 AM
+ * Last modified 4/30/20 11:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.ui;
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.UI;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -94,7 +94,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -105,7 +105,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -116,7 +116,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);

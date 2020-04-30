@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:24 AM
+ * Last modified 4/30/20 11:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,21 +23,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 
 import java.util.ArrayList;
 
-public class SavedListAdapter extends BaseAdapter {
+public class SavedApplicationsListAdapter extends BaseAdapter {
 
     private Context context;
     private Activity activity;
 
     FunctionsClass functionsClass;
 
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<AdapterItemsData> navDrawerItems;
 
-    public SavedListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
+    public SavedApplicationsListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
