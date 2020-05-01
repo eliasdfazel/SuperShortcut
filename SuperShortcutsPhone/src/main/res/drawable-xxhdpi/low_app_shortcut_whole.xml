@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 11/11/19 7:22 PM
+  ~ Last modified 5/1/20 2:50 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -12,7 +12,7 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/default_color">
     <item
-        android:id="@+id/backtemp"
+        android:id="@+id/temporaryBackground"
         android:bottom="2dp"
         android:left="0dp"
         android:right="0dp"
@@ -29,7 +29,7 @@
         android:right="3dp"
         android:top="2dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/default_color_trans" />
+            <solid android:color="@color/default_color_transparent" />
             <corners android:radius="9dp" />
         </shape>
     </item>

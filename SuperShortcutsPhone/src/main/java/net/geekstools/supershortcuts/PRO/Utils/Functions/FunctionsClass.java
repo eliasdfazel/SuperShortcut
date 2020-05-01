@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 12:03 PM
+ * Last modified 5/1/20 2:57 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,6 +33,7 @@ import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -76,6 +77,7 @@ import com.google.firebase.appindexing.builders.Actions;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.AppShortcutsMediatedActivity;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
+import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.CategoryItemListAdapter;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadCategoryItems;
 import net.geekstools.supershortcuts.PRO.R;
@@ -158,7 +160,11 @@ public class FunctionsClass {
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (context.getSystemService(ShortcutManager.class).getDynamicShortcuts().size() == countLine(fileName)) {
-                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
+
+                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker),
+                        103,
+                        true);
+
                 appToDesktop();
             }
         } catch (Exception e) {
@@ -177,7 +183,9 @@ public class FunctionsClass {
         ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
         shortcutManager.removeAllDynamicShortcuts();
 
-        Toast("Removed", context.getColor(R.color.red), true);
+        Toast("Removed", context.getColor(R.color.red),
+                103,
+                true);
     }
 
     public void removeHomeShortcut(String className, String intentAction, String intentCategory, String shortcutName) {
@@ -249,7 +257,9 @@ public class FunctionsClass {
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)) {
-                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
+                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker),
+                        103,
+                        true);
                 appToDesktop();
             }
         } catch (Exception e) {
@@ -584,7 +594,9 @@ public class FunctionsClass {
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (context.getSystemService(ShortcutManager.class).getDynamicShortcuts().size() == countLine(".mixShortcuts")) {
-                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
+                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker),
+                        103,
+                        true);
                 Toast(context.getString(R.string.cautionShortcutsHome), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
             }
         } catch (Exception e) {
@@ -902,7 +914,9 @@ public class FunctionsClass {
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (context.getSystemService(ShortcutManager.class).getDynamicShortcuts().size() == countLine(".SplitSuperSelected")) {
-                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
+                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker),
+                        103,
+                        true);
                 Toast(context.getString(R.string.cautionShortcutsHome), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
             }
         } catch (Exception e) {
@@ -1175,7 +1189,9 @@ public class FunctionsClass {
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
             if (context.getSystemService(ShortcutManager.class).getDynamicShortcuts().size() == countLine(".categorySuperSelected")) {
-                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
+                Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker),
+                        103,
+                        true);
                 Toast(context.getString(R.string.cautionShortcutsHome), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
             }
         } catch (Exception e) {
@@ -1599,6 +1615,17 @@ public class FunctionsClass {
 
     public boolean readDefaultPreference(String KEY, boolean defaultVALUE) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY, defaultVALUE);
+    }
+
+    /**
+     * 255 is Transparent.
+     */
+    public int setColorAlpha(int color, float alphaValue /*1 -- 255*/) {
+        int alpha = Math.round(Color.alpha(color) * alphaValue);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.argb(alpha, red, green, blue);
     }
 
     /*Dialogue Checkpoint Function*/
@@ -2233,6 +2260,7 @@ public class FunctionsClass {
     }
 
     public boolean mixShortcuts() {
+
         return context.getSharedPreferences("mix", MODE_PRIVATE).getBoolean("mixShortcuts", false);
     }
 
@@ -2287,33 +2315,32 @@ public class FunctionsClass {
     }
 
     /*UI*/
-    public void Toast(String toastContent, int toastColor, boolean showToast) {
-        try {
-            Toast toast = new Toast(context);
-            if (showToast == true) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-                View layout = inflater.inflate(R.layout.toast_view, null);
+    public void Toast(String toastContent, int toastColor,
+                      int toastTopOffset,
+                      boolean showToast) {
 
-                LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
-                GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
-                backToast.setColor(toastColor);
+        Toast toast = new Toast(context);
+        if (showToast) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.toast_view, null);
 
-                TextView textView = (TextView) layout.findViewById(R.id.toastText);
-                textView.setText(Html.fromHtml("<small>" + toastContent + "</small>", Html.FROM_HTML_MODE_LEGACY));
-                textView.setBackground(drawToast);
-                textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.dark_transparent_high));
+            LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
+            GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.temporaryBackground);
+            backToast.setColor(toastColor);
 
-                int yOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 34, context.getResources().getDisplayMetrics());
+            TextView textView = (TextView) layout.findViewById(R.id.toastText);
+            textView.setText(Html.fromHtml("<small>" + toastContent + "</small>", Html.FROM_HTML_MODE_LEGACY));
+            textView.setBackground(drawToast);
+            textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.dark_transparent_high));
 
-                toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.TOP, 0, yOffset);
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.setView(layout);
-                toast.show();
-            } else if (showToast == false) {
-                toast.cancel();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            int yOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, toastTopOffset, context.getResources().getDisplayMetrics());
+
+            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.TOP, 0, yOffset);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
+        } else if (!showToast) {
+            toast.cancel();
         }
     }
 
@@ -2325,7 +2352,7 @@ public class FunctionsClass {
                 View layout = inflater.inflate(R.layout.toast_view, null);
 
                 LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
-                GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
+                GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.temporaryBackground);
                 backToast.setColor(toastColor);
 
                 TextView textView = (TextView) layout.findViewById(R.id.toastText);
@@ -2355,7 +2382,7 @@ public class FunctionsClass {
 
             LayerDrawable drawToast = null;
             drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
-            GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
+            GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.temporaryBackground);
 
             TextView textView = (TextView) layout.findViewById(R.id.toastText);
             textView.setText(Html.fromHtml("<small>" + toastContent + "</small>", Html.FROM_HTML_MODE_LEGACY));
@@ -2528,7 +2555,8 @@ public class FunctionsClass {
     /*In-App Purchase*/
     public boolean mixShortcutsPurchased() {
 
-        return readPreference(".PurchasedItem", "mix.shortcuts", false);
+        return BuildConfig.DEBUG ? true :
+                readPreference(".PurchasedItem", "mix.shortcuts", false);
     }
 
     public boolean alreadyDonated() {

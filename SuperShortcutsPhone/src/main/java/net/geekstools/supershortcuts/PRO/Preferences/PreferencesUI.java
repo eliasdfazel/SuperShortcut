@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:49 PM
+ * Last modified 5/1/20 2:59 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.Preferences;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.AppOpsManager;
@@ -77,8 +76,6 @@ import java.util.List;
 public class PreferencesUI extends AppCompatActivity {
 
     FunctionsClass functionsClass;
-    Activity activity;
-    Context context;
 
     RelativeLayout smartView, splitView, mixView, customIconView, supportView, newsView, translatorView,
             floatingView;
@@ -95,20 +92,15 @@ public class PreferencesUI extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_gui);
-        try {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
 
-        activity = this;
-        context = getApplicationContext();
-        functionsClass = new FunctionsClass(context);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        functionsClass = new FunctionsClass(getApplicationContext());
         new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog();
 
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
-        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>", Html.FROM_HTML_MODE_LEGACY));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -215,7 +207,7 @@ public class PreferencesUI extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    startActivity(intent);
                 }
             }
         });
@@ -296,7 +288,7 @@ public class PreferencesUI extends AppCompatActivity {
                             Intent a = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_alpha)));
                             startActivity(a);
 
-                            functionsClass.Toast(context.getString(R.string.alphaTitle), Gravity.BOTTOM);
+                            functionsClass.Toast(getString(R.string.alphaTitle), Gravity.BOTTOM);
                         } else if (selectedPosition == 4) {
                             Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + getPackageName()));
                             startActivity(r);

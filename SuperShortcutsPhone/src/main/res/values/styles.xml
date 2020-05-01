@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/30/20 12:49 PM
+  ~ Last modified 5/1/20 2:14 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -10,7 +10,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="GeeksEmpire" parent="@android:style/Theme.DeviceDefault.Light">
+    <style name="GeeksEmpire" parent="Theme.MaterialComponents">
         <item name="android:colorPrimary">@color/default_color</item>
         <item name="android:colorPrimaryDark">@color/default_color_darker</item>
         <item name="android:colorAccent">@color/default_color_light</item>
@@ -75,7 +75,14 @@
         <item name="android:textColor">@color/dark</item>
     </style>
 
-    <!-- IAP -->
+    <style name="TransparentInAppUpdate" parent="@style/GeeksEmpire.Material">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:statusBarColor">@color/default_color</item>
+        <item name="android:navigationBarColor">@color/default_color</item>
+    </style>
+
     <style name="GeeksEmpire.Material.IAP.DARK" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorAccent">@color/default_color_light</item>
         <item name="colorPrimary">@color/default_color_light</item>
@@ -95,39 +102,5 @@
         <item name="android:windowBackground">@color/light</item>
         <item name="android:navigationBarColor">@color/light</item>
     </style>
-
-    <style name="AppThemeLight" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/default_color_light</item>
-        <item name="colorPrimary">@color/default_color_light</item>
-        <item name="colorPrimaryDark">@color/default_color_light</item>
-        <item name="android:navigationBarColor">@color/light</item>
-        <item name="android:windowLightStatusBar">true</item>
-
-        <item name="android:statusBarColor">@color/light</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="28">true</item>
-    </style>
-
-    <style name="AppThemeDark" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/default_color_darker</item>
-        <item name="colorPrimary">@color/default_color_darker</item>
-        <item name="colorPrimaryDark">@color/default_color_darker</item>
-        <item name="android:navigationBarColor">@color/dark</item>
-        <item name="android:windowLightStatusBar">false</item>
-
-        <item name="android:statusBarColor">@color/dark</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="28">false</item>
-    </style>
-
-    <style name="CardViewStyle" parent="CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginTop">3dp</item>
-        <item name="android:layout_marginBottom">1dp</item>
-        <item name="android:layout_marginEnd">9dp</item>
-        <item name="android:layout_marginStart">9dp</item>
-        <item name="cardCornerRadius">3dp</item>
-        <item name="cardElevation">7sp</item>
-        <item name="cardPreventCornerOverlap">false</item>
-    </style>
-    <!-- IAP -->
 
 </resources>

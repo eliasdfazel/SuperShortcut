@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 12:06 PM
+ * Last modified 5/1/20 1:25 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -456,7 +456,7 @@ public class AdvanceAppSelectionList extends Activity implements View.OnClickLis
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             LayerDrawable drawIndex = (LayerDrawable) getDrawable(R.drawable.draw_index);
-            GradientDrawable backIndex = (GradientDrawable) drawIndex.findDrawableByLayerId(R.id.backtemp);
+            GradientDrawable backIndex = (GradientDrawable) drawIndex.findDrawableByLayerId(R.id.temporaryBackground);
             backIndex.setColor(Color.TRANSPARENT);
 
             TextView textView = null;

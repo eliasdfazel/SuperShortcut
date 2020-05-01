@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 12:15 PM
+ * Last modified 5/1/20 2:59 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,15 +25,14 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import java.util.ArrayList
 import java.util.LinkedHashSet
 import kotlin.Comparator
-import kotlin.Int
-import kotlin.Long
-import kotlin.String
 
 fun NormalAppShortcutsSelectionList.smartPickProcess() {
 
     normalAppSelectionBinding.loadingProgress.visibility = View.INVISIBLE
     normalAppSelectionBinding.loadingLogo.setImageDrawable(getDrawable(R.drawable.draw_smart))
     normalAppSelectionBinding.loadingDescription.text = Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY)
+
+    normalAppSelectionBinding.autoSelect.visibility = View.INVISIBLE
 
     functionsClass.deleteSelectedFiles()
 

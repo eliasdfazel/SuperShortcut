@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/1/20 12:03 PM
+  ~ Last modified 5/1/20 2:13 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -166,7 +166,8 @@
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".Preferences.PreferencesUI"
-            android:label="@string/pref">
+            android:label="@string/pref"
+            android:theme="@style/GeeksEmpire">
             <intent-filter
                 android:autoVerify="true"
                 android:label="@string/app_name">
@@ -207,6 +208,10 @@
                 <!-- adb shell am start -W -a android.intent.action.VIEW -d "https//...." net.geekstools.floatshort.PRO -->
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Utils.InAppUpdate.InAppUpdateProcess"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/TransparentInAppUpdate" />
         <activity
             android:name=".Utils.InAppStore.DigitalAssets.InitializeInAppBilling"
             android:icon="@mipmap/ic_launcher_adaptive"

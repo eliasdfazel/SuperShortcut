@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 5/1/20 1:51 PM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fullEmptyView">
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="17dp"
+        android:paddingBottom="17sp">
+
+        <net.geeksempire.loadingspin.SpinKitView
+            android:id="@+id/inAppUpdateWaiting"
+            android:layout_width="123dp"
+            android:layout_height="123dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:padding="13dp"
+            app:SpinKit_Style="ChasingDots"
+            app:SpinKit_Color="@color/default_color" />
+
+        <com.google.android.material.textfield.TextInputLayout xmlns:apps="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/textInputChangeLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:padding="3dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_below="@id/inAppUpdateWaiting"
+            android:gravity="center_vertical"
+            android:imeOptions="actionDone"
+            android:textColorHint="@color/default_color_light"
+            apps:boxBackgroundMode="outline"
+            apps:boxBackgroundColor="@android:color/transparent"
+            apps:boxCornerRadiusTopStart="7dp"
+            apps:boxCornerRadiusTopEnd="7dp"
+            apps:boxCornerRadiusBottomStart="7dp"
+            apps:boxCornerRadiusBottomEnd="7dp"
+            apps:boxStrokeColor="@color/default_color_game"
+            apps:boxStrokeWidth="2dp"
+            apps:hintEnabled="true"
+            apps:hintAnimationEnabled="true"
+            apps:hintTextColor="@color/default_color_light"
+            apps:errorEnabled="true"
+            apps:errorTextColor="@color/red">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/changeLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:gravity="center_vertical"
+                android:imeOptions="actionDone"
+                android:textSize="13sp"
+                android:textColor="@color/light"
+                android:fontFamily="monospace"
+                android:cursorVisible="false"
+                android:clickable="false"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="7dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_below="@id/textInputChangeLog"
+            android:background="@android:color/transparent"
+            android:weightSum="2">
+
+            <com.google.android.material.button.MaterialButton xmlns:apps="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rateFloatIt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:ellipsize="start"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:text="@string/rate"
+                android:textSize="23sp"
+                android:fontFamily="@font/upcil"
+                apps:elevation="7dp"
+                apps:cornerRadius="7dp"
+                apps:backgroundTint="@color/default_color"
+                apps:icon="@drawable/w_rate"
+                apps:iconGravity="textEnd"
+                apps:iconSize="25dp"
+                apps:iconTint="@color/light"/>
+
+            <com.google.android.material.button.MaterialButton xmlns:apps="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/pageFloatIt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:ellipsize="start"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:text="@string/facebook"
+                android:textSize="23sp"
+                android:fontFamily="@font/upcil"
+                apps:elevation="7dp"
+                apps:cornerRadius="7dp"
+                apps:backgroundTint="@color/default_color"
+                apps:icon="@drawable/w_facebook"
+                apps:iconGravity="textEnd"
+                apps:iconSize="25dp"
+                apps:iconTint="@color/light"/>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

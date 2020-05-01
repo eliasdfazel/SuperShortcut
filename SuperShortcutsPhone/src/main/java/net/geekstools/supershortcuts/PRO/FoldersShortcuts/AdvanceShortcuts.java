@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 11:55 AM
+ * Last modified 5/1/20 1:25 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -461,14 +461,14 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
         if (functionsClass.mixShortcutsPurchased()) {
             if (functionsClass.mixShortcuts()) {
                 LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
                 backDrawMixHint.setTint(getColor(R.color.default_color_light));
 
                 mixShortcutsMenuItem.setIcon(drawMixHint);
                 mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
             } else {
                 LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
                 backDrawMixHint.setTint(getColor(R.color.dark));
 
                 mixShortcutsMenuItem.setIcon(drawMixHint);
@@ -580,14 +580,14 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
                                                             if (purchase.getSku().equals("mix.shortcuts")) {
                                                                 if (functionsClass.mixShortcuts()) {
                                                                     LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
                                                                     backDrawMixHint.setTint(getColor(R.color.default_color_light));
 
                                                                     mixShortcutsMenuItem.setIcon(drawMixHint);
                                                                     mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
                                                                 } else {
                                                                     LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.backtemp);
+                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
                                                                     backDrawMixHint.setTint(getColor(R.color.dark));
 
                                                                     mixShortcutsMenuItem.setIcon(drawMixHint);

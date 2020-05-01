@@ -2,19 +2,21 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/30/20 2:09 PM
+  ~ Last modified 5/1/20 2:17 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/facebook"
         android:icon="@drawable/draw_facebook"
         android:orderInCategory="1"
         android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/followIt" />
 
     <item
@@ -22,6 +24,7 @@
         android:icon="@drawable/draw_gift"
         android:orderInCategory="1"
         android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/donate" />
 
 </menu>

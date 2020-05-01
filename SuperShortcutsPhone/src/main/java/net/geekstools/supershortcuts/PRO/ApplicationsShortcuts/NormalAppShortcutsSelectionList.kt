@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 12:15 PM
+ * Last modified 5/1/20 2:43 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,19 +23,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.*
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
+import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts
+import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
+import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint
+import net.geekstools.supershortcuts.PRO.Utils.InAppUpdate.InAppUpdateProcess
 import net.geekstools.supershortcuts.PRO.Utils.RemoteProcess.LicenseValidator
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureConstants
@@ -43,6 +48,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstan
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
+import java.lang.String
 import java.util.*
 
 class NormalAppShortcutsSelectionList : AppCompatActivity(),
@@ -72,6 +78,9 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
     var appShortcutLimitCounter = 0
 
     var resetAdapter: Boolean = false
+    var updateAvailable: Boolean = false
+
+    private lateinit var firebaseRemoteConfig: FirebaseRemoteConfig
 
     val loadCustomIcons: LoadCustomIcons by lazy {
         LoadCustomIcons(applicationContext, functionsClass.customIconPackageName())
@@ -146,20 +155,38 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
                     ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
         }
 
+        normalAppSelectionBinding.preferencesView.setOnClickListener {
 
+            if (updateAvailable) {
+
+                FunctionsClassDialogues(this@NormalAppShortcutsSelectionList, functionsClass).changeLogPreference(
+                        firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
+                        String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
+                )
+
+            } else {
+
+                startActivity(Intent(applicationContext, PreferencesUI::class.java),
+                        ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
+
+                this@NormalAppShortcutsSelectionList.finish()
+            }
+        }
+
+        MixShortcutsProcess(applicationContext, normalAppSelectionBinding.mixShortcutsSwitchView).initialize()
     }
 
     override fun onResume() {
         super.onResume()
 
-        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
         firebaseRemoteConfig.fetch(0)
                 .addOnSuccessListener {
 
                     firebaseRemoteConfig.activate().addOnSuccessListener {
 
-                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(packageName)) {
+                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > BuildConfig.VERSION_CODE) {
 
                             val layerDrawableNewUpdate = getDrawable(R.drawable.ic_update) as LayerDrawable?
                             val gradientDrawableNewUpdate = layerDrawableNewUpdate!!.findDrawableByLayerId(R.id.temporaryBackground) as BitmapDrawable
@@ -169,15 +196,30 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
                             val scaleBitmap = Bitmap.createScaledBitmap(temporaryBitmap, temporaryBitmap.width / 4, temporaryBitmap.height / 4, false)
                             val logoDrawable: Drawable = BitmapDrawable(resources, scaleBitmap)
 
-                            //Edit UI Here
+                            normalAppSelectionBinding.preferencesView.setImageDrawable(logoDrawable)
 
                             functionsClass.notificationCreator(
                                     getString(R.string.updateAvailable),
                                     firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
                                     firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) as Int
                             )
-                        }
 
+                            val inAppUpdateTriggeredTime =
+                                    (Calendar.getInstance()[Calendar.YEAR].toString() + Calendar.getInstance()[Calendar.MONTH].toString() + Calendar.getInstance()[Calendar.DATE].toString())
+                                            .toInt()
+
+                            if (FirebaseAuth.getInstance().currentUser != null
+                                    && functionsClass.readPreference("InAppUpdate", "TriggeredDate", 0) < inAppUpdateTriggeredTime) {
+
+                                startActivity(Intent(applicationContext, InAppUpdateProcess::class.java)
+                                        .putExtra("UPDATE_CHANGE_LOG", firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()))
+                                        .putExtra("UPDATE_VERSION", firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
+                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                        ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
+                            }
+
+                            updateAvailable = true
+                        }
                     }
                 }
     }

@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/30/20 12:59 PM
+  ~ Last modified 5/1/20 2:52 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -18,10 +18,115 @@
     android:background="@color/light"
     tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionList">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/preferencesView"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="3dp"
+        android:src="@drawable/draw_pref"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/estimatedShortcutCounterView"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_toStartOf="@id/preferencesView"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="3dp"
+        android:paddingHorizontal="5dp"
+        android:gravity="center_vertical"
+        android:ellipsize="start"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textColor="@color/default_color"
+        android:textSize="23sp" />
+
+    <LinearLayout
+        android:id="@+id/autoSelect"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_below="@id/preferencesView"
+        android:layout_centerHorizontal="true"
+        android:paddingHorizontal="4dp"
+        android:visibility="visible"
+
+        android:orientation="horizontal"
+        android:weightSum="8">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_weight="4"
+
+            android:id="@+id/autoApps"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:text="@string/appsEnable"
+            android:textColor="@color/default_color_darker"
+            android:textSize="15sp"
+
+            apps:rippleColor="@color/default_color"
+            apps:backgroundTint="@color/light"
+            apps:strokeWidth="3dp"
+            apps:strokeColor="@color/default_color"
+            apps:cornerRadius="51dp"
+            apps:elevation="23dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_weight="2"
+
+            android:id="@+id/autoSplit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:text="@string/split"
+            android:textColor="@color/light"
+            android:textSize="12sp"
+
+            apps:rippleColor="@color/light_transparent"
+            apps:backgroundTint="@color/default_color_darker"
+            apps:strokeWidth="3dp"
+            apps:strokeColor="@color/default_color_darker"
+            apps:cornerRadius="51dp"
+            apps:elevation="23dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_weight="2"
+
+            android:id="@+id/autoCategories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:text="@string/folder"
+            android:textColor="@color/light"
+            android:textSize="12sp"
+
+            apps:rippleColor="@color/light_transparent"
+            apps:backgroundTint="@color/default_color_darker"
+            apps:strokeWidth="3dp"
+            apps:strokeColor="@color/default_color_darker"
+            apps:cornerRadius="51dp"
+            apps:elevation="23dp"/>
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/autoSelect"
         android:cacheColorHint="@android:color/transparent"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="37dp"
@@ -47,8 +152,9 @@
                 android:isScrollContainer="false"
                 android:listSelector="@drawable/ripple_effect_list"
                 android:nestedScrollingEnabled="false"
+                android:paddingTop="9dp"
+                android:paddingBottom="59dp"
                 android:paddingStart="9dp"
-                android:paddingTop="47dp"
                 android:paddingEnd="30dp"
                 android:saveEnabled="true" />
         </RelativeLayout>
@@ -64,6 +170,29 @@
         android:gravity="center">
         <!--        -->
     </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mixShortcutsSwitchView"
+        android:layout_width="wrap_content"
+        android:layout_height="63dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginHorizontal="9dp"
+
+        android:layout_marginBottom="3dp"
+        android:textAllCaps="false"
+        android:text="@string/mixTitle"
+        android:textColor="@color/default_color"
+        android:textSize="15sp"
+        android:textStyle="normal"
+
+        apps:icon="@drawable/w_mix"
+        apps:iconGravity="start"
+        apps:iconSize="23sp"
+        apps:iconTint="@color/red"
+        apps:backgroundTint="@color/lighter"
+        apps:rippleColor="@color/default_color_transparent"
+        apps:cornerRadius="51dp"/>
 
     <TextView
         android:id="@+id/app_selected_counter_view"
@@ -102,69 +231,6 @@
         android:padding="9dp"
         android:visibility="invisible" />
 
-    <LinearLayout
-        android:id="@+id/autoSelect"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible"
-
-        android:orientation="horizontal"
-        android:weightSum="8">
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_weight="4"
-
-            android:id="@+id/autoApps"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="-7dp"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:text="@string/appsEnable"
-            android:textColor="@color/light"
-            android:textSize="13sp"
-            android:background="@drawable/auto_apps_enable"
-
-            apps:cornerRadius="0dp"
-            apps:elevation="13dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_weight="2"
-
-            android:id="@+id/autoSplit"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="-7dp"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:text="@string/split"
-            android:textColor="@color/light"
-            android:textSize="12sp"
-            android:background="@color/default_color_darker"
-
-            apps:cornerRadius="0dp"
-            apps:elevation="13dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_weight="2"
-
-            android:id="@+id/autoCategories"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="-7dp"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:text="@string/folder"
-            android:textColor="@color/light"
-            android:textSize="12sp"
-            android:background="@drawable/auto_categories_enable"
-
-            apps:cornerRadius="0dp"
-            apps:elevation="13dp"/>
-    </LinearLayout>
-
     <!-- Indexed Popup Fast Scroller  -->
     <include
         layout="@layout/fast_scroller_index_view"
@@ -180,7 +246,7 @@
         android:layout_height="match_parent"
         android:visibility="visible">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/loadingLogo"
             android:layout_width="170dp"
             android:layout_height="170dp"
@@ -192,12 +258,11 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="33dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="-15dp"
+            android:layout_alignParentBottom="true"
             android:indeterminate="true"
             android:indeterminateBehavior="cycle" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/loadingDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -207,9 +272,10 @@
             android:padding="7dp"
             android:shadowColor="@color/dark_transparent_high"
             android:shadowRadius="19"
+            android:fontFamily="@font/upcil"
             android:text="@string/app_name"
             android:textColor="@color/darker"
-            android:textSize="43sp"
+            android:textSize="53sp"
             android:textStyle="bold" />
     </RelativeLayout>
 

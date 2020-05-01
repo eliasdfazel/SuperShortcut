@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 11/11/19 7:22 PM
+  ~ Last modified 5/1/20 1:25 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -12,7 +12,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/shadow_circle" />
     <item
-        android:id="@+id/backtemp"
+        android:id="@+id/temporaryBackground"
         android:bottom="1dp"
         android:left="1dp"
         android:right="1dp"
