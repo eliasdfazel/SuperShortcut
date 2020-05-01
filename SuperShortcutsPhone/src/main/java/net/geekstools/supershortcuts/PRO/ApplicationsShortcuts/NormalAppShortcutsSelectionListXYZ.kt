@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:45 PM
+ * Last modified 5/1/20 8:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,6 +27,7 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.loadIn
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupConfirmButtonUI
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupUI
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
@@ -132,6 +133,20 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
             }
             registerReceiver(broadcastReceiver, intentFilter)
         }
+
+        normalAppSelectionBinding.autoCategories.setOnClickListener {
+
+            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionListXYZ, AdvanceShortcuts::class.java,
+                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
+        }
+
+        normalAppSelectionBinding.autoSplit.setOnClickListener {
+
+            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionListXYZ, SplitShortcuts::class.java,
+                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
+        }
+
+
     }
 
     override fun onResume() {

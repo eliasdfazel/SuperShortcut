@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:23 PM
+ * Last modified 5/1/20 8:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -43,6 +43,7 @@ fun NormalAppShortcutsSelectionListXYZ.setupUI() {
     val typeface = resources.getFont(R.font.upcil)
 
     normalAppSelectionBinding.loadingDescription.typeface = typeface
+    normalAppSelectionBinding.loadingProgress.indeterminateTintList = ColorStateList.valueOf(getColor(R.color.default_color_game))
 
     normalAppSelectionBinding.appSelectedCounterView.typeface = typeface
     normalAppSelectionBinding.appSelectedCounterView.bringToFront()

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:40 PM
+ * Last modified 5/1/20 8:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -16,27 +16,18 @@ import android.app.ActivityOptions;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.view.Menu;
@@ -44,14 +35,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -61,7 +49,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.billingclient.api.BillingClient;
@@ -88,7 +75,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.EntryConfigurations;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
@@ -99,16 +85,13 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint;
 import net.geekstools.supershortcuts.PRO.Utils.RemoteProcess.LicenseValidator;
 import net.geekstools.supershortcuts.PRO.Utils.SimpleGestureFilterSwitch;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
-import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -157,181 +140,58 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
 
     private FirebaseAuth firebaseAuth;
 
+
     @Override
-    protected void onCreate(Bundle Saved) {
-        super.onCreate(Saved);
-        setContentView(R.layout.normal_app_selection);
+    public void onStart() {
+        super.onStart();
 
-        listPopupWindow = new ListPopupWindow(NormalAppShortcutsSelectionList.this);
-        loadingDescription = (TextView) findViewById(R.id.loadingDescription);
-        counter = (TextView) findViewById(R.id.app_selected_counter_view);
-        loadingLogo = (ImageView) findViewById(R.id.loadingLogo);
-        tempIcon = (ImageView) findViewById(R.id.temporary_falling_icon);
-        tempIcon.bringToFront();
-        popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
-        nestedIndexScrollView = (ScrollView) findViewById(R.id.nestedIndexScrollView);
-        sideIndex = (LinearLayout) findViewById(R.id.sideIndex);
-        popupIndex = (TextView) findViewById(R.id.popupIndex);
-        MainView = (RelativeLayout) findViewById(R.id.MainView);
-        loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
-        confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
-        confirmLayout.bringToFront();
-        autoSelect = (LinearLayout) findViewById(R.id.autoSelect);
 
-        autoApps = (MaterialButton) findViewById(R.id.autoApps);
-        autoSplit = (MaterialButton) findViewById(R.id.autoSplit);
-        autoCategories = (MaterialButton) findViewById(R.id.autoCategories);
-
-        recyclerViewApplicationsList = (RecyclerView) findViewById(R.id.recyclerViewApplicationsList);
-        recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
-        recyclerViewApplicationsList.setLayoutManager(recyclerViewLayoutManager);
-
-        scrollListFav = (ScrollView) findViewById(R.id.nestedScrollView);
-        scrollListFav.setSmoothScrollingEnabled(true);
-
-        MainView.setBackgroundColor(getColor(R.color.light));
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
-
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getColor(R.color.default_color));
-        window.setNavigationBarColor(getColor(R.color.light));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-        }
-
-        navDrawerItems = new ArrayList<AdapterItemsData>();
-        savedApplicationsList = new ArrayList<AdapterItemsData>();
-        indexAppName = new ArrayList<String>();
-        mapIndex = new LinkedHashMap<String, Integer>();
-        mapRangeIndex = new LinkedHashMap<Integer, String>();
-
-        Typeface face = Typeface.createFromAsset(getAssets(), "upcil.ttf");
-        loadingDescription.setTypeface(face);
-        counter.setTypeface(face);
-        counter.bringToFront();
-
-        loadingProgress = (ProgressBar) findViewById(R.id.loadingProgress);
-        loadingProgress.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(getString(R.string.loadOffline));
-        intentFilter.addAction(getString(R.string.counterAction));
-        intentFilter.addAction(getString(R.string.savedAction));
-        intentFilter.addAction(getString(R.string.savedActionHide));
-        intentFilter.addAction(getString(R.string.checkboxAction));
-        intentFilter.addAction(getString(R.string.dynamicShortcuts));
-        intentFilter.addAction(getString(R.string.license));
-        counterReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(context.getString(R.string.loadOffline))) {
-
-                    loadDataOff();
-
-                } else if (intent.getAction().equals(context.getString(R.string.counterAction))) {
-
-                    counter.setText(String.valueOf(functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)));
-
-                } else if (intent.getAction().equals(context.getString(R.string.savedAction))) {
-
-                    if (getFileStreamPath(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).exists() && functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile) > 0) {
-                        savedApplicationsList.clear();
-
-                        String[] savedLine = functionsClass.readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
-                        for (String aSavedLine : savedLine) {
-                            try {
-                                final String packageName = aSavedLine.split("\\|")[0];
-                                final String className = aSavedLine.split("\\|")[1];
-                                ActivityInfo activityInfo = getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
-                                savedApplicationsList.add(new AdapterItemsData(
-                                        functionsClass.activityLabel(activityInfo),
-                                        packageName,
-                                        className,
-                                        AppIcon = functionsClass.customIconsEnable() ?
-                                                loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(activityInfo))
-                                                :
-                                                functionsClass.activityIcon(activityInfo)
-
-                                ));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                     //   savedAppsListPopupAdapter = new SavedAppsListPopupAdapter(NormalAppShortcutsSelectionList.this, context, savedApplicationsList);
-                        listPopupWindow = new ListPopupWindow(NormalAppShortcutsSelectionList.this);
-                        listPopupWindow.setAdapter(savedAppsListPopupAdapter);
-                        listPopupWindow.setAnchorView(popupAnchorView);
-                        listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
-                        listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
-                        listPopupWindow.setModal(true);
-                        listPopupWindow.setBackgroundDrawable(null);
-
-                        listPopupWindow.show();
-                        listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                            @Override
-                            public void onDismiss() {
-                                sendBroadcast(new Intent(getString(R.string.visibilityAction)));
-                            }
-                        });
-                    }
-
-                } else if (intent.getAction().equals(getString(R.string.savedActionHide))) {
-
-                    listPopupWindow.dismiss();
-
-                } else if ((intent.getAction().equals(getString(R.string.checkboxAction)))) {
-
-                    resetAdapter = true;
-
-                    loadDataOff();
-
-                    listPopupWindow.dismiss();
-                    sendBroadcast(new Intent(getString(R.string.visibilityAction)));
-
-                } else if (intent.getAction().equals(getString(R.string.dynamicShortcuts))) {
-
-                    if (functionsClass.mixShortcuts()) {
-
-                        PublicVariable.maxAppShortcuts
-                                = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.maxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
-
-                    } else {
-
-                        appShortcutLimitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
-                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
-                        PublicVariable.maxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
-
-                    }
-
-                } else if (intent.getAction().equals(getString(R.string.license))) {
-
-                    functionsClass.dialogueLicense(NormalAppShortcutsSelectionList.this);
-                    new Handler().postDelayed(new Runnable() {
+        try {
+            if (functionsClass.networkConnection()) {
+                try {
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    firebaseUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void run() {
-                            stopService(new Intent(getApplicationContext(), LicenseValidator.class));
-                        }
-                    }, 1000);
+                        public void onComplete(@NonNull Task<Void> task) {
+                            firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                                @Override
+                                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    if (user == null) {
+                                        functionsClass.savePreference(".UserInformation", "userEmail", null);
+                                    } else {
 
+                                    }
+
+
+                                }
+                            });
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (functionsClass.readPreference(".UserInformation", "userEmail", null) == null) {
+                    GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestIdToken(getString(R.string.webClientId))
+                            .requestEmail()
+                            .build();
+
+                    GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+                    try {
+                        googleSignInClient.signOut();
+                        googleSignInClient.revokeAccess();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Intent signInIntent = googleSignInClient.getSignInIntent();
+                    startActivityForResult(signInIntent, 666);
                 }
             }
-        };
-        registerReceiver(counterReceiver, intentFilter);
-
-        autoApps.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color)));
-        autoSplit.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
-        autoCategories.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
-
-        loadDataOff();
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        //In-App Billing
-        new PurchasesCheckpoint(NormalAppShortcutsSelectionList.this).trigger();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -381,93 +241,6 @@ public class NormalAppShortcutsSelectionList extends AppCompatActivity implement
             if (!BuildConfig.DEBUG || !functionsClass.appVersionName(getPackageName()).contains("[BETA]")) {
                 startService(new Intent(getApplicationContext(), LicenseValidator.class));
             }
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        recyclerViewApplicationsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
-
-        autoCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.this, AdvanceShortcuts.class,
-                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        autoSplit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    functionsClass.overrideBackPress(NormalAppShortcutsSelectionList.this, SplitShortcuts.class,
-                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        try {
-            if (functionsClass.networkConnection()) {
-                try {
-                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                    firebaseUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                                @Override
-                                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    if (user == null) {
-                                        functionsClass.savePreference(".UserInformation", "userEmail", null);
-                                    } else {
-
-                                    }
-
-
-                                }
-                            });
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (functionsClass.readPreference(".UserInformation", "userEmail", null) == null) {
-                    GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(getString(R.string.webClientId))
-                            .requestEmail()
-                            .build();
-
-                    GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-                    try {
-                        googleSignInClient.signOut();
-                        googleSignInClient.revokeAccess();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    Intent signInIntent = googleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent, 666);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
