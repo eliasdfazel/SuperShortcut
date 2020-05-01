@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 11/11/19 7:22 PM
+  ~ Last modified 5/1/20 11:26 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -12,7 +12,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/ic_launcher_back_layer"
+        android:id="@+id/temporaryBackground"
         android:drawable="@drawable/ic_launcher_balloon" />
     <item android:drawable="@drawable/ic_new_update" />
 </layer-list>

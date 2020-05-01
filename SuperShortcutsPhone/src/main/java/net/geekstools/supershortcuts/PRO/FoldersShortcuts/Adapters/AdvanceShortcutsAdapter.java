@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 11:45 AM
+ * Last modified 5/1/20 11:55 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -113,7 +113,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                 for (int i = 0; i < previewItems; i++) {
                     freqLayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.selected_apps_item, null);
                     imageView = (ImageView) freqLayout.findViewById(R.id.appSelectedItem);
-                    if (functionsClass.appInstalledOrNot(packages[i])) {
+                    if (functionsClass.isAppInstalled(packages[i])) {
                         imageView.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packages[i], functionsClass.appIconDrawable(packages[i])) : functionsClass.appIconDrawable(packages[i]));
                     }
                     viewHolderBinder.selectedApps.addView(freqLayout);

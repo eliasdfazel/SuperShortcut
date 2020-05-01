@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:49 PM
+ * Last modified 5/1/20 12:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import kotlinx.coroutines.*
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListXYZ
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.IndexedFastScrollerFactory
@@ -26,7 +26,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Index
 import java.util.*
 import kotlin.collections.ArrayList
 
-fun NormalAppShortcutsSelectionListXYZ.loadInstalledAppsData() = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
     installedAppsListItem.clear()
 
     val listOfNewCharOfItemsForIndex: ArrayList<String> = ArrayList<String>()
@@ -86,7 +86,7 @@ fun NormalAppShortcutsSelectionListXYZ.loadInstalledAppsData() = CoroutineScope(
 
             override fun onAnimationStart(animation: Animation) {
 
-                normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).toString()
+                normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).toString()
             }
 
             override fun onAnimationEnd(animation: Animation) {

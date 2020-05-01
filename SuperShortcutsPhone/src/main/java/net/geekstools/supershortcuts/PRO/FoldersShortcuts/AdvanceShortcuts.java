@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:49 PM
+ * Last modified 5/1/20 11:55 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -257,7 +257,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
                                     if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
                                         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                                         LayerDrawable layerDrawableNewUpdate = (LayerDrawable) getDrawable(R.drawable.ic_update);
-                                        BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.ic_launcher_back_layer);
+                                        BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.temporaryBackground);
                                         gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_light));
 
                                         Bitmap tempBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate);
@@ -693,7 +693,7 @@ public class AdvanceShortcuts extends AppCompatActivity implements View.OnClickL
                 String aPackageName = queryUsageStats.get(i).getPackageName();
                 try {
                     if (!aPackageName.equals(context.getPackageName())) {
-                        if (functionsClass.appInstalledOrNot(aPackageName)) {
+                        if (functionsClass.isAppInstalled(aPackageName)) {
                             if (!functionsClass.ifSystem(aPackageName)) {
                                 if (!functionsClass.ifDefaultLauncher(aPackageName)) {
                                     if (functionsClass.canLaunch(aPackageName)) {

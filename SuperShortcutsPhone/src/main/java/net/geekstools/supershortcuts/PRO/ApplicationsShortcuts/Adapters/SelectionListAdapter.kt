@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:24 PM
+ * Last modified 5/1/20 12:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,7 +23,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListXYZ
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
@@ -125,7 +125,7 @@ class SelectionListAdapter(private val context: Context,
                     if (autoFile.exists()) {
                         context.deleteFile(functionsClass.appPackageNameClassName(packageName, className) + ".Super")
 
-                        functionsClass.removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, functionsClass.appPackageNameClassName(packageName, className))
+                        functionsClass.removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, functionsClass.appPackageNameClassName(packageName, className))
 
                         if (functionsClass.mixShortcuts()) {
                             functionsClass.removeLine(".mixShortcuts", functionsClass.appPackageNameClassName(packageName, className))
@@ -146,7 +146,7 @@ class SelectionListAdapter(private val context: Context,
                                         functionsClass.appPackageNameClassName(packageName, className))
 
                                 functionsClass.saveFileAppendLine(
-                                        NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile,
+                                        NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile,
                                         functionsClass.appPackageNameClassName(packageName, className))
 
                                 functionsClass.saveFileAppendLine(
@@ -197,7 +197,7 @@ class SelectionListAdapter(private val context: Context,
                                         packageName)
 
                                 functionsClass.saveFileAppendLine(
-                                        NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile,
+                                        NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile,
                                         functionsClass.appPackageNameClassName(packageName, className))
 
                                 viewHolderBinder.autoChoice.isChecked = true
@@ -239,7 +239,7 @@ class SelectionListAdapter(private val context: Context,
             }
             true
         }
-        PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)
+        PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

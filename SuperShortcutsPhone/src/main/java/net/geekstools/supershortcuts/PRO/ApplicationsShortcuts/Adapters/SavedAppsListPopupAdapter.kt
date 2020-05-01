@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:49 PM
+ * Last modified 5/1/20 12:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListXYZ
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
@@ -60,7 +60,7 @@ class SavedAppsListPopupAdapter(private val context: Context,
 
             context.deleteFile("$appToDelete.Super")
 
-            functionsClass.removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, appToDelete)
+            functionsClass.removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, appToDelete)
 
             if (functionsClass.mixShortcuts()) {
                 functionsClass.removeLine(".mixShortcuts", appToDelete)

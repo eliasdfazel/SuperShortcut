@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:24 PM
+ * Last modified 5/1/20 12:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -22,7 +22,7 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatButton
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonViewInterface
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListXYZ
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
@@ -100,7 +100,7 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
                         confirmButtonProcessInterface.showSavedShortcutList()
 
                         Handler().postDelayed({
-                            if (functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile) > 0) {
+                            if (functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
                                 this@AppsConfirmButton.background = context.getDrawable(R.drawable.draw_saved_dismiss)
                             }
                         }, 200)
@@ -109,7 +109,7 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
                         confirmButtonProcessInterface.showSavedShortcutList()
 
                         Handler().postDelayed({
-                            if (functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile) > 0) {
+                            if (functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
                                 this@AppsConfirmButton.background = context.getDrawable(R.drawable.draw_saved_dismiss)
                             }
                         }, 200)
@@ -122,7 +122,7 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
                         confirmButtonProcessInterface.showSavedShortcutList()
 
                         Handler().postDelayed({
-                            if (functionsClass.countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile) > 0) {
+                            if (functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
                                 this@AppsConfirmButton.background = context.getDrawable(R.drawable.draw_saved_dismiss)
                             }
                         }, 200)

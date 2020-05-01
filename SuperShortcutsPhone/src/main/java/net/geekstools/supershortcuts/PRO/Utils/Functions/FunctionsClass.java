@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:24 PM
+ * Last modified 5/1/20 12:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -75,7 +75,7 @@ import com.google.firebase.appindexing.Indexable;
 import com.google.firebase.appindexing.builders.Actions;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.AppShortcutsMediatedActivity;
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListXYZ;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.CategoryItemListAdapter;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadCategoryItems;
 import net.geekstools.supershortcuts.PRO.R;
@@ -199,7 +199,7 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
             shortcutManager.removeAllDynamicShortcuts();
-            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile));
+            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile));
 
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
@@ -219,9 +219,9 @@ public class FunctionsClass {
                 FunctionsClassDebug.Companion.PrintDebug(appShortcuts.get(i));
                 String packageName = appShortcuts.get(i).split("\\|")[0];
                 String className = appShortcuts.get(i).split("\\|")[1];
-                if (appInstalledOrNot(packageName) == false) {
+                if (isAppInstalled(packageName) == false) {
                     context.deleteFile(appShortcuts.get(i) + ".Super");
-                    removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, appShortcuts.get(i));
+                    removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, appShortcuts.get(i));
                 } else {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
@@ -248,7 +248,7 @@ public class FunctionsClass {
                 }
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
-            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)) {
+            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker), true);
                 appToDesktop();
             }
@@ -262,7 +262,7 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
             shortcutManager.removeAllDynamicShortcuts();
-            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile));
+            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile));
 
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
@@ -282,9 +282,9 @@ public class FunctionsClass {
                 FunctionsClassDebug.Companion.PrintDebug(appShortcuts.get(i));
                 String packageName = appShortcuts.get(i).split("\\|")[0];
                 String className = appShortcuts.get(i).split("\\|")[1];
-                if (appInstalledOrNot(packageName) == false) {
+                if (isAppInstalled(packageName) == false) {
                     context.deleteFile(appShortcuts.get(i) + ".Super");
-                    removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, appShortcuts.get(i));
+                    removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, appShortcuts.get(i));
                 } else {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
@@ -311,7 +311,7 @@ public class FunctionsClass {
                 }
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
-            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)) {
+            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.light), context.getColor(R.color.default_color_darker), Gravity.BOTTOM, true);
             }
         } catch (Exception e) {
@@ -342,7 +342,7 @@ public class FunctionsClass {
                 maxLoop = appShortcuts.size();
             }
             for (int i = 0; i < maxLoop; i++) {
-                if (appInstalledOrNot(appShortcuts.get(i)) == false) {
+                if (isAppInstalled(appShortcuts.get(i)) == false) {
                     removeLine(".superFreq", appShortcuts.get(i));
                 } else {
                     try {
@@ -552,9 +552,9 @@ public class FunctionsClass {
                 } else {
                     String packageName = lineShortcuts.get(i).split("\\|")[0];
                     String className = lineShortcuts.get(i).split("\\|")[1];
-                    if (!appInstalledOrNot(packageName)) {
+                    if (!isAppInstalled(packageName)) {
                         context.deleteFile(lineShortcuts.get(i) + ".Super");
-                        removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
+                        removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
                         removeLine(".mixShortcuts", lineShortcuts.get(i));
                     } else {
                         try {
@@ -761,9 +761,9 @@ public class FunctionsClass {
                 } else {
                     String packageName = lineShortcuts.get(i).split("\\|")[0];
                     String className = lineShortcuts.get(i).split("\\|")[1];
-                    if (!appInstalledOrNot(packageName)) {
+                    if (!isAppInstalled(packageName)) {
                         context.deleteFile(lineShortcuts.get(i) + ".Super");
-                        removeLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
+                        removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
                         removeLine(".mixShortcuts", lineShortcuts.get(i));
                     } else {
                         try {
@@ -1296,7 +1296,7 @@ public class FunctionsClass {
             ArrayList<AdapterItemsData> navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
             navDrawerItemsSaved.clear();
             for (String packageName : readFileLine(categoryName)) {
-                if (appInstalledOrNot(packageName)) {
+                if (isAppInstalled(packageName)) {
                     navDrawerItemsSaved.add(new AdapterItemsData(
                             appName(packageName),
                             packageName,
@@ -1428,12 +1428,12 @@ public class FunctionsClass {
             }
             context.deleteFile(".mixShortcuts");
         }
-        if (context.getFileStreamPath(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).exists()) {
-            String[] arrayContent = readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
+        if (context.getFileStreamPath(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).exists()) {
+            String[] arrayContent = readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile);
             for (String lineContent : arrayContent) {
                 context.deleteFile(packageNameSelected(lineContent));
             }
-            context.deleteFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile);
+            context.deleteFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile);
         }
         if (context.getFileStreamPath(".categorySuperSelected").exists()) {
             String[] arrayContent = readFileLine(".categorySuperSelected");
@@ -1803,7 +1803,7 @@ public class FunctionsClass {
             alertDialog.setMessage(Html.fromHtml(updateInfo, Html.FROM_HTML_MODE_LEGACY));
 
             LayerDrawable layerDrawableNewUpdate = (LayerDrawable) context.getDrawable(R.drawable.ic_update);
-            BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.ic_launcher_back_layer);
+            BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.temporaryBackground);
             gradientDrawableNewUpdate.setTint(context.getColor(R.color.default_color));
 
             alertDialog.setIcon(layerDrawableNewUpdate);
@@ -1908,7 +1908,7 @@ public class FunctionsClass {
         return networkAvailable;
     }
 
-    public boolean appInstalledOrNot(String packName) {
+    public boolean isAppInstalled(String packName) {
         PackageManager pm = context.getPackageManager();
         boolean app_installed = false;
         try {
@@ -1955,6 +1955,7 @@ public class FunctionsClass {
     }
 
     public boolean canLaunch(String packageName) {
+
         return (context.getPackageManager().getLaunchIntentForPackage(packageName) != null);
     }
 
@@ -2117,7 +2118,7 @@ public class FunctionsClass {
     }
 
     public void openApplication(String packageName) {
-        if (appInstalledOrNot(packageName)) {
+        if (isAppInstalled(packageName)) {
             try {
                 Toast.makeText(context,
                         appName(packageName), Toast.LENGTH_SHORT).show();

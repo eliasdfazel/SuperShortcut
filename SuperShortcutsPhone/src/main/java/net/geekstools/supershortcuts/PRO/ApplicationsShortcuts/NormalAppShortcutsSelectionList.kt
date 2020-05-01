@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 8:39 AM
+ * Last modified 5/1/20 12:15 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,10 @@ package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts
 
 import android.app.ActivityOptions
 import android.content.*
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
@@ -19,13 +23,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.evaluateShortcutsInfo
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.loadInstalledAppsData
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupConfirmButtonUI
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupUI
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.*
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts
 import net.geekstools.supershortcuts.PRO.R
@@ -43,7 +45,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
 import java.util.*
 
-class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
+class NormalAppShortcutsSelectionList : AppCompatActivity(),
         GestureListenerInterface,
         ConfirmButtonProcessInterface {
 
@@ -52,7 +54,7 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
     }
 
     private val functionsClassDialogues: FunctionsClassDialogues by lazy {
-        FunctionsClassDialogues(this@NormalAppShortcutsSelectionListXYZ, functionsClass)
+        FunctionsClassDialogues(this@NormalAppShortcutsSelectionList, functionsClass)
     }
 
     private val listPopupWindow: ListPopupWindow by lazy {
@@ -76,7 +78,7 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
     }
 
     private val swipeGestureListener: SwipeGestureListener by lazy {
-        SwipeGestureListener(applicationContext, this@NormalAppShortcutsSelectionListXYZ)
+        SwipeGestureListener(applicationContext, this@NormalAppShortcutsSelectionList)
     }
 
     companion object {
@@ -94,20 +96,18 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
         evaluateShortcutsInfo()
         /* Check Shortcuts Information */
 
-        appsConfirmButton = setupConfirmButtonUI(this@NormalAppShortcutsSelectionListXYZ)
+        appsConfirmButton = setupConfirmButtonUI(this@NormalAppShortcutsSelectionList)
 
         /* Setup UI*/
         setupUI()
         /* Setup UI*/
 
-        /* Load Installed Applications */
-        loadInstalledAppsData()
-        /* Load Installed Applications */
+        initializeLoadingProcess()
 
         functionsClassDialogues.changeLog()
 
         //In-App Billing
-        PurchasesCheckpoint(this@NormalAppShortcutsSelectionListXYZ).trigger()
+        PurchasesCheckpoint(this@NormalAppShortcutsSelectionList).trigger()
     }
 
     override fun onStart() {
@@ -121,7 +121,7 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
             val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (intent.action == getString(R.string.license)) {
-                        functionsClass.dialogueLicense(this@NormalAppShortcutsSelectionListXYZ)
+                        functionsClass.dialogueLicense(this@NormalAppShortcutsSelectionList)
 
                         Handler().postDelayed({
                             stopService(Intent(applicationContext, LicenseValidator::class.java))
@@ -136,13 +136,13 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
 
         normalAppSelectionBinding.autoCategories.setOnClickListener {
 
-            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionListXYZ, AdvanceShortcuts::class.java,
+            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionList, AdvanceShortcuts::class.java,
                     ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
         }
 
         normalAppSelectionBinding.autoSplit.setOnClickListener {
 
-            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionListXYZ, SplitShortcuts::class.java,
+            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionList, SplitShortcuts::class.java,
                     ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
         }
 
@@ -151,19 +151,49 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
+
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
+        firebaseRemoteConfig.fetch(0)
+                .addOnSuccessListener {
+
+                    firebaseRemoteConfig.activate().addOnSuccessListener {
+
+                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(packageName)) {
+
+                            val layerDrawableNewUpdate = getDrawable(R.drawable.ic_update) as LayerDrawable?
+                            val gradientDrawableNewUpdate = layerDrawableNewUpdate!!.findDrawableByLayerId(R.id.temporaryBackground) as BitmapDrawable
+                            gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_game))
+
+                            val temporaryBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate)
+                            val scaleBitmap = Bitmap.createScaledBitmap(temporaryBitmap, temporaryBitmap.width / 4, temporaryBitmap.height / 4, false)
+                            val logoDrawable: Drawable = BitmapDrawable(resources, scaleBitmap)
+
+                            //Edit UI Here
+
+                            functionsClass.notificationCreator(
+                                    getString(R.string.updateAvailable),
+                                    firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
+                                    firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) as Int
+                            )
+                        }
+
+                    }
+                }
     }
 
     override fun onPause() {
         super.onPause()
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
+        getSharedPreferences("ShortcutsModeView", Context.MODE_PRIVATE).edit().apply {
+            putString("TabsView", NormalAppShortcutsSelectionList::class.java.simpleName)
+            apply()
+        }
     }
 
     override fun onBackPressed() {
         if (functionsClass.UsageAccessEnabled()) {
-            this@NormalAppShortcutsSelectionListXYZ.finish()
+            this@NormalAppShortcutsSelectionList.finish()
         } else {
             val homeScreen = Intent(Intent.ACTION_MAIN).apply {
                 this.addCategory(Intent.CATEGORY_HOME)
@@ -184,7 +214,7 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
 
                     }
                     GestureListenerConstants.SWIPE_LEFT -> {
-                        functionsClass.navigateToClass(this@NormalAppShortcutsSelectionListXYZ, SplitShortcuts::class.java,
+                        functionsClass.navigateToClass(this@NormalAppShortcutsSelectionList, SplitShortcuts::class.java,
                                 ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
                     }
                 }
@@ -201,17 +231,17 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
     /*ConfirmButtonProcess*/
     override fun savedShortcutCounter() {
 
-        normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).toString()
+        normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).toString()
     }
 
     override fun showSavedShortcutList() {
 
-        if (getFileStreamPath(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile).exists()
-                && functionsClass.countLineInnerFile(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile) > 0) {
+        if (getFileStreamPath(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).exists()
+                && functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
 
             selectedAppsListItem.clear()
 
-            val savedLine = functionsClass.readFileLine(NormalAppShortcutsSelectionListXYZ.NormalApplicationsShortcutsFile)
+            val savedLine = functionsClass.readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
             for (aSavedLine in savedLine) {
 
                 val aLineSplit = aSavedLine.split("|")
@@ -237,7 +267,7 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
                     applicationContext,
                     functionsClass,
                     selectedAppsListItem,
-                    this@NormalAppShortcutsSelectionListXYZ
+                    this@NormalAppShortcutsSelectionList
             )
 
             listPopupWindow.setAdapter(savedAppsListPopupAdapter)
@@ -273,4 +303,52 @@ class NormalAppShortcutsSelectionListXYZ : AppCompatActivity(),
         evaluateShortcutsInfo()
     }
     /*ConfirmButtonProcess*/
+
+    private fun initializeLoadingProcess() {
+
+        if (functionsClass.customIconsEnable()) {
+            loadCustomIcons.load()
+        }
+
+        if (functionsClass.UsageAccessEnabled()) {
+
+            smartPickProcess()
+
+        } else {
+
+            if (!functionsClass.mixShortcuts()) {
+
+                if (applicationContext.getFileStreamPath(".mixShortcuts").exists()) {
+                    val mixShortcutsContent = functionsClass.readFileLine(".mixShortcuts")
+
+                    for (mixShortcutLine in mixShortcutsContent) {
+                        when {
+                            mixShortcutLine.contains(".CategorySelected") -> {
+                                applicationContext.deleteFile(functionsClass.categoryNameSelected(mixShortcutLine))
+                            }
+                            mixShortcutLine.contains(".SplitSelected") -> {
+                                applicationContext.deleteFile(functionsClass.splitNameSelected(mixShortcutLine))
+                            }
+                            else -> {
+                                applicationContext.deleteFile(functionsClass.packageNameSelected(mixShortcutLine))
+                            }
+                        }
+
+                    }
+
+                    applicationContext.deleteFile(".mixShortcuts")
+                }
+            }
+
+            if (applicationContext.getFileStreamPath(".superFreq").exists()) {
+                applicationContext.deleteFile(".superFreq")
+            }
+
+            /* Load Installed Applications */
+            loadInstalledAppsData()
+            /* Load Installed Applications */
+        }
+    }
+
+
 }
