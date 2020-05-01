@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 2:49 PM
+ * Last modified 5/1/20 8:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,13 +23,8 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.dialogue_message.*
-import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.R
-import java.io.File
 
 class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsClass: FunctionsClass) {
 
@@ -84,27 +79,13 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         }
 
         if (!activity.getFileStreamPath(".Updated").exists()) {
+
             dialog.show()
+
         } else if (functionsClass.appVersionCode(activity.packageName) > functionsClass.readFile(".Updated").toInt()) {
+
             dialog.show()
-            if (!BuildConfig.DEBUG && functionsClass.networkConnection()) {
-                FirebaseAuth.getInstance().addAuthStateListener {
-                    val user: FirebaseUser? = it.currentUser
-                    if (user == null) {
-                        functionsClass.savePreference(".UserInformation", "userEmail", null)
-                    } else {
-                        val betaFile = File("/data/data/" + activity.packageName + "/shared_prefs/.UserInformation.xml")
-                        val uriBetaFile = Uri.fromFile(betaFile)
-                        val firebaseStorage = FirebaseStorage.getInstance()
 
-                        val storageReference = firebaseStorage.getReference("/Users/" + "API" + functionsClass.returnAPI() + "/" +
-                                functionsClass.readPreference(".UserInformation", "userEmail", null))
-                        val uploadTask = storageReference.putFile(uriBetaFile)
-
-                        uploadTask.addOnFailureListener { exception -> exception.printStackTrace() }.addOnSuccessListener { FunctionsClassDebug.PrintDebug("Firebase Activities Done Successfully") }
-                    }
-                }
-            }
         }
     }
 
