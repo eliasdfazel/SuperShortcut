@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 11:28 AM
+ * Last modified 5/2/20 12:26 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -75,32 +75,6 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
 
                 }
             })
-
-            //Restore Subscribed Item
-            /*billingClient.startConnection(object : BillingClientStateListener {
-
-                override fun onBillingSetupFinished(billingResult: BillingResult?) {
-
-                    billingResult?.let {
-                       if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                            functionsClass.savePreference(".SubscribedItem", InAppBillingData.SKU.[...], false)
-
-                            val purchases = billingClient.queryPurchases(BillingClient.SkuType.SUBS).purchasesList
-                            for (purchase in purchases) {
-                                FunctionsClassDebug.PrintDebug("*** Subscribed Item: $purchase ***")
-
-                                functionsClass.savePreference(".SubscribedItem", purchase.sku, true)
-
-                                PurchasesCheckpoint.purchaseAcknowledgeProcess(billingClient, purchase, BillingClient.SkuType.SUBS)
-                            }
-                        }
-                    }
-                }
-
-                override fun onBillingServiceDisconnected() {
-
-                }
-            })*/
         }
 
         return billingClient

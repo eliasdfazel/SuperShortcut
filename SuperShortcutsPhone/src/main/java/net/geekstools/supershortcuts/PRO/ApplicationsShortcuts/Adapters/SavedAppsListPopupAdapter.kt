@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 7:37 AM
+ * Last modified 5/2/20 11:42 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,11 +18,11 @@ import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
+import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
 import java.util.*
 
 class SavedAppsListPopupAdapter(private val context: Context,

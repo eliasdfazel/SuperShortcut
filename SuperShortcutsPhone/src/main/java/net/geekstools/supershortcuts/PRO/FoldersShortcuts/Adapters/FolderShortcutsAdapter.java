@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 11:55 AM
+ * Last modified 5/2/20 12:13 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -34,7 +34,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceAppSelectionList;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.FolderAppSelectionList;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
@@ -44,7 +44,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIc
 import java.io.File;
 import java.util.ArrayList;
 
-public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcutsAdapter.ViewHolder> {
+public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcutsAdapter.ViewHolder> {
 
     private Context context;
     private Activity activity;
@@ -62,7 +62,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
 
     private ArrayList<AdapterItemsData> navDrawerItems;
 
-    public AdvanceShortcutsAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
+    public FolderShortcutsAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
@@ -75,14 +75,14 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
     }
 
     @Override
-    public AdvanceShortcutsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FolderShortcutsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(context).inflate(R.layout.item_advance_shortcuts, parent, false);
-        viewHolder = new AdvanceShortcutsAdapter.ViewHolder(view);
+        viewHolder = new FolderShortcutsAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(AdvanceShortcutsAdapter.ViewHolder viewHolderBinder, final int position) {
+    public void onBindViewHolder(FolderShortcutsAdapter.ViewHolder viewHolderBinder, final int position) {
 
         final String category = navDrawerItems.get(position).getCategory();
         final String[] packages = navDrawerItems.get(position).getPackageNames();
@@ -140,7 +140,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                     if (file.exists() && file.isFile()) {
                         if (navDrawerItems.get(position).getCategory().equals(PublicVariable.categoryName)) {
                             PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
-                            context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                            context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                     ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                         } else {
 
@@ -172,7 +172,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                             functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                             functionsClass.removeLine(".categorySuper", navDrawerItems.get(position).getCategory());
                             context.deleteFile(navDrawerItems.get(position).getCategory());
-                            context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                            context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                     ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                         }
                     } else {
@@ -180,7 +180,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
 
                         functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                         functionsClass.saveFileEmpty(PublicVariable.categoryName);
-                        context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     }
                 }
@@ -223,7 +223,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                 if (file.exists() && file.isFile()) {
                     if (navDrawerItems.get(position).getCategory().equals(PublicVariable.categoryName)) {
                         PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
-                        context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     } else {
 
@@ -255,7 +255,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                         functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                         functionsClass.removeLine(".categorySuper", navDrawerItems.get(position).getCategory());
                         context.deleteFile(navDrawerItems.get(position).getCategory());
-                        context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     }
                 } else {
@@ -263,7 +263,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
 
                     functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                     functionsClass.saveFileEmpty(PublicVariable.categoryName);
-                    context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                             ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                 }
             }
@@ -283,7 +283,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                 if (file.exists() && file.isFile()) {
                     if (navDrawerItems.get(position).getCategory().equals(PublicVariable.categoryName)) {
                         PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
-                        context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     } else {
 
@@ -315,7 +315,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
                         functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                         functionsClass.removeLine(".categorySuper", navDrawerItems.get(position).getCategory());
                         context.deleteFile(navDrawerItems.get(position).getCategory());
-                        context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     }
                 } else {
@@ -323,7 +323,7 @@ public class AdvanceShortcutsAdapter extends RecyclerView.Adapter<AdvanceShortcu
 
                     functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                     functionsClass.saveFileEmpty(PublicVariable.categoryName);
-                    context.startActivity(new Intent(context, AdvanceAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                    context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                             ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
                 }
             }

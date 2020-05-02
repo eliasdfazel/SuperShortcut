@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 7:26 AM
+ * Last modified 5/2/20 11:42 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -26,13 +26,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.*
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
 import net.geekstools.supershortcuts.PRO.BuildConfig
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI
 import net.geekstools.supershortcuts.PRO.R
@@ -43,6 +42,7 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint
 import net.geekstools.supershortcuts.PRO.Utils.InAppUpdate.InAppUpdateProcess
 import net.geekstools.supershortcuts.PRO.Utils.RemoteProcess.LicenseValidator
+import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureConstants
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstants
@@ -146,7 +146,7 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
 
         normalAppSelectionBinding.autoCategories.setOnClickListener {
 
-            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionList, AdvanceShortcuts::class.java,
+            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionList, FolderShortcuts::class.java,
                     ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
         }
 

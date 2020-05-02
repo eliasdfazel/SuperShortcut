@@ -7,7 +7,7 @@
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
-package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI
+package net.geekstools.supershortcuts.PRO.FoldersShortcuts.UI
 
 import android.app.Activity
 import android.content.Context

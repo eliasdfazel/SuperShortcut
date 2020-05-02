@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 6:51 AM
+  ~ Last modified 5/2/20 12:07 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light"
-    tools:context=".FoldersShortcuts.AdvanceShortcuts">
+    tools:context=".FoldersShortcuts.FolderShortcuts">
 
     <ScrollView
         android:id="@+id/list"
@@ -182,7 +182,7 @@
             android:indeterminateBehavior="cycle" />
 
         <TextView
-            android:id="@+id/desc"
+            android:id="@+id/loadingDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

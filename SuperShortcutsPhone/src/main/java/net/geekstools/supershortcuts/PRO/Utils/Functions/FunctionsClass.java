@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 2:57 PM
+ * Last modified 5/2/20 11:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -78,8 +78,8 @@ import com.google.firebase.appindexing.builders.Actions;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.AppShortcutsMediatedActivity;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.CategoryItemListAdapter;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadCategoryItems;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderItemListAdapter;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadFolderPopupShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitScreenService;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitTransparentPair;
@@ -416,7 +416,7 @@ public class FunctionsClass {
                 if (lineShortcuts.get(i).contains(".CategorySelected")) {
                     try {
                         String[] packagesName = readFileLine(lineShortcuts.get(i));
-                        Intent intent = new Intent(context, LoadCategoryItems.class);
+                        Intent intent = new Intent(context, LoadFolderPopupShortcuts.class);
                         intent.putExtra("categoryName", lineShortcuts.get(i));
                         intent.setAction("load_category_action");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -627,7 +627,7 @@ public class FunctionsClass {
                 if (lineShortcuts.get(i).contains(".CategorySelected")) {
                     try {
                         String[] packagesName = readFileLine(lineShortcuts.get(i));
-                        Intent intent = new Intent(context, LoadCategoryItems.class);
+                        Intent intent = new Intent(context, LoadFolderPopupShortcuts.class);
                         intent.putExtra("categoryName", lineShortcuts.get(i));
                         intent.setAction("load_category_action");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1117,7 +1117,7 @@ public class FunctionsClass {
             for (int i = 0; i < maxLoop; i++) {
                 try {
                     String[] packgesName = readFileLine(categoryNamesSelected[i]);
-                    Intent intent = new Intent(context, LoadCategoryItems.class);
+                    Intent intent = new Intent(context, LoadFolderPopupShortcuts.class);
                     intent.putExtra("categoryName", categoryNamesSelected[i]);
                     intent.setAction("load_category_action");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1226,7 +1226,7 @@ public class FunctionsClass {
             for (int i = 0; i < maxLoop; i++) {
                 try {
                     String[] packgesName = readFileLine(categoryNamesSelected[i]);
-                    Intent intent = new Intent(context, LoadCategoryItems.class);
+                    Intent intent = new Intent(context, LoadFolderPopupShortcuts.class);
                     intent.putExtra("categoryName", categoryNamesSelected[i]);
                     intent.setAction("load_category_action");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1328,7 +1328,7 @@ public class FunctionsClass {
                     context.getPackageName(),
                     context.getDrawable(R.drawable.draw_pref)));
             ListPopupWindow listPopupWindow = new ListPopupWindow(instanceOfActivity);
-            CategoryItemListAdapter lowerListAdapter = new CategoryItemListAdapter(instanceOfActivity, context, navDrawerItemsSaved, listPopupWindow);
+            FolderItemListAdapter lowerListAdapter = new FolderItemListAdapter(instanceOfActivity, context, navDrawerItemsSaved, listPopupWindow);
             listPopupWindow.setAdapter(lowerListAdapter);
             listPopupWindow.setAnchorView(popupAnchorView);
             listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
@@ -1349,7 +1349,7 @@ public class FunctionsClass {
     }
 
     public void categoryToDesktop(String categoryName) {
-        Intent differentIntent = new Intent(context, LoadCategoryItems.class);
+        Intent differentIntent = new Intent(context, LoadFolderPopupShortcuts.class);
         differentIntent.setAction("load_category_action_shortcut");
         differentIntent.addCategory(Intent.CATEGORY_DEFAULT);
         differentIntent.putExtra(Intent.EXTRA_TEXT, categoryName);

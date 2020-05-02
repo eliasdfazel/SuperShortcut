@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 7:53 AM
+ * Last modified 5/2/20 12:25 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -54,7 +54,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
@@ -487,8 +487,8 @@ public class PreferencesUI extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
 
-            } else if (tabView.equals(AdvanceShortcuts.class.getSimpleName())) {
-                startActivity(new Intent(getApplicationContext(), AdvanceShortcuts.class),
+            } else if (tabView.equals(FolderShortcuts.class.getSimpleName())) {
+                startActivity(new Intent(getApplicationContext(), FolderShortcuts.class),
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
             } else {
                 startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),
@@ -532,7 +532,7 @@ public class PreferencesUI extends AppCompatActivity {
 
                 startActivity(new Intent(getApplicationContext(), InitializeInAppBilling.class)
                                 .putExtra(InitializeInAppBilling.Entry.PurchaseType, InitializeInAppBilling.Entry.OneTimePurchase)
-                                .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemMixShortcuts)
+                                .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemDonation)
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         , ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.down_up, android.R.anim.fade_out).toBundle());
 
@@ -549,8 +549,8 @@ public class PreferencesUI extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
 
-                    } else if (tabView.equals(AdvanceShortcuts.class.getSimpleName())) {
-                        startActivity(new Intent(getApplicationContext(), AdvanceShortcuts.class),
+                    } else if (tabView.equals(FolderShortcuts.class.getSimpleName())) {
+                        startActivity(new Intent(getApplicationContext(), FolderShortcuts.class),
                                 ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
                     } else {
                         startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionList.class),

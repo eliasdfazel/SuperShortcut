@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 6:51 AM
+ * Last modified 5/2/20 11:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.FoldersShortcuts;
+package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
@@ -53,8 +53,9 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.BuildConfig;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.AdvanceSavedListAdapter;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.AdvanceSelectionListAdapter;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapter.FolderSavedListAdapter;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapter.FolderSelectionListAdapter;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
@@ -69,7 +70,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdvanceAppSelectionList extends AppCompatActivity implements View.OnClickListener {
+public class FolderAppSelectionList extends AppCompatActivity implements View.OnClickListener {
 
     AppCompatActivity activity;
     Context context;
@@ -92,8 +93,8 @@ public class AdvanceAppSelectionList extends AppCompatActivity implements View.O
     Map<String, Integer> mapIndex;
     Map<Integer, String> mapRangeIndex;
     ArrayList<AdapterItemsData> navDrawerItems, navDrawerItemsSaved;
-    AdvanceSelectionListAdapter advanceSelectionListAdapter;
-    AdvanceSavedListAdapter advanceSavedListAdapter;
+    FolderSelectionListAdapter folderSelectionListAdapter;
+    FolderSavedListAdapter folderSavedListAdapter;
 
     String PackageName;
     String AppName = "Application";
@@ -185,9 +186,9 @@ public class AdvanceAppSelectionList extends AppCompatActivity implements View.O
                                     functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(aSavedLine, functionsClass.appIconDrawable(aSavedLine)) : functionsClass.appIconDrawable(aSavedLine)
                             ));
                         }
-                        advanceSavedListAdapter = new AdvanceSavedListAdapter(activity, context, navDrawerItemsSaved);
+                        folderSavedListAdapter = new FolderSavedListAdapter(activity, context, navDrawerItemsSaved);
                         listPopupWindow = new ListPopupWindow(activity);
-                        listPopupWindow.setAdapter(advanceSavedListAdapter);
+                        listPopupWindow.setAdapter(folderSavedListAdapter);
                         listPopupWindow.setAnchorView(popupAnchorView);
                         listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
                         listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
@@ -276,7 +277,7 @@ public class AdvanceAppSelectionList extends AppCompatActivity implements View.O
     public void onBackPressed() {
         super.onBackPressed();
         try {
-            functionsClass.overrideBackPress(AdvanceAppSelectionList.this, AdvanceShortcuts.class,
+            functionsClass.overrideBackPress(FolderAppSelectionList.this, FolderShortcuts.class,
                     ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_down));
         } catch (Exception e) {
             e.printStackTrace();
@@ -304,7 +305,7 @@ public class AdvanceAppSelectionList extends AppCompatActivity implements View.O
         switch (item.getItemId()) {
             case android.R.id.home: {
                 try {
-                    functionsClass.overrideBackPress(AdvanceAppSelectionList.this, AdvanceShortcuts.class,
+                    functionsClass.overrideBackPress(FolderAppSelectionList.this, FolderShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_down));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -371,8 +372,8 @@ public class AdvanceAppSelectionList extends AppCompatActivity implements View.O
                         e.printStackTrace();
                     }
                 }
-                advanceSelectionListAdapter = new AdvanceSelectionListAdapter(activity, context, navDrawerItems);
-                advanceSelectionListAdapter.notifyDataSetChanged();
+                folderSelectionListAdapter = new FolderSelectionListAdapter(activity, context, navDrawerItems);
+                folderSelectionListAdapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
                 this.cancel(true);
@@ -384,7 +385,7 @@ public class AdvanceAppSelectionList extends AppCompatActivity implements View.O
         @Override
         protected void onPostExecute(final Void result) {
             super.onPostExecute(result);
-            recyclerView.setAdapter(advanceSelectionListAdapter);
+            recyclerView.setAdapter(folderSelectionListAdapter);
             registerForContextMenu(recyclerView);
 
             new Handler().postDelayed(new Runnable() {

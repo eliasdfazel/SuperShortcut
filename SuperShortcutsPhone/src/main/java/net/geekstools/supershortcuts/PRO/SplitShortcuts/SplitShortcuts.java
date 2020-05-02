@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 6:51 AM
+ * Last modified 5/2/20 11:19 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -80,7 +80,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.EntryConfigurations;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.AdvanceShortcuts;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter.SplitShortcutsAdapter;
@@ -329,7 +329,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 try {
-                    functionsClass.overrideBackPress(SplitShortcuts.this, AdvanceShortcuts.class,
+                    functionsClass.overrideBackPress(SplitShortcuts.this, FolderShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -441,7 +441,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             case SimpleGestureFilterSwitch.SWIPE_LEFT:
                 FunctionsClassDebug.Companion.PrintDebug("Swipe Left");
                 try {
-                    functionsClass.overrideBackPress(SplitShortcuts.this, AdvanceShortcuts.class,
+                    functionsClass.overrideBackPress(SplitShortcuts.this, FolderShortcuts.class,
                             ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
                 } catch (Exception e) {
                     e.printStackTrace();

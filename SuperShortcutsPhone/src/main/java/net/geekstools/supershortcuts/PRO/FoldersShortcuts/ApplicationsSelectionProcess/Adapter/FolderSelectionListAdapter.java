@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 6:34 AM
+ * Last modified 5/2/20 11:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters;
+package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,7 +38,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIc
 import java.io.File;
 import java.util.ArrayList;
 
-public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSelectionListAdapter.ViewHolder> {
+public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelectionListAdapter.ViewHolder> {
 
     private Context context;
     private Activity activity;
@@ -55,7 +55,7 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
     float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
     int animationType;
 
-    public AdvanceSelectionListAdapter(AppCompatActivity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
+    public FolderSelectionListAdapter(AppCompatActivity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
@@ -78,14 +78,14 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
     }
 
     @Override
-    public AdvanceSelectionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FolderSelectionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(context).inflate(R.layout.selection_item_card_list, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(AdvanceSelectionListAdapter.ViewHolder viewHolderBinder, final int position) {
+    public void onBindViewHolder(FolderSelectionListAdapter.ViewHolder viewHolderBinder, final int position) {
 
         viewHolderBinder.appIconView.setImageDrawable(navDrawerItems.get(position).getAppIcon());
         viewHolderBinder.appNameView.setText(navDrawerItems.get(position).getAppName());

@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 6:26 AM
+  ~ Last modified 5/2/20 11:43 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -91,19 +91,19 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".FoldersShortcuts.AdvanceShortcuts"
+            android:name=".FoldersShortcuts.FolderShortcuts"
             android:resizeableActivity="true"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/Theme.MaterialComponents.Light"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".FoldersShortcuts.AdvanceAppSelectionList"
+            android:name=".FoldersShortcuts.ApplicationsSelectionProcess.FolderAppSelectionList"
             android:theme="@style/GeeksEmpire"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".FoldersShortcuts.LoadCategoryItems"
+            android:name=".FoldersShortcuts.LoadFolderPopupShortcuts"
             android:excludeFromRecents="true"
             android:exported="true"
             android:label="@string/app_name"

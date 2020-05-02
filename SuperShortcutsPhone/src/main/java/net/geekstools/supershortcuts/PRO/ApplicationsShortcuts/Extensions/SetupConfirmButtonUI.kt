@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 7:12 AM
+ * Last modified 5/2/20 11:42 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,9 +11,9 @@
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions
 
 import android.widget.RelativeLayout
-import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
+import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
 
 fun NormalAppShortcutsSelectionList.setupConfirmButtonUI(confirmButtonProcessInterface: ConfirmButtonProcessInterface) : AppsConfirmButton {
 

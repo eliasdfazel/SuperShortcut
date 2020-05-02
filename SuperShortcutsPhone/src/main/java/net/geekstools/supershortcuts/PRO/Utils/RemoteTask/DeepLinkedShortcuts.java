@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 5/2/20 11:00 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,7 +14,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadCategoryItems;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadFolderPopupShortcuts;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitTransparentPair;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 
@@ -39,7 +39,7 @@ public class DeepLinkedShortcuts extends Activity {
             shortcutName = shortcutInfo.split(htmlSymbol)[0];
             shortcutType = shortcutInfo.split(htmlSymbol)[1];
             if (shortcutType.equals("Category")) {
-                Intent category = new Intent(getApplicationContext(), LoadCategoryItems.class);
+                Intent category = new Intent(getApplicationContext(), LoadFolderPopupShortcuts.class);
                 category.setAction("load_category_action_shortcut");
                 category.putExtra(Intent.EXTRA_TEXT, shortcutName);
                 startActivity(category);

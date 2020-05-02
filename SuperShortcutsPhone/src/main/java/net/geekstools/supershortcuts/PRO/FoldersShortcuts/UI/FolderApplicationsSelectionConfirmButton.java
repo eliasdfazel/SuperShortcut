@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 11:03 AM
+ * Last modified 5/2/20 11:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,7 +25,7 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.SimpleGestureFilter;
 
-public class AdvanceConfirmButton extends Button
+public class FolderApplicationsSelectionConfirmButton extends Button
         implements SimpleGestureFilter.SimpleGestureListener {
 
     FunctionsClass functionsClass;
@@ -34,14 +34,14 @@ public class AdvanceConfirmButton extends Button
     SimpleGestureFilter detector;
     BroadcastReceiver visibilityReceiver;
 
-    public AdvanceConfirmButton(Context context, AttributeSet attrs) {
+    public FolderApplicationsSelectionConfirmButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         functionsClass = new FunctionsClass(context);
         initConfirmButton();
     }
 
-    public AdvanceConfirmButton(Context context) {
+    public FolderApplicationsSelectionConfirmButton(Context context) {
         super(context);
     }
 
@@ -55,13 +55,13 @@ public class AdvanceConfirmButton extends Button
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(context.getString(R.string.visibilityActionAdvance))) {
-                    AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
-                    if (!AdvanceConfirmButton.this.isShown()) {
-                        AdvanceConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
-                        AdvanceConfirmButton.this.setVisibility(VISIBLE);
+                    FolderApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
+                    if (!FolderApplicationsSelectionConfirmButton.this.isShown()) {
+                        FolderApplicationsSelectionConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
+                        FolderApplicationsSelectionConfirmButton.this.setVisibility(VISIBLE);
                     }
                 } else if (intent.getAction().equals(context.getString(R.string.animtaionActionAdvance))) {
-                    AdvanceConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button));
+                    FolderApplicationsSelectionConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button));
                 }
             }
         };
@@ -94,7 +94,7 @@ public class AdvanceConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
+                            FolderApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -105,7 +105,7 @@ public class AdvanceConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
+                            FolderApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -116,7 +116,7 @@ public class AdvanceConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            AdvanceConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
+                            FolderApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
