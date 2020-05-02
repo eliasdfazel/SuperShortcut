@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 1:13 PM
+ * Last modified 5/2/20 2:34 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -26,7 +26,6 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
@@ -148,15 +147,15 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
 
         new FunctionsClassDialogues(SplitShortcuts.this, functionsClass).changeLog();
 
-        if (functionsClass.mixShortcuts() == true) {
-            PublicVariable.SplitShortcutsMaxAppShortcuts
-                    = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-            getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".SplitSuperSelected");
-            getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
-            PublicVariable.SplitShortcutsMaxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
-        }
+//        if (functionsClass.mixShortcuts() == true) {
+//            PublicVariable.SplitShortcutsMaxAppShortcuts
+//                    = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
+//            getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+//        } else {
+//            limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".SplitSuperSelected");
+//            getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+//            PublicVariable.SplitShortcutsMaxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
+//        }
 
         context = getApplicationContext();
         activity = this;
@@ -180,8 +179,8 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
         wholeAuto.setBackgroundColor(getColor(R.color.light));
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
+//        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -217,10 +216,10 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                     if (functionsClass.mixShortcuts() == true) {
                         PublicVariable.SplitShortcutsMaxAppShortcuts
                                 = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
-                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+//                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                     } else {
                         limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".SplitSuperSelected");
-                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+//                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                     }
                 }
             }
@@ -253,7 +252,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                                 @Override
                                 public void onSuccess(Boolean aBoolean) {
                                     if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-                                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//                                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                                         LayerDrawable layerDrawableNewUpdate = (LayerDrawable) getDrawable(R.drawable.ic_update);
                                         BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.temporaryBackground);
                                         gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_light));
@@ -261,7 +260,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                                         Bitmap tempBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate);
                                         Bitmap scaleBitmap = Bitmap.createScaledBitmap(tempBitmap, tempBitmap.getWidth() / 4, tempBitmap.getHeight() / 4, false);
                                         Drawable logoDrawable = new BitmapDrawable(getResources(), scaleBitmap);
-                                        activity.getSupportActionBar().setHomeAsUpIndicator(logoDrawable);
+//                                        activity.getSupportActionBar().setHomeAsUpIndicator(logoDrawable);
 
                                         functionsClass.notificationCreator(
                                                 getString(R.string.updateAvailable),

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 2:03 PM
+ * Last modified 5/2/20 2:33 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -275,8 +275,8 @@ class FolderShortcuts : AppCompatActivity(),
             is GestureConstants.SwipeHorizontal -> {
                 when (gestureConstants.horizontalDirection) {
                     GestureListenerConstants.SWIPE_RIGHT -> {
-                        functionsClass.navigateToClass(this@FolderShortcuts, SplitShortcuts::class.java,
-                                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
+                        functionsClass.overrideBackPress(this@FolderShortcuts, SplitShortcuts::class.java,
+                                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_left, R.anim.slide_to_right))
                     }
                     GestureListenerConstants.SWIPE_LEFT -> {
 
