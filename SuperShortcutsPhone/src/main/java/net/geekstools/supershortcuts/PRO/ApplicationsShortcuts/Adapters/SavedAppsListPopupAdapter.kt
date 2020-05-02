@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 12:03 PM
+ * Last modified 5/2/20 6:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -47,11 +47,11 @@ class SavedAppsListPopupAdapter(private val context: Context,
         val convertView = layoutInflater.inflate(R.layout.item_saved_app, null)
 
         val items = convertView.findViewById<View>(R.id.items) as RelativeLayout
-        val imgIcon = convertView.findViewById<View>(R.id.iconItem) as ImageView
+        val appIconItem = convertView.findViewById<View>(R.id.appIconItem) as ImageView
         val textAppName = convertView.findViewById<View>(R.id.itemAppName) as TextView
         val deleteItem = convertView.findViewById<View>(R.id.deleteItem) as Button
 
-        imgIcon.setImageDrawable(selectedAppsListItem[position].appIcon)
+        appIconItem.setImageDrawable(selectedAppsListItem[position].appIcon)
         textAppName.text = selectedAppsListItem[position].appName
 
         deleteItem.setOnClickListener {

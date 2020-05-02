@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 12:21 PM
+ * Last modified 5/2/20 6:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.R;
@@ -54,7 +55,7 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
     float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
     int animationType;
 
-    public AdvanceSelectionListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
+    public AdvanceSelectionListAdapter(AppCompatActivity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
@@ -65,7 +66,7 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels;
         dpWidth = displayMetrics.widthPixels;
-        systemUiHeight = activity.getActionBar().getHeight();
+        systemUiHeight = activity.getSupportActionBar().getHeight();
         fromX = toX = PublicVariable.confirmButtonX;
         toY = PublicVariable.confirmButtonY;
         animationType = Animation.ABSOLUTE;
@@ -85,12 +86,9 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
 
     @Override
     public void onBindViewHolder(AdvanceSelectionListAdapter.ViewHolder viewHolderBinder, final int position) {
-        RelativeLayout item = viewHolderBinder.item;
-        ImageView imgIcon = viewHolderBinder.imgIcon;
-        TextView txtDesc = viewHolderBinder.txtDesc;
 
-        imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-        txtDesc.setText(navDrawerItems.get(position).getAppName());
+        viewHolderBinder.appIconView.setImageDrawable(navDrawerItems.get(position).getAppIcon());
+        viewHolderBinder.appNameView.setText(navDrawerItems.get(position).getAppName());
 
         final String pack = navDrawerItems.get(position).getPackageName();
         File autoFile = context.getFileStreamPath(pack + PublicVariable.categoryName);
@@ -193,15 +191,15 @@ public class AdvanceSelectionListAdapter extends RecyclerView.Adapter<AdvanceSel
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout item;
-        ImageView imgIcon;
-        TextView txtDesc;
+        ImageView appIconView;
+        TextView appNameView;
         CheckBox autoChoice;
 
         public ViewHolder(View view) {
             super(view);
             item = (RelativeLayout) view.findViewById(R.id.fullItemView);
-            imgIcon = (ImageView) view.findViewById(R.id.appIconView);
-            txtDesc = (TextView) view.findViewById(R.id.desc);
+            appIconView = (ImageView) view.findViewById(R.id.appIconView);
+            appNameView = (TextView) view.findViewById(R.id.appNameView);
             autoChoice = (CheckBox) view.findViewById(R.id.autoChoice);
         }
     }

@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/1/20 2:13 PM
+  ~ Last modified 5/2/20 6:26 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -98,7 +98,8 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".FoldersShortcuts.AdvanceAppSelectionList" />
+            android:name=".FoldersShortcuts.AdvanceAppSelectionList"
+            android:theme="@style/GeeksEmpire"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
@@ -126,7 +127,8 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".SplitShortcuts.SplitAppSelectionList" />
+            android:name=".SplitShortcuts.SplitAppSelectionList"
+            android:theme="@style/GeeksEmpire"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"

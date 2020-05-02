@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 2:49 PM
+ * Last modified 5/2/20 5:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -16,6 +16,7 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
+import android.view.View
 import com.google.android.material.button.MaterialButton
 import net.geekstools.supershortcuts.PRO.EntryConfigurations
 import net.geekstools.supershortcuts.PRO.R
@@ -30,25 +31,33 @@ class MixShortcutsProcess(private val context: Context,
     private val functionsClass: FunctionsClass = FunctionsClass(context)
 
     fun initialize() {
-        if (functionsClass.mixShortcutsPurchased()) {
-            if (functionsClass.mixShortcuts()) {
 
-                mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.default_color_light))
+        if(functionsClass.UsageAccessEnabled()) {
 
-            } else {
+            mixShortcutsSwitchView.visibility = View.GONE
 
-                mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.darker))
-
-            }
         } else {
 
-            mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.red))
+            if (functionsClass.mixShortcutsPurchased()) {
+                if (functionsClass.mixShortcuts()) {
 
-        }
+                    mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.default_color_light))
 
-        mixShortcutsSwitchView.setOnClickListener {
+                } else {
 
-            trigger()
+                    mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.darker))
+
+                }
+            } else {
+
+                mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.red))
+
+            }
+
+            mixShortcutsSwitchView.setOnClickListener {
+
+                trigger()
+            }
         }
     }
 

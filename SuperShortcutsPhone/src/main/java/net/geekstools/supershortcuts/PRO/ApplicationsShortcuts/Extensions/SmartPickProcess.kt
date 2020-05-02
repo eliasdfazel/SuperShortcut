@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 2:59 PM
+ * Last modified 5/2/20 6:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,17 +33,22 @@ fun NormalAppShortcutsSelectionList.smartPickProcess() {
     normalAppSelectionBinding.loadingDescription.text = Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY)
 
     normalAppSelectionBinding.autoSelect.visibility = View.INVISIBLE
+    normalAppSelectionBinding.estimatedShortcutCounterView.visibility = View.INVISIBLE
 
     functionsClass.deleteSelectedFiles()
 
-    retrieveFrequentlyUsedApplications(this@smartPickProcess,
+    extractSaveFrequentlyUsedApplicationsData(this@smartPickProcess,
             functionsClass)
 }
 
-private fun letMeKnow(activity: Activity,
-                      functionsClass: FunctionsClass,
-                      maxValue: Int, startTime: Long /*‪86400000‬ = 1 days*/, endTime: Long /*System.currentTimeMillis()*/): List<String> {
-    /*‪86400000 = 24h --- 82800000 = 23h‬*/
+/**
+ * 86400000 = 24h
+ **/
+private fun retrieveFrequentlyUsedApplications(activity: Activity,
+                                               functionsClass: FunctionsClass,
+                                               maxValue: Int,
+                                               /**86400000‬ = 1 days**/startTime: Long, endTime: Long /*System.currentTimeMillis()*/): List<String> {
+
     val frequentlyUsedApplications: MutableList<String> = ArrayList()
 
     val usageStatsManager = activity.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
@@ -81,10 +86,11 @@ private fun letMeKnow(activity: Activity,
     return frequentlyUsedApplications
 }
 
-private fun retrieveFrequentlyUsedApplications(activity: AppCompatActivity, functionsClass: FunctionsClass) = CoroutineScope(Dispatchers.Default).launch {
+private fun extractSaveFrequentlyUsedApplicationsData(activity: AppCompatActivity, functionsClass: FunctionsClass) = CoroutineScope(Dispatchers.Default).launch {
+
     functionsClass.deleteSelectedFiles()
 
-    val frequentlyUsedApplications = letMeKnow(activity, functionsClass,
+    val frequentlyUsedApplications = retrieveFrequentlyUsedApplications(activity, functionsClass,
             25, (86400000 * 7).toLong(), System.currentTimeMillis())
 
     for (i in 0..4) {

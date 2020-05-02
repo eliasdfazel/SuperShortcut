@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 1:25 PM
+ * Last modified 5/2/20 6:51 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,6 +48,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -69,7 +70,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SplitAppSelectionList extends Activity implements View.OnClickListener {
+public class SplitAppSelectionList extends AppCompatActivity implements View.OnClickListener {
 
     Activity activity;
     Context context;
@@ -106,11 +107,8 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
     protected void onCreate(Bundle Saved) {
         super.onCreate(Saved);
         setContentView(R.layout.split_app_selection_list);
-        try {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         functionsClass = new FunctionsClass(getApplicationContext());
         PublicVariable.SplitMaxAppShortcuts = 2;
@@ -120,7 +118,7 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
 
         listPopupWindow = new ListPopupWindow(activity);
         desc = (TextView) findViewById(R.id.desc);
-        counterView = (TextView) findViewById(R.id.app_selected_counter_view);
+        counterView = (TextView) findViewById(R.id.appSelectedCounterView);
         loadIcon = (ImageView) findViewById(R.id.loadingLogo);
         tempIcon = (ImageView) findViewById(R.id.temporary_falling_icon);
         tempIcon.bringToFront();
@@ -141,10 +139,10 @@ public class SplitAppSelectionList extends Activity implements View.OnClickListe
         nestedScrollView.setSmoothScrollingEnabled(true);
 
         wholeAuto.setBackgroundColor(getColor(R.color.light));
-        getActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
-        getActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>"
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>"
                 + PublicVariable.categoryName.split("_")[0] + "</font>", Html.FROM_HTML_MODE_LEGACY));
-        getActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

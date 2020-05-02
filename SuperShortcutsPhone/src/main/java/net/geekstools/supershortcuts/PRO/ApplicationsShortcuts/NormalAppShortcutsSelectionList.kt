@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 2:43 PM
+ * Last modified 5/2/20 7:26 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,7 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.view.Gravity
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
@@ -312,16 +313,22 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
                     this@NormalAppShortcutsSelectionList
             )
 
-            listPopupWindow.setAdapter(savedAppsListPopupAdapter)
-            listPopupWindow.anchorView = normalAppSelectionBinding.popupAnchorView
-            listPopupWindow.width = ListPopupWindow.WRAP_CONTENT
-            listPopupWindow.height = ListPopupWindow.WRAP_CONTENT
-            listPopupWindow.isModal = true
-            listPopupWindow.setBackgroundDrawable(null)
+            listPopupWindow.apply {
+                anchorView = normalAppSelectionBinding.confirmLayout
+                width = functionsClass.DpToInteger(300)
+                height = ListPopupWindow.WRAP_CONTENT
+                promptPosition = ListPopupWindow.POSITION_PROMPT_ABOVE
+                isModal = true
+                setDropDownGravity(Gravity.CENTER)
+                setBackgroundDrawable(null)
+            }
+
             listPopupWindow.setOnDismissListener {
 
                 appsConfirmButton?.makeItVisible()
             }
+
+            listPopupWindow.setAdapter(savedAppsListPopupAdapter)
             listPopupWindow.show()
         }
     }
