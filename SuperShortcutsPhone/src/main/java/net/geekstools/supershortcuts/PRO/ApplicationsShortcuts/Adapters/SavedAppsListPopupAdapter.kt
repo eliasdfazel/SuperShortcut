@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 6:47 AM
+ * Last modified 5/2/20 7:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,7 +14,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import net.geekstools.floatshort.PRO.Folders.Utils.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.R
@@ -46,9 +49,8 @@ class SavedAppsListPopupAdapter(private val context: Context,
         val layoutInflater = context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val convertView = layoutInflater.inflate(R.layout.item_saved_app, null)
 
-        val items = convertView.findViewById<View>(R.id.items) as RelativeLayout
-        val appIconItem = convertView.findViewById<View>(R.id.appIconItem) as ImageView
-        val textAppName = convertView.findViewById<View>(R.id.itemAppName) as TextView
+        val appIconItem = convertView.findViewById<View>(R.id.appIconItemView) as ImageView
+        val textAppName = convertView.findViewById<View>(R.id.appNameItemView) as TextView
         val deleteItem = convertView.findViewById<View>(R.id.deleteItem) as Button
 
         appIconItem.setImageDrawable(selectedAppsListItem[position].appIcon)

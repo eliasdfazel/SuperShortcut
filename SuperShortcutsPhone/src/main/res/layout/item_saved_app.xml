@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 7:31 AM
+  ~ Last modified 5/2/20 7:35 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -27,7 +27,7 @@
         android:background="@drawable/ic_cancel_stable_light" />
 
     <TextView
-        android:id="@+id/itemAppName"
+        android:id="@+id/appNameItemView"
         android:layout_width="200dp"
         android:layout_height="53dp"
         android:layout_toEndOf="@id/deleteItem"
@@ -41,10 +41,10 @@
         android:textSize="17sp" />
 
     <ImageView
-        android:id="@+id/appIconItem"
+        android:id="@+id/appIconItemView"
         android:layout_width="47dp"
         android:layout_height="47dp"
-        android:layout_toEndOf="@id/itemAppName"
+        android:layout_toEndOf="@id/appNameItemView"
         android:layout_centerVertical="true"
         android:layout_marginEnd="9dp"
         android:foregroundGravity="center"
