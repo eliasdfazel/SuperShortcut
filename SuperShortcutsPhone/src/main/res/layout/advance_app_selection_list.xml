@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 11:27 AM
+  ~ Last modified 5/2/20 1:13 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewApplicationsList"
+                android:id="@+id/recycler_view_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@drawable/draw_divider"
@@ -92,7 +92,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/appSelectedCounterView"
+        android:id="@+id/selected_shortcut_counter_view"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/confirmLayout"

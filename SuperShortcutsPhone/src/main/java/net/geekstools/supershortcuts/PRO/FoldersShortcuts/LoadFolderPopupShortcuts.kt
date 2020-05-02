@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 12:26 PM
+ * Last modified 5/2/20 2:30 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -32,6 +32,8 @@ class LoadFolderPopupShortcuts : Activity() {
 
     private lateinit var folderPopupViewBinding: FolderPopupViewBinding
 
+
+
     override fun onCreate(saved: Bundle?) {
         super.onCreate(saved)
         folderPopupViewBinding = FolderPopupViewBinding.inflate(layoutInflater)
@@ -55,29 +57,34 @@ class LoadFolderPopupShortcuts : Activity() {
                     loadCustomIcons.load()
                 }
 
-                if (intent.action == "load_category_action") {
+                folderPopupViewBinding.popupAnchorView.post {
 
-                    functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                            folderPopupViewBinding.popupAnchorView,
-                            folderName.replace(".CategorySelected", ""), loadCustomIcons)
+                    if (intent.action == "load_category_action") {
 
-                } else if (intent.action == "load_category_action_shortcut") {
+                        functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                                folderPopupViewBinding.popupAnchorView,
+                                folderName.replace(".CategorySelected", ""),
+                                loadCustomIcons)
 
-                    functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                            folderPopupViewBinding.popupAnchorView,
-                            folderName, loadCustomIcons)
+                    } else if (intent.action == "load_category_action_shortcut") {
 
+                        functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                                folderPopupViewBinding.popupAnchorView,
+                                folderName,
+                                loadCustomIcons)
+
+                    }
                 }
 
             } else {
+
                 this@LoadFolderPopupShortcuts.finish()
 
-                return
             }
         } else {
+
             this@LoadFolderPopupShortcuts.finish()
 
-            return
         }
 
         folderPopupViewBinding.root.setOnTouchListener { view, motionEvent ->
@@ -86,11 +93,5 @@ class LoadFolderPopupShortcuts : Activity() {
 
             true
         }
-    }
-
-    public override fun onPause() {
-        super.onPause()
-
-        this@LoadFolderPopupShortcuts.finish()
     }
 }

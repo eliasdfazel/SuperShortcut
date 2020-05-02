@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 12:03 PM
+ * Last modified 5/2/20 1:13 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -69,7 +69,7 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
                 appsConfirmButton!!,
                 this@loadInstalledAppsData)
 
-        normalAppSelectionBinding.recyclerViewApplicationsList.adapter = appSelectionListAdapter
+        normalAppSelectionBinding.recyclerViewList.adapter = appSelectionListAdapter
 
         normalAppSelectionBinding.loadingSplash.visibility = View.INVISIBLE
 
@@ -81,17 +81,17 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
         appsConfirmButton?.makeItVisible()
 
         val animationFadeIn = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_in)
-        normalAppSelectionBinding.appSelectedCounterView.startAnimation(animationFadeIn)
+        normalAppSelectionBinding.selectedShortcutCounterView.startAnimation(animationFadeIn)
         animationFadeIn.setAnimationListener(object : Animation.AnimationListener {
 
             override fun onAnimationStart(animation: Animation) {
 
-                normalAppSelectionBinding.appSelectedCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).toString()
+                normalAppSelectionBinding.selectedShortcutCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).toString()
             }
 
             override fun onAnimationEnd(animation: Animation) {
 
-                normalAppSelectionBinding.appSelectedCounterView.visibility = View.VISIBLE
+                normalAppSelectionBinding.selectedShortcutCounterView.visibility = View.VISIBLE
             }
 
             override fun onAnimationRepeat(animation: Animation) {
@@ -108,7 +108,7 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
             layoutInflater = layoutInflater,
             rootView = normalAppSelectionBinding.MainView,
             nestedScrollView = normalAppSelectionBinding.nestedScrollView,
-            recyclerView = normalAppSelectionBinding.recyclerViewApplicationsList,
+            recyclerView = normalAppSelectionBinding.recyclerViewList,
             fastScrollerIndexViewBinding = normalAppSelectionBinding.fastScrollerIndexInclude,
             indexedFastScrollerFactory = IndexedFastScrollerFactory(
                     popupEnable = true,

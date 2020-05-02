@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:27 AM
+ * Last modified 5/2/20 2:19 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -1308,43 +1308,45 @@ public class FunctionsClass {
 
     public void showPopupCategoryItem(Activity instanceOfActivity, RelativeLayout popupAnchorView,
                                       String categoryName, LoadCustomIcons loadCustomIcons) {
-        try {
-            ArrayList<AdapterItemsData> navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
-            navDrawerItemsSaved.clear();
-            for (String packageName : readFileLine(categoryName)) {
-                if (isAppInstalled(packageName)) {
-                    navDrawerItemsSaved.add(new AdapterItemsData(
-                            appName(packageName),
-                            packageName,
-                            customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
-                    ));
-                } else {
-                    context.deleteFile(packageName + "." + categoryName);
-                    removeLine(categoryName, packageName);
-                }
+
+        ArrayList<AdapterItemsData> navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
+        navDrawerItemsSaved.clear();
+        for (String packageName : readFileLine(categoryName)) {
+            if (isAppInstalled(packageName)) {
+                navDrawerItemsSaved.add(new AdapterItemsData(
+                        appName(packageName),
+                        packageName,
+                        customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
+                ));
+            } else {
+                context.deleteFile(packageName + "." + categoryName);
+                removeLine(categoryName, packageName);
             }
-            navDrawerItemsSaved.add(new AdapterItemsData(
-                    context.getString(R.string.edit_advanced_shortcut) + " " + categoryName.replace(".CategorySelected", "").split("_")[0],
-                    context.getPackageName(),
-                    context.getDrawable(R.drawable.draw_pref)));
-            ListPopupWindow listPopupWindow = new ListPopupWindow(instanceOfActivity);
-            FolderItemListAdapter lowerListAdapter = new FolderItemListAdapter(instanceOfActivity, context, navDrawerItemsSaved, listPopupWindow);
-            listPopupWindow.setAdapter(lowerListAdapter);
-            listPopupWindow.setAnchorView(popupAnchorView);
-            listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
-            listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
-            listPopupWindow.setModal(true);
-            listPopupWindow.setBackgroundDrawable(null);
-            listPopupWindow.show();
-            listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    instanceOfActivity.finish();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        navDrawerItemsSaved.add(new AdapterItemsData(
+                context.getString(R.string.edit_advanced_shortcut) + " " + categoryName.replace(".CategorySelected", "").split("_")[0],
+                context.getPackageName(),
+                context.getDrawable(R.drawable.draw_pref)));
+
+        ListPopupWindow listPopupWindow = new ListPopupWindow(instanceOfActivity);
+
+        FolderItemListAdapter lowerListAdapter = new FolderItemListAdapter(instanceOfActivity, context, navDrawerItemsSaved, listPopupWindow);
+
+        listPopupWindow.setAdapter(lowerListAdapter);
+        listPopupWindow.setAnchorView(popupAnchorView);
+        listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
+        listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
+        listPopupWindow.setModal(true);
+        listPopupWindow.setBackgroundDrawable(null);
+        listPopupWindow.show();
+
+        listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+
+                instanceOfActivity.finish();
+            }
+        });
 
     }
 
@@ -1650,7 +1652,7 @@ public class FunctionsClass {
         return false;
     }
 
-    public void AccessibilityService(final Activity activity) {
+    public void AccessibilityService(final Activity activity, boolean finishIt) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Light);
         alertDialog.setTitle(
                 Html.fromHtml("<font color='" + context.getColor(R.color.default_color) + "'>" +
@@ -1671,7 +1673,10 @@ public class FunctionsClass {
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                activity.finish();
+                if (finishIt) {
+
+                    activity.finish();
+                }
             }
         });
         alertDialog.show();

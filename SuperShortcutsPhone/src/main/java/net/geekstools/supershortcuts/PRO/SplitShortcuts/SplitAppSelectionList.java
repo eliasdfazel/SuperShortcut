@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 6:51 AM
+ * Last modified 5/2/20 1:13 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -118,7 +118,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
 
         listPopupWindow = new ListPopupWindow(activity);
         desc = (TextView) findViewById(R.id.desc);
-        counterView = (TextView) findViewById(R.id.appSelectedCounterView);
+        counterView = (TextView) findViewById(R.id.selected_shortcut_counter_view);
         loadIcon = (ImageView) findViewById(R.id.loadingLogo);
         tempIcon = (ImageView) findViewById(R.id.temporary_falling_icon);
         tempIcon.bringToFront();
@@ -131,7 +131,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewApplicationsList);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_list);
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
         recyclerView.setLayoutManager(recyclerViewLayoutManager);
 

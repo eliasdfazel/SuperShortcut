@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 1:19 PM
+ * Last modified 5/2/20 1:17 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,7 +27,7 @@ fun NormalAppShortcutsSelectionList.setupUI() {
     normalAppSelectionBinding.confirmLayout.bringToFront()
 
     recyclerViewLayoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
-    normalAppSelectionBinding.recyclerViewApplicationsList.layoutManager = recyclerViewLayoutManager
+    normalAppSelectionBinding.recyclerViewList.layoutManager = recyclerViewLayoutManager
 
     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -42,8 +42,8 @@ fun NormalAppShortcutsSelectionList.setupUI() {
     normalAppSelectionBinding.loadingDescription.typeface = typeface
     normalAppSelectionBinding.loadingProgress.indeterminateTintList = ColorStateList.valueOf(getColor(R.color.default_color))
 
-    normalAppSelectionBinding.appSelectedCounterView.typeface = typeface
-    normalAppSelectionBinding.appSelectedCounterView.bringToFront()
+    normalAppSelectionBinding.selectedShortcutCounterView.typeface = typeface
+    normalAppSelectionBinding.selectedShortcutCounterView.bringToFront()
 }
 
 fun NormalAppShortcutsSelectionList.evaluateShortcutsInfo() {

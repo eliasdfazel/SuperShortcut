@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 6:31 AM
+ * Last modified 5/2/20 1:59 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,7 +48,7 @@ public class SplitTransparentSingle extends Activity {
 
         final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
         if (!functionsClass.AccessibilityServiceEnabled()) {
-            functionsClass.AccessibilityService(this);
+            functionsClass.AccessibilityService(this, true);
         } else {
             AccessibilityEvent event = AccessibilityEvent.obtain();
             event.setSource(new Button(getApplicationContext()));

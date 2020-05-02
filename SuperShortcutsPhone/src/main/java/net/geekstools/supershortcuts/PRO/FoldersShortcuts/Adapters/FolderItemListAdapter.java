@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:27 AM
+ * Last modified 5/2/20 2:18 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -56,7 +56,7 @@ public class FolderItemListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public AdapterItemsData getItem(int position) {
         return navDrawerItems.get(position);
     }
 
@@ -73,11 +73,11 @@ public class FolderItemListAdapter extends BaseAdapter {
         }
 
         final RelativeLayout items = (RelativeLayout) convertView.findViewById(R.id.items);
-        ImageView imgIcon = (ImageView) convertView.findViewById(R.id.iconItem);
-        TextView textAppName = (TextView) convertView.findViewById(R.id.itemAppName);
+        ImageView iconItem = (ImageView) convertView.findViewById(R.id.iconItem);
+        TextView itemAppName = (TextView) convertView.findViewById(R.id.itemAppName);
 
-        imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-        textAppName.setText(navDrawerItems.get(position).getAppName());
+        iconItem.setImageDrawable(navDrawerItems.get(position).getAppIcon());
+        itemAppName.setText(navDrawerItems.get(position).getAppName());
 
         items.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +95,7 @@ public class FolderItemListAdapter extends BaseAdapter {
                 listPopupWindow.dismiss();
             }
         });
+
         items.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

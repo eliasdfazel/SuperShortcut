@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 12:13 PM
+ * Last modified 5/2/20 2:30 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,10 +10,8 @@
 
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.Editable;
@@ -35,6 +33,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.FolderAppSelectionList;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
@@ -46,53 +45,48 @@ import java.util.ArrayList;
 
 public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcutsAdapter.ViewHolder> {
 
-    private Context context;
-    private Activity activity;
+    private FolderShortcuts folderShortcuts;
 
     FunctionsClass functionsClass;
 
-    ImageView imageView;
-    RelativeLayout freqLayout;
-    View view;
-    ViewHolder viewHolder;
-
-    String endEdited = "", endFocus = "";
+    String endEdited = "",
+            endFocus = "";
 
     LoadCustomIcons loadCustomIcons;
 
-    private ArrayList<AdapterItemsData> navDrawerItems;
+    private ArrayList<AdapterItemsData> createdFolderListItem;
 
-    public FolderShortcutsAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
-        this.activity = activity;
-        this.context = context;
-        this.navDrawerItems = navDrawerItems;
+    public FolderShortcutsAdapter(FolderShortcuts folderShortcuts,
+                                  ArrayList<AdapterItemsData> createdFolderListItem) {
+        this.folderShortcuts = folderShortcuts;
 
-        functionsClass = new FunctionsClass(context);
+        this.createdFolderListItem = createdFolderListItem;
+
+        functionsClass = new FunctionsClass(folderShortcuts);
 
         if (functionsClass.customIconsEnable()) {
-            loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
+            loadCustomIcons = new LoadCustomIcons(folderShortcuts, functionsClass.customIconPackageName());
         }
     }
 
     @Override
     public FolderShortcutsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.item_advance_shortcuts, parent, false);
-        viewHolder = new FolderShortcutsAdapter.ViewHolder(view);
-        return viewHolder;
+
+        return new FolderShortcutsAdapter.ViewHolder(LayoutInflater.from(folderShortcuts).inflate(R.layout.item_advance_shortcuts, parent, false));
     }
 
     @Override
     public void onBindViewHolder(FolderShortcutsAdapter.ViewHolder viewHolderBinder, final int position) {
 
-        final String category = navDrawerItems.get(position).getCategory();
-        final String[] packages = navDrawerItems.get(position).getPackageNames();
+        final String category = createdFolderListItem.get(position).getCategory();
+        final String[] packages = createdFolderListItem.get(position).getPackageNames();
 
         try {
-            viewHolderBinder.categoryName.setText(navDrawerItems.get(position).getCategory().split("_")[0]);
+            viewHolderBinder.categoryName.setText(createdFolderListItem.get(position).getCategory().split("_")[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (category.equals(context.getPackageName())) {
+        if (category.equals(folderShortcuts.getPackageName())) {
             try {
                 viewHolderBinder.categoryName.setText("");
                 viewHolderBinder.autoChoice.setChecked(false);
@@ -102,7 +96,7 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                 e.printStackTrace();
             }
         } else {
-            File autoFile = context.getFileStreamPath(category);
+            File autoFile = folderShortcuts.getFileStreamPath(category);
             if (autoFile.exists() && autoFile.isFile()) {
                 viewHolderBinder.selectedApps.removeAllViews();
                 viewHolderBinder.selectedApps.setVisibility(View.VISIBLE);
@@ -111,17 +105,17 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                     previewItems = packages.length;
                 }
                 for (int i = 0; i < previewItems; i++) {
-                    freqLayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.selected_apps_item, null);
-                    imageView = (ImageView) freqLayout.findViewById(R.id.appSelectedItem);
+                    RelativeLayout selectedApplicationsPreview = (RelativeLayout) folderShortcuts.getLayoutInflater().inflate(R.layout.selected_apps_item, null);
+                    ImageView imageView = (ImageView) selectedApplicationsPreview.findViewById(R.id.appSelectedItem);
                     if (functionsClass.isAppInstalled(packages[i])) {
                         imageView.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packages[i], functionsClass.appIconDrawable(packages[i])) : functionsClass.appIconDrawable(packages[i]));
                     }
-                    viewHolderBinder.selectedApps.addView(freqLayout);
+                    viewHolderBinder.selectedApps.addView(selectedApplicationsPreview);
                     viewHolderBinder.addApps.setVisibility(View.VISIBLE);
                 }
             }
 
-            File autoFileSelected = context.getFileStreamPath(functionsClass.categoryNameSelected(category));
+            File autoFileSelected = folderShortcuts.getFileStreamPath(functionsClass.categoryNameSelected(category));
             viewHolderBinder.autoChoice.setChecked(false);
             if (autoFileSelected.exists() && autoFileSelected.isFile()) {
                 viewHolderBinder.autoChoice.setChecked(true);
@@ -136,52 +130,52 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     PublicVariable.categoryName = textView.getText().toString();
 
-                    File file = context.getFileStreamPath(navDrawerItems.get(position).getCategory());
+                    File file = folderShortcuts.getFileStreamPath(createdFolderListItem.get(position).getCategory());
                     if (file.exists() && file.isFile()) {
-                        if (navDrawerItems.get(position).getCategory().equals(PublicVariable.categoryName)) {
-                            PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
-                            context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                    ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                        if (createdFolderListItem.get(position).getCategory().equals(PublicVariable.categoryName)) {
+                            PublicVariable.categoryName = createdFolderListItem.get(position).getCategory();
+                            folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                    ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                         } else {
 
                             //selectedCategory
-                            if (context.getFileStreamPath(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory())).exists()) {
-                                String[] appsContent = functionsClass.readFileLine(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                            if (folderShortcuts.getFileStreamPath(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory())).exists()) {
+                                String[] appsContent = functionsClass.readFileLine(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                                 for (String appContent : appsContent) {
-                                    context.deleteFile(functionsClass.categoryNameSelected(appContent + navDrawerItems.get(position).getCategory()));
+                                    folderShortcuts.deleteFile(functionsClass.categoryNameSelected(appContent + createdFolderListItem.get(position).getCategory()));
                                     functionsClass.saveFileAppendLine(functionsClass.categoryNameSelected(PublicVariable.categoryName), appContent);
                                     functionsClass.saveFile(functionsClass.categoryNameSelected(appContent + PublicVariable.categoryName), appContent);
                                 }
                                 functionsClass.saveFileAppendLine(".categorySuperSelected", PublicVariable.categoryName);
-                                functionsClass.removeLine(".categorySuperSelected", navDrawerItems.get(position).getCategory());
-                                context.deleteFile(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                                functionsClass.removeLine(".categorySuperSelected", createdFolderListItem.get(position).getCategory());
+                                folderShortcuts.deleteFile(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                             }
 
                             //selectedSplit
                             if (functionsClass.mixShortcuts()) {
-                                functionsClass.removeLine(".mixShortcuts", functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                                functionsClass.removeLine(".mixShortcuts", functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                                 functionsClass.saveFileAppendLine(".mixShortcuts", functionsClass.categoryNameSelected(PublicVariable.categoryName));
                             }
 
-                            String[] appsContent = functionsClass.readFileLine(navDrawerItems.get(position).getCategory());
+                            String[] appsContent = functionsClass.readFileLine(createdFolderListItem.get(position).getCategory());
                             for (String appContent : appsContent) {
-                                context.deleteFile(appContent + navDrawerItems.get(position).getCategory());
+                                folderShortcuts.deleteFile(appContent + createdFolderListItem.get(position).getCategory());
                                 functionsClass.saveFileAppendLine(PublicVariable.categoryName, appContent);
                                 functionsClass.saveFile(appContent + PublicVariable.categoryName, appContent);
                             }
                             functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
-                            functionsClass.removeLine(".categorySuper", navDrawerItems.get(position).getCategory());
-                            context.deleteFile(navDrawerItems.get(position).getCategory());
-                            context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                    ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                            functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                            folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
+                            folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                    ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                         }
                     } else {
                         PublicVariable.categoryName = PublicVariable.categoryName + "_" + System.currentTimeMillis();
 
                         functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                         functionsClass.saveFileEmpty(PublicVariable.categoryName);
-                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                        folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     }
                 }
                 return true;
@@ -210,8 +204,8 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                 if (endFocus.length() > 0) {
                     PublicVariable.categoryName = endFocus;
                 } else {
-                    if (!navDrawerItems.get(position).getCategory().equals(context.getPackageName())) {
-                        PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
+                    if (!createdFolderListItem.get(position).getCategory().equals(folderShortcuts.getPackageName())) {
+                        PublicVariable.categoryName = createdFolderListItem.get(position).getCategory();
                     } else {
                         if (endEdited.length() > 0) {
                             PublicVariable.categoryName = endEdited;
@@ -219,112 +213,112 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                     }
                 }
 
-                File file = context.getFileStreamPath(navDrawerItems.get(position).getCategory());
+                File file = folderShortcuts.getFileStreamPath(createdFolderListItem.get(position).getCategory());
                 if (file.exists() && file.isFile()) {
-                    if (navDrawerItems.get(position).getCategory().equals(PublicVariable.categoryName)) {
-                        PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
-                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                    if (createdFolderListItem.get(position).getCategory().equals(PublicVariable.categoryName)) {
+                        PublicVariable.categoryName = createdFolderListItem.get(position).getCategory();
+                        folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     } else {
 
                         //selectedCategory
-                        if (context.getFileStreamPath(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory())).exists()) {
-                            String[] appsContent = functionsClass.readFileLine(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                        if (folderShortcuts.getFileStreamPath(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory())).exists()) {
+                            String[] appsContent = functionsClass.readFileLine(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                             for (String appContent : appsContent) {
-                                context.deleteFile(functionsClass.categoryNameSelected(appContent + navDrawerItems.get(position).getCategory()));
+                                folderShortcuts.deleteFile(functionsClass.categoryNameSelected(appContent + createdFolderListItem.get(position).getCategory()));
                                 functionsClass.saveFileAppendLine(functionsClass.categoryNameSelected(PublicVariable.categoryName), appContent);
                                 functionsClass.saveFile(functionsClass.categoryNameSelected(appContent + PublicVariable.categoryName), appContent);
                             }
                             functionsClass.saveFileAppendLine(".categorySuperSelected", PublicVariable.categoryName);
-                            functionsClass.removeLine(".categorySuperSelected", navDrawerItems.get(position).getCategory());
-                            context.deleteFile(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                            functionsClass.removeLine(".categorySuperSelected", createdFolderListItem.get(position).getCategory());
+                            folderShortcuts.deleteFile(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                         }
 
                         //selectedSplit
                         if (functionsClass.mixShortcuts()) {
-                            functionsClass.removeLine(".mixShortcuts", functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                            functionsClass.removeLine(".mixShortcuts", functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                             functionsClass.saveFileAppendLine(".mixShortcuts", functionsClass.categoryNameSelected(PublicVariable.categoryName));
                         }
 
-                        String[] appsContent = functionsClass.readFileLine(navDrawerItems.get(position).getCategory());
+                        String[] appsContent = functionsClass.readFileLine(createdFolderListItem.get(position).getCategory());
                         for (String appContent : appsContent) {
-                            context.deleteFile(appContent + navDrawerItems.get(position).getCategory());
+                            folderShortcuts.deleteFile(appContent + createdFolderListItem.get(position).getCategory());
                             functionsClass.saveFileAppendLine(PublicVariable.categoryName, appContent);
                             functionsClass.saveFile(appContent + PublicVariable.categoryName, appContent);
                         }
                         functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
-                        functionsClass.removeLine(".categorySuper", navDrawerItems.get(position).getCategory());
-                        context.deleteFile(navDrawerItems.get(position).getCategory());
-                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                        functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                        folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
+                        folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     }
                 } else {
                     PublicVariable.categoryName = PublicVariable.categoryName + "_" + System.currentTimeMillis();
 
                     functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                     functionsClass.saveFileEmpty(PublicVariable.categoryName);
-                    context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                            ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                    folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                            ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                 }
             }
         });
         viewHolderBinder.addApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!navDrawerItems.get(position).getCategory().equals(context.getPackageName())) {
-                    PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
+                if (!createdFolderListItem.get(position).getCategory().equals(folderShortcuts.getPackageName())) {
+                    PublicVariable.categoryName = createdFolderListItem.get(position).getCategory();
                 } else {
                     if (endEdited.length() > 0) {
                         PublicVariable.categoryName = endEdited;
                     }
                 }
 
-                File file = context.getFileStreamPath(navDrawerItems.get(position).getCategory());
+                File file = folderShortcuts.getFileStreamPath(createdFolderListItem.get(position).getCategory());
                 if (file.exists() && file.isFile()) {
-                    if (navDrawerItems.get(position).getCategory().equals(PublicVariable.categoryName)) {
-                        PublicVariable.categoryName = navDrawerItems.get(position).getCategory();
-                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                    if (createdFolderListItem.get(position).getCategory().equals(PublicVariable.categoryName)) {
+                        PublicVariable.categoryName = createdFolderListItem.get(position).getCategory();
+                        folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     } else {
 
                         //selectedCategory
-                        if (context.getFileStreamPath(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory())).exists()) {
-                            String[] appsContent = functionsClass.readFileLine(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                        if (folderShortcuts.getFileStreamPath(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory())).exists()) {
+                            String[] appsContent = functionsClass.readFileLine(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                             for (String appContent : appsContent) {
-                                context.deleteFile(functionsClass.categoryNameSelected(appContent + navDrawerItems.get(position).getCategory()));
+                                folderShortcuts.deleteFile(functionsClass.categoryNameSelected(appContent + createdFolderListItem.get(position).getCategory()));
                                 functionsClass.saveFileAppendLine(functionsClass.categoryNameSelected(PublicVariable.categoryName), appContent);
                                 functionsClass.saveFile(functionsClass.categoryNameSelected(appContent + PublicVariable.categoryName), appContent);
                             }
                             functionsClass.saveFileAppendLine(".categorySuperSelected", PublicVariable.categoryName);
-                            functionsClass.removeLine(".categorySuperSelected", navDrawerItems.get(position).getCategory());
-                            context.deleteFile(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                            functionsClass.removeLine(".categorySuperSelected", createdFolderListItem.get(position).getCategory());
+                            folderShortcuts.deleteFile(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                         }
 
                         //selectedSplit
                         if (functionsClass.mixShortcuts()) {
-                            functionsClass.removeLine(".mixShortcuts", functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                            functionsClass.removeLine(".mixShortcuts", functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                             functionsClass.saveFileAppendLine(".mixShortcuts", functionsClass.categoryNameSelected(PublicVariable.categoryName));
                         }
 
-                        String[] appsContent = functionsClass.readFileLine(navDrawerItems.get(position).getCategory());
+                        String[] appsContent = functionsClass.readFileLine(createdFolderListItem.get(position).getCategory());
                         for (String appContent : appsContent) {
-                            context.deleteFile(appContent + navDrawerItems.get(position).getCategory());
+                            folderShortcuts.deleteFile(appContent + createdFolderListItem.get(position).getCategory());
                             functionsClass.saveFileAppendLine(PublicVariable.categoryName, appContent);
                             functionsClass.saveFile(appContent + PublicVariable.categoryName, appContent);
                         }
                         functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
-                        functionsClass.removeLine(".categorySuper", navDrawerItems.get(position).getCategory());
-                        context.deleteFile(navDrawerItems.get(position).getCategory());
-                        context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                        functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                        folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
+                        folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                     }
                 } else {
                     PublicVariable.categoryName = PublicVariable.categoryName + "_" + System.currentTimeMillis();
 
                     functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
                     functionsClass.saveFileEmpty(PublicVariable.categoryName);
-                    context.startActivity(new Intent(context, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                            ActivityOptions.makeCustomAnimation(context, R.anim.down_up, android.R.anim.fade_out).toBundle());
+                    folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                            ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
                 }
             }
         });
@@ -333,23 +327,26 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
             @Override
             public void onClick(View view) {
                 try {
-                    if (!category.equals(context.getPackageName())) {
-                        PublicVariable.categoryNameSelected = functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory());
+                    if (!category.equals(folderShortcuts.getPackageName())) {
+                        PublicVariable.categoryNameSelected = functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory());
 
-                        File fileSelected = context.getFileStreamPath(PublicVariable.categoryNameSelected);
+                        File fileSelected = folderShortcuts.getFileStreamPath(PublicVariable.categoryNameSelected);
                         if (fileSelected.exists() && fileSelected.isFile()) {
-                            context.deleteFile(PublicVariable.categoryNameSelected);
+                            folderShortcuts.deleteFile(PublicVariable.categoryNameSelected);
                             functionsClass.removeLine(".categorySuperSelected", PublicVariable.categoryNameSelected);
                             if (functionsClass.mixShortcuts() == true) {
                                 functionsClass.removeLine(".mixShortcuts", PublicVariable.categoryNameSelected);
                             }
                             viewHolderBinder.autoChoice.setChecked(false);
-                            context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvanceShortcuts)));
-                            context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcutsAdvance)));
+
+                            folderShortcuts.savedShortcutCounter();
+
+                            folderShortcuts.reevaluateShortcutsInfo();
+
                         } else {
                             if (functionsClass.mixShortcuts() == true) {
                                 if (functionsClass.countLine(".mixShortcuts") < functionsClass.getSystemMaxAppShortcut()) {
-                                    String[] appsContent = functionsClass.readFileLine(navDrawerItems.get(position).getCategory());
+                                    String[] appsContent = functionsClass.readFileLine(createdFolderListItem.get(position).getCategory());
                                     for (String appContent : appsContent) {
                                         functionsClass.saveFileAppendLine(PublicVariable.categoryNameSelected, appContent);
                                     }
@@ -357,20 +354,26 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                                     functionsClass.saveFileAppendLine(".mixShortcuts", PublicVariable.categoryNameSelected);
 
                                     viewHolderBinder.autoChoice.setChecked(true);
-                                    context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvanceShortcuts)));
-                                    context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcutsAdvance)));
+
+                                    folderShortcuts.savedShortcutCounter();
+
+                                    folderShortcuts.reevaluateShortcutsInfo();
+
                                 }
                             } else {
                                 if (PublicVariable.advanceShortcutsMaxAppShortcutsCounter < PublicVariable.advanceShortcutsMaxAppShortcuts) {
-                                    String[] appsContent = functionsClass.readFileLine(navDrawerItems.get(position).getCategory());
+                                    String[] appsContent = functionsClass.readFileLine(createdFolderListItem.get(position).getCategory());
                                     for (String appContent : appsContent) {
                                         functionsClass.saveFileAppendLine(PublicVariable.categoryNameSelected, appContent);
                                     }
                                     functionsClass.saveFileAppendLine(".categorySuperSelected", PublicVariable.categoryNameSelected);
 
                                     viewHolderBinder.autoChoice.setChecked(true);
-                                    context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvanceShortcuts)));
-                                    context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcutsAdvance)));
+
+                                    folderShortcuts.savedShortcutCounter();
+
+                                    folderShortcuts.reevaluateShortcutsInfo();
+
                                 }
                             }
                         }
@@ -383,14 +386,14 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
         viewHolderBinder.item.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if (!navDrawerItems.get(position).getCategory().equals(context.getPackageName())) {
+                if (!createdFolderListItem.get(position).getCategory().equals(folderShortcuts.getPackageName())) {
                     String[] categoryChoices = new String[]{
-                            context.getString(R.string.addSuper),
-                            context.getString(R.string.addToDesktop),
-                            context.getString(R.string.deleteFolder)
+                            folderShortcuts.getString(R.string.addSuper),
+                            folderShortcuts.getString(R.string.addToDesktop),
+                            folderShortcuts.getString(R.string.deleteFolder)
                     };
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                    builder.setTitle(Html.fromHtml("<small>" + context.getString(R.string.option) + " " + "<b>" + navDrawerItems.get(position).getCategory().split("_")[0] + "</b></small>", Html.FROM_HTML_MODE_LEGACY));
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(folderShortcuts);
+                    builder.setTitle(Html.fromHtml("<small>" + folderShortcuts.getString(R.string.option) + " " + "<b>" + createdFolderListItem.get(position).getCategory().split("_")[0] + "</b></small>", Html.FROM_HTML_MODE_LEGACY));
                     builder.setSingleChoiceItems(categoryChoices, 0, null);
                     builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -398,25 +401,27 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                             int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                             switch (selectedPosition) {
                                 case 0:
-                                    functionsClass.addToSuperShortcuts(navDrawerItems.get(position).getCategory());
+                                    functionsClass.addToSuperShortcuts(createdFolderListItem.get(position).getCategory());
                                     break;
                                 case 1:
-                                    functionsClass.categoryToDesktop(navDrawerItems.get(position).getCategory());
+                                    functionsClass.categoryToDesktop(createdFolderListItem.get(position).getCategory());
                                     break;
                                 case 2:
                                     try {
-                                        if (context.getFileStreamPath(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory())).exists()) {
-                                            functionsClass.removeLine(".categorySuperSelected", functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
-                                            context.deleteFile(functionsClass.categoryNameSelected(navDrawerItems.get(position).getCategory()));
+                                        if (folderShortcuts.getFileStreamPath(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory())).exists()) {
+                                            functionsClass.removeLine(".categorySuperSelected", functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
+                                            folderShortcuts.deleteFile(functionsClass.categoryNameSelected(createdFolderListItem.get(position).getCategory()));
                                         }
-                                        String[] packsToDelete = functionsClass.readFileLine(navDrawerItems.get(position).getCategory());
+                                        String[] packsToDelete = functionsClass.readFileLine(createdFolderListItem.get(position).getCategory());
                                         for (String packToDelete : packsToDelete) {
-                                            context.deleteFile(packToDelete + navDrawerItems.get(position).getCategory());
+                                            folderShortcuts.deleteFile(packToDelete + createdFolderListItem.get(position).getCategory());
                                         }
-                                        functionsClass.removeLine(".categorySuper", navDrawerItems.get(position).getCategory());
-                                        context.deleteFile(navDrawerItems.get(position).getCategory());
-                                        functionsClass.removeHomeShortcut(".advanced.LoadCategoryItems", "load_category_action_shortcut", Intent.CATEGORY_DEFAULT, navDrawerItems.get(position).getCategory());
-                                        context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionAdvanceShortcuts)));
+                                        functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                                        folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
+                                        functionsClass.removeHomeShortcut(".advanced.LoadCategoryItems", "load_category_action_shortcut", Intent.CATEGORY_DEFAULT, createdFolderListItem.get(position).getCategory());
+
+                                        folderShortcuts.shortcutDeleted();
+
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -454,7 +459,7 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
 
     @Override
     public int getItemCount() {
-        return navDrawerItems.size();
+        return createdFolderListItem.size();
     }
 
     @Override

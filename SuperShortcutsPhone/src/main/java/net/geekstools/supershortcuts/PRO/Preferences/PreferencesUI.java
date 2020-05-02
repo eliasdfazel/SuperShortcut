@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 12:25 PM
+ * Last modified 5/2/20 1:59 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -73,16 +73,6 @@ import java.util.List;
 public class PreferencesUI extends AppCompatActivity {
 
     FunctionsClass functionsClass;
-
-//    RelativeLayout smartView, splitView, mixView, customIconView, supportView, newsView, translatorView,
-//            floatingView;
-//    ImageView customIconIcon,
-//            prefIconNews;
-//    ImageView share, rate, facebook, twitter;
-//    Switch prefSwitch, splitSwitch, mixSwitch;
-//
-//    TextView customIconDesc,
-//            prefDescFloating;
 
     FirebaseRemoteConfig firebaseRemoteConfig;
 
@@ -180,7 +170,7 @@ public class PreferencesUI extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!functionsClass.AccessibilityServiceEnabled()) {
-                    functionsClass.AccessibilityService(PreferencesUI.this);
+                    functionsClass.AccessibilityService(PreferencesUI.this, false);
                 } else {
                     Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

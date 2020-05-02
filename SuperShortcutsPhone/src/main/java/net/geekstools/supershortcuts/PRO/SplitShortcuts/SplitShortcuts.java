@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:19 AM
+ * Last modified 5/2/20 1:13 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -162,7 +162,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         activity = this;
 
         desc = (TextView) findViewById(R.id.desc);
-        counterView = (TextView) findViewById(R.id.appSelectedCounterView);
+        counterView = (TextView) findViewById(R.id.selected_shortcut_counter_view);
         loadIcon = (ImageView) findViewById(R.id.loadingLogo);
         wholeAuto = (RelativeLayout) findViewById(R.id.MainView);
         loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);

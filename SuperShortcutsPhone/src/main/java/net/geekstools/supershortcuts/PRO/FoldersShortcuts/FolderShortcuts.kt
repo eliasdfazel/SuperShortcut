@@ -2,36 +2,38 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 1:53 PM
+ * Last modified 5/2/20 2:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts
+package net.geekstools.supershortcuts.PRO.FoldersShortcuts
 
 import android.app.ActivityOptions
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.Gravity
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.*
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.BuildConfig
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderShortcutsAdapter
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions.evaluateShortcutsInfo
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions.loadCreatedFoldersData
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions.setupUI
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions.smartPickProcess
 import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI
 import net.geekstools.supershortcuts.PRO.R
@@ -42,39 +44,29 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint
 import net.geekstools.supershortcuts.PRO.Utils.InAppUpdate.InAppUpdateProcess
 import net.geekstools.supershortcuts.PRO.Utils.RemoteProcess.LicenseValidator
-import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureConstants
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstants
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
-import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
+import net.geekstools.supershortcuts.PRO.databinding.FolderShortcutsViewBinding
 import java.lang.String
 import java.util.*
 
-class NormalAppShortcutsSelectionList : AppCompatActivity(),
-        GestureListenerInterface,
-        ConfirmButtonProcessInterface {
+class FolderShortcuts : AppCompatActivity(),
+        GestureListenerInterface {
 
     val functionsClass: FunctionsClass by lazy {
         FunctionsClass(applicationContext)
     }
 
     private val functionsClassDialogues: FunctionsClassDialogues by lazy {
-        FunctionsClassDialogues(this@NormalAppShortcutsSelectionList, functionsClass)
-    }
-
-    private val listPopupWindow: ListPopupWindow by lazy {
-        ListPopupWindow(applicationContext)
+        FunctionsClassDialogues(this@FolderShortcuts, functionsClass)
     }
 
     lateinit var recyclerViewLayoutManager: LinearLayoutManager
-    lateinit var appSelectionListAdapter: RecyclerView.Adapter<SelectionListAdapter.ViewHolder>
-    val installedAppsListItem: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
-
-    private val selectedAppsListItem: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
-
-    var appsConfirmButton: AppsConfirmButton? = null
+    lateinit var folderSelectionListAdapter: RecyclerView.Adapter<FolderShortcutsAdapter.ViewHolder>
+    val createdFolderListItem: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
 
     var appShortcutLimitCounter = 0
 
@@ -88,25 +80,25 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
     }
 
     private val swipeGestureListener: SwipeGestureListener by lazy {
-        SwipeGestureListener(applicationContext, this@NormalAppShortcutsSelectionList)
+        SwipeGestureListener(applicationContext, this@FolderShortcuts)
     }
 
     companion object {
-        const val NormalApplicationsShortcutsFile = ".autoSuper"
+        const val FolderShortcutsFile = ".categorySuper"
+        const val FolderShortcutsSelectedFile = ".categorySuperSelected"
     }
 
-    lateinit var normalAppSelectionBinding: NormalAppSelectionBinding
+    lateinit var folderShortcutsViewBinding: FolderShortcutsViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        normalAppSelectionBinding = NormalAppSelectionBinding.inflate(layoutInflater)
-        setContentView(normalAppSelectionBinding.root)
+        folderShortcutsViewBinding = FolderShortcutsViewBinding.inflate(layoutInflater)
+        setContentView(folderShortcutsViewBinding.root)
+
 
         /* Check Shortcuts Information */
         evaluateShortcutsInfo()
         /* Check Shortcuts Information */
-
-        appsConfirmButton = setupConfirmButtonUI(this@NormalAppShortcutsSelectionList)
 
         /* Setup UI*/
         setupUI()
@@ -117,7 +109,7 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
         functionsClassDialogues.changeLog()
 
         //In-App Billing
-        PurchasesCheckpoint(this@NormalAppShortcutsSelectionList).trigger()
+        PurchasesCheckpoint(this@FolderShortcuts).trigger()
     }
 
     override fun onStart() {
@@ -131,7 +123,7 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
             val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (intent.action == getString(R.string.license)) {
-                        functionsClass.dialogueLicense(this@NormalAppShortcutsSelectionList)
+                        functionsClass.dialogueLicense(this@FolderShortcuts)
 
                         Handler().postDelayed({
                             stopService(Intent(applicationContext, LicenseValidator::class.java))
@@ -144,23 +136,51 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
             registerReceiver(broadcastReceiver, intentFilter)
         }
 
-        normalAppSelectionBinding.autoCategories.setOnClickListener {
+        folderShortcutsViewBinding.confirmButton.setOnClickListener {
+            if (functionsClass.mixShortcuts()) {
+                functionsClass.addMixAppShortcuts()
+            } else {
+                functionsClass.addAppsShortcutCategory()
 
-            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionList, FolderShortcuts::class.java,
-                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
+                getSharedPreferences(".PopupShortcut", Context.MODE_PRIVATE).edit().apply {
+                    putString("PopupShortcutMode", "CategoryShortcuts")
+                    apply()
+                }
+            }
         }
 
-        normalAppSelectionBinding.autoSplit.setOnClickListener {
+        folderShortcutsViewBinding.confirmButton.setOnLongClickListener {
 
-            functionsClass.overrideBackPress(this@NormalAppShortcutsSelectionList, SplitShortcuts::class.java,
-                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
+            functionsClass.deleteSelectedFiles()
+
+            shortcutDeleted()
+
+            savedShortcutCounter()
+
+            reevaluateShortcutsInfo()
+
+            functionsClass.clearDynamicShortcuts()
+
+            true
         }
 
-        normalAppSelectionBinding.preferencesView.setOnClickListener {
+        folderShortcutsViewBinding.autoApps.setOnClickListener {
+
+            functionsClass.overrideBackPress(this@FolderShortcuts, NormalAppShortcutsSelectionList::class.java,
+                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_left, R.anim.slide_to_right))
+        }
+
+        folderShortcutsViewBinding.autoSplit.setOnClickListener {
+
+            functionsClass.overrideBackPress(this@FolderShortcuts, SplitShortcuts::class.java,
+                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_left, R.anim.slide_to_right))
+        }
+
+        folderShortcutsViewBinding.preferencesView.setOnClickListener {
 
             if (updateAvailable) {
 
-                FunctionsClassDialogues(this@NormalAppShortcutsSelectionList, functionsClass).changeLogPreference(
+                FunctionsClassDialogues(this@FolderShortcuts, functionsClass).changeLogPreference(
                         firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
                         String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
                 )
@@ -170,11 +190,11 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
                 startActivity(Intent(applicationContext, PreferencesUI::class.java),
                         ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
 
-                this@NormalAppShortcutsSelectionList.finish()
+                this@FolderShortcuts.finish()
             }
         }
 
-        MixShortcutsProcess(applicationContext, normalAppSelectionBinding.mixShortcutsSwitchView).initialize()
+        MixShortcutsProcess(applicationContext, folderShortcutsViewBinding.mixShortcutsSwitchView).initialize()
     }
 
     override fun onResume() {
@@ -190,14 +210,14 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
                         if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > BuildConfig.VERSION_CODE) {
 
                             val layerDrawableNewUpdate = getDrawable(R.drawable.ic_update) as LayerDrawable?
-                            val gradientDrawableNewUpdate = layerDrawableNewUpdate!!.findDrawableByLayerId(R.id.temporaryBackground) as BitmapDrawable
-                            gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_game))
+                            val gradientDrawableNewUpdate = layerDrawableNewUpdate?.findDrawableByLayerId(R.id.temporaryBackground) as BitmapDrawable?
+                            gradientDrawableNewUpdate?.setTint(getColor(R.color.default_color_game))
 
                             val temporaryBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate)
                             val scaleBitmap = Bitmap.createScaledBitmap(temporaryBitmap, temporaryBitmap.width / 4, temporaryBitmap.height / 4, false)
                             val logoDrawable: Drawable = BitmapDrawable(resources, scaleBitmap)
 
-                            normalAppSelectionBinding.preferencesView.setImageDrawable(logoDrawable)
+                            folderShortcutsViewBinding.preferencesView.setImageDrawable(logoDrawable)
 
                             functionsClass.notificationCreator(
                                     getString(R.string.updateAvailable),
@@ -229,14 +249,15 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
         super.onPause()
 
         getSharedPreferences("ShortcutsModeView", Context.MODE_PRIVATE).edit().apply {
-            putString("TabsView", NormalAppShortcutsSelectionList::class.java.simpleName)
+            putString("TabsView", FolderShortcuts::class.java.simpleName)
             apply()
         }
+
     }
 
     override fun onBackPressed() {
         if (functionsClass.UsageAccessEnabled()) {
-            this@NormalAppShortcutsSelectionList.finish()
+            this@FolderShortcuts.finish()
         } else {
             val homeScreen = Intent(Intent.ACTION_MAIN).apply {
                 this.addCategory(Intent.CATEGORY_HOME)
@@ -254,11 +275,11 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
             is GestureConstants.SwipeHorizontal -> {
                 when (gestureConstants.horizontalDirection) {
                     GestureListenerConstants.SWIPE_RIGHT -> {
-
+                        functionsClass.navigateToClass(this@FolderShortcuts, SplitShortcuts::class.java,
+                                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
                     }
                     GestureListenerConstants.SWIPE_LEFT -> {
-                        functionsClass.navigateToClass(this@NormalAppShortcutsSelectionList, SplitShortcuts::class.java,
-                                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_right, R.anim.slide_to_left))
+
                     }
                 }
             }
@@ -270,88 +291,6 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
 
         return super.dispatchTouchEvent(motionEvent)
     }
-
-    /*ConfirmButtonProcess*/
-    override fun savedShortcutCounter() {
-
-        normalAppSelectionBinding.selectedShortcutCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).toString()
-    }
-
-    override fun showSavedShortcutList() {
-
-        if (getFileStreamPath(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).exists()
-                && functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
-
-            selectedAppsListItem.clear()
-
-            val savedLine = functionsClass.readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
-            for (aSavedLine in savedLine) {
-
-                val aLineSplit = aSavedLine.split("|")
-
-                val packageName = aLineSplit[0]
-                val className = aLineSplit[1]
-
-                val activityInfo = packageManager.getActivityInfo(ComponentName(packageName, className), 0)
-
-                selectedAppsListItem.add(AdapterItemsData(
-                        functionsClass.activityLabel(activityInfo),
-                        packageName,
-                        className,
-                        if (functionsClass.customIconsEnable()) {
-                            loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(activityInfo))
-                        } else {
-                            functionsClass.activityIcon(activityInfo)
-                        }
-                ))
-            }
-
-            val savedAppsListPopupAdapter = SavedAppsListPopupAdapter(
-                    applicationContext,
-                    functionsClass,
-                    selectedAppsListItem,
-                    this@NormalAppShortcutsSelectionList
-            )
-
-            listPopupWindow.apply {
-                anchorView = normalAppSelectionBinding.confirmLayout
-                width = functionsClass.DpToInteger(300)
-                height = ListPopupWindow.WRAP_CONTENT
-                promptPosition = ListPopupWindow.POSITION_PROMPT_ABOVE
-                isModal = true
-                setDropDownGravity(Gravity.CENTER)
-                setBackgroundDrawable(null)
-            }
-
-            listPopupWindow.setOnDismissListener {
-
-                appsConfirmButton?.makeItVisible()
-            }
-
-            listPopupWindow.setAdapter(savedAppsListPopupAdapter)
-            listPopupWindow.show()
-        }
-    }
-
-    override fun hideSavedShortcutList() {
-
-        listPopupWindow.dismiss()
-    }
-
-    override fun shortcutDeleted() {
-
-        resetAdapter = true
-
-        loadInstalledAppsData()
-
-        listPopupWindow.dismiss()
-    }
-
-    override fun reevaluateShortcutsInfo() {
-
-        evaluateShortcutsInfo()
-    }
-    /*ConfirmButtonProcess*/
 
     private fun initializeLoadingProcess() {
 
@@ -394,8 +333,26 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
             }
 
             /* Load Installed Applications */
-            loadInstalledAppsData()
+            loadCreatedFoldersData()
             /* Load Installed Applications */
         }
+    }
+
+    fun savedShortcutCounter() {
+
+        folderShortcutsViewBinding.selectedShortcutCounterView.text = functionsClass.countLineInnerFile(FolderShortcuts.FolderShortcutsSelectedFile).toString()
+    }
+
+    fun reevaluateShortcutsInfo() {
+
+        evaluateShortcutsInfo()
+    }
+
+    fun shortcutDeleted() {
+
+        resetAdapter = true
+
+        loadCreatedFoldersData()
+
     }
 }
