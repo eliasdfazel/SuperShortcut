@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/30/20 6:30 AM
+  ~ Last modified 5/2/20 7:44 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -422,29 +422,29 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/twitter"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:background="@drawable/ic_share_twitter" />
+                    android:src="@drawable/ic_share_twitter" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/facebook"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:background="@drawable/ic_share_fb" />
+                    android:src="@drawable/ic_share_fb" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/rate"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:background="@drawable/ic_rate" />
+                    android:src="@drawable/ic_rate" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/share"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
-                    android:background="@drawable/ic_share_full" />
+                    android:src="@drawable/ic_share_full" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

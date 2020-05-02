@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/30/20 6:35 AM
+  ~ Last modified 5/2/20 7:42 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -61,7 +61,7 @@
         Split Super Shortcuts ᴾᴿᴼ | Diese Berechtigung berechtigt die App Multi-Fenster zu nutzen &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen (Android 7 &amp; höher)\n\nâ™¿ Wie hilft die App Behinderten?\nIt Es ist für Behinderte unter Umständen schwer eine App zu öffnen oder zwischen Apps zu wechseln. Die Bedienhilfe-Services erlauben der App den Multi-Fenster Modus zu starten.
     </string>
     <string name="split_service_summary">
-        Split Super Shortcuts ᴾᴿᴼ | Diese Berechtigung erlaubt der App den Multi-Fenster Modus zu starten. &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen (Android 7 &amp; höher)
+        Split Shortcuts | Diese Berechtigung erlaubt der App den Multi-Fenster Modus zu starten. &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen
     </string>
     <string name="observeDesc">
         <![CDATA[

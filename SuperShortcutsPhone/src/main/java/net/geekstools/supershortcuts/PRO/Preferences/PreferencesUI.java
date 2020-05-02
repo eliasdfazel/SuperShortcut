@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 2:59 PM
+ * Last modified 5/2/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,10 +35,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -69,6 +65,7 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
+import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,21 +74,25 @@ public class PreferencesUI extends AppCompatActivity {
 
     FunctionsClass functionsClass;
 
-    RelativeLayout smartView, splitView, mixView, customIconView, supportView, newsView, translatorView,
-            floatingView;
-    ImageView customIconIcon,
-            prefIconNews;
-    Button shareAll, rate, facebook, twitter;
-    Switch prefSwitch, splitSwitch, mixSwitch;
-    TextView customIconDesc,
-            prefDescFloating;
+//    RelativeLayout smartView, splitView, mixView, customIconView, supportView, newsView, translatorView,
+//            floatingView;
+//    ImageView customIconIcon,
+//            prefIconNews;
+//    ImageView share, rate, facebook, twitter;
+//    Switch prefSwitch, splitSwitch, mixSwitch;
+//
+//    TextView customIconDesc,
+//            prefDescFloating;
 
     FirebaseRemoteConfig firebaseRemoteConfig;
+
+    PreferenceViewBinding preferenceViewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting_gui);
+        preferenceViewBinding = PreferenceViewBinding.inflate(getLayoutInflater());
+        setContentView(preferenceViewBinding.getRoot());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -101,6 +102,7 @@ public class PreferencesUI extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
         getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>", Html.FROM_HTML_MODE_LEGACY));
+
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -110,33 +112,8 @@ public class PreferencesUI extends AppCompatActivity {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
 
-        smartView = (RelativeLayout) findViewById(R.id.smartView);
-        splitView = (RelativeLayout) findViewById(R.id.splitView);
-        mixView = (RelativeLayout) findViewById(R.id.mixView);
-        customIconView = (RelativeLayout) findViewById(R.id.customIconView);
-        supportView = (RelativeLayout) findViewById(R.id.supportView);
-        newsView = (RelativeLayout) findViewById(R.id.newsView);
-        translatorView = (RelativeLayout) findViewById(R.id.translatorView);
-        floatingView = (RelativeLayout) findViewById(R.id.floatingView);
-
-        customIconIcon = (ImageView) findViewById(R.id.customIconIcon);
-        prefIconNews = (ImageView) findViewById(R.id.prefIconNews);
-
-        customIconDesc = (TextView) findViewById(R.id.customIconDesc);
-
-        shareAll = (Button) findViewById(R.id.share);
-        rate = (Button) findViewById(R.id.rate);
-        twitter = (Button) findViewById(R.id.twitter);
-        facebook = (Button) findViewById(R.id.facebook);
-
-        prefSwitch = (Switch) findViewById(R.id.prefSwitch);
-        splitSwitch = (Switch) findViewById(R.id.splitSwitch);
-        mixSwitch = (Switch) findViewById(R.id.mixSwitch);
-
-        prefDescFloating = (TextView) findViewById(R.id.prefDescfloating);
-
-        prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
-        customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
+        preferenceViewBinding.prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
+        preferenceViewBinding.customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
 
         if (!functionsClass.mixShortcutsPurchased()) {
             BillingClient billingClient = BillingClient.newBuilder(PreferencesUI.this).setListener(new PurchasesUpdatedListener() {
@@ -178,15 +155,15 @@ public class PreferencesUI extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
+        preferenceViewBinding.prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
 
-        smartView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.smartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences sharedPreferences = getSharedPreferences("smart", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 if (sharedPreferences.getBoolean("smartPick", false) == true) {
-                    prefSwitch.setChecked(false);
+                    preferenceViewBinding.prefSwitch.setChecked(false);
                     editor.putBoolean("smartPick", false);
                     editor.apply();
 
@@ -194,12 +171,12 @@ public class PreferencesUI extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else if (sharedPreferences.getBoolean("smartPick", false) == false) {
-                    functionsClass.UsageAccess(PreferencesUI.this, prefSwitch);
+                    functionsClass.UsageAccess(PreferencesUI.this, preferenceViewBinding.prefSwitch);
                 }
             }
         });
 
-        splitView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.splitView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!functionsClass.AccessibilityServiceEnabled()) {
@@ -212,7 +189,7 @@ public class PreferencesUI extends AppCompatActivity {
             }
         });
 
-        mixView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.mixView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (functionsClass.mixShortcutsPurchased()) {
@@ -224,11 +201,11 @@ public class PreferencesUI extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
-                        mixSwitch.setChecked(false);
+                        preferenceViewBinding.mixSwitch.setChecked(false);
                         editor.putBoolean("mixShortcuts", false);
                         editor.apply();
                     } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
-                        mixSwitch.setChecked(true);
+                        preferenceViewBinding.mixSwitch.setChecked(true);
                         editor.putBoolean("mixShortcuts", true);
                         editor.apply();
                     }
@@ -244,7 +221,7 @@ public class PreferencesUI extends AppCompatActivity {
             }
         });
 
-        newsView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.newsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -252,7 +229,7 @@ public class PreferencesUI extends AppCompatActivity {
             }
         });
 
-        supportView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.supportView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String[] contactOption = new String[]{
@@ -303,46 +280,46 @@ public class PreferencesUI extends AppCompatActivity {
             }
         });
 
-        translatorView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.translatorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda_translator))));
             }
         });
 
-        floatingView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.floatingView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_floating_shortcuts))));
             }
         });
 
-        shareAll.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 shareAll();
             }
         });
-        rate.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + getPackageName())));
             }
         });
-        twitter.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_twitter))));
             }
         });
-        facebook.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook))));
             }
         });
 
-        customIconView.setOnClickListener(new View.OnClickListener() {
+        preferenceViewBinding.customIconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -383,7 +360,7 @@ public class PreferencesUI extends AppCompatActivity {
                         sendBroadcast(new Intent("CUSTOM_DIALOGUE_DISMISS"));
 
                         functionsClass.saveDefaultPreference("customIcon", getPackageName());
-                        customIconIcon.setImageDrawable(getDrawable(R.drawable.draw_pref_custom_icon));
+                        preferenceViewBinding.customIconIcon.setImageDrawable(getDrawable(R.drawable.draw_pref_custom_icon));
                         dialog.dismiss();
                     }
                 });
@@ -402,8 +379,8 @@ public class PreferencesUI extends AppCompatActivity {
                     @Override
                     public void onReceive(Context context, Intent intent) {
                         if (intent.getAction().equals("CUSTOM_DIALOGUE_DISMISS")) {
-                            customIconIcon.setImageDrawable(functionsClass.customIconsEnable() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
-                            customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
+                            preferenceViewBinding.customIconIcon.setImageDrawable(functionsClass.customIconsEnable() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
+                            preferenceViewBinding.customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
                             if (functionsClass.customIconsEnable()) {
                                 if (functionsClass.mixShortcuts()) {
                                     functionsClass.addMixAppShortcutsCustomIconsPref();
@@ -446,7 +423,7 @@ public class PreferencesUI extends AppCompatActivity {
 
                                     }
                                     if (firebaseRemoteConfig.getBoolean("boolean_new_floating_shortcuts_pref_desc")) {
-                                        prefDescFloating.setText(Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc"), Html.FROM_HTML_MODE_LEGACY));
+                                        preferenceViewBinding.prefDescfloating.setText(Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc"), Html.FROM_HTML_MODE_LEGACY));
                                     }
                                 }
                             });
@@ -463,11 +440,11 @@ public class PreferencesUI extends AppCompatActivity {
             AppOpsManager appOps = (AppOpsManager) getSystemService(APP_OPS_SERVICE);
             int mode = appOps.checkOp("android:get_usage_stats", android.os.Process.myUid(), getPackageName());
             if (mode == AppOpsManager.MODE_ALLOWED) {
-                prefSwitch.setChecked(true);
+                preferenceViewBinding.prefSwitch.setChecked(true);
                 editor.putBoolean("smartPick", true);
                 editor.apply();
             } else {
-                prefSwitch.setChecked(false);
+                preferenceViewBinding.prefSwitch.setChecked(false);
                 editor.putBoolean("smartPick", false);
                 editor.apply();
             }
@@ -477,19 +454,19 @@ public class PreferencesUI extends AppCompatActivity {
         }
 
         if (functionsClass.AccessibilityServiceEnabled()) {
-            splitSwitch.setChecked(true);
+            preferenceViewBinding.splitSwitch.setChecked(true);
         } else {
-            splitSwitch.setChecked(false);
+            preferenceViewBinding.splitSwitch.setChecked(false);
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
         if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
-            mixSwitch.setChecked(true);
+            preferenceViewBinding.mixSwitch.setChecked(true);
         } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
-            mixSwitch.setChecked(false);
+            preferenceViewBinding.mixSwitch.setChecked(false);
         }
 
-        customIconIcon.setImageDrawable(functionsClass.customIconsEnable() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
+        preferenceViewBinding.customIconIcon.setImageDrawable(functionsClass.customIconsEnable() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
     }
 
     @Override
