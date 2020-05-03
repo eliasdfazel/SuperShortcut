@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 12:13 PM
+ * Last modified 5/3/20 6:15 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,7 +38,7 @@ class EntryConfigurations : AppCompatActivity() {
 
     private lateinit var waitingDialogue: Dialog
 
-    lateinit var firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private object Google {
         const val SignInRequest: Int = 666
@@ -56,8 +56,6 @@ class EntryConfigurations : AppCompatActivity() {
         if (functionsClass.appVersionName(packageName).contains("[BETA]")) {
             functionsClass.saveDefaultPreference("JoinedBetaProgrammer", true)
         }
-
-        firebaseAuth = FirebaseAuth.getInstance()
 
         if (functionsClass.networkConnection()
                 && functionsClass.readPreference(".UserInformation", "userEmail", null) == null

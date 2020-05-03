@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/1/20 1:59 PM
+ * Last modified 5/3/20 6:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,7 +14,6 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.Gravity
@@ -57,21 +56,17 @@ class InAppUpdateProcess : AppCompatActivity() {
         inAppUpdateViewBinding = InAppUpdateViewBinding.inflate(layoutInflater)
         setContentView(inAppUpdateViewBinding.root)
 
-        window.statusBarColor = functionsClass.setColorAlpha(getColor(R.color.default_color), 77f)
-        window.navigationBarColor = functionsClass.setColorAlpha(getColor(R.color.default_color), 77f)
+        window.statusBarColor = getColor(R.color.default_color_transparent_twice)
+        window.navigationBarColor = getColor(R.color.default_color_transparent_twice)
 
-        inAppUpdateViewBinding.fullEmptyView.setBackgroundColor(functionsClass.setColorAlpha(getColor(R.color.default_color), 77f))
+        inAppUpdateViewBinding.fullEmptyView.setBackgroundColor(getColor(R.color.default_color_transparent_twice))
         inAppUpdateViewBinding.inAppUpdateWaiting.setColor(getColor(R.color.default_color_game_light))
 
-        inAppUpdateViewBinding.textInputChangeLog.boxBackgroundColor = functionsClass.setColorAlpha(getColor(R.color.default_color), 77f)
+        inAppUpdateViewBinding.textInputChangeLog.boxBackgroundColor = getColor(R.color.dark_transparent)
         inAppUpdateViewBinding.textInputChangeLog.hintTextColor = ColorStateList.valueOf(getColor(R.color.lighter))
         inAppUpdateViewBinding.textInputChangeLog.hint = "${getString(R.string.inAppUpdateAvailable)} ${intent.getStringExtra("UPDATE_VERSION")}"
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            inAppUpdateViewBinding.changeLog.setText(Html.fromHtml(intent.getStringExtra("UPDATE_CHANGE_LOG"), Html.FROM_HTML_MODE_LEGACY))
-        } else {
-            inAppUpdateViewBinding.changeLog.setText(Html.fromHtml(intent.getStringExtra("UPDATE_CHANGE_LOG")))
-        }
+        inAppUpdateViewBinding.changeLog.setText(Html.fromHtml(intent.getStringExtra("UPDATE_CHANGE_LOG"), Html.FROM_HTML_MODE_LEGACY))
 
         installStateUpdatedListener = InstallStateUpdatedListener {
             when (it.installStatus()) {
@@ -105,6 +100,14 @@ class InAppUpdateProcess : AppCompatActivity() {
 
                     val inAppUpdateTriggeredTime: Int = "${Calendar.getInstance().get(Calendar.YEAR)}${Calendar.getInstance().get(Calendar.MONTH)}${Calendar.getInstance().get(Calendar.DATE)}".toInt()
                     functionsClass.savePreference("InAppUpdate", "TriggeredDate", inAppUpdateTriggeredTime)
+                }
+                InstallStatus.PENDING -> {
+                    FunctionsClassDebug.PrintDebug("*** UPDATE Pending ***")
+
+                }
+                InstallStatus.UNKNOWN -> {
+                    FunctionsClassDebug.PrintDebug("*** UPDATE Unknown Stage ***")
+
                 }
             }
         }
@@ -158,6 +161,16 @@ class InAppUpdateProcess : AppCompatActivity() {
 
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook_app))),
                     ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
+        }
+
+        inAppUpdateViewBinding.cancelInAppUpdateNow.setOnLongClickListener {
+
+            val inAppUpdateTriggeredTime: Int = "${Calendar.getInstance().get(Calendar.YEAR)}${Calendar.getInstance().get(Calendar.MONTH)}${Calendar.getInstance().get(Calendar.DATE)}".toInt()
+            functionsClass.savePreference("InAppUpdate", "TriggeredDate", inAppUpdateTriggeredTime)
+
+            this@InAppUpdateProcess.finish()
+
+            false
         }
     }
 

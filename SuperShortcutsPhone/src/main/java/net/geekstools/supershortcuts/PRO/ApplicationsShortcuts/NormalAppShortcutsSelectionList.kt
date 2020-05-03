@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 1:53 PM
+ * Last modified 5/3/20 6:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -81,7 +81,7 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
     var resetAdapter: Boolean = false
     var updateAvailable: Boolean = false
 
-    private lateinit var firebaseRemoteConfig: FirebaseRemoteConfig
+    private val firebaseRemoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 
     val loadCustomIcons: LoadCustomIcons by lazy {
         LoadCustomIcons(applicationContext, functionsClass.customIconPackageName())
@@ -180,7 +180,6 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
     override fun onResume() {
         super.onResume()
 
-        firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
         firebaseRemoteConfig.fetch(0)
                 .addOnSuccessListener {
