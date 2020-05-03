@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 1:13 PM
+ * Last modified 5/3/20 7:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -21,6 +21,7 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.Selectio
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
+import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.IndexedFastScrollerFactory
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.IndexedFastScroller
 import java.util.*
@@ -99,7 +100,8 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
             }
         })
 
-        resetAdapter = false
+        PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
+        resetAdapter = false;
     }
 
     /*Indexed Popup Fast Scroller*/

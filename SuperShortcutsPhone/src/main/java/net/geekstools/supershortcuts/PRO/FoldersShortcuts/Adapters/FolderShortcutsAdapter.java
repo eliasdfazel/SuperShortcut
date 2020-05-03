@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 2:30 PM
+ * Last modified 5/3/20 7:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -163,8 +163,8 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                                 functionsClass.saveFileAppendLine(PublicVariable.categoryName, appContent);
                                 functionsClass.saveFile(appContent + PublicVariable.categoryName, appContent);
                             }
-                            functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
-                            functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                            functionsClass.saveFileAppendLine(FolderShortcuts.FolderShortcutsFile, PublicVariable.categoryName);
+                            functionsClass.removeLine(FolderShortcuts.FolderShortcutsFile, createdFolderListItem.get(position).getCategory());
                             folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
                             folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                     ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
@@ -172,7 +172,7 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                     } else {
                         PublicVariable.categoryName = PublicVariable.categoryName + "_" + System.currentTimeMillis();
 
-                        functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
+                        functionsClass.saveFileAppendLine(FolderShortcuts.FolderShortcutsFile, PublicVariable.categoryName);
                         functionsClass.saveFileEmpty(PublicVariable.categoryName);
                         folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
@@ -246,8 +246,8 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                             functionsClass.saveFileAppendLine(PublicVariable.categoryName, appContent);
                             functionsClass.saveFile(appContent + PublicVariable.categoryName, appContent);
                         }
-                        functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
-                        functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                        functionsClass.saveFileAppendLine(FolderShortcuts.FolderShortcutsFile, PublicVariable.categoryName);
+                        functionsClass.removeLine(FolderShortcuts.FolderShortcutsFile, createdFolderListItem.get(position).getCategory());
                         folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
                         folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
@@ -255,7 +255,7 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                 } else {
                     PublicVariable.categoryName = PublicVariable.categoryName + "_" + System.currentTimeMillis();
 
-                    functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
+                    functionsClass.saveFileAppendLine(FolderShortcuts.FolderShortcutsFile, PublicVariable.categoryName);
                     functionsClass.saveFileEmpty(PublicVariable.categoryName);
                     folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                             ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
@@ -306,8 +306,8 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                             functionsClass.saveFileAppendLine(PublicVariable.categoryName, appContent);
                             functionsClass.saveFile(appContent + PublicVariable.categoryName, appContent);
                         }
-                        functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
-                        functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                        functionsClass.saveFileAppendLine(FolderShortcuts.FolderShortcutsFile, PublicVariable.categoryName);
+                        functionsClass.removeLine(FolderShortcuts.FolderShortcutsFile, createdFolderListItem.get(position).getCategory());
                         folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
                         folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                                 ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
@@ -315,7 +315,7 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                 } else {
                     PublicVariable.categoryName = PublicVariable.categoryName + "_" + System.currentTimeMillis();
 
-                    functionsClass.saveFileAppendLine(".categorySuper", PublicVariable.categoryName);
+                    functionsClass.saveFileAppendLine(FolderShortcuts.FolderShortcutsFile, PublicVariable.categoryName);
                     functionsClass.saveFileEmpty(PublicVariable.categoryName);
                     folderShortcuts.startActivity(new Intent(folderShortcuts, FolderAppSelectionList.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                             ActivityOptions.makeCustomAnimation(folderShortcuts, R.anim.down_up, android.R.anim.fade_out).toBundle());
@@ -416,7 +416,7 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
                                         for (String packToDelete : packsToDelete) {
                                             folderShortcuts.deleteFile(packToDelete + createdFolderListItem.get(position).getCategory());
                                         }
-                                        functionsClass.removeLine(".categorySuper", createdFolderListItem.get(position).getCategory());
+                                        functionsClass.removeLine(FolderShortcuts.FolderShortcutsFile, createdFolderListItem.get(position).getCategory());
                                         folderShortcuts.deleteFile(createdFolderListItem.get(position).getCategory());
                                         functionsClass.removeHomeShortcut(".advanced.LoadCategoryItems", "load_category_action_shortcut", Intent.CATEGORY_DEFAULT, createdFolderListItem.get(position).getCategory());
 

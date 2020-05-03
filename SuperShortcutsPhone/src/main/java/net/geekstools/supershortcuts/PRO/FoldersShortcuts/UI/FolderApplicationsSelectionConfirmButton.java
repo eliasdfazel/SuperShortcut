@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:27 AM
+ * Last modified 5/3/20 7:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,6 +19,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Toast;
 
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
@@ -126,6 +127,8 @@ public class FolderApplicationsSelectionConfirmButton extends Button
 
     @Override
     public void onSingleTapUp() {
+
+        Toast.makeText(context, "ISSUE", Toast.LENGTH_SHORT).show();
 //        try {
 //            functionsClass.overrideBackPress(AdvanceShortcuts.class,
 //                    ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, R.anim.go_down));

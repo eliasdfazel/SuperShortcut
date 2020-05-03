@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 2:03 PM
+ * Last modified 5/3/20 7:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -16,23 +16,36 @@ import android.view.animation.AnimationUtils
 import kotlinx.coroutines.*
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderShortcutsAdapter
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
+import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
+import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.IndexedFastScrollerFactory
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.IndexedFastScroller
+import java.util.*
+import kotlin.collections.ArrayList
 
 fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
     createdFolderListItem.clear()
 
-    if (!getFileStreamPath(".categorySuper").exists()) {
+    val listOfNewCharOfItemsForIndex: ArrayList<String> = ArrayList<String>()
+
+    if (!getFileStreamPath(FolderShortcuts.FolderShortcutsFile).exists()) {
 
         createdFolderListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))
 
     } else {
 
-        functionsClass.readFileLine(".categorySuper").forEachIndexed { index, folderName ->
+        val folderNameList = functionsClass.readFileLine(FolderShortcuts.FolderShortcutsFile)
+        folderNameList.sort()
+        folderNameList.forEachIndexed { index, folderName ->
 
             createdFolderListItem.add(AdapterItemsData(
                     folderName,
                     functionsClass.readFileLine(folderName)
             ))
+
+            listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).toUpperCase(Locale.getDefault()))
+
         }
 
         createdFolderListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))
@@ -74,5 +87,25 @@ fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() +
         })
 
         resetAdapter = false
+
+        PublicVariable.advanceShortcutsMaxAppShortcutsCounter = functionsClass.countLine(".categorySuperSelected");
+        resetAdapter = false;
     }
+
+    /*Indexed Popup Fast Scroller*/
+    val indexedFastScroller: IndexedFastScroller = IndexedFastScroller(
+            context = applicationContext,
+            layoutInflater = layoutInflater,
+            rootView = folderShortcutsViewBinding.MainView,
+            nestedScrollView = folderShortcutsViewBinding.nestedScrollView,
+            recyclerView = folderShortcutsViewBinding.recyclerViewList,
+            fastScrollerIndexViewBinding = folderShortcutsViewBinding.fastScrollerIndexInclude,
+            indexedFastScrollerFactory = IndexedFastScrollerFactory(
+                    popupEnable = true,
+                    popupTextColor = getColor(R.color.light),
+                    indexItemTextColor = getColor(R.color.dark))
+    )
+    indexedFastScroller.initializeIndexView().await()
+            .loadIndexData(listOfNewCharOfItemsForIndex = listOfNewCharOfItemsForIndex).await()
+    /*Indexed Popup Fast Scroller*/
 }

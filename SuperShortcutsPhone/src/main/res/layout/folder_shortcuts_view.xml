@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 1:13 PM
+  ~ Last modified 5/3/20 7:34 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -217,6 +217,15 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:visibility="invisible" />
+
+    <!-- Indexed Popup Fast Scroller  -->
+    <include
+        layout="@layout/fast_scroller_index_view"
+
+        android:id="@+id/fastScrollerIndexInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <!-- Indexed Popup Fast Scroller  -->
 
     <RelativeLayout
         android:id="@+id/loadingSplash"
