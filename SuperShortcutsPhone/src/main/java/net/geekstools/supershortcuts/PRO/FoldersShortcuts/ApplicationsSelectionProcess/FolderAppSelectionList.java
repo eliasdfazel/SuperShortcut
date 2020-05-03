@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 1:13 PM
+ * Last modified 5/3/20 8:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess;
 
-import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,13 +17,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,82 +28,65 @@ import android.os.Handler;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
-import net.geekstools.supershortcuts.PRO.BuildConfig;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapter.FolderSavedListAdapter;
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapter.FolderSelectionListAdapter;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapters.FolderSavedListAdapter;
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapters.FolderSelectionListAdapter;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
+import net.geekstools.supershortcuts.PRO.databinding.FolderAppsSelectionViewBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
-public class FolderAppSelectionList extends AppCompatActivity implements View.OnClickListener {
+public class FolderAppSelectionList extends AppCompatActivity {
 
     AppCompatActivity activity;
     Context context;
     FunctionsClass functionsClass;
 
-    RecyclerView recyclerView;
-    RecyclerView.Adapter splitSelectionListAdapter;
     LinearLayoutManager recyclerViewLayoutManager;
 
-    ScrollView nestedScrollView, nestedIndexScrollView;
     ListPopupWindow listPopupWindow;
-    RelativeLayout popupAnchorView;
-    RelativeLayout wholeAuto, confirmLayout;
-    LinearLayout indexView;
-    RelativeLayout loadingSplash;
-    TextView desc, counterView, popupIndex;
-    ImageView tempIcon, loadIcon;
 
-    List<String> appName;
-    Map<String, Integer> mapIndex;
-    Map<Integer, String> mapRangeIndex;
+    ArrayList<String> listOfNewCharOfItemsForIndex;
+
     ArrayList<AdapterItemsData> navDrawerItems, navDrawerItemsSaved;
     FolderSelectionListAdapter folderSelectionListAdapter;
     FolderSavedListAdapter folderSavedListAdapter;
 
-    String PackageName;
-    String AppName = "Application";
-    Drawable AppIcon;
+    String appPackageName;
+    String appName = "Application";
+    Drawable appIcon;
 
     boolean resetAdapter = false;
 
     LoadCustomIcons loadCustomIcons;
 
+    FolderAppsSelectionViewBinding folderAppsSelectionViewBinding;
+
     @Override
     protected void onCreate(Bundle Saved) {
         super.onCreate(Saved);
-        setContentView(R.layout.advance_app_selection_list);
+        folderAppsSelectionViewBinding = FolderAppsSelectionViewBinding.inflate(getLayoutInflater());
+        setContentView(folderAppsSelectionViewBinding.getRoot());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         functionsClass = new FunctionsClass(getApplicationContext());
@@ -116,28 +95,16 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
         activity = this;
 
         listPopupWindow = new ListPopupWindow(activity);
-        desc = (TextView) findViewById(R.id.desc);
-        counterView = (TextView) findViewById(R.id.selected_shortcut_counter_view);
-        loadIcon = (ImageView) findViewById(R.id.loadingLogo);
-        tempIcon = (ImageView) findViewById(R.id.temporary_falling_icon);
-        tempIcon.bringToFront();
-        popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
-        nestedIndexScrollView = (ScrollView) findViewById(R.id.nestedIndexScrollView);
-        indexView = (LinearLayout) findViewById(R.id.sideIndex);
-        popupIndex = (TextView) findViewById(R.id.popupIndex);
-        wholeAuto = (RelativeLayout) findViewById(R.id.MainView);
-        loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
-        confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
-        confirmLayout.bringToFront();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_list);
+        folderAppsSelectionViewBinding.temporaryFallingIcon.bringToFront();
+        folderAppsSelectionViewBinding.confirmLayout.bringToFront();
+
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
-        recyclerView.setLayoutManager(recyclerViewLayoutManager);
+        folderAppsSelectionViewBinding.recyclerViewList.setLayoutManager(recyclerViewLayoutManager);
 
-        nestedScrollView = (ScrollView) findViewById(R.id.nestedScrollView);
-        nestedScrollView.setSmoothScrollingEnabled(true);
+        folderAppsSelectionViewBinding.nestedScrollView.setSmoothScrollingEnabled(true);
 
-        wholeAuto.setBackgroundColor(getColor(R.color.light));
+        folderAppsSelectionViewBinding.MainView.setBackgroundColor(getColor(R.color.light));
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>"
                 + PublicVariable.categoryName.split("_")[0] + "</font>", Html.FROM_HTML_MODE_LEGACY));
@@ -152,18 +119,15 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
 
         navDrawerItems = new ArrayList<AdapterItemsData>();
         navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
-        appName = new ArrayList<String>();
-        mapIndex = new LinkedHashMap<String, Integer>();
-        mapRangeIndex = new LinkedHashMap<Integer, String>();
+        listOfNewCharOfItemsForIndex = new ArrayList<String>();
 
-        Typeface face = Typeface.createFromAsset(getAssets(), "upcil.ttf");
-        desc.setTypeface(face);
-        desc.setText(PublicVariable.categoryName.split("_")[0]);
-        counterView.setTypeface(face);
-        counterView.bringToFront();
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "upcil.ttf");
+        folderAppsSelectionViewBinding.loadingDescription.setTypeface(typeface);
+        folderAppsSelectionViewBinding.loadingDescription.setText(PublicVariable.categoryName.split("_")[0]);
+        folderAppsSelectionViewBinding.selectedShortcutCounterView.setTypeface(typeface);
+        folderAppsSelectionViewBinding.selectedShortcutCounterView.bringToFront();
 
-        ProgressBar loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgress);
-        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
+        folderAppsSelectionViewBinding.loadingProgress.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(context.getString(R.string.counterActionAdvance));
@@ -174,7 +138,7 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(context.getString(R.string.counterActionAdvance))) {
-                    counterView.setText(String.valueOf(functionsClass.countLine(PublicVariable.categoryName)));
+                    folderAppsSelectionViewBinding.selectedShortcutCounterView.setText(String.valueOf(functionsClass.countLine(PublicVariable.categoryName)));
                 } else if (intent.getAction().equals(context.getString(R.string.savedActionAdvance))) {
                     if (getFileStreamPath(PublicVariable.categoryName).exists() && functionsClass.countLine(PublicVariable.categoryName) > 0) {
                         navDrawerItemsSaved.clear();
@@ -189,7 +153,7 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
                         folderSavedListAdapter = new FolderSavedListAdapter(activity, context, navDrawerItemsSaved);
                         listPopupWindow = new ListPopupWindow(activity);
                         listPopupWindow.setAdapter(folderSavedListAdapter);
-                        listPopupWindow.setAnchorView(popupAnchorView);
+                        listPopupWindow.setAnchorView(folderAppsSelectionViewBinding.popupAnchorView);
                         listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
                         listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
                         listPopupWindow.setModal(true);
@@ -241,18 +205,6 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
     }
 
     @Override
@@ -282,11 +234,6 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 
     @Override
@@ -333,8 +280,7 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
             super.onPreExecute();
 
             try {
-                recyclerView.getRecycledViewPool().clear();
-                indexView.removeAllViews();
+                folderAppsSelectionViewBinding.recyclerViewList.getRecycledViewPool().clear();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -348,9 +294,6 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
 
                 if (functionsClass.customIconsEnable()) {
                     loadCustomIcons.load();
-                    if (BuildConfig.DEBUG) {
-                        FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
-                    }
                 }
 
                 Collections.sort(applicationInfoList, new ApplicationInfo.DisplayNameComparator(packageManager));
@@ -358,12 +301,14 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
                     try {
                         if (packageManager.getLaunchIntentForPackage(applicationInfo.packageName) != null) {
                             try {
-                                PackageName = applicationInfo.packageName;
-                                AppName = functionsClass.appName(PackageName);
-                                appName.add(AppName);
-                                AppIcon = functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.appIconDrawable(PackageName)) : functionsClass.appIconDrawable(PackageName);
+                                appPackageName = applicationInfo.packageName;
+                                appName = functionsClass.appName(appPackageName);
+                                appIcon = functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(appPackageName, functionsClass.appIconDrawable(appPackageName)) : functionsClass.appIconDrawable(appPackageName);
 
-                                navDrawerItems.add(new AdapterItemsData(AppName, PackageName, AppIcon));
+                                navDrawerItems.add(new AdapterItemsData(appName, appPackageName, appIcon));
+
+                                listOfNewCharOfItemsForIndex.add(appName.substring(0, 1).toUpperCase(Locale.getDefault()));
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -385,30 +330,30 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
         @Override
         protected void onPostExecute(final Void result) {
             super.onPostExecute(result);
-            recyclerView.setAdapter(folderSelectionListAdapter);
-            registerForContextMenu(recyclerView);
+            folderAppsSelectionViewBinding.recyclerViewList.setAdapter(folderSelectionListAdapter);
+            registerForContextMenu(folderAppsSelectionViewBinding.recyclerViewList);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
-                    loadingSplash.setVisibility(View.INVISIBLE);
-                    if (resetAdapter == false) {
-                        loadingSplash.startAnimation(anim);
+                    folderAppsSelectionViewBinding.loadingSplash.setVisibility(View.INVISIBLE);
+                    if (!resetAdapter) {
+                        folderAppsSelectionViewBinding.loadingSplash.startAnimation(anim);
                     }
                     context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionAdvance)));
 
                     Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-                    counterView.startAnimation(animation);
+                    folderAppsSelectionViewBinding.selectedShortcutCounterView.startAnimation(animation);
                     animation.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
-                            counterView.setText(String.valueOf(functionsClass.countLine(PublicVariable.categoryName)));
+                            folderAppsSelectionViewBinding.selectedShortcutCounterView.setText(String.valueOf(functionsClass.countLine(PublicVariable.categoryName)));
                         }
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            counterView.setVisibility(View.VISIBLE);
+                            folderAppsSelectionViewBinding.selectedShortcutCounterView.setVisibility(View.VISIBLE);
                         }
 
                         @Override
@@ -421,150 +366,19 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
                 }
             }, 100);
 
-            LoadApplicationsIndex loadApplicationsIndex = new LoadApplicationsIndex();
-            loadApplicationsIndex.execute();
+            /*Indexed Popup Fast Scroller*/
+//            IndexedFastScroller indexedFastScroller = new IndexedFastScroller(
+//                    getApplicationContext(),
+//                    getLayoutInflater(),
+//                    folderAppsSelectionViewBinding.MainView,
+//                    folderAppsSelectionViewBinding.nestedScrollView,
+//                    folderAppsSelectionViewBinding.recyclerViewList,
+//                    folderAppsSelectionViewBinding.fastScrollerIndexInclude,
+//                    new IndexedFastScrollerFactory());
+//            indexedFastScroller.initializeIndexView().getOnAwait();
+//            indexedFastScroller.loadIndexData(listOfNewCharOfItemsForIndex).getOnAwait();
+            /*Indexed Popup Fast Scroller*/
+
         }
-    }
-
-    private class LoadApplicationsIndex extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            indexView.removeAllViews();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            for (int navItem = 0; navItem < appName.size(); navItem++) {
-                try {
-                    String index = (appName.get(navItem)).substring(0, 1).toUpperCase();
-                    if (mapIndex.get(index) == null) {
-                        mapIndex.put(index, navItem);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            LayerDrawable drawIndex = (LayerDrawable) getDrawable(R.drawable.draw_index);
-            GradientDrawable backIndex = (GradientDrawable) drawIndex.findDrawableByLayerId(R.id.temporaryBackground);
-            backIndex.setColor(Color.TRANSPARENT);
-
-            TextView textView = null;
-            List<String> indexList = new ArrayList<String>(mapIndex.keySet());
-            for (String index : indexList) {
-                textView = (TextView) getLayoutInflater()
-                        .inflate(R.layout.side_index_item, null);
-                textView.setBackground(drawIndex);
-                textView.setText(index.toUpperCase());
-                textView.setTextColor(getColor(R.color.dark));
-                indexView.addView(textView);
-            }
-
-            PublicVariable.advMaxAppShortcuts = appName.size();
-            getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.advMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
-
-            TextView finalTextView = textView;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    int upperRange = (int) (indexView.getY() - finalTextView.getHeight());
-                    for (int i = 0; i < indexView.getChildCount(); i++) {
-                        String indexText = ((TextView) indexView.getChildAt(i)).getText().toString();
-                        int indexRange = (int) (indexView.getChildAt(i).getY() + indexView.getY() + finalTextView.getHeight());
-                        for (int jRange = upperRange; jRange <= (indexRange); jRange++) {
-                            mapRangeIndex.put(jRange, indexText);
-                        }
-
-                        upperRange = indexRange;
-                    }
-
-                    setupFastScrollingIndexing();
-                }
-            }, 700);
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    public void setupFastScrollingIndexing() {
-        Drawable popupIndexBackground = getDrawable(R.drawable.ic_launcher_balloon).mutate();
-        popupIndexBackground.setTint(getColor(R.color.default_color_darker));
-        popupIndex.setBackground(popupIndexBackground);
-
-        nestedIndexScrollView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
-        nestedIndexScrollView.setVisibility(View.VISIBLE);
-
-        float popupIndexOffsetY = PublicVariable.statusBarHeight + PublicVariable.actionBarHeight + PublicVariable.navigationBarHeight + functionsClass.DpToInteger(7);
-        nestedIndexScrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        String indexText = mapRangeIndex.get((((int) motionEvent.getY())));
-
-                        if (indexText != null) {
-                            popupIndex.setY(motionEvent.getRawY() - popupIndexOffsetY);
-                            popupIndex.setText(indexText);
-                            popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
-                            popupIndex.setVisibility(View.VISIBLE);
-                        }
-
-                        break;
-                    }
-                    case MotionEvent.ACTION_MOVE: {
-                        String indexText = mapRangeIndex.get(((int) motionEvent.getY()));
-
-                        if (indexText != null) {
-                            if (!popupIndex.isShown()) {
-                                popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in));
-                                popupIndex.setVisibility(View.VISIBLE);
-                            }
-                            popupIndex.setY(motionEvent.getRawY() - popupIndexOffsetY);
-                            popupIndex.setText(indexText);
-
-                            try {
-                                nestedScrollView.smoothScrollTo(
-                                        0,
-                                        ((int) recyclerView.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY()) - functionsClass.DpToInteger(7)
-                                );
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            if (popupIndex.isShown()) {
-                                popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out));
-                                popupIndex.setVisibility(View.INVISIBLE);
-                            }
-                        }
-
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        if (popupIndex.isShown()) {
-                            try {
-                                nestedScrollView.smoothScrollTo(
-                                        0,
-                                        ((int) recyclerView.getChildAt(mapIndex.get(mapRangeIndex.get(((int) motionEvent.getY())))).getY()) - functionsClass.DpToInteger(7)
-                                );
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            popupIndex.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out));
-                            popupIndex.setVisibility(View.INVISIBLE);
-                        }
-
-                        break;
-                    }
-                }
-                return true;
-            }
-        });
     }
 }

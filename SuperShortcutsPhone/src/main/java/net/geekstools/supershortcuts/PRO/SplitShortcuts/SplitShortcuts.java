@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 2:34 PM
+ * Last modified 5/3/20 9:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -22,19 +22,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,58 +36,30 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
-import net.geekstools.supershortcuts.PRO.EntryConfigurations;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
-import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI;
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter.SplitShortcutsAdapter;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapters.SplitShortcutsAdapter;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint;
 import net.geekstools.supershortcuts.PRO.Utils.SimpleGestureFilterSwitch;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
+import net.geekstools.supershortcuts.PRO.databinding.SplitShortcutsViewBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,31 +68,19 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SplitShortcuts extends AppCompatActivity implements View.OnClickListener, SimpleGestureFilterSwitch.SimpleGestureListener {
+public class SplitShortcuts extends AppCompatActivity implements SimpleGestureFilterSwitch.SimpleGestureListener {
 
-    AppCompatActivity activity;
-    Context context;
     FunctionsClass functionsClass;
 
-    RecyclerView.Adapter splitShortcutsAdapter;
-    RecyclerView recyclerView;
+    RecyclerView.Adapter splitSelectionListAdapter;
     LinearLayoutManager recyclerViewLayoutManager;
-
-    RelativeLayout wholeAuto, confirmLayout, loadingSplash;
-    LinearLayout autoSelect;
-    TextView desc, counterView;
-    ImageView loadIcon, confirmButton;
-    ProgressBar loadingBarLTR;
-
-    MaterialButton apps, split, categories;
 
     MenuItem mixShortcutsMenuItem;
 
-    String[] appData;
-    ArrayList<AdapterItemsData> navDrawerItems;
+    ArrayList<AdapterItemsData> createdSplitListItem;
 
-    int limitCounter;
-    BroadcastReceiver counterReceiver;
+    int appShortcutLimitCounter;
+
     boolean resetAdapter = false;
 
     SimpleGestureFilterSwitch simpleGestureFilterSwitch;
@@ -137,10 +91,13 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
 
     private FirebaseAuth firebaseAuth;
 
+    SplitShortcutsViewBinding splitShortcutsViewBinding;
+
     @Override
     protected void onCreate(Bundle Saved) {
         super.onCreate(Saved);
-        setContentView(R.layout.split_shortcuts_view);
+        splitShortcutsViewBinding = SplitShortcutsViewBinding.inflate(getLayoutInflater());
+        setContentView(splitShortcutsViewBinding.getRoot());
 
         simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
         functionsClass = new FunctionsClass(getApplicationContext());
@@ -157,28 +114,12 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
 //            PublicVariable.SplitShortcutsMaxAppShortcuts = functionsClass.getSystemMaxAppShortcut();
 //        }
 
-        context = getApplicationContext();
-        activity = this;
+        splitShortcutsViewBinding.confirmLayout.bringToFront();
 
-        desc = (TextView) findViewById(R.id.desc);
-        counterView = (TextView) findViewById(R.id.selected_shortcut_counter_view);
-        loadIcon = (ImageView) findViewById(R.id.loadingLogo);
-        wholeAuto = (RelativeLayout) findViewById(R.id.MainView);
-        loadingSplash = (RelativeLayout) findViewById(R.id.loadingSplash);
-        confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
-        confirmLayout.bringToFront();
-        confirmButton = (ImageView) findViewById(R.id.confirmButton);
-        autoSelect = (LinearLayout) findViewById(R.id.autoSelect);
-
-        apps = (MaterialButton) findViewById(R.id.autoApps);
-        split = (MaterialButton) findViewById(R.id.autoSplit);
-        categories = (MaterialButton) findViewById(R.id.autoCategories);
-
-        recyclerView = (RecyclerView) findViewById(R.id.categoryList);
         recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
-        recyclerView.setLayoutManager(recyclerViewLayoutManager);
+        splitShortcutsViewBinding.recyclerViewList.setLayoutManager(recyclerViewLayoutManager);
 
-        wholeAuto.setBackgroundColor(getColor(R.color.light));
+        splitShortcutsViewBinding.MainView.setBackgroundColor(getColor(R.color.light));
 //        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color)));
 //        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.app_name) + "</font>", Html.FROM_HTML_MODE_LEGACY));
         Window window = getWindow();
@@ -190,25 +131,24 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
 
-        navDrawerItems = new ArrayList<AdapterItemsData>();
+        createdSplitListItem = new ArrayList<AdapterItemsData>();
 
-        Typeface face = Typeface.createFromAsset(getAssets(), "upcil.ttf");
-        desc.setTypeface(face);
-        counterView.setTypeface(face);
-        counterView.bringToFront();
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "upcil.ttf");
+        splitShortcutsViewBinding.loadingDescription.setTypeface(typeface);
+        splitShortcutsViewBinding.selectedShortcutCounterView.setTypeface(typeface);
+        splitShortcutsViewBinding.selectedShortcutCounterView.bringToFront();
 
-        loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgress);
-        loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
+        splitShortcutsViewBinding.loadingProgress.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(context.getString(R.string.counterActionSplitShortcuts));
-        intentFilter.addAction(context.getString(R.string.checkboxActionSplitShortcuts));
-        intentFilter.addAction(context.getString(R.string.dynamicShortcutsSplit));
-        counterReceiver = new BroadcastReceiver() {
+        intentFilter.addAction(getString(R.string.counterActionSplitShortcuts));
+        intentFilter.addAction(getString(R.string.checkboxActionSplitShortcuts));
+        intentFilter.addAction(getString(R.string.dynamicShortcutsSplit));
+        BroadcastReceiver counterReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(context.getString(R.string.counterActionSplitShortcuts))) {
-                    counterView.setText(String.valueOf(functionsClass.countLine(".SplitSuperSelected")));
+                if (intent.getAction().equals(getString(R.string.counterActionSplitShortcuts))) {
+                    splitShortcutsViewBinding.selectedShortcutCounterView.setText(String.valueOf(functionsClass.countLine(".SplitSuperSelected")));
                 } else if ((intent.getAction().equals(getString(R.string.checkboxActionSplitShortcuts)))) {
                     resetAdapter = true;
                     loadSplitData();
@@ -218,17 +158,17 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                                 = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
 //                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                     } else {
-                        limitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".SplitSuperSelected");
+                        appShortcutLimitCounter = functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".SplitSuperSelected");
 //                        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + limitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
                     }
                 }
             }
         };
-        context.registerReceiver(counterReceiver, intentFilter);
+        registerReceiver(counterReceiver, intentFilter);
 
-        apps.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
-        split.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color)));
-        categories.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
+        splitShortcutsViewBinding.autoApps.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
+        splitShortcutsViewBinding.autoSplit.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color)));
+        splitShortcutsViewBinding.autoCategories.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
 
         loadSplitData();
 
@@ -239,72 +179,33 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
-        firebaseRemoteConfig.fetch(0)
-                .addOnCompleteListener(SplitShortcuts.this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            firebaseRemoteConfig.activate().addOnSuccessListener(new OnSuccessListener<Boolean>() {
-                                @Override
-                                public void onSuccess(Boolean aBoolean) {
-                                    if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(getPackageName())) {
-//                                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                                        LayerDrawable layerDrawableNewUpdate = (LayerDrawable) getDrawable(R.drawable.ic_update);
-                                        BitmapDrawable gradientDrawableNewUpdate = (BitmapDrawable) layerDrawableNewUpdate.findDrawableByLayerId(R.id.temporaryBackground);
-                                        gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_light));
-
-                                        Bitmap tempBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate);
-                                        Bitmap scaleBitmap = Bitmap.createScaledBitmap(tempBitmap, tempBitmap.getWidth() / 4, tempBitmap.getHeight() / 4, false);
-                                        Drawable logoDrawable = new BitmapDrawable(getResources(), scaleBitmap);
-//                                        activity.getSupportActionBar().setHomeAsUpIndicator(logoDrawable);
-
-                                        functionsClass.notificationCreator(
-                                                getString(R.string.updateAvailable),
-                                                firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
-                                                (int) firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey())
-                                        );
-                                    } else {
-
-                                    }
-                                }
-                            });
-                        } else {
-
-                        }
-                    }
-                });
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
-        confirmButton.setOnClickListener(new View.OnClickListener() {
+
+        splitShortcutsViewBinding.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (functionsClass.mixShortcuts() == true) {
                     functionsClass.addMixAppShortcuts();
                 } else {
                     functionsClass.addAppsShortcutSplit();
-                    SharedPreferences sharedPreferences = context.getSharedPreferences(".PopupShortcut", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(".PopupShortcut", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("PopupShortcutMode", "SplitShortcuts");
                     editor.apply();
                 }
             }
         });
-        confirmButton.setOnLongClickListener(new View.OnLongClickListener() {
+
+        splitShortcutsViewBinding.confirmButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 try {
                     functionsClass.deleteSelectedFiles();
 
-                    context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionSplitShortcuts)));
-                    context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplitShortcuts)));
-                    context.sendBroadcast(new Intent(context.getString(R.string.dynamicShortcutsSplit)));
+                    sendBroadcast(new Intent(getString(R.string.checkboxActionSplitShortcuts)));
+                    sendBroadcast(new Intent(getString(R.string.counterActionSplitShortcuts)));
+                    sendBroadcast(new Intent(getString(R.string.dynamicShortcutsSplit)));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -313,7 +214,8 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                 return true;
             }
         });
-        apps.setOnClickListener(new View.OnClickListener() {
+
+        splitShortcutsViewBinding.autoApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -324,7 +226,8 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
-        categories.setOnClickListener(new View.OnClickListener() {
+
+        splitShortcutsViewBinding.autoCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -335,78 +238,6 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
-
-        try {
-            if (functionsClass.networkConnection()) {
-                try {
-                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                    firebaseUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-                                @Override
-                                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                                    if (user == null) {
-                                        functionsClass.savePreference(".UserInformation", "userEmail", null);
-                                    } else {
-
-                                    }
-
-
-                                }
-                            });
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (functionsClass.readPreference(".UserInformation", "userEmail", null) == null) {
-                    GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(getString(R.string.webClientId))
-                            .requestEmail()
-                            .build();
-
-                    GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-                    try {
-                        googleSignInClient.signOut();
-                        googleSignInClient.revokeAccess();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    Intent signInIntent = googleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent, 666);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        SharedPreferences sharedPreferences = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("TabsView", SplitShortcuts.class.getSimpleName());
-        editor.apply();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        try {
-            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            firebaseUser.reload();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -418,13 +249,8 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             homeScreen.addCategory(Intent.CATEGORY_HOME);
             homeScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(homeScreen);
-            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 
     @Override
@@ -459,181 +285,19 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.selection_menu, menu);
 
-        mixShortcutsMenuItem = menu.findItem(R.id.mixShortcuts);
 
-        if (functionsClass.mixShortcutsPurchased()) {
-            if (functionsClass.mixShortcuts()) {
-                LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
-                backDrawMixHint.setTint(getColor(R.color.default_color_light));
-
-                mixShortcutsMenuItem.setIcon(drawMixHint);
-                mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
-            } else {
-                LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
-                backDrawMixHint.setTint(getColor(R.color.dark));
-
-                mixShortcutsMenuItem.setIcon(drawMixHint);
-                mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsDisable));
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.prefs: {
-                startActivity(new Intent(getApplicationContext(), PreferencesUI.class),
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.up_down, android.R.anim.fade_out).toBundle());
-                finish();
-                break;
-            }
-            case R.id.mixShortcuts: {
-                if (functionsClass.mixShortcutsPurchased()) {
-                    try {
-                        functionsClass.deleteSelectedFiles();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
-                        editor.putBoolean("mixShortcuts", false);
-                        editor.apply();
-                    } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
-                        editor.putBoolean("mixShortcuts", true);
-                        editor.apply();
-                    }
-
-                    Intent intent = new Intent(getApplicationContext(), EntryConfigurations.class);
-                    startActivity(intent, ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, android.R.anim.fade_out).toBundle());
-                } else {
-
-                    startActivity(new Intent(getApplicationContext(), InitializeInAppBilling.class)
-                                    .putExtra(InitializeInAppBilling.Entry.PurchaseType, InitializeInAppBilling.Entry.OneTimePurchase)
-                                    .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemMixShortcuts)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            , ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.down_up, android.R.anim.fade_out).toBundle());
-
-                }
-                break;
-            }
-            case android.R.id.home: {
-                new FunctionsClassDialogues(SplitShortcuts.this, functionsClass).changeLogPreference(
-                        firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
-                        String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
-                );
-                break;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 666) {
-            try {
-                Task<GoogleSignInAccount> googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
-                GoogleSignInAccount googleSignInAccount = googleSignInAccountTask.getResult(ApiException.class);
-
-                AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
-                firebaseAuth.signInWithCredential(authCredential)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                    if (firebaseUser != null) {
-                                        functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.getEmail());
-
-                                        if (!functionsClass.mixShortcutsPurchased() || !functionsClass.alreadyDonated()) {
-                                            BillingClient billingClient = BillingClient.newBuilder(SplitShortcuts.this).setListener(new PurchasesUpdatedListener() {
-                                                @Override
-                                                public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
-                                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
-
-                                                    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
-
-                                                    } else {
-
-                                                    }
-
-                                                }
-                                            }).enablePendingPurchases().build();
-                                            billingClient.startConnection(new BillingClientStateListener() {
-                                                @Override
-                                                public void onBillingSetupFinished(BillingResult billingResult) {
-                                                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                                                        functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
-
-                                                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
-                                                        for (Purchase purchase : purchases) {
-                                                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
-
-                                                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
-                                                            if (purchase.getSku().equals("mix.shortcuts")) {
-                                                                if (functionsClass.mixShortcuts()) {
-                                                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
-                                                                    backDrawMixHint.setTint(getColor(R.color.default_color_light));
-
-                                                                    mixShortcutsMenuItem.setIcon(drawMixHint);
-                                                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsEnable));
-                                                                } else {
-                                                                    LayerDrawable drawMixHint = (LayerDrawable) getDrawable(R.drawable.draw_mix_hint);
-                                                                    Drawable backDrawMixHint = drawMixHint.findDrawableByLayerId(R.id.temporaryBackground);
-                                                                    backDrawMixHint.setTint(getColor(R.color.dark));
-
-                                                                    mixShortcutsMenuItem.setIcon(drawMixHint);
-                                                                    mixShortcutsMenuItem.setTitle(getString(R.string.mixShortcutsDisable));
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onBillingServiceDisconnected() {
-
-                                                }
-                                            });
-                                        }
-                                    }
-                                } else {
-
-                                }
-                            }
-                        });
-            } catch (ApiException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void loadSplitData() {
-        loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
+        loadCustomIcons = new LoadCustomIcons(getApplicationContext(), functionsClass.customIconPackageName());
 
         LoadInstalledCustomIcons loadInstalledCustomIcons = new LoadInstalledCustomIcons();
         loadInstalledCustomIcons.execute();
 
         if (functionsClass.UsageAccessEnabled()) {
-            loadingBarLTR.setVisibility(View.INVISIBLE);
-            loadIcon.setImageDrawable(getDrawable(R.drawable.draw_smart));
-            desc.setText(Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY));
+            splitShortcutsViewBinding.loadingProgress.setVisibility(View.INVISIBLE);
+            splitShortcutsViewBinding.loadingLogo.setImageDrawable(getDrawable(R.drawable.draw_smart));
+            splitShortcutsViewBinding.loadingDescription.setText(Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY));
 
             try {
                 functionsClass.deleteSelectedFiles();
@@ -648,25 +312,25 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             }
         } else {
             try {
-                navDrawerItems.clear();
+                createdSplitListItem.clear();
 
                 if (!functionsClass.mixShortcuts()) {
-                    if (context.getFileStreamPath(".mixShortcuts").exists()) {
+                    if (getFileStreamPath(".mixShortcuts").exists()) {
                         String[] mixContent = functionsClass.readFileLine(".mixShortcuts");
                         for (String mixLine : mixContent) {
                             if (mixLine.contains(".CategorySelected")) {
-                                context.deleteFile(functionsClass.categoryNameSelected(mixLine));
+                                deleteFile(functionsClass.categoryNameSelected(mixLine));
                             } else if (mixLine.contains(".SplitSelected")) {
-                                context.deleteFile(functionsClass.splitNameSelected(mixLine));
+                                deleteFile(functionsClass.splitNameSelected(mixLine));
                             } else {
-                                context.deleteFile(functionsClass.packageNameSelected(mixLine));
+                                deleteFile(functionsClass.packageNameSelected(mixLine));
                             }
                         }
-                        context.deleteFile(".mixShortcuts");
+                        deleteFile(".mixShortcuts");
                     }
                 }
-                if (context.getFileStreamPath(".superFreq").exists()) {
-                    context.deleteFile(".superFreq");
+                if (getFileStreamPath(".superFreq").exists()) {
+                    deleteFile(".superFreq");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -700,7 +364,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
             for (int i = 0; i < maxValue; i++) {
                 String aPackageName = queryUsageStats.get(i).getPackageName();
                 try {
-                    if (!aPackageName.equals(context.getPackageName())) {
+                    if (!aPackageName.equals(getPackageName())) {
                         if (functionsClass.isAppInstalled(aPackageName)) {
                             if (!functionsClass.ifSystem(aPackageName)) {
                                 if (!functionsClass.ifDefaultLauncher(aPackageName)) {
@@ -726,7 +390,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
     }
 
     public void retrieveFreqUsedApp() throws Exception {
-        List<String> freqApps = letMeKnow(activity, 25, (86400000 * 7), System.currentTimeMillis());
+        List<String> freqApps = letMeKnow(SplitShortcuts.this, 25, (86400000 * 7), System.currentTimeMillis());
         for (int i = 0; i < 5; i++) {
             functionsClass.saveFileAppendLine(
                     ".superFreq",
@@ -740,18 +404,18 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         protected void onPreExecute() {
             super.onPreExecute();
             if (!getFileStreamPath(".SplitSuper").exists()) {
-                Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
-                loadingSplash.setVisibility(View.INVISIBLE);
-                loadingSplash.startAnimation(anim);
+                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
+                splitShortcutsViewBinding.loadingSplash.setVisibility(View.INVISIBLE);
+                splitShortcutsViewBinding.loadingSplash.startAnimation(anim);
             }
 
             if (!PublicVariable.firstLoad) {
-                autoSelect.setVisibility(View.VISIBLE);
+                splitShortcutsViewBinding.autoSelect.setVisibility(View.VISIBLE);
             }
 
             try {
-                recyclerView.getRecycledViewPool().clear();
-                navDrawerItems.clear();
+                splitShortcutsViewBinding.recyclerViewList.getRecycledViewPool().clear();
+                createdSplitListItem.clear();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -760,9 +424,9 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         @Override
         protected Void doInBackground(Void... params) {
             if (!getFileStreamPath(".SplitSuper").exists()) {
-                navDrawerItems = new ArrayList<AdapterItemsData>();
-                navDrawerItems.add(new AdapterItemsData(getPackageName(), new String[]{getPackageName()}));
-                splitShortcutsAdapter = new SplitShortcutsAdapter(activity, context, navDrawerItems);
+                createdSplitListItem = new ArrayList<AdapterItemsData>();
+                createdSplitListItem.add(new AdapterItemsData(getPackageName(), new String[]{getPackageName()}));
+                splitSelectionListAdapter = new SplitShortcutsAdapter(SplitShortcuts.this, getApplicationContext(), createdSplitListItem);
             } else {
                 try {
                     if (functionsClass.customIconsEnable()) {
@@ -772,20 +436,20 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                         }
                     }
 
-                    appData = functionsClass.readFileLine(".SplitSuper");
-                    navDrawerItems = new ArrayList<AdapterItemsData>();
-                    for (int navItem = 0; navItem < appData.length; navItem++) {
+                    String[] splitListItem = functionsClass.readFileLine(".SplitSuper");
+                    createdSplitListItem = new ArrayList<AdapterItemsData>();
+                    for (int navItem = 0; navItem < splitListItem.length; navItem++) {
                         try {
-                            navDrawerItems.add(new AdapterItemsData(
-                                    appData[navItem],
-                                    functionsClass.readFileLine(appData[navItem])));
+                            createdSplitListItem.add(new AdapterItemsData(
+                                    splitListItem[navItem],
+                                    functionsClass.readFileLine(splitListItem[navItem])));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    navDrawerItems.add(new AdapterItemsData(getPackageName(), new String[]{getPackageName()}));
-                    splitShortcutsAdapter = new SplitShortcutsAdapter(activity, context, navDrawerItems);
-                    splitShortcutsAdapter.notifyDataSetChanged();
+                    createdSplitListItem.add(new AdapterItemsData(getPackageName(), new String[]{getPackageName()}));
+                    splitSelectionListAdapter = new SplitShortcutsAdapter(SplitShortcuts.this, getApplicationContext(), createdSplitListItem);
+                    splitSelectionListAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     e.printStackTrace();
                     this.cancel(true);
@@ -798,7 +462,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
         @Override
         protected void onPostExecute(final Void result) {
             super.onPostExecute(result);
-            recyclerView.setAdapter(splitShortcutsAdapter);
+            splitShortcutsViewBinding.recyclerViewList.setAdapter(splitSelectionListAdapter);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -807,7 +471,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                     if (PublicVariable.firstLoad) {
                         PublicVariable.firstLoad = false;
 
-                        autoSelect.startAnimation(slideDown_select);
+                        splitShortcutsViewBinding.autoSelect.startAnimation(slideDown_select);
                         slideDown_select.setAnimationListener(new Animation.AnimationListener() {
                             @Override
                             public void onAnimationStart(Animation animation) {
@@ -815,7 +479,7 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
-                                autoSelect.setVisibility(View.VISIBLE);
+                                splitShortcutsViewBinding.autoSelect.setVisibility(View.VISIBLE);
                             }
 
                             @Override
@@ -824,25 +488,25 @@ public class SplitShortcuts extends AppCompatActivity implements View.OnClickLis
                         });
                     }
 
-                    Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
-                    loadingSplash.setVisibility(View.INVISIBLE);
+                    Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
+                    splitShortcutsViewBinding.loadingSplash.setVisibility(View.INVISIBLE);
 
-                    if (resetAdapter == false) {
-                        loadingSplash.startAnimation(anim);
+                    if (!resetAdapter) {
+                        splitShortcutsViewBinding.loadingSplash.startAnimation(anim);
                     }
-                    confirmButton.setVisibility(View.VISIBLE);
+                    splitShortcutsViewBinding.confirmButton.setVisibility(View.VISIBLE);
 
-                    Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-                    counterView.startAnimation(animation);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
+                    splitShortcutsViewBinding.selectedShortcutCounterView.startAnimation(animation);
                     animation.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
-                            counterView.setText(String.valueOf(functionsClass.countLine(".SplitSuperSelected")));
+                            splitShortcutsViewBinding.selectedShortcutCounterView.setText(String.valueOf(functionsClass.countLine(".SplitSuperSelected")));
                         }
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            counterView.setVisibility(View.VISIBLE);
+                            splitShortcutsViewBinding.selectedShortcutCounterView.setVisibility(View.VISIBLE);
                         }
 
                         @Override

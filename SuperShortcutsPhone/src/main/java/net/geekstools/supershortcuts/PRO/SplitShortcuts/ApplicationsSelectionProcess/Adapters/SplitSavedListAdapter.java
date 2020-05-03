@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:43 AM
+ * Last modified 5/3/20 8:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapter;
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,7 +29,7 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 
 import java.util.ArrayList;
 
-public class FolderSavedListAdapter extends BaseAdapter {
+public class SplitSavedListAdapter extends BaseAdapter {
 
     private Context context;
     private Activity activity;
@@ -38,7 +38,7 @@ public class FolderSavedListAdapter extends BaseAdapter {
 
     private ArrayList<AdapterItemsData> navDrawerItems;
 
-    public FolderSavedListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
+    public SplitSavedListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
@@ -81,8 +81,8 @@ public class FolderSavedListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 context.deleteFile(navDrawerItems.get(position).getPackageName() + PublicVariable.categoryName);
                 functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
-                context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionAdvance)));
-                context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
+                context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionSplit)));
+                context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplit)));
             }
         });
 

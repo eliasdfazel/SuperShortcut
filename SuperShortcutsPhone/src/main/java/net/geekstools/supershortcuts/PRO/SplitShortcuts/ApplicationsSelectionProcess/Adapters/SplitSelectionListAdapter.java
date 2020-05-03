@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:43 AM
+ * Last modified 5/3/20 8:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapter;
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.R;
@@ -38,7 +37,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIc
 import java.io.File;
 import java.util.ArrayList;
 
-public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelectionListAdapter.ViewHolder> {
+public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelectionListAdapter.ViewHolder> {
 
     private Context context;
     private Activity activity;
@@ -48,6 +47,7 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
     ImageView tempIcon;
     View view;
     ViewHolder viewHolder;
+
     LoadCustomIcons loadCustomIcons;
 
     private ArrayList<AdapterItemsData> navDrawerItems;
@@ -55,7 +55,7 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
     float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
     int animationType;
 
-    public FolderSelectionListAdapter(AppCompatActivity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
+    public SplitSelectionListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
         this.activity = activity;
         this.context = context;
         this.navDrawerItems = navDrawerItems;
@@ -66,7 +66,7 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels;
         dpWidth = displayMetrics.widthPixels;
-        systemUiHeight = activity.getSupportActionBar().getHeight();
+        systemUiHeight = activity.getActionBar().getHeight();
         fromX = toX = PublicVariable.confirmButtonX;
         toY = PublicVariable.confirmButtonY;
         animationType = Animation.ABSOLUTE;
@@ -78,25 +78,42 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
     }
 
     @Override
-    public FolderSelectionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SplitSelectionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(context).inflate(R.layout.selection_item_card_list, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(FolderSelectionListAdapter.ViewHolder viewHolderBinder, final int position) {
+    public void onBindViewHolder(SplitSelectionListAdapter.ViewHolder viewHolderBinder, final int position) {
 
-        viewHolderBinder.appIconView.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-        viewHolderBinder.appNameView.setText(navDrawerItems.get(position).getAppName());
+        viewHolderBinder.imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
+        viewHolderBinder.txtDesc.setText(navDrawerItems.get(position).getAppName());
 
-        final String pack = navDrawerItems.get(position).getPackageName();
-        File autoFile = context.getFileStreamPath(pack + PublicVariable.categoryName);
-        viewHolderBinder.autoChoice.setChecked(false);
-        if (autoFile.exists()) {
-            viewHolderBinder.autoChoice.setChecked(true);
-        } else {
+        try {
+            final String pack = navDrawerItems.get(position).getPackageName();
+            File autoFile = context.getFileStreamPath(pack + PublicVariable.categoryName);
             viewHolderBinder.autoChoice.setChecked(false);
+            if (autoFile.exists()) {
+                viewHolderBinder.autoChoice.setChecked(true);
+            } else {
+                viewHolderBinder.autoChoice.setChecked(false);
+            }
+            viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked == true) {
+                        if (PublicVariable.SplitMaxAppShortcutsCounter < PublicVariable.SplitMaxAppShortcuts) {
+                            PublicVariable.SplitMaxAppShortcutsCounter++;
+                        }
+                    } else if (isChecked == false) {
+                        PublicVariable.SplitMaxAppShortcutsCounter = PublicVariable.SplitMaxAppShortcutsCounter - 1;
+                    }
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         viewHolderBinder.item.setOnTouchListener(new View.OnTouchListener() {
@@ -112,18 +129,26 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                         if (autoFile.exists()) {
                             context.deleteFile(pack + PublicVariable.categoryName);
                             functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
-                            viewHolderBinder.autoChoice.setChecked(false);
-                            context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
+                            try {
+                                viewHolderBinder.autoChoice.setChecked(false);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplit)));
 
-                            context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideAdvance)));
-                            context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionAdvance)));
+                            context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideSplit)));
+                            context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionSplit)));
                         } else {
-                            if (PublicVariable.advMaxAppShortcutsCounter < PublicVariable.advMaxAppShortcuts) {
+                            if (PublicVariable.SplitMaxAppShortcutsCounter < PublicVariable.SplitMaxAppShortcuts) {
                                 functionsClass.saveFile(
                                         pack + PublicVariable.categoryName, pack);
                                 functionsClass.saveFileAppendLine(
                                         PublicVariable.categoryName, pack);
-                                viewHolderBinder.autoChoice.setChecked(true);
+                                try {
+                                    viewHolderBinder.autoChoice.setChecked(true);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
                                 TranslateAnimation translateAnimation =
                                         new TranslateAnimation(animationType, fromX,
@@ -132,13 +157,14 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                                                 animationType, toY);
                                 translateAnimation.setDuration((long) Math.abs(fromY));
 
+
                                 tempIcon.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(navDrawerItems.get(position).getPackageName(), functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName())) : functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName()));
                                 tempIcon.startAnimation(translateAnimation);
                                 translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
                                     public void onAnimationStart(Animation animation) {
-                                        context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideAdvance)));
-                                        context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionAdvance)));
+                                        context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideSplit)));
+                                        context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionSplit)));
 
                                         tempIcon.setVisibility(View.VISIBLE);
                                     }
@@ -146,8 +172,8 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         tempIcon.setVisibility(View.INVISIBLE);
-                                        context.sendBroadcast(new Intent(context.getString(R.string.animtaionActionAdvance)));
-                                        context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
+                                        context.sendBroadcast(new Intent(context.getString(R.string.animtaionActionSplit)));
+                                        context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplit)));
                                     }
 
                                     @Override
@@ -161,21 +187,8 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                 return true;
             }
         });
-        viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked == true) {
-                    if (PublicVariable.advMaxAppShortcutsCounter < PublicVariable.advMaxAppShortcuts) {
-                        PublicVariable.advMaxAppShortcutsCounter++;
-                    }
-                } else if (isChecked == false) {
-                    PublicVariable.advMaxAppShortcutsCounter = PublicVariable.advMaxAppShortcutsCounter - 1;
-                }
 
-            }
-        });
-
-        PublicVariable.advMaxAppShortcutsCounter = functionsClass.countLine(PublicVariable.categoryName);
+        PublicVariable.SplitMaxAppShortcutsCounter = functionsClass.countLine(PublicVariable.categoryName);
     }
 
     @Override
@@ -191,15 +204,15 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout item;
-        ImageView appIconView;
-        TextView appNameView;
+        ImageView imgIcon;
+        TextView txtDesc;
         CheckBox autoChoice;
 
         public ViewHolder(View view) {
             super(view);
             item = (RelativeLayout) view.findViewById(R.id.fullItemView);
-            appIconView = (ImageView) view.findViewById(R.id.appIconView);
-            appNameView = (TextView) view.findViewById(R.id.appNameView);
+            imgIcon = (ImageView) view.findViewById(R.id.appIconView);
+            txtDesc = (TextView) view.findViewById(R.id.desc);
             autoChoice = (CheckBox) view.findViewById(R.id.autoChoice);
         }
     }

@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 11:45 AM
+ * Last modified 5/3/20 8:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapter;
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapters;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -35,7 +35,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitAppSelectionList;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess.SplitAppSelectionList;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;

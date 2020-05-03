@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 1:13 PM
+  ~ Last modified 5/3/20 7:50 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -51,27 +51,6 @@
                 android:paddingEnd="30dp"
                 android:saveEnabled="true" />
         </RelativeLayout>
-    </ScrollView>
-
-    <ScrollView
-        android:id="@+id/nestedIndexScrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignEnd="@id/nestedScrollView"
-        android:foregroundGravity="center_vertical"
-        android:background="@android:color/transparent"
-        android:visibility="invisible">
-
-        <LinearLayout
-            android:id="@+id/sideIndex"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:background="@android:color/transparent"
-            android:orientation="vertical" />
     </ScrollView>
 
     <RelativeLayout
@@ -128,17 +107,14 @@
         android:padding="9dp"
         android:visibility="invisible" />
 
-    <TextView
-        android:id="@+id/popupIndex"
-        android:layout_width="77dp"
-        android:layout_height="77dp"
-        android:layout_toStartOf="@id/nestedIndexScrollView"
-        android:gravity="center"
-        android:textColor="@color/light"
-        android:textSize="29sp"
-        android:typeface="monospace"
-        android:background="@drawable/ic_launcher_balloon"
-        android:visibility="invisible" />
+    <!-- Indexed Popup Fast Scroller  -->
+    <include
+        layout="@layout/fast_scroller_index_view"
+
+        android:id="@+id/fastScrollerIndexInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <!-- Indexed Popup Fast Scroller  -->
 
     <RelativeLayout
         android:id="@+id/loadingSplash"
@@ -164,7 +140,7 @@
             android:indeterminateBehavior="cycle" />
 
         <TextView
-            android:id="@+id/desc"
+            android:id="@+id/loadingDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
