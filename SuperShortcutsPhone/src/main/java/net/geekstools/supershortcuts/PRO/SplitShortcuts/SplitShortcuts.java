@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 9:46 AM
+ * Last modified 5/3/20 10:00 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -21,7 +21,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -29,8 +28,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,9 +38,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
@@ -56,7 +50,6 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint;
-import net.geekstools.supershortcuts.PRO.Utils.SimpleGestureFilterSwitch;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 import net.geekstools.supershortcuts.PRO.databinding.SplitShortcutsViewBinding;
@@ -68,14 +61,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SplitShortcuts extends AppCompatActivity implements SimpleGestureFilterSwitch.SimpleGestureListener {
+public class SplitShortcuts extends AppCompatActivity {
 
     FunctionsClass functionsClass;
 
     RecyclerView.Adapter splitSelectionListAdapter;
     LinearLayoutManager recyclerViewLayoutManager;
 
-    MenuItem mixShortcutsMenuItem;
 
     ArrayList<AdapterItemsData> createdSplitListItem;
 
@@ -83,13 +75,11 @@ public class SplitShortcuts extends AppCompatActivity implements SimpleGestureFi
 
     boolean resetAdapter = false;
 
-    SimpleGestureFilterSwitch simpleGestureFilterSwitch;
+
 
     LoadCustomIcons loadCustomIcons;
 
-    FirebaseRemoteConfig firebaseRemoteConfig;
 
-    private FirebaseAuth firebaseAuth;
 
     SplitShortcutsViewBinding splitShortcutsViewBinding;
 
@@ -99,7 +89,6 @@ public class SplitShortcuts extends AppCompatActivity implements SimpleGestureFi
         splitShortcutsViewBinding = SplitShortcutsViewBinding.inflate(getLayoutInflater());
         setContentView(splitShortcutsViewBinding.getRoot());
 
-        simpleGestureFilterSwitch = new SimpleGestureFilterSwitch(getApplicationContext(), this);
         functionsClass = new FunctionsClass(getApplicationContext());
 
         new FunctionsClassDialogues(SplitShortcuts.this, functionsClass).changeLog();
@@ -166,13 +155,10 @@ public class SplitShortcuts extends AppCompatActivity implements SimpleGestureFi
         };
         registerReceiver(counterReceiver, intentFilter);
 
-        splitShortcutsViewBinding.autoApps.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
-        splitShortcutsViewBinding.autoSplit.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color)));
-        splitShortcutsViewBinding.autoCategories.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.default_color_darker)));
+
 
         loadSplitData();
 
-        firebaseAuth = FirebaseAuth.getInstance();
 
         //In-App Billing
         new PurchasesCheckpoint(SplitShortcuts.this).trigger();
@@ -240,50 +226,7 @@ public class SplitShortcuts extends AppCompatActivity implements SimpleGestureFi
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (functionsClass.UsageAccessEnabled()) {
-            finish();
-        } else {
-            Intent homeScreen = new Intent(Intent.ACTION_MAIN);
-            homeScreen.addCategory(Intent.CATEGORY_HOME);
-            homeScreen.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeScreen);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        }
-    }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent me) {
-        this.simpleGestureFilterSwitch.onTouchEvent(me);
-
-        return super.dispatchTouchEvent(me);
-    }
-
-    @Override
-    public void onSwipe(int direction) {
-        switch (direction) {
-            case SimpleGestureFilterSwitch.SWIPE_LEFT:
-                FunctionsClassDebug.Companion.PrintDebug("Swipe Left");
-                try {
-                    functionsClass.overrideBackPress(SplitShortcuts.this, FolderShortcuts.class,
-                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_right, R.anim.slide_to_left));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                break;
-            case SimpleGestureFilterSwitch.SWIPE_RIGHT:
-                FunctionsClassDebug.Companion.PrintDebug("Swipe Right");
-                try {
-                    functionsClass.overrideBackPress(SplitShortcuts.this, NormalAppShortcutsSelectionList.class,
-                            ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.slide_from_left, R.anim.slide_to_right));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-        }
-    }
 
 
 
