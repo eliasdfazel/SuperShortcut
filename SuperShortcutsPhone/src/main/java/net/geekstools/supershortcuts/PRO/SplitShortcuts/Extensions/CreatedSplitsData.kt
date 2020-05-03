@@ -2,21 +2,21 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:24 AM
+ * Last modified 5/3/20 10:25 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.Extensions
 
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import kotlinx.coroutines.*
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderShortcutsAdapter
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapters.SplitShortcutsAdapter
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.IndexedFastScrollerFactory
@@ -24,22 +24,22 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Index
 import java.util.*
 import kotlin.collections.ArrayList
 
-fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
-    createdFolderListItem.clear()
+fun SplitShortcuts.loadCreatedSplitsData()  = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+    createdSplitListItem.clear()
 
     val listOfNewCharOfItemsForIndex: ArrayList<String> = ArrayList<String>()
 
-    if (!getFileStreamPath(FolderShortcuts.FolderShortcutsFile).exists()) {
+    if (!getFileStreamPath(SplitShortcuts.SplitShortcutsFile).exists()) {
 
-        createdFolderListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))
+        createdSplitListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))
 
     } else {
 
-        val folderNameList = functionsClass.readFileLine(FolderShortcuts.FolderShortcutsFile)
+        val folderNameList = functionsClass.readFileLine(SplitShortcuts.SplitShortcutsFile)
         folderNameList.sort()
         folderNameList.forEachIndexed { index, folderName ->
 
-            createdFolderListItem.add(AdapterItemsData(
+            createdSplitListItem.add(AdapterItemsData(
                     folderName,
                     functionsClass.readFileLine(folderName)
             ))
@@ -48,37 +48,37 @@ fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() +
 
         }
 
-        createdFolderListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))
+        createdSplitListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))
     }
 
     withContext(Dispatchers.Main) {
 
-        folderSelectionListAdapter = FolderShortcutsAdapter(this@loadCreatedFoldersData,
-                createdFolderListItem)
+        splitSelectionListAdapter = SplitShortcutsAdapter(this@loadCreatedSplitsData,
+                createdSplitListItem)
 
-        folderShortcutsViewBinding.recyclerViewList.adapter = folderSelectionListAdapter
+        splitShortcutsViewBinding.recyclerViewList.adapter = splitSelectionListAdapter
 
-        folderShortcutsViewBinding.loadingSplash.visibility = View.INVISIBLE
+        splitShortcutsViewBinding.loadingSplash.visibility = View.INVISIBLE
 
         if (!resetAdapter) {
             val animationFadeOut = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)
-            folderShortcutsViewBinding.loadingSplash.startAnimation(animationFadeOut)
+            splitShortcutsViewBinding.loadingSplash.startAnimation(animationFadeOut)
         }
 
-        folderShortcutsViewBinding.confirmButton.visibility = View.VISIBLE
+        splitShortcutsViewBinding.confirmButton.visibility = View.VISIBLE
 
         val animationFadeIn = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_in)
-        folderShortcutsViewBinding.selectedShortcutCounterView.startAnimation(animationFadeIn)
+        splitShortcutsViewBinding.selectedShortcutCounterView.startAnimation(animationFadeIn)
         animationFadeIn.setAnimationListener(object : Animation.AnimationListener {
 
             override fun onAnimationStart(animation: Animation) {
 
-                folderShortcutsViewBinding.selectedShortcutCounterView.text = functionsClass.countLineInnerFile(FolderShortcuts.FolderShortcutsSelectedFile).toString()
+                splitShortcutsViewBinding.selectedShortcutCounterView.text = functionsClass.countLineInnerFile(SplitShortcuts.SplitShortcutsSelectedFile).toString()
             }
 
             override fun onAnimationEnd(animation: Animation) {
 
-                folderShortcutsViewBinding.selectedShortcutCounterView.visibility = View.VISIBLE
+                splitShortcutsViewBinding.selectedShortcutCounterView.visibility = View.VISIBLE
             }
 
             override fun onAnimationRepeat(animation: Animation) {
@@ -86,20 +86,18 @@ fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() +
             }
         })
 
+        PublicVariable.SplitShortcutsMaxAppShortcutsCounter = functionsClass.countLine(".SplitSuperSelected")
         resetAdapter = false
-
-        PublicVariable.advanceShortcutsMaxAppShortcutsCounter = functionsClass.countLine(".categorySuperSelected")
-        resetAdapter = false;
     }
 
     /*Indexed Popup Fast Scroller*/
     val indexedFastScroller: IndexedFastScroller = IndexedFastScroller(
             context = applicationContext,
             layoutInflater = layoutInflater,
-            rootView = folderShortcutsViewBinding.MainView,
-            nestedScrollView = folderShortcutsViewBinding.nestedScrollView,
-            recyclerView = folderShortcutsViewBinding.recyclerViewList,
-            fastScrollerIndexViewBinding = folderShortcutsViewBinding.fastScrollerIndexInclude,
+            rootView = splitShortcutsViewBinding.MainView,
+            nestedScrollView = splitShortcutsViewBinding.nestedScrollView,
+            recyclerView = splitShortcutsViewBinding.recyclerViewList,
+            fastScrollerIndexViewBinding = splitShortcutsViewBinding.fastScrollerIndexInclude,
             indexedFastScrollerFactory = IndexedFastScrollerFactory(
                     popupEnable = true,
                     popupTextColor = getColor(R.color.light),

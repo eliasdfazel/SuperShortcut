@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 7:39 AM
+ * Last modified 5/3/20 10:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -58,6 +58,7 @@ public class FolderShortcutsAdapter extends RecyclerView.Adapter<FolderShortcuts
 
     public FolderShortcutsAdapter(FolderShortcuts folderShortcuts,
                                   ArrayList<AdapterItemsData> createdFolderListItem) {
+
         this.folderShortcuts = folderShortcuts;
 
         this.createdFolderListItem = createdFolderListItem;

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 6:43 AM
+ * Last modified 5/3/20 10:22 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -50,7 +50,6 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstan
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.FolderShortcutsViewBinding
-import java.lang.String
 import java.util.*
 
 class FolderShortcuts : AppCompatActivity(),
@@ -182,7 +181,7 @@ class FolderShortcuts : AppCompatActivity(),
 
                 FunctionsClassDialogues(this@FolderShortcuts, functionsClass).changeLogPreference(
                         firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
-                        String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
+                        (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
                 )
 
             } else {
@@ -331,9 +330,9 @@ class FolderShortcuts : AppCompatActivity(),
                 applicationContext.deleteFile(".superFreq")
             }
 
-            /* Load Installed Applications */
+            /* Load Data */
             loadCreatedFoldersData()
-            /* Load Installed Applications */
+            /* Load Data */
         }
     }
 
