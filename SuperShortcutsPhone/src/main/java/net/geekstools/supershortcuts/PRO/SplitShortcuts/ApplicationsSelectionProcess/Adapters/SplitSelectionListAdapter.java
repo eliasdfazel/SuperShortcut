@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 9:39 AM
+ * Last modified 5/4/20 12:10 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -51,7 +51,7 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
 
     private ArrayList<AdapterItemsData> splitSelectionListData;
 
-    float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
+    float fromX, fromY, toX, toY, dpHeight, dpWidth;
     int animationType;
 
     public SplitSelectionListAdapter(AppCompatActivity appCompatActivity, ArrayList<AdapterItemsData> splitSelectionListData) {
@@ -64,7 +64,7 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
         DisplayMetrics displayMetrics = appCompatActivity.getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels;
         dpWidth = displayMetrics.widthPixels;
-        systemUiHeight = appCompatActivity.getSupportActionBar().getHeight();
+
         fromX = toX = PublicVariable.confirmButtonX;
         toY = PublicVariable.confirmButtonY;
         animationType = Animation.ABSOLUTE;
@@ -111,7 +111,9 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        fromY = -((dpHeight - motionEvent.getRawY()) - (systemUiHeight));
+
+                        fromY = -((dpHeight - motionEvent.getRawY()) - (viewHolderBinder.fullItemView.getHeight()));
+
                         break;
                     case MotionEvent.ACTION_UP:
                         final String pack = splitSelectionListData.get(position).getPackageName();

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 9:43 AM
+ * Last modified 5/4/20 12:50 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -53,7 +53,7 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
 
     private ArrayList<AdapterItemsData> navDrawerItems;
 
-    float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
+    float fromX, fromY, toX, toY, dpHeight, dpWidth;
     int animationType;
 
     public FolderSelectionListAdapter(AppCompatActivity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
@@ -67,7 +67,7 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels;
         dpWidth = displayMetrics.widthPixels;
-        systemUiHeight = activity.getSupportActionBar().getHeight();
+
         fromX = toX = PublicVariable.confirmButtonX;
         toY = PublicVariable.confirmButtonY;
         animationType = Animation.ABSOLUTE;
@@ -114,7 +114,9 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        fromY = -((dpHeight - motionEvent.getRawY()) - (systemUiHeight));
+
+                        fromY = -((dpHeight - motionEvent.getRawY()) - (viewHolderBinder.fullItemView.getHeight()));
+
                         break;
                     case MotionEvent.ACTION_UP:
                         final String pack = navDrawerItems.get(position).getPackageName();
