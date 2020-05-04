@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 8:57 AM
+ * Last modified 5/4/20 9:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -56,7 +56,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class FolderAppSelectionList extends AppCompatActivity {
+public class FolderAppSelectionList extends AppCompatActivity implements View.OnClickListener {
 
     AppCompatActivity activity;
     Context context;
@@ -87,9 +87,13 @@ public class FolderAppSelectionList extends AppCompatActivity {
         super.onCreate(Saved);
         folderAppsSelectionViewBinding = FolderAppsSelectionViewBinding.inflate(getLayoutInflater());
         setContentView(folderAppsSelectionViewBinding.getRoot());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         functionsClass = new FunctionsClass(getApplicationContext());
+
+        PublicVariable.advMaxAppShortcuts = getPackageManager()
+                .queryIntentActivities(new Intent()
+                        .setAction(Intent.ACTION_MAIN)
+                        .addCategory(Intent.CATEGORY_LAUNCHER), 0).size();
 
         context = getApplicationContext();
         activity = this;
@@ -105,9 +109,13 @@ public class FolderAppSelectionList extends AppCompatActivity {
         folderAppsSelectionViewBinding.nestedScrollView.setSmoothScrollingEnabled(true);
 
         folderAppsSelectionViewBinding.MainView.setBackgroundColor(getColor(R.color.light));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>"
                 + PublicVariable.categoryName.split("_")[0] + "</font>", Html.FROM_HTML_MODE_LEGACY));
+        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.advMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -190,11 +198,6 @@ public class FolderAppSelectionList extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         try {
@@ -234,6 +237,11 @@ public class FolderAppSelectionList extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 
     @Override

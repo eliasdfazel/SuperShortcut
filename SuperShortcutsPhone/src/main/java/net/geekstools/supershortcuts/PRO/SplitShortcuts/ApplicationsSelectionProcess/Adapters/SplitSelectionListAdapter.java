@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:29 AM
+ * Last modified 5/4/20 9:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,7 @@
 
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess.Adapters;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -39,8 +39,7 @@ import java.util.ArrayList;
 
 public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelectionListAdapter.ViewHolder> {
 
-    private Context context;
-    private AppCompatActivity activity;
+    private AppCompatActivity appCompatActivity;
 
     FunctionsClass functionsClass;
 
@@ -50,73 +49,64 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
 
     LoadCustomIcons loadCustomIcons;
 
-    private ArrayList<AdapterItemsData> navDrawerItems;
+    private ArrayList<AdapterItemsData> splitSelectionListData;
 
     float fromX, fromY, toX, toY, dpHeight, dpWidth, systemUiHeight;
     int animationType;
 
-    public SplitSelectionListAdapter(AppCompatActivity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
-        this.activity = activity;
-        this.context = context;
-        this.navDrawerItems = navDrawerItems;
+    public SplitSelectionListAdapter(AppCompatActivity appCompatActivity, ArrayList<AdapterItemsData> splitSelectionListData) {
+        this.appCompatActivity = appCompatActivity;
+        this.splitSelectionListData = splitSelectionListData;
 
-        functionsClass = new FunctionsClass(context);
-        tempIcon = (ImageView) activity.findViewById(R.id.temporary_falling_icon);
+        functionsClass = new FunctionsClass(appCompatActivity);
+        tempIcon = (ImageView) appCompatActivity.findViewById(R.id.temporary_falling_icon);
 
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics = appCompatActivity.getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels;
         dpWidth = displayMetrics.widthPixels;
-        systemUiHeight = activity.getSupportActionBar().getHeight();
+        systemUiHeight = appCompatActivity.getSupportActionBar().getHeight();
         fromX = toX = PublicVariable.confirmButtonX;
         toY = PublicVariable.confirmButtonY;
         animationType = Animation.ABSOLUTE;
 
         if (functionsClass.customIconsEnable()) {
-            loadCustomIcons = new LoadCustomIcons(context, functionsClass.customIconPackageName());
+            loadCustomIcons = new LoadCustomIcons(appCompatActivity, functionsClass.customIconPackageName());
             loadCustomIcons.load();
         }
     }
 
     @Override
     public SplitSelectionListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.selection_item_card_list, parent, false);
+        view = LayoutInflater.from(appCompatActivity).inflate(R.layout.selection_item_card_list, parent, false);
         viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(SplitSelectionListAdapter.ViewHolder viewHolderBinder, final int position) {
 
-        viewHolderBinder.imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-        viewHolderBinder.txtDesc.setText(navDrawerItems.get(position).getAppName());
+        viewHolderBinder.appIconView.setImageDrawable(splitSelectionListData.get(position).getAppIcon());
+        viewHolderBinder.appNameView.setText(splitSelectionListData.get(position).getAppName());
 
-        try {
-            final String pack = navDrawerItems.get(position).getPackageName();
-            File autoFile = context.getFileStreamPath(pack + PublicVariable.categoryName);
+        final String pack = splitSelectionListData.get(position).getPackageName();
+        File autoFile = appCompatActivity.getFileStreamPath(pack + PublicVariable.categoryName);
+        viewHolderBinder.autoChoice.setChecked(false);
+        if (autoFile.exists()) {
+            viewHolderBinder.autoChoice.setChecked(true);
+        } else {
             viewHolderBinder.autoChoice.setChecked(false);
-            if (autoFile.exists()) {
-                viewHolderBinder.autoChoice.setChecked(true);
-            } else {
-                viewHolderBinder.autoChoice.setChecked(false);
-            }
-            viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (isChecked == true) {
-                        if (PublicVariable.SplitMaxAppShortcutsCounter < PublicVariable.SplitMaxAppShortcuts) {
-                            PublicVariable.SplitMaxAppShortcutsCounter++;
-                        }
-                    } else if (isChecked == false) {
-                        PublicVariable.SplitMaxAppShortcutsCounter = PublicVariable.SplitMaxAppShortcutsCounter - 1;
-                    }
-
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
-        viewHolderBinder.item.setOnTouchListener(new View.OnTouchListener() {
+        viewHolderBinder.fullItemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        viewHolderBinder.fullItemView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
@@ -124,20 +114,20 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                         fromY = -((dpHeight - motionEvent.getRawY()) - (systemUiHeight));
                         break;
                     case MotionEvent.ACTION_UP:
-                        final String pack = navDrawerItems.get(position).getPackageName();
-                        File autoFile = context.getFileStreamPath(pack + PublicVariable.categoryName);
+                        final String pack = splitSelectionListData.get(position).getPackageName();
+                        File autoFile = appCompatActivity.getFileStreamPath(pack + PublicVariable.categoryName);
                         if (autoFile.exists()) {
-                            context.deleteFile(pack + PublicVariable.categoryName);
-                            functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
+                            appCompatActivity.deleteFile(pack + PublicVariable.categoryName);
+                            functionsClass.removeLine(PublicVariable.categoryName, splitSelectionListData.get(position).getPackageName());
                             try {
                                 viewHolderBinder.autoChoice.setChecked(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplit)));
+                            appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.counterActionSplit)));
 
-                            context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideSplit)));
-                            context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionSplit)));
+                            appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.savedActionHideSplit)));
+                            appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.visibilityActionSplit)));
                         } else {
                             if (PublicVariable.SplitMaxAppShortcutsCounter < PublicVariable.SplitMaxAppShortcuts) {
                                 functionsClass.saveFile(
@@ -158,13 +148,13 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                                 translateAnimation.setDuration((long) Math.abs(fromY));
 
 
-                                tempIcon.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(navDrawerItems.get(position).getPackageName(), functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName())) : functionsClass.appIconDrawable(navDrawerItems.get(position).getPackageName()));
+                                tempIcon.setImageDrawable(functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(splitSelectionListData.get(position).getPackageName(), functionsClass.appIconDrawable(splitSelectionListData.get(position).getPackageName())) : functionsClass.appIconDrawable(splitSelectionListData.get(position).getPackageName()));
                                 tempIcon.startAnimation(translateAnimation);
                                 translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
                                     public void onAnimationStart(Animation animation) {
-                                        context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideSplit)));
-                                        context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionSplit)));
+                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.savedActionHideSplit)));
+                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.visibilityActionSplit)));
 
                                         tempIcon.setVisibility(View.VISIBLE);
                                     }
@@ -172,8 +162,8 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         tempIcon.setVisibility(View.INVISIBLE);
-                                        context.sendBroadcast(new Intent(context.getString(R.string.animtaionActionSplit)));
-                                        context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplit)));
+                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.animtaionActionSplit)));
+                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.counterActionSplit)));
                                     }
 
                                     @Override
@@ -188,12 +178,26 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
             }
         });
 
+        viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    if (PublicVariable.SplitMaxAppShortcutsCounter < PublicVariable.SplitMaxAppShortcuts) {
+                        PublicVariable.SplitMaxAppShortcutsCounter++;
+                    }
+                } else if (!isChecked) {
+                    PublicVariable.SplitMaxAppShortcutsCounter = PublicVariable.SplitMaxAppShortcutsCounter - 1;
+                }
+
+            }
+        });
+
         PublicVariable.SplitMaxAppShortcutsCounter = functionsClass.countLine(PublicVariable.categoryName);
     }
 
     @Override
     public int getItemCount() {
-        return navDrawerItems.size();
+        return splitSelectionListData.size();
     }
 
     @Override
@@ -203,16 +207,16 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout item;
-        ImageView imgIcon;
-        TextView txtDesc;
+        RelativeLayout fullItemView;
+        ImageView appIconView;
+        TextView appNameView;
         CheckBox autoChoice;
 
         public ViewHolder(View view) {
             super(view);
-            item = (RelativeLayout) view.findViewById(R.id.fullItemView);
-            imgIcon = (ImageView) view.findViewById(R.id.appIconView);
-            txtDesc = (TextView) view.findViewById(R.id.desc);
+            fullItemView = (RelativeLayout) view.findViewById(R.id.fullItemView);
+            appIconView = (ImageView) view.findViewById(R.id.appIconView);
+            appNameView = (TextView) view.findViewById(R.id.appNameView);
             autoChoice = (CheckBox) view.findViewById(R.id.autoChoice);
         }
     }

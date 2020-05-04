@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 8:57 AM
+ * Last modified 5/4/20 9:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess.Adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -84,6 +85,7 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
         return viewHolder;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(FolderSelectionListAdapter.ViewHolder viewHolderBinder, final int position) {
 
@@ -99,7 +101,15 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
             viewHolderBinder.autoChoice.setChecked(false);
         }
 
-        viewHolderBinder.item.setOnTouchListener(new View.OnTouchListener() {
+        viewHolderBinder.fullItemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        viewHolderBinder.fullItemView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
@@ -164,11 +174,11 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
         viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked == true) {
+                if (isChecked) {
                     if (PublicVariable.advMaxAppShortcutsCounter < PublicVariable.advMaxAppShortcuts) {
                         PublicVariable.advMaxAppShortcutsCounter++;
                     }
-                } else if (isChecked == false) {
+                } else if (!isChecked) {
                     PublicVariable.advMaxAppShortcutsCounter = PublicVariable.advMaxAppShortcutsCounter - 1;
                 }
 
@@ -190,14 +200,14 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout item;
+        RelativeLayout fullItemView;
         ImageView appIconView;
         TextView appNameView;
         CheckBox autoChoice;
 
         public ViewHolder(View view) {
             super(view);
-            item = (RelativeLayout) view.findViewById(R.id.fullItemView);
+            fullItemView = (RelativeLayout) view.findViewById(R.id.fullItemView);
             appIconView = (ImageView) view.findViewById(R.id.appIconView);
             appNameView = (TextView) view.findViewById(R.id.appNameView);
             autoChoice = (CheckBox) view.findViewById(R.id.autoChoice);

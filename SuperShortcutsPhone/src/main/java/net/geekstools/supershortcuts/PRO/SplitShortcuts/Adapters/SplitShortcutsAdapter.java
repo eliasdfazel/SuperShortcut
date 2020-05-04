@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:05 AM
+ * Last modified 5/4/20 9:26 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -329,14 +329,14 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                         if (fileSelected.exists() && fileSelected.isFile()) {
                             splitShortcuts.deleteFile(PublicVariable.categoryNameSelected);
                             functionsClass.removeLine(".SplitSuperSelected", PublicVariable.categoryNameSelected);
-                            if (functionsClass.mixShortcuts() == true) {
+                            if (functionsClass.mixShortcuts()) {
                                 functionsClass.removeLine(".mixShortcuts", PublicVariable.categoryNameSelected);
                             }
                             viewHolderBinder.autoChoice.setChecked(false);
                             splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.counterActionSplitShortcuts)));
                             splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.dynamicShortcutsSplit)));
                         } else {
-                            if (functionsClass.mixShortcuts() == true) {
+                            if (functionsClass.mixShortcuts()) {
                                 if (functionsClass.countLine(".mixShortcuts") < functionsClass.getSystemMaxAppShortcut()) {
                                     String[] appsContent = functionsClass.readFileLine(createdSplitListItem.get(position).getCategory());
                                     for (String appContent : appsContent) {
@@ -428,11 +428,11 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
         viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked == true) {
+                if (isChecked) {
                     if (PublicVariable.SplitShortcutsMaxAppShortcutsCounter < PublicVariable.SplitShortcutsMaxAppShortcuts) {
                         PublicVariable.SplitShortcutsMaxAppShortcutsCounter++;
                     }
-                } else if (isChecked == false) {
+                } else if (!isChecked) {
                     PublicVariable.SplitShortcutsMaxAppShortcutsCounter = PublicVariable.SplitShortcutsMaxAppShortcutsCounter - 1;
                 }
             }

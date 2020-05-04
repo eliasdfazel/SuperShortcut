@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:00 AM
+ * Last modified 5/4/20 9:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -68,8 +67,6 @@ import java.util.Map;
 
 public class SplitAppSelectionList extends AppCompatActivity implements View.OnClickListener {
 
-    Activity activity;
-    Context context;
     FunctionsClass functionsClass;
 
     ScrollView nestedScrollView, nestedIndexScrollView;
@@ -88,7 +85,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
     List<String> appName;
     Map<String, Integer> mapIndex;
     Map<Integer, String> mapRangeIndex;
-    ArrayList<AdapterItemsData> navDrawerItems, navDrawerItemsSaved;
+    ArrayList<AdapterItemsData> splitSelectionListData, navDrawerItemsSaved;
     SplitSavedListAdapter splitSavedListAdapter;
 
     String PackageName;
@@ -104,15 +101,11 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
         super.onCreate(Saved);
         setContentView(R.layout.split_app_selection_list);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         functionsClass = new FunctionsClass(getApplicationContext());
         PublicVariable.SplitMaxAppShortcuts = 2;
 
-        context = getApplicationContext();
-        activity = this;
-
-        listPopupWindow = new ListPopupWindow(activity);
+        listPopupWindow = new ListPopupWindow(this);
         desc = (TextView) findViewById(R.id.desc);
         counterView = (TextView) findViewById(R.id.selected_shortcut_counter_view);
         loadIcon = (ImageView) findViewById(R.id.loadingLogo);
@@ -135,10 +128,13 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
         nestedScrollView.setSmoothScrollingEnabled(true);
 
         wholeAuto.setBackgroundColor(getColor(R.color.light));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>"
                 + PublicVariable.categoryName.split("_")[0] + "</font>", Html.FROM_HTML_MODE_LEGACY));
         getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + getString(R.string.maximum) + "</font>" + "<b><font color='" + getColor(R.color.light) + "'>" + PublicVariable.SplitMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY));
+
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -148,7 +144,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
 
-        navDrawerItems = new ArrayList<AdapterItemsData>();
+        splitSelectionListData = new ArrayList<AdapterItemsData>();
         navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
         appName = new ArrayList<String>();
         mapIndex = new LinkedHashMap<String, Integer>();
@@ -164,16 +160,16 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
         loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(context.getString(R.string.counterActionSplit));
-        intentFilter.addAction(context.getString(R.string.savedActionSplit));
-        intentFilter.addAction(context.getString(R.string.savedActionHideSplit));
-        intentFilter.addAction(context.getString(R.string.checkboxActionSplit));
+        intentFilter.addAction(getString(R.string.counterActionSplit));
+        intentFilter.addAction(getString(R.string.savedActionSplit));
+        intentFilter.addAction(getString(R.string.savedActionHideSplit));
+        intentFilter.addAction(getString(R.string.checkboxActionSplit));
         BroadcastReceiver counterReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(context.getString(R.string.counterActionSplit))) {
+                if (intent.getAction().equals(getString(R.string.counterActionSplit))) {
                     counterView.setText(String.valueOf(functionsClass.countLine(PublicVariable.categoryName)));
-                } else if (intent.getAction().equals(context.getString(R.string.savedActionSplit))) {
+                } else if (intent.getAction().equals(getString(R.string.savedActionSplit))) {
                     if (getFileStreamPath(PublicVariable.categoryName).exists() && functionsClass.countLine(PublicVariable.categoryName) > 0) {
                         navDrawerItemsSaved.clear();
                         String[] savedLine = functionsClass.readFileLine(PublicVariable.categoryName);
@@ -184,8 +180,8 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                                     functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(aSavedLine, functionsClass.appIconDrawable(aSavedLine)) : functionsClass.appIconDrawable(aSavedLine)
                             ));
                         }
-                        splitSavedListAdapter = new SplitSavedListAdapter(activity, context, navDrawerItemsSaved);
-                        listPopupWindow = new ListPopupWindow(activity);
+                        splitSavedListAdapter = new SplitSavedListAdapter(SplitAppSelectionList.this, context, navDrawerItemsSaved);
+                        listPopupWindow = new ListPopupWindow(SplitAppSelectionList.this);
                         listPopupWindow.setAdapter(splitSavedListAdapter);
                         listPopupWindow.setAnchorView(popupAnchorView);
                         listPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
@@ -218,14 +214,9 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                 }
             }
         };
-        context.registerReceiver(counterReceiver, intentFilter);
+        registerReceiver(counterReceiver, intentFilter);
 
         loadDataOff();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -318,7 +309,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
         loadCustomIcons = new LoadCustomIcons(getApplicationContext(), functionsClass.customIconPackageName());
 
         try {
-            navDrawerItems.clear();
+            splitSelectionListData.clear();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -362,7 +353,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                                 appName.add(AppName);
                                 AppIcon = functionsClass.customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(PackageName, functionsClass.appIconDrawable(PackageName)) : functionsClass.appIconDrawable(PackageName);
 
-                                navDrawerItems.add(new AdapterItemsData(AppName, PackageName, AppIcon));
+                                splitSelectionListData.add(new AdapterItemsData(AppName, PackageName, AppIcon));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -371,7 +362,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                         e.printStackTrace();
                     }
                 }
-                splitSelectionListAdapter = new SplitSelectionListAdapter(activity, context, navDrawerItems);
+                splitSelectionListAdapter = new SplitSelectionListAdapter(SplitAppSelectionList.this, splitSelectionListData);
                 splitSelectionListAdapter.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -390,14 +381,14 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Animation anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
+                    Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
                     loadingSplash.setVisibility(View.INVISIBLE);
                     if (resetAdapter == false) {
                         loadingSplash.startAnimation(anim);
                     }
-                    context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionSplit)));
+                    sendBroadcast(new Intent(getString(R.string.visibilityActionSplit)));
 
-                    Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+                    Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
                     counterView.startAnimation(animation);
                     animation.setAnimationListener(new Animation.AnimationListener() {
                         @Override

@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/3/20 9:56 AM
+  ~ Last modified 5/4/20 9:22 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -68,7 +68,7 @@
             android:textAllCaps="false"
             android:text="@string/apps"
             android:textColor="@color/light"
-            android:textSize="15sp"
+            android:textSize="12sp"
 
             apps:rippleColor="@color/light_transparent"
             apps:backgroundTint="@color/default_color_darker"

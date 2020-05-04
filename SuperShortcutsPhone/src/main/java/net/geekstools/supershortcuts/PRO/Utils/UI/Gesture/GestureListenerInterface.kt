@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 11:30 AM
+ * Last modified 5/4/20 9:12 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package  net.geekstools.supershortcuts.PRO.Utils.UI.Gesture
+package net.geekstools.supershortcuts.PRO.Utils.UI.Gesture
 
 import android.view.MotionEvent
 

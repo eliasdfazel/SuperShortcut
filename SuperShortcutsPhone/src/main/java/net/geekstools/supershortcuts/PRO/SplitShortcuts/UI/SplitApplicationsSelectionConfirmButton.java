@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 11:03 AM
+ * Last modified 5/4/20 9:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,13 +19,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Toast;
 
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.SimpleGestureFilter;
 
-public class SplitConfirmButton extends Button
+public class SplitApplicationsSelectionConfirmButton extends Button
         implements SimpleGestureFilter.SimpleGestureListener {
 
     FunctionsClass functionsClass;
@@ -34,14 +35,14 @@ public class SplitConfirmButton extends Button
     SimpleGestureFilter detector;
     BroadcastReceiver visibilityReceiver;
 
-    public SplitConfirmButton(Context context, AttributeSet attrs) {
+    public SplitApplicationsSelectionConfirmButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         functionsClass = new FunctionsClass(context);
         initConfirmButton();
     }
 
-    public SplitConfirmButton(Context context) {
+    public SplitApplicationsSelectionConfirmButton(Context context) {
         super(context);
     }
 
@@ -55,13 +56,13 @@ public class SplitConfirmButton extends Button
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(context.getString(R.string.visibilityActionSplit))) {
-                    SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
-                    if (!SplitConfirmButton.this.isShown()) {
-                        SplitConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
-                        SplitConfirmButton.this.setVisibility(VISIBLE);
+                    SplitApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.ripple_effect_confirm));
+                    if (!SplitApplicationsSelectionConfirmButton.this.isShown()) {
+                        SplitApplicationsSelectionConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
+                        SplitApplicationsSelectionConfirmButton.this.setVisibility(VISIBLE);
                     }
                 } else if (intent.getAction().equals(context.getString(R.string.animtaionActionSplit))) {
-                    SplitConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button));
+                    SplitApplicationsSelectionConfirmButton.this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button));
                 }
             }
         };
@@ -94,7 +95,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
+                            SplitApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -105,7 +106,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
+                            SplitApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -116,7 +117,7 @@ public class SplitConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(PublicVariable.categoryName) > 0) {
-                            SplitConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
+                            SplitApplicationsSelectionConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -126,6 +127,8 @@ public class SplitConfirmButton extends Button
 
     @Override
     public void onSingleTapUp() {
+
+        Toast.makeText(context, "ISSUE", Toast.LENGTH_SHORT).show();
 //        try {
 //            functionsClass.overrideBackPress(SplitShortcuts.class,
 //                    ActivityOptions.makeCustomAnimation(context, android.R.anim.fade_in, R.anim.go_down));

@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 1:13 PM
+  ~ Last modified 5/4/20 9:16 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -83,7 +83,7 @@
         android:background="@android:color/transparent"
         android:gravity="center">
 
-        <net.geekstools.supershortcuts.PRO.SplitShortcuts.UI.SplitConfirmButton
+        <net.geekstools.supershortcuts.PRO.SplitShortcuts.UI.SplitApplicationsSelectionConfirmButton
             android:layout_width="63dp"
             android:layout_height="63dp"
             android:layout_centerInParent="true"
