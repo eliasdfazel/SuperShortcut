@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 2:19 PM
+ * Last modified 5/4/20 12:51 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -81,8 +81,8 @@ import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderItemListAdapter;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadFolderPopupShortcuts;
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitScreenService;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitTransparentPair;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices.SplitScreenService;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices.SplitTransparentPair;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 

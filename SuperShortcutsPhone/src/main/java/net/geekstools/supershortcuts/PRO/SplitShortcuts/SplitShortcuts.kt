@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:23 AM
+ * Last modified 5/4/20 12:56 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -139,7 +139,7 @@ class SplitShortcuts : AppCompatActivity(),
             if (functionsClass.mixShortcuts()) {
                 functionsClass.addMixAppShortcuts()
             } else {
-                functionsClass.addAppsShortcutCategory()
+                functionsClass.addAppsShortcutSplit()
 
                 getSharedPreferences(".PopupShortcut", Context.MODE_PRIVATE).edit().apply {
                     putString("PopupShortcutMode", "SplitShortcuts")

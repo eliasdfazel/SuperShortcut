@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 9:26 AM
+ * Last modified 5/4/20 12:54 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -333,8 +333,11 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                                 functionsClass.removeLine(".mixShortcuts", PublicVariable.categoryNameSelected);
                             }
                             viewHolderBinder.autoChoice.setChecked(false);
-                            splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.counterActionSplitShortcuts)));
-                            splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.dynamicShortcutsSplit)));
+
+                            splitShortcuts.savedShortcutCounter();
+
+                            splitShortcuts.reevaluateShortcutsInfo();
+
                         } else {
                             if (functionsClass.mixShortcuts()) {
                                 if (functionsClass.countLine(".mixShortcuts") < functionsClass.getSystemMaxAppShortcut()) {
@@ -346,8 +349,11 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                                     functionsClass.saveFileAppendLine(".mixShortcuts", PublicVariable.categoryNameSelected);
 
                                     viewHolderBinder.autoChoice.setChecked(true);
-                                    splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.counterActionSplitShortcuts)));
-                                    splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.dynamicShortcutsSplit)));
+
+                                    splitShortcuts.savedShortcutCounter();
+
+                                    splitShortcuts.reevaluateShortcutsInfo();
+
                                 }
                             } else {
                                 if (PublicVariable.SplitShortcutsMaxAppShortcutsCounter < PublicVariable.SplitShortcutsMaxAppShortcuts) {
@@ -358,8 +364,11 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                                     functionsClass.saveFileAppendLine(".SplitSuperSelected", PublicVariable.categoryNameSelected);
 
                                     viewHolderBinder.autoChoice.setChecked(true);
-                                    splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.counterActionSplitShortcuts)));
-                                    splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.dynamicShortcutsSplit)));
+
+                                    splitShortcuts.savedShortcutCounter();
+
+                                    splitShortcuts.reevaluateShortcutsInfo();
+
                                 }
                             }
                         }
@@ -405,7 +414,9 @@ public class SplitShortcutsAdapter extends RecyclerView.Adapter<SplitShortcutsAd
                                         functionsClass.removeLine(".SplitSuper", createdSplitListItem.get(position).getCategory());
                                         splitShortcuts.deleteFile(createdSplitListItem.get(position).getCategory());
                                         functionsClass.removeHomeShortcut(".split.SplitTransparentPair", "load_split_action_pair_shortcut", Intent.CATEGORY_DEFAULT, createdSplitListItem.get(position).getCategory());
-                                        splitShortcuts.sendBroadcast(new Intent(splitShortcuts.getString(R.string.checkboxActionSplitShortcuts)));
+
+                                        splitShortcuts.shortcutDeleted();
+
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:00 AM
+ * Last modified 5/4/20 12:51 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,7 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadFolderPopupShortcuts;
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitTransparentPair;
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices.SplitTransparentPair;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 
 

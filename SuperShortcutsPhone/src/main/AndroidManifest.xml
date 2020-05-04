@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/4/20 11:55 AM
+  ~ Last modified 5/4/20 12:59 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -131,11 +131,11 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".SplitShortcuts.SplitTransparentPair"
+            android:name=".SplitShortcuts.SplitServices.SplitTransparentPair"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
-            android:exported="true"
             android:noHistory="true"
+            android:exported="true"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/Transparent">
@@ -149,7 +149,7 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".SplitShortcuts.SplitTransparentSingle"
+            android:name=".SplitShortcuts.SplitServices.SplitTransparentSingle"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -159,6 +159,7 @@
             android:theme="@style/Transparent">
             <intent-filter>
                 <action android:name="load_split_action_single" />
+                <action android:name="load_split_action_single_shortcut" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -226,7 +227,7 @@
         </activity>
 
         <service
-            android:name=".SplitShortcuts.SplitScreenService"
+            android:name=".SplitShortcuts.SplitServices.SplitScreenService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />

@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 1:59 PM
+ * Last modified 5/4/20 1:10 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts;
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -30,7 +30,6 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 public class SplitTransparentSingle extends Activity {
 
     FunctionsClass functionsClass;
-    BroadcastReceiver broadcastReceiver;
 
     String packageNameSplit;
 
@@ -63,7 +62,7 @@ public class SplitTransparentSingle extends Activity {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("split_single_finish");
             intentFilter.addAction("Split_Apps_Single_" + SplitTransparentSingle.class.getSimpleName());
-            broadcastReceiver = new BroadcastReceiver() {
+            BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     if (intent.getAction().equals("Split_Apps_Single_" + SplitTransparentSingle.class.getSimpleName())) {
@@ -71,14 +70,14 @@ public class SplitTransparentSingle extends Activity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent spliteOne = getPackageManager().getLaunchIntentForPackage(packageNameSplit);
-                                spliteOne.addCategory(Intent.CATEGORY_LAUNCHER);
-                                spliteOne.setFlags(
+                                Intent splitOne = getPackageManager().getLaunchIntentForPackage(packageNameSplit);
+                                splitOne.addCategory(Intent.CATEGORY_LAUNCHER);
+                                splitOne.setFlags(
                                         Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
                                                 Intent.FLAG_ACTIVITY_NEW_TASK |
                                                 Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
-                                startActivity(spliteOne);
+                                startActivity(splitOne);
 
                             }
                         }, 500);
@@ -88,16 +87,6 @@ public class SplitTransparentSingle extends Activity {
                 }
             };
             registerReceiver(broadcastReceiver, intentFilter);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        try {
-            unregisterReceiver(broadcastReceiver);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
