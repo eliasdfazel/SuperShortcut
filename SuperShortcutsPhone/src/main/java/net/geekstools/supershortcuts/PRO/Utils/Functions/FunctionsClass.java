@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 12:51 PM
+ * Last modified 5/5/20 2:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -75,8 +75,8 @@ import com.google.firebase.appindexing.FirebaseUserActions;
 import com.google.firebase.appindexing.Indexable;
 import com.google.firebase.appindexing.builders.Actions;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.AppShortcutsMediatedActivity;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Utils.AppShortcutsMediatedActivity;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderItemListAdapter;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadFolderPopupShortcuts;

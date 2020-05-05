@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/4/20 12:59 PM
+  ~ Last modified 5/4/20 1:52 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -76,7 +76,7 @@
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".ApplicationsShortcuts.AppShortcutsMediatedActivity"
+            android:name=".ApplicationsShortcuts.Utils.AppShortcutsMediatedActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
