@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 2:30 PM
+ * Last modified 5/6/20 8:55 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -53,27 +53,34 @@ class LoadFolderPopupShortcuts : Activity() {
                     folderName = intent.getStringExtra(Intent.EXTRA_TEXT)!!
                 }
 
-                if (functionsClass.customIconsEnable()) {
-                    loadCustomIcons.load()
-                }
+                if (functionsClass.countLineInnerFile(folderName) > 0) {
 
-                folderPopupViewBinding.popupAnchorView.post {
-
-                    if (intent.action == "load_category_action") {
-
-                        functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                                folderPopupViewBinding.popupAnchorView,
-                                folderName.replace(".CategorySelected", ""),
-                                loadCustomIcons)
-
-                    } else if (intent.action == "load_category_action_shortcut") {
-
-                        functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                                folderPopupViewBinding.popupAnchorView,
-                                folderName,
-                                loadCustomIcons)
-
+                    if (functionsClass.customIconsEnable()) {
+                        loadCustomIcons.load()
                     }
+
+                    folderPopupViewBinding.popupAnchorView.post {
+
+                        if (intent.action == "load_category_action") {
+
+                            functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                                    folderPopupViewBinding.popupAnchorView,
+                                    folderName.replace(".CategorySelected", ""),
+                                    loadCustomIcons)
+
+                        } else if (intent.action == "load_category_action_shortcut") {
+
+                            functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                                    folderPopupViewBinding.popupAnchorView,
+                                    folderName,
+                                    loadCustomIcons)
+
+                        }
+                    }
+                } else {
+
+                    this@LoadFolderPopupShortcuts.finish()
+
                 }
 
             } else {

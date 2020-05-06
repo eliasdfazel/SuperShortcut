@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/5/20 2:03 PM
+ * Last modified 5/6/20 8:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -2560,7 +2560,7 @@ public class FunctionsClass {
     /*In-App Purchase*/
     public boolean mixShortcutsPurchased() {
 
-        return BuildConfig.DEBUG ? true :
+        return BuildConfig.DEBUG ? false :
                 readPreference(".PurchasedItem", "mix.shortcuts", false);
     }
 

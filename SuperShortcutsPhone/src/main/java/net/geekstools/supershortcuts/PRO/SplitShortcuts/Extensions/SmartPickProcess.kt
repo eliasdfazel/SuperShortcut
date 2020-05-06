@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:23 AM
+ * Last modified 5/6/20 9:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -46,7 +46,7 @@ fun SplitShortcuts.smartPickProcess() {
  **/
 private fun retrieveFrequentlyUsedApplications(activity: Activity,
                                                functionsClass: FunctionsClass,
-                                               maxValue: Int,
+                                               initialMaxValue: Int,
                                                /**86400000‬ = 1 days**/startTime: Long, endTime: Long /*System.currentTimeMillis()*/): List<String> {
 
     val frequentlyUsedApplications: MutableList<String> = ArrayList()
@@ -60,6 +60,11 @@ private fun retrieveFrequentlyUsedApplications(activity: Activity,
 
         right.totalTimeInForeground.compareTo(left.totalTimeInForeground)
     })
+
+    var maxValue = initialMaxValue
+    if (queryUsageStats.size < maxValue) {
+        maxValue = queryUsageStats.size
+    }
 
     for (i in 0 until maxValue) {
         val aPackageName = queryUsageStats[i].packageName
@@ -91,12 +96,12 @@ private fun extractSaveFrequentlyUsedApplicationsData(activity: AppCompatActivit
     functionsClass.deleteSelectedFiles()
 
     val frequentlyUsedApplications = retrieveFrequentlyUsedApplications(activity, functionsClass,
-            25, (86400000 * 7).toLong(), System.currentTimeMillis())
+            functionsClass.systemMaxAppShortcut, (86400000 * 7).toLong(), System.currentTimeMillis())
 
-    for (i in 0..4) {
+    frequentlyUsedApplications.forEach {
         functionsClass.saveFileAppendLine(
                 ".superFreq",
-                frequentlyUsedApplications[i])
+                it)
     }
 
     functionsClass.addAppShortcutsFreqApps()

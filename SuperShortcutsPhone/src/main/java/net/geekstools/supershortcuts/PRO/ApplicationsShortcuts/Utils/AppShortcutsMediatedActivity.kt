@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 1:52 PM
+ * Last modified 5/6/20 9:05 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,18 +19,24 @@ class AppShortcutsMediatedActivity : Activity() {
         super.onCreate(bundle)
 
         intent?.let {
-            val packageName = it.getStringExtra("PackageName")!!
+            val packageName = it.getStringExtra("PackageName")
+            val className = it.getStringExtra("ClassName")
 
-            val openIntent = Intent().apply {
-                this.setPackage(packageName)
-                if (it.hasExtra("ClassName")) {
-                    this.setClassName(packageName, it.getStringExtra("ClassName")!!)
+            packageName?.let {
+
+                Intent().apply {
+                    setPackage(packageName)
+                    if (className != null) {
+                        setClassName(packageName, className)
+                    }
+                    action = Intent.ACTION_MAIN
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    addCategory(Intent.CATEGORY_DEFAULT)
+
+                    startActivity(this)
                 }
-                this.action = Intent.ACTION_MAIN
-                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                this.addCategory(Intent.CATEGORY_DEFAULT)
+
             }
-            startActivity(openIntent)
         }
 
         this@AppShortcutsMediatedActivity.finish()
