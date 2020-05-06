@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 12:50 PM
+ * Last modified 5/6/20 11:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -158,7 +158,6 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         tempIcon.setVisibility(View.INVISIBLE);
-                                        context.sendBroadcast(new Intent(context.getString(R.string.animtaionActionAdvance)));
                                         context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
                                     }
 

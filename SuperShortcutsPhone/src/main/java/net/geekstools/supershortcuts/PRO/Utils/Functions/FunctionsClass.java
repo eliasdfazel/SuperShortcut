@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 8:32 AM
+ * Last modified 5/6/20 10:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -1847,7 +1847,7 @@ public class FunctionsClass {
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 }
             });
-            alertDialog.setNeutralButton(context.getString(R.string.newupdate), new DialogInterface.OnClickListener() {
+            alertDialog.setNeutralButton(context.getString(R.string.installUpdate), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int i) {
                     dialog.dismiss();

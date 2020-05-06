@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 8:02 AM
+  ~ Last modified 5/6/20 11:03 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -25,7 +25,7 @@
     <string name="followIt" translatable="false">Follow App Page</string>
     <string name="shareIt" translatable="false">Rate &amp; Share</string>
     <string name="invitation_title" translatable="false">
-        *Install Super Shortcut App*
+        *Install Super Shortcuts*
     </string>
     <string name="invitation_message" translatable="false">
         By This App you can Replace Several Home Screen Shortcuts to One… Quick Access to Apps &amp; Enjoy your Wallpapers!
@@ -80,7 +80,7 @@
 
     <string name="supportTitle" translatable="false">Support Center</string>
     <string name="supportDesc" translatable="false">Help &amp; Feedback</string>
-    <string name="newupdate" translatable="false">Install Update</string>
+    <string name="installUpdate" translatable="false">Install Update</string>
     <string name="updateAvailable" translatable="false">New Update Available | Click Here to Install…!</string>
 
     <string name="inAppUpdateAvailable" translatable="false">Loading New Update | Version </string>
@@ -107,36 +107,19 @@
 
     <string name="license" translatable="false">LICENSE</string>
 
-    <string name="dynamicShortcuts" translatable="false">DYNAMIC_SHORTCUTS</string>
-    <string name="loadOffline" translatable="false">LOAD_OFFLINE</string>
-    <string name="visibilityAction" translatable="false">VISIBILITY_ACTION</string>
-    <string name="animtaionAction" translatable="false">ANIMATION_ACTION</string>
-    <string name="counterAction" translatable="false">COUNTER_ACTION</string>
-    <string name="savedAction" translatable="false">SAVED_ACTION</string>
-    <string name="savedActionHide" translatable="false">SAVED_ACTION_HIDE</string>
-    <string name="checkboxAction" translatable="false">CHECKBOX_ACTION</string>
-
-    <string name="dynamicShortcutsAdvance" translatable="false">DYNAMIC_SHORTCUTS_ADVANCE</string>
     <string name="visibilityActionAdvance" translatable="false">VISIBILITY_ACTION_ADVANCE</string>
-    <string name="animtaionActionAdvance" translatable="false">ANIMATION_ACTION_ADVANCE</string>
     <string name="counterActionAdvance" translatable="false">COUNTER_ACTION_ADVANCE</string>
-    <string name="savedActionAdvance" translatable="false">SAVED_ACTION_ADVANCE</string>
     <string name="savedActionHideAdvance" translatable="false">SAVED_ACTION_HIDE_ADVANCE</string>
     <string name="checkboxActionAdvance" translatable="false">CHECKBOX_ACTION_ADVANCE</string>
 
     <string name="counterActionAdvanceShortcuts" translatable="false">COUNTER_ACTION_ADVANCE_SHORTCUTS</string>
     <string name="checkboxActionAdvanceShortcuts" translatable="false">CHECKBOX_ACTION_ADVANCE_SHORTCUTS</string>
 
-    <string name="dynamicShortcutsSplit" translatable="false">DYNAMIC_SHORTCUTS_SPLIT</string>
     <string name="visibilityActionSplit" translatable="false">VISIBILITY_ACTION_SPLIT</string>
     <string name="animtaionActionSplit" translatable="false">ANIMATION_ACTION_SPLIT</string>
     <string name="counterActionSplit" translatable="false">COUNTER_ACTION_SPLIT</string>
-    <string name="savedActionSplit" translatable="false">SAVED_ACTION_SPLIT</string>
     <string name="savedActionHideSplit" translatable="false">SAVED_ACTION_HIDE_SPLIT</string>
     <string name="checkboxActionSplit" translatable="false">CHECKBOX_ACTION_SPLIT</string>
-
-    <string name="counterActionSplitShortcuts" translatable="false">COUNTER_ACTION_SPLIT_SHORTCUTS</string>
-    <string name="checkboxActionSplitShortcuts" translatable="false">CHECKBOX_ACTION_SPLIT_SHORTCUTS</string>
 
     <string name="integerVersionCodeNewUpdatePhone" translatable="false">integer_version_code_new_update_phone</string>
     <string name="stringVersionNameNewUpdatePhone" translatable="false">string_version_name_new_update_phone</string>

@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/1/20 2:14 PM
+  ~ Last modified 5/6/20 10:52 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -91,16 +91,6 @@
         <item name="android:statusBarColor">@color/dark</item>
         <item name="android:windowBackground">@color/dark</item>
         <item name="android:navigationBarColor">@color/dark</item>
-    </style>
-
-    <style name="GeeksEmpire.Material.IAP.LIGHT" parent="Theme.MaterialComponents">
-        <item name="colorAccent">@color/default_color_light</item>
-        <item name="colorPrimary">@color/default_color_light</item>
-        <item name="colorPrimaryDark">@color/default_color_light</item>
-
-        <item name="android:statusBarColor">@color/light</item>
-        <item name="android:windowBackground">@color/light</item>
-        <item name="android:navigationBarColor">@color/light</item>
     </style>
 
 </resources>
