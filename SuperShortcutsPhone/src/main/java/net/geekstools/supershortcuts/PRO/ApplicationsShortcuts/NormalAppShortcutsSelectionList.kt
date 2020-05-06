@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 6:43 AM
+ * Last modified 5/6/20 10:21 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -201,7 +201,7 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
                             functionsClass.notificationCreator(
                                     getString(R.string.updateAvailable),
                                     firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
-                                    firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) as Int
+                                    firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toInt()
                             )
 
                             val inAppUpdateTriggeredTime =

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 10:07 AM
+ * Last modified 5/6/20 10:36 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,12 +38,13 @@ class WaitingDialogueLiveData() : ViewModel() {
 class WaitingDialogue {
 
     fun initShow(initActivity: AppCompatActivity) : Dialog {
+
         val waitingDialogueLiveData = ViewModelProvider(initActivity).get(WaitingDialogueLiveData::class.java)
 
-        val layoutParams = WindowManager.LayoutParams()
         val dialogueWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 363f, initActivity.resources.displayMetrics).toInt()
         val dialogueHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100f, initActivity.resources.displayMetrics).toInt()
 
+        val layoutParams = WindowManager.LayoutParams()
         layoutParams.width = dialogueWidth
         layoutParams.height = dialogueHeight
         layoutParams.windowAnimations = android.R.style.Animation_Dialog
@@ -53,10 +54,10 @@ class WaitingDialogue {
         val dialog = Dialog(initActivity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.waiting_dialogue)
-        dialog.window?.attributes = layoutParams
+        dialog.setCancelable(false)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.decorView?.setBackgroundColor(Color.TRANSPARENT)
-        dialog.setCancelable(true)
+        dialog.window?.attributes = layoutParams
 
         dialog.dialogueView.backgroundTintList = ColorStateList.valueOf(initActivity.getColor(R.color.light))
 

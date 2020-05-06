@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 6:15 AM
+ * Last modified 5/6/20 10:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,6 +38,8 @@ class EntryConfigurations : AppCompatActivity() {
 
     private lateinit var waitingDialogue: Dialog
 
+    private lateinit var waitingDialogueLiveData: WaitingDialogueLiveData
+
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private object Google {
@@ -71,7 +73,8 @@ class EntryConfigurations : AppCompatActivity() {
                 startActivityForResult(this, Google.SignInRequest)
             }
 
-            ViewModelProvider(this@EntryConfigurations).get(WaitingDialogueLiveData::class.java).run {
+            waitingDialogueLiveData = ViewModelProvider(this@EntryConfigurations).get(WaitingDialogueLiveData::class.java)
+            waitingDialogueLiveData.run {
                 this.dialogueTitle.value = getString(R.string.signinTitle)
                 this.dialogueMessage.value = getString(R.string.signinMessage)
 
@@ -160,7 +163,7 @@ class EntryConfigurations : AppCompatActivity() {
                 }
             }
         } else {
-            ViewModelProvider(this@EntryConfigurations).get(WaitingDialogueLiveData::class.java).run {
+            waitingDialogueLiveData.run {
                 this.dialogueTitle.value = getString(R.string.error)
                 this.dialogueMessage.value = Activity.RESULT_CANCELED.toString()
             }

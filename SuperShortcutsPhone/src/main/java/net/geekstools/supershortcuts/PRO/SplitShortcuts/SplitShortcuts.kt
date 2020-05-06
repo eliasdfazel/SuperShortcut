@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 12:56 PM
+ * Last modified 5/6/20 10:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -221,7 +221,7 @@ class SplitShortcuts : AppCompatActivity(),
                             functionsClass.notificationCreator(
                                     getString(R.string.updateAvailable),
                                     firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
-                                    firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) as Int
+                                    firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toInt()
                             )
 
                             val inAppUpdateTriggeredTime =
