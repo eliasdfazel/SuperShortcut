@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 10:21 AM
+ * Last modified 5/7/20 12:08 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -283,52 +283,54 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
 
             selectedAppsListItem.clear()
 
-            val savedLine = functionsClass.readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
-            for (aSavedLine in savedLine) {
+            functionsClass.readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)?.let {
 
-                val aLineSplit = aSavedLine.split("|")
+                for (aSavedLine in it) {
 
-                val packageName = aLineSplit[0]
-                val className = aLineSplit[1]
+                    val aLineSplit = aSavedLine.split("|")
 
-                val activityInfo = packageManager.getActivityInfo(ComponentName(packageName, className), 0)
+                    val packageName = aLineSplit[0]
+                    val className = aLineSplit[1]
 
-                selectedAppsListItem.add(AdapterItemsData(
-                        functionsClass.activityLabel(activityInfo),
-                        packageName,
-                        className,
-                        if (functionsClass.customIconsEnable()) {
-                            loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(activityInfo))
-                        } else {
-                            functionsClass.activityIcon(activityInfo)
-                        }
-                ))
+                    val activityInfo = packageManager.getActivityInfo(ComponentName(packageName, className), 0)
+
+                    selectedAppsListItem.add(AdapterItemsData(
+                            functionsClass.activityLabel(activityInfo),
+                            packageName,
+                            className,
+                            if (functionsClass.customIconsEnable()) {
+                                loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(activityInfo))
+                            } else {
+                                functionsClass.activityIcon(activityInfo)
+                            }
+                    ))
+                }
+
+                val savedAppsListPopupAdapter = SavedAppsListPopupAdapter(
+                        applicationContext,
+                        functionsClass,
+                        selectedAppsListItem,
+                        this@NormalAppShortcutsSelectionList
+                )
+
+                listPopupWindow.apply {
+                    anchorView = normalAppSelectionBinding.confirmLayout
+                    width = functionsClass.DpToInteger(300)
+                    height = ListPopupWindow.WRAP_CONTENT
+                    promptPosition = ListPopupWindow.POSITION_PROMPT_ABOVE
+                    isModal = true
+                    setDropDownGravity(Gravity.CENTER)
+                    setBackgroundDrawable(null)
+                }
+
+                listPopupWindow.setOnDismissListener {
+
+                    appsConfirmButton?.makeItVisible()
+                }
+
+                listPopupWindow.setAdapter(savedAppsListPopupAdapter)
+                listPopupWindow.show()
             }
-
-            val savedAppsListPopupAdapter = SavedAppsListPopupAdapter(
-                    applicationContext,
-                    functionsClass,
-                    selectedAppsListItem,
-                    this@NormalAppShortcutsSelectionList
-            )
-
-            listPopupWindow.apply {
-                anchorView = normalAppSelectionBinding.confirmLayout
-                width = functionsClass.DpToInteger(300)
-                height = ListPopupWindow.WRAP_CONTENT
-                promptPosition = ListPopupWindow.POSITION_PROMPT_ABOVE
-                isModal = true
-                setDropDownGravity(Gravity.CENTER)
-                setBackgroundDrawable(null)
-            }
-
-            listPopupWindow.setOnDismissListener {
-
-                appsConfirmButton?.makeItVisible()
-            }
-
-            listPopupWindow.setAdapter(savedAppsListPopupAdapter)
-            listPopupWindow.show()
         }
     }
 
@@ -367,21 +369,23 @@ class NormalAppShortcutsSelectionList : AppCompatActivity(),
             if (!functionsClass.mixShortcuts()) {
 
                 if (applicationContext.getFileStreamPath(".mixShortcuts").exists()) {
-                    val mixShortcutsContent = functionsClass.readFileLine(".mixShortcuts")
 
-                    for (mixShortcutLine in mixShortcutsContent) {
-                        when {
-                            mixShortcutLine.contains(".CategorySelected") -> {
-                                applicationContext.deleteFile(functionsClass.categoryNameSelected(mixShortcutLine))
+                    functionsClass.readFileLine(".mixShortcuts")?.let {
+
+                        for (mixShortcutLine in it) {
+                            when {
+                                mixShortcutLine.contains(".CategorySelected") -> {
+                                    applicationContext.deleteFile(functionsClass.categoryNameSelected(mixShortcutLine))
+                                }
+                                mixShortcutLine.contains(".SplitSelected") -> {
+                                    applicationContext.deleteFile(functionsClass.splitNameSelected(mixShortcutLine))
+                                }
+                                else -> {
+                                    applicationContext.deleteFile(functionsClass.packageNameSelected(mixShortcutLine))
+                                }
                             }
-                            mixShortcutLine.contains(".SplitSelected") -> {
-                                applicationContext.deleteFile(functionsClass.splitNameSelected(mixShortcutLine))
-                            }
-                            else -> {
-                                applicationContext.deleteFile(functionsClass.packageNameSelected(mixShortcutLine))
-                            }
+
                         }
-
                     }
 
                     applicationContext.deleteFile(".mixShortcuts")

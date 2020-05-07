@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 10:29 AM
+ * Last modified 5/7/20 10:16 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -155,7 +155,7 @@ class EntryConfigurations : AppCompatActivity() {
                                 }
                             }.addOnFailureListener { exception ->
 
-                                ViewModelProvider(this@EntryConfigurations).get(WaitingDialogueLiveData::class.java).run {
+                                waitingDialogueLiveData.run {
                                     this.dialogueTitle.value = getString(R.string.error)
                                     this.dialogueMessage.value = exception.message
                                 }

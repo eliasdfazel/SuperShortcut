@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 8:55 AM
+ * Last modified 5/7/20 12:25 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -31,8 +31,6 @@ class LoadFolderPopupShortcuts : Activity() {
     private lateinit var folderName: String
 
     private lateinit var folderPopupViewBinding: FolderPopupViewBinding
-
-
 
     override fun onCreate(saved: Bundle?) {
         super.onCreate(saved)

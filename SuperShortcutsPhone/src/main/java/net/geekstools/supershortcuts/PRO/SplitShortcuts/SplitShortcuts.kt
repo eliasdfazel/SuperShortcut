@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 10:23 AM
+ * Last modified 5/7/20 12:09 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -307,21 +307,23 @@ class SplitShortcuts : AppCompatActivity(),
             if (!functionsClass.mixShortcuts()) {
 
                 if (applicationContext.getFileStreamPath(".mixShortcuts").exists()) {
-                    val mixShortcutsContent = functionsClass.readFileLine(".mixShortcuts")
 
-                    for (mixShortcutLine in mixShortcutsContent) {
-                        when {
-                            mixShortcutLine.contains(".CategorySelected") -> {
-                                applicationContext.deleteFile(functionsClass.categoryNameSelected(mixShortcutLine))
+                    functionsClass.readFileLine(".mixShortcuts")?.let {
+
+                        for (mixShortcutLine in it) {
+                            when {
+                                mixShortcutLine.contains(".CategorySelected") -> {
+                                    applicationContext.deleteFile(functionsClass.categoryNameSelected(mixShortcutLine))
+                                }
+                                mixShortcutLine.contains(".SplitSelected") -> {
+                                    applicationContext.deleteFile(functionsClass.splitNameSelected(mixShortcutLine))
+                                }
+                                else -> {
+                                    applicationContext.deleteFile(functionsClass.packageNameSelected(mixShortcutLine))
+                                }
                             }
-                            mixShortcutLine.contains(".SplitSelected") -> {
-                                applicationContext.deleteFile(functionsClass.splitNameSelected(mixShortcutLine))
-                            }
-                            else -> {
-                                applicationContext.deleteFile(functionsClass.packageNameSelected(mixShortcutLine))
-                            }
+
                         }
-
                     }
 
                     applicationContext.deleteFile(".mixShortcuts")

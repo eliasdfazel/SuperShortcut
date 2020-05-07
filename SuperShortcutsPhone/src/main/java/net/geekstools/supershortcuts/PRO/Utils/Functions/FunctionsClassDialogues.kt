@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 10:06 AM
+ * Last modified 5/7/20 12:09 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -84,7 +84,7 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
                 dialog.show()
             }
 
-        } else if (functionsClass.appVersionCode(activity.packageName) > functionsClass.readFile(".Updated").toInt()) {
+        } else if (functionsClass.appVersionCode(activity.packageName) > functionsClass.readFile(".Updated")?.toInt()?:0) {
 
             if (!activity.isFinishing) {
                 dialog.show()

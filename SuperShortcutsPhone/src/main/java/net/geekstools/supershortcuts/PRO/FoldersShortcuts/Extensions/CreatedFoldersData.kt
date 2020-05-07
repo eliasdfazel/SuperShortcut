@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:24 AM
+ * Last modified 5/7/20 10:04 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,17 +35,18 @@ fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() +
 
     } else {
 
-        val folderNameList = functionsClass.readFileLine(FolderShortcuts.FolderShortcutsFile)
-        folderNameList.sort()
-        folderNameList.forEachIndexed { index, folderName ->
+        functionsClass.readFileLine(FolderShortcuts.FolderShortcutsFile)?.let {
+            it.sort()
+            it.forEachIndexed { index, folderName ->
 
-            createdFolderListItem.add(AdapterItemsData(
-                    folderName,
-                    functionsClass.readFileLine(folderName)
-            ))
+                createdFolderListItem.add(AdapterItemsData(
+                        folderName,
+                        functionsClass.readFileLine(folderName)
+                ))
 
-            listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).toUpperCase(Locale.getDefault()))
+                listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).toUpperCase(Locale.getDefault()))
 
+            }
         }
 
         createdFolderListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))

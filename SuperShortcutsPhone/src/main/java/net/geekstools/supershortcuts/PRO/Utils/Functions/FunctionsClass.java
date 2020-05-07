@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 10:59 AM
+ * Last modified 5/7/20 10:12 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -66,6 +66,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -1493,12 +1494,12 @@ public class FunctionsClass {
         }
     }
 
-    public String[] readFileLine(String fileName) {
+    public @Nullable String[] readFileLine(String fileName) {
 
         return new FunctionsClassIO(context).readFileLines(fileName);
     }
 
-    public String readFile(String fileName) {
+    public @Nullable String readFile(String fileName) {
 
         return new FunctionsClassIO(context).readFile(fileName);
     }

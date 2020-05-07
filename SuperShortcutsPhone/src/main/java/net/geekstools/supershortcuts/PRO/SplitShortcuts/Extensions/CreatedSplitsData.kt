@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 10:25 AM
+ * Last modified 5/7/20 10:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,17 +35,18 @@ fun SplitShortcuts.loadCreatedSplitsData()  = CoroutineScope(SupervisorJob() + D
 
     } else {
 
-        val folderNameList = functionsClass.readFileLine(SplitShortcuts.SplitShortcutsFile)
-        folderNameList.sort()
-        folderNameList.forEachIndexed { index, folderName ->
+        functionsClass.readFileLine(SplitShortcuts.SplitShortcutsFile)?.let {
+            it.sort()
+            it.forEachIndexed { index, folderName ->
 
-            createdSplitListItem.add(AdapterItemsData(
-                    folderName,
-                    functionsClass.readFileLine(folderName)
-            ))
+                createdSplitListItem.add(AdapterItemsData(
+                        folderName,
+                        functionsClass.readFileLine(folderName)
+                ))
 
-            listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).toUpperCase(Locale.getDefault()))
+                listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).toUpperCase(Locale.getDefault()))
 
+            }
         }
 
         createdSplitListItem.add(AdapterItemsData(packageName, arrayOf(packageName)))

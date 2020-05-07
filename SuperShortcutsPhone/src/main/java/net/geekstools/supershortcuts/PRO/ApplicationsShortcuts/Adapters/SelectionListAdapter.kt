@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:42 AM
+ * Last modified 5/7/20 12:25 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -39,7 +39,9 @@ class SelectionListAdapter(private val context: Context,
                            private val appsConfirmButton: AppsConfirmButton,
                            private val confirmButtonProcessInterface: ConfirmButtonProcessInterface) : RecyclerView.Adapter<SelectionListAdapter.ViewHolder>() {
 
-    lateinit var loadCustomIcons: LoadCustomIcons
+    private val loadCustomIcons: LoadCustomIcons by lazy {
+        LoadCustomIcons(context, functionsClass.customIconPackageName())
+    }
 
     object PickedAttribute {
         var fromX: Float = 0f
@@ -68,7 +70,7 @@ class SelectionListAdapter(private val context: Context,
         PickedAttribute.animationType = Animation.ABSOLUTE
 
         if (functionsClass.customIconsEnable()) {
-            loadCustomIcons = LoadCustomIcons(context, functionsClass.customIconPackageName())
+            loadCustomIcons.load()
         }
     }
 
