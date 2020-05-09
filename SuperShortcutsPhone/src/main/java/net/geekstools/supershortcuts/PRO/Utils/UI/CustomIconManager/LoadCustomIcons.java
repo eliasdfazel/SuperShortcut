@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:49 AM
+ * Last modified 5/9/20 11:22 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -137,11 +137,7 @@ public class LoadCustomIcons {
                 this.totalIcons = mapPackagesDrawables.size();
             }
             iconsLoaded = true;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (PackageManager.NameNotFoundException | XmlPullParserException | IOException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
     }
