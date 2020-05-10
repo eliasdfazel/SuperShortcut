@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 10:19 AM
+ * Last modified 5/10/20 3:31 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -31,5 +31,5 @@ interface ConfirmButtonProcessInterface {
     /**
      * Reevaluate Popup Dynamic Shortcuts Information
      **/
-    fun reevaluateShortcutsInfo()
+    fun reevaluateShortcutsInfo() {}
 }

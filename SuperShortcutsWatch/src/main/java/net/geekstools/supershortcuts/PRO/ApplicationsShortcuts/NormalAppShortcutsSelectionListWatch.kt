@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 3:29 PM
+ * Last modified 5/10/20 3:36 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,20 +10,30 @@
 
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
 import android.support.wearable.activity.WearableActivity
 import android.widget.ListPopupWindow
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.loadInstalledAppsData
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButtonWatch
+import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
+import net.geekstools.supershortcuts.PRO.Utils.RemoteTask.LicenseValidator
 import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout
 import net.geekstools.supershortcuts.PRO.databinding.ApplicationsSelectionListViewBinding
@@ -66,6 +76,18 @@ class NormalAppShortcutsSelectionListWatch : WearableActivity(),
 
         applicationsSelectionListViewBinding.rootView.setBackgroundColor(getColor(R.color.light))
 
+        /*
+        *
+        *
+        *
+        * Convert to WearableRecyclerView
+        *
+        *
+        *
+        *
+        *
+        * */
+
         val recyclerViewLayoutManager: LinearLayoutManager = RecycleViewSmoothLayout(applicationContext, OrientationHelper.VERTICAL, false)
         applicationsSelectionListViewBinding.recyclerViewApplicationList.layoutManager = recyclerViewLayoutManager
 
@@ -84,10 +106,51 @@ class NormalAppShortcutsSelectionListWatch : WearableActivity(),
 
     override fun onStart() {
         super.onStart()
+
+        if (!getFileStreamPath(".License").exists() && functionsClass.networkConnection()) {
+            startService(Intent(applicationContext, LicenseValidator::class.java))
+
+            val intentFilter = IntentFilter()
+            intentFilter.addAction(getString(R.string.license))
+            val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    if (intent.action == getString(R.string.license)) {
+                        functionsClass.dialogueLicense(this@NormalAppShortcutsSelectionListWatch)
+
+                        Handler().postDelayed({
+                            stopService(Intent(applicationContext, LicenseValidator::class.java))
+                        }, 1000)
+
+                        unregisterReceiver(this)
+                    }
+                }
+            }
+            registerReceiver(broadcastReceiver, intentFilter)
+        }
     }
 
     override fun onResume() {
         super.onResume()
+
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+                .setFetchTimeoutInSeconds(0)
+                .build()
+        firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
+        firebaseRemoteConfig.fetch()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        firebaseRemoteConfig.activate().addOnSuccessListener {
+
+                            if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(packageName)) {
+
+                                Toast.makeText(applicationContext,
+                                        getString(R.string.updateAvailable), Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                }
     }
 
 
