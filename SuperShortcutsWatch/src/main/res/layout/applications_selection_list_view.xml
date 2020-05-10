@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/10/20 3:36 PM
+  ~ Last modified 5/10/20 3:56 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -14,56 +14,26 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/light"
     tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionListWatch">
 
-    <ScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.wear.widget.WearableRecyclerView
-                android:id="@+id/recyclerViewApplicationList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@drawable/draw_divider"
-                android:dividerHeight="2dp"
-                android:fadingEdge="vertical"
-                android:fadingEdgeLength="13dp"
-                android:isScrollContainer="false"
-                android:listSelector="@drawable/ripple_effect_list"
-                android:nestedScrollingEnabled="false"
-                android:paddingStart="5dp"
-                android:paddingTop="39dp"
-                android:paddingEnd="23dp"
-                android:paddingBottom="37dp"
-                android:requiresFadingEdge="vertical"
-                android:saveEnabled="true"
-                android:scrollbars="none" />
-        </RelativeLayout>
-    </ScrollView>
+    <androidx.wear.widget.WearableRecyclerView
+        android:id="@+id/recyclerViewApplicationList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="3dp"
+        android:paddingHorizontal="3dp" />
 
     <RelativeLayout
         android:id="@+id/confirmLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="13dp"
         android:background="@android:color/transparent"
         android:gravity="center">
-
-        <net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.ConfirmButton
-            android:layout_width="37dp"
-            android:layout_height="37dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/ripple_effect_confirm"
-            android:visibility="invisible" />
+        <!--        -->
     </RelativeLayout>
 
     <TextView

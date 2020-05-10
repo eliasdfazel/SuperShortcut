@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 3:36 PM
+ * Last modified 5/10/20 3:57 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,12 +20,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.wearable.activity.WearableActivity
 import android.widget.ListPopupWindow
+import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.wear.widget.WearableLinearLayoutManager
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.CurveWearLayoutManager
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.loadInstalledAppsData
@@ -35,7 +36,6 @@ import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.RemoteTask.LicenseValidator
 import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
-import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout
 import net.geekstools.supershortcuts.PRO.databinding.ApplicationsSelectionListViewBinding
 import java.util.*
 
@@ -72,26 +72,31 @@ class NormalAppShortcutsSelectionListWatch : WearableActivity(),
         setContentView(applicationsSelectionListViewBinding.root)
 
         applicationsSelectionListViewBinding.confirmLayout.bringToFront()
-        applicationsSelectionListViewBinding.temporaryIcon.bringToFront()
 
-        applicationsSelectionListViewBinding.rootView.setBackgroundColor(getColor(R.color.light))
+        val confirmButtonLayoutParams = RelativeLayout.LayoutParams(
+                functionsClass.DpToInteger(73),
+                functionsClass.DpToInteger(73)
+        )
 
-        /*
-        *
-        *
-        *
-        * Convert to WearableRecyclerView
-        *
-        *
-        *
-        *
-        *
-        * */
+        appsConfirmButtonWatch = AppsConfirmButtonWatch(this@NormalAppShortcutsSelectionListWatch, applicationContext,
+                functionsClass,
+                this@NormalAppShortcutsSelectionListWatch)
 
-        val recyclerViewLayoutManager: LinearLayoutManager = RecycleViewSmoothLayout(applicationContext, OrientationHelper.VERTICAL, false)
-        applicationsSelectionListViewBinding.recyclerViewApplicationList.layoutManager = recyclerViewLayoutManager
+        appsConfirmButtonWatch!!.layoutParams = confirmButtonLayoutParams
+        appsConfirmButtonWatch!!.bringToFront()
 
-        applicationsSelectionListViewBinding.nestedScrollView.isSmoothScrollingEnabled = true
+        applicationsSelectionListViewBinding.confirmLayout.addView(appsConfirmButtonWatch)
+        appsConfirmButtonWatch!!.setOnClickListener {
+
+        }
+
+        applicationsSelectionListViewBinding.recyclerViewApplicationList.layoutManager = WearableLinearLayoutManager(applicationContext, CurveWearLayoutManager())
+        applicationsSelectionListViewBinding.recyclerViewApplicationList.isEdgeItemsCenteringEnabled = true
+        applicationsSelectionListViewBinding.recyclerViewApplicationList.apply {
+            this.isCircularScrollingGestureEnabled = true
+            this.bezelFraction = 0.10f
+            this.scrollDegreesPerScreen = 90f
+        }
 
         val typeface = Typeface.createFromAsset(assets, "upcil.ttf")
         applicationsSelectionListViewBinding.counterView.typeface = typeface

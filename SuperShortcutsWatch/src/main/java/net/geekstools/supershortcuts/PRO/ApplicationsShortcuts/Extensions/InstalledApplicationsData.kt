@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 3:23 PM
+ * Last modified 5/10/20 3:49 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -76,7 +76,6 @@ fun NormalAppShortcutsSelectionListWatch.loadInstalledAppsData() = CoroutineScop
 
         val fadeInAnimation = AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in)
         applicationsSelectionListViewBinding.counterView.startAnimation(fadeInAnimation)
-        applicationsSelectionListViewBinding.supportView.startAnimation(fadeInAnimation)
         fadeInAnimation.setAnimationListener(object : Animation.AnimationListener {
 
             override fun onAnimationStart(animation: Animation) {
@@ -88,7 +87,6 @@ fun NormalAppShortcutsSelectionListWatch.loadInstalledAppsData() = CoroutineScop
 
                 applicationsSelectionListViewBinding.counterView.visibility = View.VISIBLE
 
-                applicationsSelectionListViewBinding.supportView.visibility = View.VISIBLE
             }
 
             override fun onAnimationRepeat(animation: Animation) {
@@ -97,6 +95,8 @@ fun NormalAppShortcutsSelectionListWatch.loadInstalledAppsData() = CoroutineScop
         })
 
         PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(".autoSuper")
+        PublicVariable.maxAppShortcuts = installedApplicationsItemsData.size
+
         resetAdapter = false
     }
 }

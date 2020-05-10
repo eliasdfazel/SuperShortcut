@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 9:34 AM
+ * Last modified 5/10/20 3:45 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -80,6 +81,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
         return viewHolder;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(ViewHolder viewHolderBinder, final int position) {
         RelativeLayout item = viewHolderBinder.item;
@@ -104,6 +106,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
 
             }
         });
+
         item.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -111,7 +114,9 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
 
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+
                         fromY = -((dpHeight - motionEvent.getRawY()) - (view.getHeight()));
+
                         break;
                     case MotionEvent.ACTION_UP:
                         final String pack = adapterItemsData.get(position).getTitle();
@@ -178,14 +183,15 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                 return true;
             }
         });
+
         viewHolderBinder.autoChoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked == true) {
+                if (isChecked) {
                     if (PublicVariable.maxAppShortcutsCounter < PublicVariable.maxAppShortcuts) {
                         PublicVariable.maxAppShortcutsCounter++;
                     }
-                } else if (isChecked == false) {
+                } else if (!isChecked) {
                     PublicVariable.maxAppShortcutsCounter = PublicVariable.maxAppShortcutsCounter - 1;
                 }
             }
