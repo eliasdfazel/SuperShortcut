@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 9:41 AM
+ * Last modified 5/10/20 2:21 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -101,7 +101,7 @@ fun NormalAppShortcutsSelectionListPhone.loadInstalledAppsData() = CoroutineScop
         })
 
         PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile)
-        resetAdapter = false;
+        resetAdapter = false
     }
 
     /*Indexed Popup Fast Scroller*/
