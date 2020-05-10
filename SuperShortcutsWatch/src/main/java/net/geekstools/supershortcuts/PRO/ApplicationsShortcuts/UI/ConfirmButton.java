@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:41 AM
+ * Last modified 5/10/20 9:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +37,7 @@ public class ConfirmButton extends Button
     public ConfirmButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        functionsClass = new FunctionsClass(context, (Activity) getContext());
+        functionsClass = new FunctionsClass(context);
         initConfirmButton();
     }
 
@@ -95,7 +94,7 @@ public class ConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -106,7 +105,7 @@ public class ConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -117,7 +116,7 @@ public class ConfirmButton extends Button
                     @Override
                     public void run() {
                         if (functionsClass.countLine(".autoSuper") > 0) {
-                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.ic_cancel_stable_dark));
+                            ConfirmButton.this.setBackground(context.getDrawable(R.drawable.draw_saved_dismiss));
                         }
                     }
                 }, 200);
@@ -127,7 +126,7 @@ public class ConfirmButton extends Button
 
     @Override
     public void onSingleTapUp() {
-        functionsClass.Toast(context.getString(R.string.done), true);
+        functionsClass.Toast(context.getString(R.string.done));
         functionsClass.addAppShortcuts();
     }
 }

@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:41 AM
+ * Last modified 5/10/20 9:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,7 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 
 import java.util.ArrayList;
@@ -31,28 +31,26 @@ import java.util.ArrayList;
 public class SavedListAdapter extends BaseAdapter {
 
     private Context context;
-    private Activity activity;
 
     FunctionsClass functionsClass;
 
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<AdapterItemsData> adapterItemsData;
 
-    public SavedListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
-        this.activity = activity;
+    public SavedListAdapter(Context context, ArrayList<AdapterItemsData> adapterItemsData) {
         this.context = context;
-        this.navDrawerItems = navDrawerItems;
+        this.adapterItemsData = adapterItemsData;
 
-        functionsClass = new FunctionsClass(context, activity);
+        functionsClass = new FunctionsClass(context);
     }
 
     @Override
     public int getCount() {
-        return navDrawerItems.size();
+        return adapterItemsData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return navDrawerItems.get(position);
+        return adapterItemsData.get(position);
     }
 
     @Override
@@ -72,15 +70,15 @@ public class SavedListAdapter extends BaseAdapter {
         TextView textAppName = (TextView) convertView.findViewById(R.id.itemAppName);
         Button deleteItem = (Button) convertView.findViewById(R.id.deleteItem);
 
-        imgIcon.setImageDrawable(navDrawerItems.get(position).getIcon());
-        textAppName.setText(navDrawerItems.get(position).getDesc());
+        imgIcon.setImageDrawable(adapterItemsData.get(position).getIcon());
+        textAppName.setText(adapterItemsData.get(position).getDesc());
 
         deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 context.deleteFile(
-                        navDrawerItems.get(position).getTitle() + ".Super");
-                functionsClass.removeLine(".autoSuper", navDrawerItems.get(position).getTitle());
+                        adapterItemsData.get(position).getTitle() + ".Super");
+                functionsClass.removeLine(".autoSuper", adapterItemsData.get(position).getTitle());
                 context.sendBroadcast(new Intent(context.getString(R.string.checkboxAction)));
                 context.sendBroadcast(new Intent(context.getString(R.string.counterAction)));
             }
@@ -89,8 +87,8 @@ public class SavedListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 context.deleteFile(
-                        navDrawerItems.get(position).getTitle() + ".Super");
-                functionsClass.removeLine(".autoSuper", navDrawerItems.get(position).getTitle());
+                        adapterItemsData.get(position).getTitle() + ".Super");
+                functionsClass.removeLine(".autoSuper", adapterItemsData.get(position).getTitle());
                 context.sendBroadcast(new Intent(context.getString(R.string.checkboxAction)));
                 context.sendBroadcast(new Intent(context.getString(R.string.counterAction)));
             }

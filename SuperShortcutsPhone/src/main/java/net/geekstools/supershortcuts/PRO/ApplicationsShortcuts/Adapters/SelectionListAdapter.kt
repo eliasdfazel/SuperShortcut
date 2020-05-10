@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/7/20 12:25 PM
+ * Last modified 5/10/20 9:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -22,8 +22,8 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButtonPhone
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
@@ -36,7 +36,7 @@ class SelectionListAdapter(private val context: Context,
                            private var functionsClass: FunctionsClass,
                            private var temporaryFallingIcon: ImageView,
                            private val adapterItemData: ArrayList<AdapterItemsData>,
-                           private val appsConfirmButton: AppsConfirmButton,
+                           private val appsConfirmButtonPhone: AppsConfirmButtonPhone,
                            private val confirmButtonProcessInterface: ConfirmButtonProcessInterface) : RecyclerView.Adapter<SelectionListAdapter.ViewHolder>() {
 
     private val loadCustomIcons: LoadCustomIcons by lazy {
@@ -127,7 +127,7 @@ class SelectionListAdapter(private val context: Context,
                     if (autoFile.exists()) {
                         context.deleteFile(functionsClass.appPackageNameClassName(packageName, className) + ".Super")
 
-                        functionsClass.removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, functionsClass.appPackageNameClassName(packageName, className))
+                        functionsClass.removeLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile, functionsClass.appPackageNameClassName(packageName, className))
 
                         if (functionsClass.mixShortcuts()) {
                             functionsClass.removeLine(".mixShortcuts", functionsClass.appPackageNameClassName(packageName, className))
@@ -138,7 +138,7 @@ class SelectionListAdapter(private val context: Context,
                         confirmButtonProcessInterface.savedShortcutCounter()
                         confirmButtonProcessInterface.reevaluateShortcutsInfo()
                         confirmButtonProcessInterface.hideSavedShortcutList()
-                        appsConfirmButton.makeItVisible()
+                        appsConfirmButtonPhone.makeItVisible()
 
                     } else {
                         if (functionsClass.mixShortcuts()) {
@@ -148,7 +148,7 @@ class SelectionListAdapter(private val context: Context,
                                         functionsClass.appPackageNameClassName(packageName, className))
 
                                 functionsClass.saveFileAppendLine(
-                                        NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile,
+                                        NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile,
                                         functionsClass.appPackageNameClassName(packageName, className))
 
                                 functionsClass.saveFileAppendLine(
@@ -175,7 +175,7 @@ class SelectionListAdapter(private val context: Context,
                                     override fun onAnimationStart(animation: Animation) {
 
                                         confirmButtonProcessInterface.hideSavedShortcutList()
-                                        appsConfirmButton.makeItVisible()
+                                        appsConfirmButtonPhone.makeItVisible()
 
                                         temporaryFallingIcon.visibility = View.VISIBLE
                                     }
@@ -183,7 +183,7 @@ class SelectionListAdapter(private val context: Context,
                                     override fun onAnimationEnd(animation: Animation) {
                                         temporaryFallingIcon.visibility = View.INVISIBLE
 
-                                        appsConfirmButton.startCustomAnimation(null)
+                                        appsConfirmButtonPhone.startCustomAnimation(null)
                                         confirmButtonProcessInterface.savedShortcutCounter()
                                         confirmButtonProcessInterface.reevaluateShortcutsInfo()
                                     }
@@ -199,7 +199,7 @@ class SelectionListAdapter(private val context: Context,
                                         packageName)
 
                                 functionsClass.saveFileAppendLine(
-                                        NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile,
+                                        NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile,
                                         functionsClass.appPackageNameClassName(packageName, className))
 
                                 viewHolderBinder.autoChoice.isChecked = true
@@ -218,7 +218,7 @@ class SelectionListAdapter(private val context: Context,
                                     override fun onAnimationStart(animation: Animation) {
 
                                         confirmButtonProcessInterface.hideSavedShortcutList()
-                                        appsConfirmButton.makeItVisible()
+                                        appsConfirmButtonPhone.makeItVisible()
 
                                         temporaryFallingIcon.visibility = View.VISIBLE
                                     }
@@ -226,7 +226,7 @@ class SelectionListAdapter(private val context: Context,
                                     override fun onAnimationEnd(animation: Animation) {
                                         temporaryFallingIcon.visibility = View.INVISIBLE
 
-                                        appsConfirmButton.startCustomAnimation(null)
+                                        appsConfirmButtonPhone.startCustomAnimation(null)
                                         confirmButtonProcessInterface.savedShortcutCounter()
                                         confirmButtonProcessInterface.reevaluateShortcutsInfo()
                                     }
@@ -241,7 +241,7 @@ class SelectionListAdapter(private val context: Context,
             }
             true
         }
-        PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
+        PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

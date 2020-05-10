@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:41 AM
+ * Last modified 5/10/20 10:19 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,7 +38,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.Html;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,16 +49,13 @@ import android.widget.Toast;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.ItemListAdapter;
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,24 +63,10 @@ import java.util.List;
 
 public class FunctionsClass {
 
-    int API;
-    Activity activity;
     Context context;
-    PackageManager packageManager;
-
-    String[] categoryNamesSelected;
-    LayerDrawable drawCategory;
-    boolean justUpdate;
 
     public FunctionsClass(Context context) {
         this.context = context;
-        API = Build.VERSION.SDK_INT;
-    }
-
-    public FunctionsClass(Context context, Activity activity) {
-        this.context = context;
-        this.activity = activity;
-        API = Build.VERSION.SDK_INT;
     }
 
     public void addAppShortcuts() {
@@ -130,7 +112,7 @@ public class FunctionsClass {
                 }
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
-            Toast(context.getString(R.string.done), true);
+            Toast(context.getString(R.string.done));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -162,27 +144,8 @@ public class FunctionsClass {
     }
 
     public String[] readFileLine(String fileName) {
-        String[] contentLine = null;
-        if (context.getFileStreamPath(fileName).exists()) {
-            try {
-                FileInputStream fileInputStream = new FileInputStream(context.getFileStreamPath(fileName));
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
 
-                int count = countLine(fileName);
-                contentLine = new String[count];
-                String line = "";
-                int i = 0;
-                while ((line = bufferedReader.readLine()) != null) {
-                    contentLine[i] = line;
-                    i++;
-                }
-                fileInputStream.close();
-                bufferedReader.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return contentLine;
+        return new FunctionsClassIO(context).readFileLines(fileName);
     }
 
     public void removeLine(String fileName, String lineToRemove) {
@@ -215,19 +178,8 @@ public class FunctionsClass {
     }
 
     public int countLine(String fileName) {
-        int nLines = 0;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(context.getFileStreamPath(fileName)));
 
-            while (reader.readLine() != null) {
-                nLines++;
-            }
-
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return nLines;
+        return new FunctionsClassIO(context).fileLinesCounter(fileName);
     }
 
     public void savePreference(String PreferenceName, String KEY, String VALUE) {
@@ -283,8 +235,8 @@ public class FunctionsClass {
     }
 
     /*Checkpoint Function*/
-    public void dialogueLicense() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity, R.style.GeeksEmpire_Dialogue_Day);
+    public void dialogueLicense(Activity instanceOfActivity) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(instanceOfActivity, R.style.GeeksEmpire_Dialogue_Day);
         alertDialog.setTitle(Html.fromHtml(context.getString(R.string.license_title)));
         alertDialog.setMessage(Html.fromHtml(context.getString(R.string.license_msg)));
         alertDialog.setIcon(R.drawable.ic_launcher);
@@ -332,7 +284,7 @@ public class FunctionsClass {
                 //dialog.dismiss();
                 String[] contactOption = new String[]{
                         "Send an Email"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                AlertDialog.Builder builder = new AlertDialog.Builder(instanceOfActivity);
                 builder.setTitle(context.getString(R.string.supportTitle));
                 builder.setSingleChoiceItems(contactOption, 0, null);
                 builder.setCancelable(false);
@@ -361,7 +313,7 @@ public class FunctionsClass {
                 builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        activity.finish();
+                        instanceOfActivity.finish();
                     }
                 });
                 builder.show();
@@ -376,7 +328,7 @@ public class FunctionsClass {
         try {
             alertDialog.show();
         } catch (Exception e) {
-            activity.finish();
+            instanceOfActivity.finish();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -553,20 +505,20 @@ public class FunctionsClass {
         }
     }
 
-    public void goToSettingInfo(String packageName) {
+    public void goToSettingInfo(Activity instanceOfActivity, String packageName) {
         Intent goToSettingInfo = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         goToSettingInfo.addCategory(Intent.CATEGORY_DEFAULT);
         goToSettingInfo.setData(Uri.parse("package:" + packageName));
         goToSettingInfo.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        activity.startActivityForResult(goToSettingInfo, 1000);
+        instanceOfActivity.startActivityForResult(goToSettingInfo, 1000);
     }
 
-    public void overrideBackPress(Class returnClass) throws Exception {
+    public void overrideBackPress(Activity instanceOfActivity, Class returnClass) throws Exception {
         context.startActivity(new Intent(context, returnClass).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                activity.finish();
+                instanceOfActivity.finish();
             }
         }, 100);
     }
@@ -606,70 +558,67 @@ public class FunctionsClass {
     }
 
     public int returnAPI() {
-        return API;
+        return Build.VERSION.SDK_INT;
     }
 
     /*UI*/
-    public void Toast(String toastContent, boolean showToast) {
+    public void Toast(String toastContent) {
         Toast toast = new Toast(context);
-        if (showToast == true) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.toast_view, null);
 
-            LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
-            GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.toast_view, null);
 
-            TextView textView = (TextView) layout.findViewById(R.id.toastText);
-            textView.setText(Html.fromHtml(toastContent));
-            textView.setBackground(drawToast);
-            textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
+        LayerDrawable drawToast = (LayerDrawable) context.getDrawable(R.drawable.toast_background);
+        GradientDrawable backToast = (GradientDrawable) drawToast.findDrawableByLayerId(R.id.backtemp);
+
+        TextView textView = (TextView) layout.findViewById(R.id.toastText);
+        textView.setText(Html.fromHtml(toastContent));
+        textView.setBackground(drawToast);
+        textView.setShadowLayer(0.02f, 2, 2, context.getColor(R.color.trans_dark_high));
 
 
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 0);
-            toast.setDuration(Toast.LENGTH_LONG);
-            toast.setView(layout);
-            toast.show();
-        } else if (showToast == false) {
-            toast.cancel();
-        }
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 
     /*normal*/
-    public void showPopupItem(RelativeLayout popupAnchorView,
+    public void showPopupItem(Activity instanceOfActivity, RelativeLayout popupAnchorView,
                               String categoryName, String[] packagesName) {
-        int W = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                100,
-                context.getResources().getDisplayMetrics());
 
-        ArrayList<NavDrawerItem> navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
-        navDrawerItemsSaved.clear();
+        ArrayList<AdapterItemsData> adapterItemsData = new ArrayList<AdapterItemsData>();
+        adapterItemsData.clear();
+
         for (String packageName : packagesName) {
-            navDrawerItemsSaved.add(new NavDrawerItem(
+
+            adapterItemsData.add(new AdapterItemsData(
                     appName(packageName),
                     packageName,
                     appIconDrawable(packageName)));
         }
-        navDrawerItemsSaved.add(new NavDrawerItem(
+
+        adapterItemsData.add(new AdapterItemsData(
                 context.getString(R.string.edit_advanced_shortcut) + " " + categoryName,
                 context.getPackageName(),
                 context.getDrawable(R.drawable.draw_pref)));
-        ListPopupWindow listPopupWindow = new ListPopupWindow(activity);
-        ItemListAdapter lowerListAdapter = new ItemListAdapter(activity, context, navDrawerItemsSaved, listPopupWindow);
+
+        ListPopupWindow listPopupWindow = new ListPopupWindow(instanceOfActivity);
+
+        ItemListAdapter lowerListAdapter = new ItemListAdapter(instanceOfActivity, context, adapterItemsData, listPopupWindow);
+
         listPopupWindow.setAdapter(lowerListAdapter);
         listPopupWindow.setAnchorView(popupAnchorView);
-        listPopupWindow.setWidth(W);
+        listPopupWindow.setWidth(popupAnchorView.getWidth());
         listPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
         listPopupWindow.setModal(true);
         listPopupWindow.setBackgroundDrawable(null);
-        try {
-            listPopupWindow.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        listPopupWindow.show();
+
         listPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                activity.finish();
+                instanceOfActivity.finish();
             }
         });
     }

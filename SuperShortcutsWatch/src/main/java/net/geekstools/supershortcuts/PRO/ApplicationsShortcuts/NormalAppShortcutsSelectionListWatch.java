@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:41 AM
+ * Last modified 5/10/20 10:19 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -56,12 +56,12 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedListAdapter;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
-import net.geekstools.supershortcuts.PRO.LicenseValidator;
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.RecycleViewSmoothLayout;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
+import net.geekstools.supershortcuts.PRO.Utils.RemoteTask.LicenseValidator;
+import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,7 +69,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NormalAppSelectionList extends WearableActivity implements View.OnClickListener {
+public class NormalAppShortcutsSelectionListWatch extends WearableActivity implements View.OnClickListener {
 
     Activity activity;
     Context context;
@@ -86,12 +86,12 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
     LinearLayout indexView;
     RelativeLayout loadingSplash;
     TextView counterView;
-    ImageView tempIcon, loadIcon;
+    ImageView temporaryIcon, loadIcon;
     Button supportView;
 
     List<String> appName;
     Map<String, Integer> mapIndex;
-    ArrayList<NavDrawerItem> navDrawerItems, navDrawerItemsSaved;
+    ArrayList<AdapterItemsData> adapterItemsData, navDrawerItemsSaved;
     SavedListAdapter savedListAdapter;
 
     String PackageName;
@@ -102,21 +102,23 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
 
     FirebaseRemoteConfig firebaseRemoteConfig;
 
+    public final static String NormalApplicationsShortcutsFile = ".autoSuper";
+
     @Override
     protected void onCreate(Bundle Saved) {
         super.onCreate(Saved);
         setContentView(R.layout.activity_app_selection_list);
         setAmbientEnabled();
-        functionsClass = new FunctionsClass(getApplicationContext(), this);
+        functionsClass = new FunctionsClass(getApplicationContext());
 
         context = getApplicationContext();
         activity = this;
 
         listPopupWindow = new ListPopupWindow(activity);
         counterView = (TextView) findViewById(R.id.counter);
-        loadIcon = (ImageView) findViewById(R.id.loadLogo);
-        tempIcon = (ImageView) findViewById(R.id.tempIcon);
-        tempIcon.bringToFront();
+        loadIcon = (ImageView) findViewById(R.id.loadingLogo);
+        temporaryIcon = (ImageView) findViewById(R.id.temporaryIcon);
+        temporaryIcon.bringToFront();
         supportView = (Button) findViewById(R.id.supportView);
         popupAnchorView = (RelativeLayout) findViewById(R.id.popupAnchorView);
         indexView = (LinearLayout) findViewById(R.id.side_index);
@@ -126,8 +128,8 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
         confirmLayout = (RelativeLayout) findViewById(R.id.confirmLayout);
         confirmLayout.bringToFront();
 
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-        navDrawerItemsSaved = new ArrayList<NavDrawerItem>();
+        adapterItemsData = new ArrayList<AdapterItemsData>();
+        navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
         appName = new ArrayList<String>();
         mapIndex = new LinkedHashMap<String, Integer>();
 
@@ -142,7 +144,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
         counterView.setTypeface(face);
         counterView.bringToFront();
 
-        ProgressBar loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgressltr);
+        ProgressBar loadingBarLTR = (ProgressBar) findViewById(R.id.loadingProgress);
         loadingBarLTR.getIndeterminateDrawable().setColorFilter(getColor(R.color.dark), PorterDuff.Mode.MULTIPLY);
 
         IntentFilter intentFilter = new IntentFilter();
@@ -164,12 +166,12 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
                         navDrawerItemsSaved.clear();
                         String[] savedLine = functionsClass.readFileLine(".autoSuper");
                         for (String aSavedLine : savedLine) {
-                            navDrawerItemsSaved.add(new NavDrawerItem(
+                            navDrawerItemsSaved.add(new AdapterItemsData(
                                     functionsClass.appName(aSavedLine),
                                     aSavedLine,
                                     functionsClass.appIconDrawable(aSavedLine)));
                         }
-                        savedListAdapter = new SavedListAdapter(activity, context, navDrawerItemsSaved);
+                        savedListAdapter = new SavedListAdapter(context, navDrawerItemsSaved);
                         listPopupWindow = new ListPopupWindow(activity);
                         listPopupWindow.setAdapter(savedListAdapter);
                         listPopupWindow.setAnchorView(popupAnchorView);
@@ -201,7 +203,9 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
                     listPopupWindow.dismiss();
                     sendBroadcast(new Intent(getString(R.string.visibilityAction)));
                 } else if (intent.getAction().equals(getString(R.string.license))) {
-                    functionsClass.dialogueLicense();
+
+                    functionsClass.dialogueLicense(NormalAppShortcutsSelectionListWatch.this);
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -226,7 +230,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
         firebaseRemoteConfig.setConfigSettingsAsync(configSettings);
         firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
         firebaseRemoteConfig.fetch()
-                .addOnCompleteListener(NormalAppSelectionList.this, new OnCompleteListener<Void>() {
+                .addOnCompleteListener(NormalAppShortcutsSelectionListWatch.this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
@@ -292,7 +296,6 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
     @Override
     public void onPause() {
         super.onPause();
-        functionsClass.Toast(null, false);
     }
 
     @Override
@@ -323,7 +326,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
 
     public void loadDataOff() {
         try {
-            navDrawerItems.clear();
+            adapterItemsData.clear();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -382,7 +385,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
                                 appName.add(AppName);
                                 AppIcon = functionsClass.appIconDrawable(PackageName);
 
-                                navDrawerItems.add(new NavDrawerItem(AppName, PackageName, AppIcon));
+                                adapterItemsData.add(new AdapterItemsData(AppName, PackageName, AppIcon));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -391,9 +394,9 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
                         e.printStackTrace();
                     }
                 }
-                selectionListAdapter = new SelectionListAdapter(activity, context, navDrawerItems);
+                selectionListAdapter = new SelectionListAdapter(context, adapterItemsData, temporaryIcon);
                 selectionListAdapter.notifyDataSetChanged();
-                functionsClass.savePreference("InstalledApps", "countApps", navDrawerItems.size());
+                functionsClass.savePreference("InstalledApps", "countApps", adapterItemsData.size());
             } catch (Exception e) {
                 e.printStackTrace();
                 this.cancel(true);
@@ -487,7 +490,7 @@ public class NormalAppSelectionList extends WearableActivity implements View.OnC
                 textView.setBackground(drawIndex);
                 textView.setText(index.toUpperCase());
                 textView.setTextColor(getColor(R.color.dark));
-                textView.setOnClickListener(NormalAppSelectionList.this);
+                textView.setOnClickListener(NormalAppShortcutsSelectionListWatch.this);
                 indexView.addView(textView);
             }
 

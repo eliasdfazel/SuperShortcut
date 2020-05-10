@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 10:44 AM
+ * Last modified 5/10/20 9:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,7 +12,7 @@ package net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData;
 
 import android.graphics.drawable.Drawable;
 
-public class NavDrawerItem {
+public class AdapterItemsData {
 
     CharSequence charTitle;
     String title, desc, extra = "0", category;
@@ -21,23 +21,23 @@ public class NavDrawerItem {
     Drawable icon, run;
     boolean isExtraVisible = false;
 
-    public NavDrawerItem(String title, String pack, Drawable icon) {
+    public AdapterItemsData(String title, String pack, Drawable icon) {
         this.desc = title;
         this.title = pack;
         this.icon = icon;
     }
 
-    public NavDrawerItem(String title, String desc) {
+    public AdapterItemsData(String title, String desc) {
         this.title = title;
         this.desc = desc;
     }
 
-    public NavDrawerItem(CharSequence title, Drawable icon) {
+    public AdapterItemsData(CharSequence title, Drawable icon) {
         this.charTitle = title;
         this.icon = icon;
     }
 
-    public NavDrawerItem(String title, Drawable icon, boolean isExtraVisible, String count, String desc) {
+    public AdapterItemsData(String title, Drawable icon, boolean isExtraVisible, String count, String desc) {
         this.title = title;
         this.desc = desc;
         this.icon = icon;
@@ -45,14 +45,14 @@ public class NavDrawerItem {
         this.extra = count;
     }
 
-    public NavDrawerItem(String widgetTitle, Drawable appIcon, Drawable runWidget, int widgetID) {
+    public AdapterItemsData(String widgetTitle, Drawable appIcon, Drawable runWidget, int widgetID) {
         this.title = widgetTitle;
         this.icon = appIcon;
         this.run = runWidget;
         this.widgetID = widgetID;
     }
 
-    public NavDrawerItem(String category, String[] packageNames) {
+    public AdapterItemsData(String category, String[] packageNames) {
         this.category = category;
         this.packName = packageNames;
     }

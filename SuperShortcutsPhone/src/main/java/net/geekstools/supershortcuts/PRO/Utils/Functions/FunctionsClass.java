@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/7/20 10:12 AM
+ * Last modified 5/10/20 9:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -76,7 +76,7 @@ import com.google.firebase.appindexing.FirebaseUserActions;
 import com.google.firebase.appindexing.Indexable;
 import com.google.firebase.appindexing.builders.Actions;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone;
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Utils.AppShortcutsMediatedActivity;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderItemListAdapter;
@@ -208,7 +208,7 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
             shortcutManager.removeAllDynamicShortcuts();
-            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile));
+            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile));
 
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
@@ -230,7 +230,7 @@ public class FunctionsClass {
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (isAppInstalled(packageName) == false) {
                     context.deleteFile(appShortcuts.get(i) + ".Super");
-                    removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, appShortcuts.get(i));
+                    removeLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile, appShortcuts.get(i));
                 } else {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
@@ -257,7 +257,7 @@ public class FunctionsClass {
                 }
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
-            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)) {
+            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile)) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.default_color_darker),
                         103,
                         true);
@@ -273,7 +273,7 @@ public class FunctionsClass {
             final ShortcutManager shortcutManager = context.getSystemService(ShortcutManager.class);
 
             shortcutManager.removeAllDynamicShortcuts();
-            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile));
+            List<String> appShortcuts = Arrays.asList(readFileLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile));
 
             List<ShortcutInfo> shortcutInfos = new ArrayList<ShortcutInfo>();
             shortcutInfos.clear();
@@ -295,7 +295,7 @@ public class FunctionsClass {
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (isAppInstalled(packageName) == false) {
                     context.deleteFile(appShortcuts.get(i) + ".Super");
-                    removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, appShortcuts.get(i));
+                    removeLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile, appShortcuts.get(i));
                 } else {
                     try {
                         ActivityInfo activityInfo = context.getPackageManager().getActivityInfo(new ComponentName(packageName, className), 0);
@@ -322,7 +322,7 @@ public class FunctionsClass {
                 }
             }
             shortcutManager.addDynamicShortcuts(shortcutInfos);
-            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)) {
+            if (shortcutManager.getDynamicShortcuts().size() == countLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile)) {
                 Toast(context.getString(R.string.done), context.getColor(R.color.light), context.getColor(R.color.default_color_darker), Gravity.BOTTOM, true);
             }
         } catch (Exception e) {
@@ -565,7 +565,7 @@ public class FunctionsClass {
                     String className = lineShortcuts.get(i).split("\\|")[1];
                     if (!isAppInstalled(packageName)) {
                         context.deleteFile(lineShortcuts.get(i) + ".Super");
-                        removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
+                        removeLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
                         removeLine(".mixShortcuts", lineShortcuts.get(i));
                     } else {
                         try {
@@ -776,7 +776,7 @@ public class FunctionsClass {
                     String className = lineShortcuts.get(i).split("\\|")[1];
                     if (!isAppInstalled(packageName)) {
                         context.deleteFile(lineShortcuts.get(i) + ".Super");
-                        removeLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
+                        removeLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile, lineShortcuts.get(i));
                         removeLine(".mixShortcuts", lineShortcuts.get(i));
                     } else {
                         try {
@@ -1447,12 +1447,12 @@ public class FunctionsClass {
             }
             context.deleteFile(".mixShortcuts");
         }
-        if (context.getFileStreamPath(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).exists()) {
-            String[] arrayContent = readFileLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile);
+        if (context.getFileStreamPath(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile).exists()) {
+            String[] arrayContent = readFileLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile);
             for (String lineContent : arrayContent) {
                 context.deleteFile(packageNameSelected(lineContent));
             }
-            context.deleteFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile);
+            context.deleteFile(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile);
         }
         if (context.getFileStreamPath(".categorySuperSelected").exists()) {
             String[] arrayContent = readFileLine(".categorySuperSelected");

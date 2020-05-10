@@ -2,12 +2,12 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 5/10/20 9:51 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
-package net.geekstools.supershortcuts.PRO
+package net.geekstools.supershortcuts.PRO.Utils.RemoteTask
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage

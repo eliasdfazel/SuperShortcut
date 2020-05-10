@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 5/10/20 9:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@ import android.support.wearable.complications.ComplicationManager;
 import android.support.wearable.complications.ComplicationProviderService;
 import android.support.wearable.complications.ComplicationText;
 
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.LoadItems;
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.LoadPopupShortcuts;
 import net.geekstools.supershortcuts.PRO.BuildConfig;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
@@ -42,7 +42,7 @@ public class RecoveryComplication extends ComplicationProviderService {
             functionsClass = new FunctionsClass(getApplicationContext());
             functionsClass.savePreference("ComplicationProviderService", "ComplicationedId", complicationId);
 
-            Intent recoveryIntent = new Intent(getApplicationContext(), LoadItems.class);
+            Intent recoveryIntent = new Intent(getApplicationContext(), LoadPopupShortcuts.class);
             recoveryIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             PendingIntent complicationTogglePendingIntent = PendingIntent

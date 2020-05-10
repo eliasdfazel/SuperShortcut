@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 4/29/20 11:41 AM
+  ~ Last modified 5/10/20 9:50 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -15,7 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".ApplicationsShortcuts.NormalAppSelectionList">
+    tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionListWatch">
 
     <ScrollView
         android:id="@+id/scrollListFav"
@@ -123,7 +123,7 @@
         android:visibility="invisible" />
 
     <ImageView
-        android:id="@+id/tempIcon"
+        android:id="@+id/temporaryIcon"
         android:layout_width="41dp"
         android:layout_height="41dp"
         android:layout_alignParentBottom="true"
@@ -139,14 +139,14 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/loadLogo"
+            android:id="@+id/loadingLogo"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_launcher" />
 
         <ProgressBar
-            android:id="@+id/loadingProgressltr"
+            android:id="@+id/loadingProgress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="33dp"

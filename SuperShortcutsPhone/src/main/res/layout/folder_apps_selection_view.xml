@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/4/20 1:29 PM
+  ~ Last modified 5/10/20 9:31 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionList">
+    tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone">
 
     <ScrollView
         android:id="@+id/nestedScrollView"

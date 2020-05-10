@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:42 AM
+ * Last modified 5/10/20 9:44 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatButton
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListWatch
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
@@ -31,7 +31,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstan
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 
-class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
+class AppsConfirmButtonWatch : AppCompatButton, GestureListenerInterface,
         ConfirmButtonViewInterface {
 
     private lateinit var activity: Activity
@@ -41,7 +41,7 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
     private lateinit var confirmButtonProcessInterface: ConfirmButtonProcessInterface
 
     private val swipeGestureListener: SwipeGestureListener by lazy {
-        SwipeGestureListener(context, this@AppsConfirmButton)
+        SwipeGestureListener(context, this@AppsConfirmButtonWatch)
     }
 
     private lateinit var dismissDrawable: LayerDrawable
@@ -100,8 +100,8 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
                         confirmButtonProcessInterface.showSavedShortcutList()
 
                         Handler().postDelayed({
-                            if (functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
-                                this@AppsConfirmButton.background = context.getDrawable(R.drawable.draw_saved_dismiss)
+                            if (functionsClass.countLine(NormalAppShortcutsSelectionListWatch.NormalApplicationsShortcutsFile) > 0) {
+                                this@AppsConfirmButtonWatch.background = context.getDrawable(R.drawable.draw_saved_dismiss)
                             }
                         }, 200)
                     }
@@ -109,8 +109,8 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
                         confirmButtonProcessInterface.showSavedShortcutList()
 
                         Handler().postDelayed({
-                            if (functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
-                                this@AppsConfirmButton.background = context.getDrawable(R.drawable.draw_saved_dismiss)
+                            if (functionsClass.countLine(NormalAppShortcutsSelectionListWatch.NormalApplicationsShortcutsFile) > 0) {
+                                this@AppsConfirmButtonWatch.background = context.getDrawable(R.drawable.draw_saved_dismiss)
                             }
                         }, 200)
                     }
@@ -122,8 +122,8 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
                         confirmButtonProcessInterface.showSavedShortcutList()
 
                         Handler().postDelayed({
-                            if (functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile) > 0) {
-                                this@AppsConfirmButton.background = context.getDrawable(R.drawable.draw_saved_dismiss)
+                            if (functionsClass.countLine(NormalAppShortcutsSelectionListWatch.NormalApplicationsShortcutsFile) > 0) {
+                                this@AppsConfirmButtonWatch.background = context.getDrawable(R.drawable.draw_saved_dismiss)
                             }
                         }, 200)
                     }
@@ -138,54 +138,45 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
     override fun onSingleTapUp(motionEvent: MotionEvent) {
         super.onSingleTapUp(motionEvent)
 
-        if (functionsClass.mixShortcuts()) {
+        functionsClass.Toast(context.getString(R.string.done))
 
-            functionsClass.addMixAppShortcuts()
+        functionsClass.addAppShortcuts()
 
-        } else {
-
-            functionsClass.addAppShortcuts()
-
-            context.getSharedPreferences(".PopupShortcut", Context.MODE_PRIVATE).edit().apply {
-                putString("PopupShortcutMode", "AppShortcuts")
-                apply()
-            }
+        context.getSharedPreferences(".PopupShortcut", Context.MODE_PRIVATE).edit().apply {
+            putString("PopupShortcutMode", "AppShortcuts")
+            apply()
         }
     }
 
     override fun onLongPress(motionEvent: MotionEvent) {
         super.onLongPress(motionEvent)
 
-        functionsClass.deleteSelectedFiles()
-
         confirmButtonProcessInterface.shortcutDeleted()
 
         confirmButtonProcessInterface.savedShortcutCounter()
 
         confirmButtonProcessInterface.reevaluateShortcutsInfo()
-
-        functionsClass.clearDynamicShortcuts()
     }
 
     /*ConfirmButtonViewInterface*/
     override fun makeItVisible() {
         val confirmDrawable = context.getDrawable(R.drawable.ripple_effect_confirm) as LayerDrawable
-        this@AppsConfirmButton.background = confirmDrawable
+        this@AppsConfirmButtonWatch.background = confirmDrawable
 
-        if (!this@AppsConfirmButton.isShown) {
-            this@AppsConfirmButton.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
-            this@AppsConfirmButton.visibility = View.VISIBLE
+        if (!this@AppsConfirmButtonWatch.isShown) {
+            this@AppsConfirmButtonWatch.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
+            this@AppsConfirmButtonWatch.visibility = View.VISIBLE
         }
     }
 
     override fun startCustomAnimation(animation: Animation?) {
         if (animation == null) {
 
-            this@AppsConfirmButton.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button))
+            this@AppsConfirmButtonWatch.startAnimation(AnimationUtils.loadAnimation(context, R.anim.scale_confirm_button))
 
         } else {
 
-            this@AppsConfirmButton.startAnimation(animation)
+            this@AppsConfirmButtonWatch.startAnimation(animation)
 
         }
     }
@@ -195,7 +186,7 @@ class AppsConfirmButton : AppCompatButton, GestureListenerInterface,
         val backgroundTemporary: Drawable = drawDismiss.findDrawableByLayerId(R.id.backgroundTemporary)
         backgroundTemporary.setTint(context.getColor(R.color.default_color_darker))
 
-        this@AppsConfirmButton.background = drawDismiss
+        this@AppsConfirmButtonWatch.background = drawDismiss
     }
     /*ConfirmButtonViewInterface*/
 }

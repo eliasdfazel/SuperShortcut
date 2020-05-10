@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/7/20 12:09 PM
+ * Last modified 5/10/20 9:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
@@ -165,7 +165,7 @@ class SplitShortcuts : AppCompatActivity(),
 
         splitShortcutsViewBinding.autoApps.setOnClickListener {
 
-            functionsClass.overrideBackPress(this@SplitShortcuts, NormalAppShortcutsSelectionList::class.java,
+            functionsClass.overrideBackPress(this@SplitShortcuts, NormalAppShortcutsSelectionListPhone::class.java,
                     ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_left, R.anim.slide_to_right))
 
         }
@@ -274,7 +274,7 @@ class SplitShortcuts : AppCompatActivity(),
             is GestureConstants.SwipeHorizontal -> {
                 when (gestureConstants.horizontalDirection) {
                     GestureListenerConstants.SWIPE_RIGHT -> {
-                        functionsClass.overrideBackPress(this@SplitShortcuts, NormalAppShortcutsSelectionList::class.java,
+                        functionsClass.overrideBackPress(this@SplitShortcuts, NormalAppShortcutsSelectionListPhone::class.java,
                                 ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_from_left, R.anim.slide_to_right))
                     }
                     GestureListenerConstants.SWIPE_LEFT -> {

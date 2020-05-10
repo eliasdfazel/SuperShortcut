@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 11:42 AM
+ * Last modified 5/10/20 9:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,18 +11,18 @@
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions
 
 import android.widget.RelativeLayout
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButton
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButtonPhone
 import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
 
-fun NormalAppShortcutsSelectionList.setupConfirmButtonUI(confirmButtonProcessInterface: ConfirmButtonProcessInterface) : AppsConfirmButton {
+fun NormalAppShortcutsSelectionListPhone.setupConfirmButtonUI(confirmButtonProcessInterface: ConfirmButtonProcessInterface) : AppsConfirmButtonPhone {
 
     val confirmButtonLayoutParams = RelativeLayout.LayoutParams(
             functionsClass.DpToInteger(73),
             functionsClass.DpToInteger(73)
     )
 
-    val appsConfirmButton = AppsConfirmButton(this@setupConfirmButtonUI, applicationContext,
+    val appsConfirmButton = AppsConfirmButtonPhone(this@setupConfirmButtonUI, applicationContext,
             functionsClass,
             confirmButtonProcessInterface)
 

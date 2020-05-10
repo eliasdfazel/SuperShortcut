@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:41 AM
+ * Last modified 5/10/20 9:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,7 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +30,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.NavDrawerItem;
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.RemoteTask.RecoveryComplication;
@@ -42,26 +41,28 @@ import java.util.ArrayList;
 public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdapter.ViewHolder> {
 
     private Context context;
-    private Activity activity;
 
     FunctionsClass functionsClass;
 
-    ImageView tempIcon;
+    ImageView temporaryIcon;
+
     View view;
     ViewHolder viewHolder;
 
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<AdapterItemsData> adapterItemsData;
 
     float fromX, fromY, toX, toY, dpHeight, dpWidth;
     int animationType;
 
-    public SelectionListAdapter(Activity activity, Context context, ArrayList<NavDrawerItem> navDrawerItems) {
-        this.activity = activity;
-        this.context = context;
-        this.navDrawerItems = navDrawerItems;
+    public SelectionListAdapter(Context context,
+                                ArrayList<AdapterItemsData> adapterItemsData,
+                                ImageView temporaryIcon) {
 
-        functionsClass = new FunctionsClass(context, activity);
-        tempIcon = (ImageView) activity.findViewById(R.id.tempIcon);
+        this.context = context;
+        this.adapterItemsData = adapterItemsData;
+
+        functionsClass = new FunctionsClass(context);
+        this.temporaryIcon = temporaryIcon;
 
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         dpHeight = displayMetrics.heightPixels;
@@ -85,10 +86,10 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
         ImageView imgIcon = viewHolderBinder.imgIcon;
         TextView txtDesc = viewHolderBinder.txtDesc;
 
-        imgIcon.setImageDrawable(navDrawerItems.get(position).getIcon());
-        txtDesc.setText(navDrawerItems.get(position).getDesc());
+        imgIcon.setImageDrawable(adapterItemsData.get(position).getIcon());
+        txtDesc.setText(adapterItemsData.get(position).getDesc());
 
-        final String pack = navDrawerItems.get(position).getTitle();
+        final String pack = adapterItemsData.get(position).getTitle();
         File autoFile = context.getFileStreamPath(pack + ".Super");
         viewHolderBinder.autoChoice.setChecked(false);
         if (autoFile.exists()) {
@@ -113,12 +114,12 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                         fromY = -((dpHeight - motionEvent.getRawY()) - (view.getHeight()));
                         break;
                     case MotionEvent.ACTION_UP:
-                        final String pack = navDrawerItems.get(position).getTitle();
+                        final String pack = adapterItemsData.get(position).getTitle();
                         File autoFile = context.getFileStreamPath(pack + ".Super");
                         if (autoFile.exists()) {
                             context.deleteFile(
-                                    navDrawerItems.get(position).getTitle() + ".Super");
-                            functionsClass.removeLine(".autoSuper", navDrawerItems.get(position).getTitle());
+                                    adapterItemsData.get(position).getTitle() + ".Super");
+                            functionsClass.removeLine(".autoSuper", adapterItemsData.get(position).getTitle());
                             viewHolderBinder.autoChoice.setChecked(false);
                             context.sendBroadcast(new Intent(context.getString(R.string.counterAction)));
 
@@ -127,11 +128,11 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                         } else {
                             if (PublicVariable.maxAppShortcutsCounter < PublicVariable.maxAppShortcuts) {
                                 functionsClass.saveFile(
-                                        navDrawerItems.get(position).getTitle() + ".Super",
-                                        navDrawerItems.get(position).getTitle());
+                                        adapterItemsData.get(position).getTitle() + ".Super",
+                                        adapterItemsData.get(position).getTitle());
                                 functionsClass.saveFileAppendLine(
                                         ".autoSuper",
-                                        navDrawerItems.get(position).getTitle());
+                                        adapterItemsData.get(position).getTitle());
                                 viewHolderBinder.autoChoice.setChecked(true);
 
                                 TranslateAnimation translateAnimation =
@@ -142,20 +143,20 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
                                 translateAnimation.setDuration((long) Math.abs(fromY));
 
 
-                                tempIcon.setImageDrawable(functionsClass.appIconDrawable(navDrawerItems.get(position).getTitle()));
-                                tempIcon.startAnimation(translateAnimation);
+                                temporaryIcon.setImageDrawable(functionsClass.appIconDrawable(adapterItemsData.get(position).getTitle()));
+                                temporaryIcon.startAnimation(translateAnimation);
                                 translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
                                     public void onAnimationStart(Animation animation) {
                                         context.sendBroadcast(new Intent(context.getString(R.string.savedActionHide)));
                                         context.sendBroadcast(new Intent(context.getString(R.string.visibilityAction)));
 
-                                        tempIcon.setVisibility(View.VISIBLE);
+                                        temporaryIcon.setVisibility(View.VISIBLE);
                                     }
 
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
-                                        tempIcon.setVisibility(View.INVISIBLE);
+                                        temporaryIcon.setVisibility(View.INVISIBLE);
                                         context.sendBroadcast(new Intent(context.getString(R.string.animtaionAction)));
                                         context.sendBroadcast(new Intent(context.getString(R.string.counterAction)));
                                     }
@@ -197,7 +198,7 @@ public class SelectionListAdapter extends RecyclerView.Adapter<SelectionListAdap
 
     @Override
     public int getItemCount() {
-        return navDrawerItems.size();
+        return adapterItemsData.size();
     }
 
     @Override

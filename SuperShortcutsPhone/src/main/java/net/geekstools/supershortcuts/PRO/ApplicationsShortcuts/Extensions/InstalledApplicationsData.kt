@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 7:40 AM
+ * Last modified 5/10/20 9:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import kotlinx.coroutines.*
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
@@ -27,7 +27,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Index
 import java.util.*
 import kotlin.collections.ArrayList
 
-fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+fun NormalAppShortcutsSelectionListPhone.loadInstalledAppsData() = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
     installedAppsListItem.clear()
 
     val listOfNewCharOfItemsForIndex: ArrayList<String> = ArrayList<String>()
@@ -67,7 +67,7 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
                 functionsClass,
                 normalAppSelectionBinding.temporaryFallingIcon,
                 installedAppsListItem,
-                appsConfirmButton!!,
+                appsConfirmButtonPhone!!,
                 this@loadInstalledAppsData)
 
         normalAppSelectionBinding.recyclerViewList.adapter = appSelectionListAdapter
@@ -79,7 +79,7 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
             normalAppSelectionBinding.loadingSplash.startAnimation(animationFadeOut)
         }
 
-        appsConfirmButton?.makeItVisible()
+        appsConfirmButtonPhone?.makeItVisible()
 
         val animationFadeIn = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_in)
         normalAppSelectionBinding.selectedShortcutCounterView.startAnimation(animationFadeIn)
@@ -87,7 +87,7 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
 
             override fun onAnimationStart(animation: Animation) {
 
-                normalAppSelectionBinding.selectedShortcutCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile).toString()
+                normalAppSelectionBinding.selectedShortcutCounterView.text = functionsClass.countLineInnerFile(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile).toString()
             }
 
             override fun onAnimationEnd(animation: Animation) {
@@ -100,7 +100,7 @@ fun NormalAppShortcutsSelectionList.loadInstalledAppsData() = CoroutineScope(Sup
             }
         })
 
-        PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
+        PublicVariable.maxAppShortcutsCounter = functionsClass.countLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile)
         resetAdapter = false;
     }
 

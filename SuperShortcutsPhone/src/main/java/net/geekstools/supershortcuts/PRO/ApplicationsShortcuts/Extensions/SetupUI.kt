@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/2/20 1:17 PM
+ * Last modified 5/10/20 9:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,11 +17,11 @@ import android.view.View
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionList
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 
-fun NormalAppShortcutsSelectionList.setupUI() {
+fun NormalAppShortcutsSelectionListPhone.setupUI() {
 
     normalAppSelectionBinding.temporaryFallingIcon.bringToFront()
     normalAppSelectionBinding.confirmLayout.bringToFront()
@@ -46,7 +46,7 @@ fun NormalAppShortcutsSelectionList.setupUI() {
     normalAppSelectionBinding.selectedShortcutCounterView.bringToFront()
 }
 
-fun NormalAppShortcutsSelectionList.evaluateShortcutsInfo() {
+fun NormalAppShortcutsSelectionListPhone.evaluateShortcutsInfo() {
 
     if (functionsClass.mixShortcuts()) {
 
@@ -58,7 +58,7 @@ fun NormalAppShortcutsSelectionList.evaluateShortcutsInfo() {
 
     } else {
 
-        appShortcutLimitCounter = functionsClass.systemMaxAppShortcut - functionsClass.countLine(NormalAppShortcutsSelectionList.NormalApplicationsShortcutsFile)
+        appShortcutLimitCounter = functionsClass.systemMaxAppShortcut - functionsClass.countLine(NormalAppShortcutsSelectionListPhone.NormalApplicationsShortcutsFile)
 
         normalAppSelectionBinding.estimatedShortcutCounterView.text = Html.fromHtml("<small><font color='" + getColor(R.color.default_color) + "'>"
                 + getString(R.string.maximum) + "</font>"
