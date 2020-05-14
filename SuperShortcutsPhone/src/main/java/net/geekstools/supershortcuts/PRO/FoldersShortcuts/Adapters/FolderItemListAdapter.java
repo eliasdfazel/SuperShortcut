@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 12:51 PM
+ * Last modified 5/14/20 2:37 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,18 +33,18 @@ import java.util.ArrayList;
 public class FolderItemListAdapter extends BaseAdapter {
 
     private Context context;
-    private Activity activity;
 
     FunctionsClass functionsClass;
 
-    private ArrayList<AdapterItemsData> navDrawerItems;
+    private ArrayList<AdapterItemsData> adapterItemsData;
 
     private ListPopupWindow listPopupWindow;
 
-    public FolderItemListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems, ListPopupWindow listPopupWindow) {
-        this.activity = activity;
+    public FolderItemListAdapter(Context context, ArrayList<AdapterItemsData> adapterItemsData, ListPopupWindow listPopupWindow) {
         this.context = context;
-        this.navDrawerItems = navDrawerItems;
+
+        this.adapterItemsData = adapterItemsData;
+
         this.listPopupWindow = listPopupWindow;
 
         functionsClass = new FunctionsClass(context);
@@ -52,12 +52,12 @@ public class FolderItemListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return navDrawerItems.size();
+        return adapterItemsData.size();
     }
 
     @Override
     public AdapterItemsData getItem(int position) {
-        return navDrawerItems.get(position);
+        return adapterItemsData.get(position);
     }
 
     @Override
@@ -67,31 +67,34 @@ public class FolderItemListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.item_category_apps, null);
+            convertView = mInflater.inflate(R.layout.popup_folder_items, null);
         }
 
         final RelativeLayout items = (RelativeLayout) convertView.findViewById(R.id.items);
-        ImageView iconItem = (ImageView) convertView.findViewById(R.id.iconItem);
-        TextView itemAppName = (TextView) convertView.findViewById(R.id.itemAppName);
+        ImageView appIconItemView = (ImageView) convertView.findViewById(R.id.appIconItemView);
+        TextView appNameItemView = (TextView) convertView.findViewById(R.id.appNameItemView);
 
-        iconItem.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-        itemAppName.setText(navDrawerItems.get(position).getAppName());
+        appIconItemView.setImageDrawable(adapterItemsData.get(position).getAppIcon());
+        appNameItemView.setText(adapterItemsData.get(position).getAppName());
 
         items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    if (navDrawerItems.get(position).getAppName().contains(context.getString(R.string.edit_advanced_shortcut))) {
-                        context.startActivity(new Intent(context, FolderShortcuts.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                    } else {
-                        String packageName = navDrawerItems.get(position).getPackageName();
-                        functionsClass.openApplication(packageName);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                if (adapterItemsData.get(position).getAppName().contains(context.getString(R.string.edit_advanced_shortcut))) {
+
+                    context.startActivity(new Intent(context, FolderShortcuts.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                } else {
+
+                    functionsClass.openApplication(adapterItemsData.get(position).getPackageName());
+
                 }
+
                 listPopupWindow.dismiss();
             }
         });
@@ -99,8 +102,11 @@ public class FolderItemListAdapter extends BaseAdapter {
         items.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                String packageName = navDrawerItems.get(position).getPackageName();
-                context.startActivity(new Intent(context, SplitTransparentSingle.class).putExtra("package", packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                context.startActivity(new Intent(context, SplitTransparentSingle.class)
+                        .putExtra("package", adapterItemsData.get(position).getPackageName())
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
                 return true;
             }
         });

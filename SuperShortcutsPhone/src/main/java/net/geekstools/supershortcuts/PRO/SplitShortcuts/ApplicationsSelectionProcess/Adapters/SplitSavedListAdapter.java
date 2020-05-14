@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 8:57 AM
+ * Last modified 5/14/20 2:39 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -69,12 +69,12 @@ public class SplitSavedListAdapter extends BaseAdapter {
         }
 
         final RelativeLayout items = (RelativeLayout) convertView.findViewById(R.id.items);
-        ImageView imgIcon = (ImageView) convertView.findViewById(R.id.iconItem);
-        TextView textAppName = (TextView) convertView.findViewById(R.id.itemAppName);
+        ImageView appIconItemView = (ImageView) convertView.findViewById(R.id.appIconItemView);
+        TextView appNameItemView = (TextView) convertView.findViewById(R.id.appNameItemView);
         Button deleteItem = (Button) convertView.findViewById(R.id.deleteItem);
 
-        imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-        textAppName.setText(navDrawerItems.get(position).getAppName());
+        appIconItemView.setImageDrawable(navDrawerItems.get(position).getAppIcon());
+        appNameItemView.setText(navDrawerItems.get(position).getAppName());
 
         deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override

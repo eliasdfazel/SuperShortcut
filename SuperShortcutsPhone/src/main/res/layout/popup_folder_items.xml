@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 5/14/20 2:51 PM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/items"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popup_folder_items_background"
+    android:visibility="visible">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appIconItemView"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="9dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_launcher"
+        android:background="@drawable/app_shortcut_icon"/>
+
+    <TextView
+        android:id="@+id/appNameItemView"
+        android:layout_width="200dp"
+        android:layout_height="53dp"
+        android:layout_toEndOf="@id/appIconItemView"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="19dp"
+        android:shadowColor="@color/default_color_darker"
+        android:shadowRadius="19"
+        android:lines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/dark"
+        android:textSize="17sp" />
+
+</RelativeLayout>

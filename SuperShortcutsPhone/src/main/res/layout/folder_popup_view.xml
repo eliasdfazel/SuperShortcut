@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 11:01 AM
+  ~ Last modified 5/14/20 2:55 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -17,8 +17,8 @@
 
     <RelativeLayout
         android:id="@+id/popupAnchorView"
-        android:layout_width="220dp"
-        android:layout_height="109dp"
+        android:layout_width="247dp"
+        android:layout_height="19dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"

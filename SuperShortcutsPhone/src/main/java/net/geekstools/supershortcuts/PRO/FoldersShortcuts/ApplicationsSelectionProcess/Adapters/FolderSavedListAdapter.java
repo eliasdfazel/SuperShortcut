@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 8:57 AM
+ * Last modified 5/14/20 2:41 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -36,24 +36,24 @@ public class FolderSavedListAdapter extends BaseAdapter {
 
     FunctionsClass functionsClass;
 
-    private ArrayList<AdapterItemsData> navDrawerItems;
+    private ArrayList<AdapterItemsData> adapterItemsData;
 
-    public FolderSavedListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
+    public FolderSavedListAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> adapterItemsData) {
         this.activity = activity;
         this.context = context;
-        this.navDrawerItems = navDrawerItems;
+        this.adapterItemsData = adapterItemsData;
 
         functionsClass = new FunctionsClass(context);
     }
 
     @Override
     public int getCount() {
-        return navDrawerItems.size();
+        return adapterItemsData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return navDrawerItems.get(position);
+        return adapterItemsData.get(position);
     }
 
     @Override
@@ -69,18 +69,18 @@ public class FolderSavedListAdapter extends BaseAdapter {
         }
 
         final RelativeLayout items = (RelativeLayout) convertView.findViewById(R.id.items);
-        ImageView imgIcon = (ImageView) convertView.findViewById(R.id.iconItem);
-        TextView textAppName = (TextView) convertView.findViewById(R.id.itemAppName);
+        ImageView appIconItemView = (ImageView) convertView.findViewById(R.id.appIconItemView);
+        TextView appNameItemView = (TextView) convertView.findViewById(R.id.appNameItemView);
         Button deleteItem = (Button) convertView.findViewById(R.id.deleteItem);
 
-        imgIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
-        textAppName.setText(navDrawerItems.get(position).getAppName());
+        appIconItemView.setImageDrawable(adapterItemsData.get(position).getAppIcon());
+        appNameItemView.setText(adapterItemsData.get(position).getAppName());
 
         deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.deleteFile(navDrawerItems.get(position).getPackageName() + PublicVariable.categoryName);
-                functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
+                context.deleteFile(adapterItemsData.get(position).getPackageName() + PublicVariable.categoryName);
+                functionsClass.removeLine(PublicVariable.categoryName, adapterItemsData.get(position).getPackageName());
                 context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionAdvance)));
                 context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
             }

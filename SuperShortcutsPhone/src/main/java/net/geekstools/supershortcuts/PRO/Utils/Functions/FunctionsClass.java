@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 9:31 AM
+ * Last modified 5/14/20 2:38 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -1310,11 +1310,11 @@ public class FunctionsClass {
     public void showPopupCategoryItem(Activity instanceOfActivity, RelativeLayout popupAnchorView,
                                       String categoryName, LoadCustomIcons loadCustomIcons) {
 
-        ArrayList<AdapterItemsData> navDrawerItemsSaved = new ArrayList<AdapterItemsData>();
-        navDrawerItemsSaved.clear();
+        ArrayList<AdapterItemsData> folderItemListAdapter = new ArrayList<AdapterItemsData>();
+        folderItemListAdapter.clear();
         for (String packageName : readFileLine(categoryName)) {
             if (isAppInstalled(packageName)) {
-                navDrawerItemsSaved.add(new AdapterItemsData(
+                folderItemListAdapter.add(new AdapterItemsData(
                         appName(packageName),
                         packageName,
                         customIconsEnable() ? loadCustomIcons.getDrawableIconForPackage(packageName, appIconDrawable(packageName)) : appIconDrawable(packageName)
@@ -1324,14 +1324,16 @@ public class FunctionsClass {
                 removeLine(categoryName, packageName);
             }
         }
-        navDrawerItemsSaved.add(new AdapterItemsData(
+        folderItemListAdapter.add(new AdapterItemsData(
                 context.getString(R.string.edit_advanced_shortcut) + " " + categoryName.replace(".CategorySelected", "").split("_")[0],
                 context.getPackageName(),
                 context.getDrawable(R.drawable.draw_pref)));
 
         ListPopupWindow listPopupWindow = new ListPopupWindow(instanceOfActivity);
 
-        FolderItemListAdapter lowerListAdapter = new FolderItemListAdapter(instanceOfActivity, context, navDrawerItemsSaved, listPopupWindow);
+        FolderItemListAdapter lowerListAdapter = new FolderItemListAdapter(context,
+                folderItemListAdapter,
+                listPopupWindow);
 
         listPopupWindow.setAdapter(lowerListAdapter);
         listPopupWindow.setAnchorView(popupAnchorView);
