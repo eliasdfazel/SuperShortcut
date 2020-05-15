@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 1:59 PM
+ * Last modified 5/15/20 9:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory
+package net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory
 
 import android.graphics.Color
 import android.graphics.Typeface

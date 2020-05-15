@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 3:57 PM
+ * Last modified 5/15/20 11:18 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.CurveWearLayoutManager
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.loadInstalledAppsData
@@ -36,6 +35,7 @@ import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.RemoteTask.LicenseValidator
 import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
+import net.geekstools.supershortcuts.PRO.Utils.UI.CurveUtils.CurveWearLayoutManager
 import net.geekstools.supershortcuts.PRO.databinding.ApplicationsSelectionListViewBinding
 import java.util.*
 
@@ -55,6 +55,8 @@ class NormalAppShortcutsSelectionListWatch : WearableActivity(),
 
     val installedApplicationsItemsData: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
     private val selectedApplicationsDataItem: ArrayList<AdapterItemsData> = ArrayList<AdapterItemsData>()
+
+    val listOfNewCharOfItemsForIndex: ArrayList<String> = ArrayList<String>()
 
     var appsConfirmButtonWatch: AppsConfirmButtonWatch? = null
 
@@ -97,6 +99,8 @@ class NormalAppShortcutsSelectionListWatch : WearableActivity(),
             this.bezelFraction = 0.10f
             this.scrollDegreesPerScreen = 90f
         }
+
+
 
         val typeface = Typeface.createFromAsset(assets, "upcil.ttf")
         applicationsSelectionListViewBinding.counterView.typeface = typeface

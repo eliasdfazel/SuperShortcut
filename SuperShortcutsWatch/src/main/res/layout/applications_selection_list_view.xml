@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/10/20 3:56 PM
+  ~ Last modified 5/15/20 11:18 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -22,7 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingVertical="3dp"
-        android:paddingHorizontal="3dp" />
+        android:paddingHorizontal="3dp"
+
+        android:scrollbars="vertical"
+        android:scrollbarSize="7dp"
+        android:scrollIndicators="end"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="insideOverlay"/>
 
     <RelativeLayout
         android:id="@+id/confirmLayout"
@@ -64,13 +70,22 @@
 
     <ImageView
         android:id="@+id/temporaryIcon"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
         android:padding="5dp"
         android:visibility="invisible" />
+
+    <!-- Indexed Popup Fast Scroller  -->
+    <include
+        layout="@layout/fast_scroller_index_view"
+
+        android:id="@+id/fastScrollerIndexInclude"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+    <!-- Indexed Popup Fast Scroller  -->
 
     <RelativeLayout
         android:id="@+id/loadingSplash"

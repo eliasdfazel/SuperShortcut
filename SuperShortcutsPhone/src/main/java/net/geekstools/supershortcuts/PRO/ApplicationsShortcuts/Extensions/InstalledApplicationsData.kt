@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 2:21 PM
+ * Last modified 5/15/20 9:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -22,8 +22,8 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcut
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.IndexedFastScrollerFactory
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.IndexedFastScroller
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactory
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.IndexedFastScroller
 import java.util.*
 import kotlin.collections.ArrayList
 

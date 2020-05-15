@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 3:49 PM
+ * Last modified 5/15/20 9:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,14 +17,13 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListWatch
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactoryWatch
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.IndexedFastScrollerWatch
 import java.util.*
 
 fun NormalAppShortcutsSelectionListWatch.loadInstalledAppsData() = CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
@@ -42,6 +41,25 @@ fun NormalAppShortcutsSelectionListWatch.loadInstalledAppsData() = CoroutineScop
 
                 it
             }
+            .onCompletion {
+
+                /*Indexed Popup Fast Scroller*/
+                val indexedFastScrollerWatch: IndexedFastScrollerWatch = IndexedFastScrollerWatch(
+                        context = applicationContext,
+                        layoutInflater = layoutInflater,
+                        rootView = applicationsSelectionListViewBinding.rootView,
+                        recyclerView = applicationsSelectionListViewBinding.recyclerViewApplicationList,
+                        fastScrollerIndexViewBinding = applicationsSelectionListViewBinding.fastScrollerIndexInclude,
+                        indexedFastScrollerFactoryWatch = IndexedFastScrollerFactoryWatch(
+                                popupEnable = true,
+                                popupTextColor = getColor(net.geekstools.supershortcuts.PRO.R.color.light),
+                                indexItemTextColor = getColor(net.geekstools.supershortcuts.PRO.R.color.dark))
+                )
+                indexedFastScrollerWatch.initializeIndexView().await()
+                        .loadIndexData(listOfNewCharOfItemsForIndex = listOfNewCharOfItemsForIndex).await()
+                /*Indexed Popup Fast Scroller*/
+
+            }
             .collect { applicationInfo ->
                 val packageName = applicationInfo.packageName
                 val appName = functionsClass.appName(packageName)
@@ -53,6 +71,8 @@ fun NormalAppShortcutsSelectionListWatch.loadInstalledAppsData() = CoroutineScop
                                 packageName,
                                 appIcon)
                 )
+
+                listOfNewCharOfItemsForIndex.add(appName[0].toUpperCase().toString())
             }
 
     selectionListAdapter = SelectionListAdapter(applicationContext,

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 5/15/20 11:12 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <androidx.wear.widget.WearableRecyclerView
+        android:id="@+id/nestedIndexScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:visibility="invisible">
+
+    </androidx.wear.widget.WearableRecyclerView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/popupIndex"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_toStartOf="@id/nestedIndexScrollView"
+        android:gravity="center"
+        android:textColor="@color/light"
+        android:textSize="12sp"
+        android:fontFamily="monospace"
+        android:background="@drawable/ic_launcher_balloon"
+        android:visibility="invisible" />
+
+</RelativeLayout>

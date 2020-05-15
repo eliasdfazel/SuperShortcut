@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 1:59 PM
+ * Last modified 5/15/20 9:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller
+package net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -26,10 +26,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import net.geekstools.supershortcuts.PRO.R
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.IndexedFastScrollerFactory
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.calculateNavigationBarHeight
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.calculateStatusBarHeight
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScroller.Factory.convertToDp
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactory
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.calculateNavigationBarHeight
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.calculateStatusBarHeight
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.convertToDp
 import net.geekstools.supershortcuts.PRO.databinding.FastScrollerIndexViewBinding
 import java.util.*
 

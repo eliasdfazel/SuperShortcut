@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 3:39 PM
+ * Last modified 5/15/20 9:56 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters
+package net.geekstools.supershortcuts.PRO.Utils.UI.CurveUtils
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
