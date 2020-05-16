@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/15/20 11:15 AM
+  ~ Last modified 5/15/20 2:53 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -18,8 +18,9 @@
     <TextView
         android:id="@+id/itemIndexView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="19dp"
         android:gravity="center_vertical|end"
+        android:paddingHorizontal="5dp"
         android:fontFamily="monospace"
         android:text="S"
         android:textColor="@color/dark"

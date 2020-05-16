@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/15/20 11:18 AM
+ * Last modified 5/15/20 4:21 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,25 +12,31 @@ package net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.wear.widget.WearableLinearLayoutManager
+import androidx.wear.widget.WearableRecyclerView
 import kotlinx.coroutines.*
 import net.geekstools.supershortcuts.PRO.R
-import net.geekstools.supershortcuts.PRO.Utils.UI.CurveUtils.CurveWearLayoutManager
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Adapter.CurveIndexItemAdapter
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Adapter.IndexCurveItemAdapter
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Adapter.IndexCurveWearLayoutManager
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactoryWatch
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.calculateNavigationBarHeight
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.calculateStatusBarHeight
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.convertToDp
 import net.geekstools.supershortcuts.PRO.databinding.FastScrollerIndexViewBinding
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.LinkedHashMap
 
 /**
  * You Must Enable ViewBinding.
@@ -55,48 +61,29 @@ class IndexedFastScrollerWatch(private val context: Context,
                                private val fastScrollerIndexViewBinding: FastScrollerIndexViewBinding,
                                private val indexedFastScrollerFactoryWatch: IndexedFastScrollerFactoryWatch) {
 
-    private val statusBarHeight = calculateStatusBarHeight(context.resources)
-    private val navigationBarBarHeight = calculateNavigationBarHeight(context.resources)
-
-    private val finalPopupVerticalOffset: Int = indexedFastScrollerFactoryWatch.popupVerticalOffset.convertToDp(context)
-
-    private val finalPopupHorizontalOffset: Int = indexedFastScrollerFactoryWatch.popupHorizontalOffset.convertToDp(context)
-
     init {
         Log.d(this@IndexedFastScrollerWatch.javaClass.simpleName, "*** Indexed Fast Scroller Initialized ***")
     }
 
     fun initializeIndexView() : Deferred<IndexedFastScrollerWatch> = CoroutineScope(SupervisorJob() + Dispatchers.Main).async {
 
-        fastScrollerIndexViewBinding.nestedIndexScrollView.layoutManager = WearableLinearLayoutManager(context, CurveWearLayoutManager())
-        fastScrollerIndexViewBinding.nestedIndexScrollView.isEdgeItemsCenteringEnabled = true
-        fastScrollerIndexViewBinding.nestedIndexScrollView.apply {
-            this.isCircularScrollingGestureEnabled = true
-            this.bezelFraction = 0.10f
-            this.scrollDegreesPerScreen = 90f
-        }
-
         //Root View
-//        val rootLayoutParams = fastScrollerIndexViewBinding.root.layoutParams as RelativeLayout.LayoutParams
-//        rootLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, rootView.id)
-//
-//        fastScrollerIndexViewBinding.root.layoutParams = rootLayoutParams
-//
-//        fastScrollerIndexViewBinding.root
-//                .setPadding(indexedFastScrollerFactoryWatch.rootPaddingStart, indexedFastScrollerFactoryWatch.rootPaddingTop,
-//                        indexedFastScrollerFactoryWatch.rootPaddingEnd, indexedFastScrollerFactoryWatch.rootPaddingBottom)
+        val rootLayoutParams = fastScrollerIndexViewBinding.root.layoutParams as RelativeLayout.LayoutParams
+        rootLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_END, rootView.id)
+
+        fastScrollerIndexViewBinding.root.layoutParams = rootLayoutParams
+
+        fastScrollerIndexViewBinding.root
+                .setPadding(indexedFastScrollerFactoryWatch.rootPaddingStart, indexedFastScrollerFactoryWatch.rootPaddingTop,
+                        indexedFastScrollerFactoryWatch.rootPaddingEnd, indexedFastScrollerFactoryWatch.rootPaddingBottom)
 
         //Popup Text
-        val popupIndexLayoutParams = fastScrollerIndexViewBinding.popupIndex.layoutParams as RelativeLayout.LayoutParams
-        popupIndexLayoutParams.marginEnd = finalPopupHorizontalOffset
-
-        fastScrollerIndexViewBinding.popupIndex.layoutParams = popupIndexLayoutParams
-
         val popupIndexBackground: Drawable? = indexedFastScrollerFactoryWatch.popupBackgroundShape?:context.getDrawable(R.drawable.ic_launcher_balloon)?.mutate()
         popupIndexBackground?.setTint(indexedFastScrollerFactoryWatch.popupBackgroundTint)
+
         fastScrollerIndexViewBinding.popupIndex.background = popupIndexBackground
-        fastScrollerIndexViewBinding.popupIndex.setTextColor(indexedFastScrollerFactoryWatch.popupTextColor)
         fastScrollerIndexViewBinding.popupIndex.typeface = indexedFastScrollerFactoryWatch.popupTextFont
+        fastScrollerIndexViewBinding.popupIndex.setTextColor(indexedFastScrollerFactoryWatch.popupTextColor)
         fastScrollerIndexViewBinding.popupIndex.setTextSize(TypedValue.COMPLEX_UNIT_SP, indexedFastScrollerFactoryWatch.popupTextSize)
 
         this@IndexedFastScrollerWatch
@@ -130,45 +117,76 @@ class IndexedFastScrollerWatch(private val context: Context,
             }
         }
 
-        val t = ArrayList<String>()
-        mapIndexFirstItem.keys.forEach {
-            t.add(it)
+
+
+        //Curve Index View
+        /*Repositioning Process*/
+//        val nestedIndexScrollViewCurve = rootView.findViewById<WearableRecyclerView>(R.id.nestedIndexScrollViewCurve)
+
+        val fastScrollerCurvedIndexView = layoutInflater.inflate(R.layout.fast_scroller_curved_index_view, null) as RelativeLayout
+        val nestedIndexScrollViewCurve = fastScrollerCurvedIndexView.findViewById<WearableRecyclerView>(R.id.nestedIndexScrollViewCurve)
+        rootView.addView(fastScrollerCurvedIndexView, 0)
+
+        delay(1000)
+
+        val wearableLinearLayoutManager = WearableLinearLayoutManager(context, IndexCurveWearLayoutManager())
+        nestedIndexScrollViewCurve.layoutManager = wearableLinearLayoutManager
+
+        nestedIndexScrollViewCurve.setOnTouchListener { view, motionEvent -> true }
+
+        nestedIndexScrollViewCurve.isEdgeItemsCenteringEnabled = true
+        nestedIndexScrollViewCurve.apply {
+            isCircularScrollingGestureEnabled = true
+            bezelFraction = 0.10f
+            scrollDegreesPerScreen = 90f
         }
 
-        val curveIndexItemAdapter: CurveIndexItemAdapter = CurveIndexItemAdapter(context, t)
-        fastScrollerIndexViewBinding.nestedIndexScrollView.adapter = curveIndexItemAdapter
+        val itemsIndex = ArrayList<String>()
+        itemsIndex.addAll(mapIndexFirstItem.keys)
+
+        val indexCurveItemAdapter: IndexCurveItemAdapter = IndexCurveItemAdapter(context,
+                indexedFastScrollerFactoryWatch,
+                itemsIndex)
+        nestedIndexScrollViewCurve.adapter = indexCurveItemAdapter
 
         delay(500)
-        fastScrollerIndexViewBinding.nestedIndexScrollView.scrollToPosition(20)
+        nestedIndexScrollViewCurve.smoothScrollToPosition(itemsIndex.size/2)
+        nestedIndexScrollViewCurve.visibility = View.VISIBLE
+        ///
 
-//        var sideIndexItem = layoutInflater.inflate(R.layout.fast_scroller_side_index_item, null) as TextView
 
-//        mapIndexFirstItem.keys.forEach { indexText ->
-//            sideIndexItem = layoutInflater.inflate(R.layout.fast_scroller_side_index_item, null) as TextView
-//            sideIndexItem.text = indexText.toUpperCase(Locale.getDefault())
-//            sideIndexItem.setTextColor(indexedFastScrollerFactoryWatch.indexItemTextColor)
-//            sideIndexItem.typeface = indexedFastScrollerFactoryWatch.indexItemFont
-//            sideIndexItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, indexedFastScrollerFactoryWatch.indexItemSize)
+        var sideIndexItemLayout = layoutInflater.inflate(R.layout.fast_scroller_side_index_item, null) as ConstraintLayout
 
-//            fastScrollerIndexViewBinding.indexView.addView(sideIndexItem)
-//        }
+        mapIndexFirstItem.keys.forEach { indexText ->
+            sideIndexItemLayout = layoutInflater.inflate(R.layout.fast_scroller_side_index_item, null) as ConstraintLayout
 
-//        val finalTextView = sideIndexItem
+            val sideIndexItem = sideIndexItemLayout.findViewById<TextView>(R.id.itemIndexView)
+            sideIndexItem.setTextColor(Color.TRANSPARENT)
+            sideIndexItem.text = indexText.toUpperCase(Locale.getDefault())
 
-//        delay(777)
+            fastScrollerIndexViewBinding.indexView.addView(sideIndexItemLayout)
+        }
 
-//        var upperRange = (fastScrollerIndexViewBinding.indexView.y - finalTextView.height).toInt()
+        val finalTextViewHeight = 19F.convertToDp(context)
 
-//        for (number in 0 until fastScrollerIndexViewBinding.indexView.childCount) {
-//            val indexText = (fastScrollerIndexViewBinding.indexView.getChildAt(number) as TextView).text.toString()
-//            val indexRange = (fastScrollerIndexViewBinding.indexView.getChildAt(number).y + fastScrollerIndexViewBinding.indexView.y + finalTextView.height).toInt()
+        delay(777)
 
-//            for (jRange in upperRange..indexRange) {
-//                mapRangeIndex[jRange] = indexText
-//            }
+        var upperRange = (fastScrollerIndexViewBinding.indexView.y - finalTextViewHeight).toInt()
 
-//            upperRange = indexRange
-//        }
+        for (number in 0 until fastScrollerIndexViewBinding.indexView.childCount) {
+            val indexItemRootView = fastScrollerIndexViewBinding.indexView.getChildAt(number) as ConstraintLayout
+
+            val indexText = (indexItemRootView.findViewById<TextView>(R.id.itemIndexView)).text.toString()
+            val indexRange = (fastScrollerIndexViewBinding.indexView.getChildAt(number).y + fastScrollerIndexViewBinding.indexView.y + finalTextViewHeight).toInt()
+
+            for (jRange in upperRange..indexRange) {
+                mapRangeIndex[jRange] = indexText
+            }
+
+            upperRange = indexRange
+        }
+
+        fastScrollerIndexViewBinding.indexView.visibility = View.GONE
 
         this@async.launch {
 
@@ -187,82 +205,79 @@ class IndexedFastScrollerWatch(private val context: Context,
         fastScrollerIndexViewBinding.nestedIndexScrollView.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
         fastScrollerIndexViewBinding.nestedIndexScrollView.visibility = View.VISIBLE
 
-        val popupIndexOffsetY = (
-                statusBarHeight
-                        + navigationBarBarHeight
-                        + finalPopupVerticalOffset).toFloat()
+        fastScrollerIndexViewBinding.nestedIndexScrollView.setOnTouchListener { view, motionEvent ->
 
-//        fastScrollerIndexViewBinding.nestedIndexScrollView.setOnTouchListener { view, motionEvent ->
-//
-//            when(motionEvent.action) {
-//                MotionEvent.ACTION_DOWN -> {
-//                    if (indexedFastScrollerFactoryWatch.popupEnable) {
-//                        val indexText = mapRangeIndex[motionEvent.y.toInt()]
-//
-//                        if (indexText != null) {
-//                            fastScrollerIndexViewBinding.popupIndex.y = motionEvent.rawY - popupIndexOffsetY
-//                            fastScrollerIndexViewBinding.popupIndex.text = indexText
-//                            fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
-//                            fastScrollerIndexViewBinding.popupIndex.visibility = View.VISIBLE
-//                        }
-//                    }
-//                }
-//                MotionEvent.ACTION_MOVE -> {
-//                    if (indexedFastScrollerFactoryWatch.popupEnable) {
-//                        val indexText = mapRangeIndex[motionEvent.y.toInt()]
-//
-//                        if (indexText != null) {
-//                            if (!fastScrollerIndexViewBinding.popupIndex.isShown) {
-//                                fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
-//                                fastScrollerIndexViewBinding.popupIndex.visibility = View.VISIBLE
-//                            }
-//
-//                            fastScrollerIndexViewBinding.popupIndex.y = motionEvent.rawY - popupIndexOffsetY
-//                            fastScrollerIndexViewBinding.popupIndex.text = indexText
-//
-//                            recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
-//
-//                        } else {
-//                            if (fastScrollerIndexViewBinding.popupIndex.isShown) {
-//                                fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_out))
-//                                fastScrollerIndexViewBinding.popupIndex.visibility = View.INVISIBLE
-//                            }
-//                        }
-//                    }
-//                }
-//                MotionEvent.ACTION_UP -> {
-//                    if (indexedFastScrollerFactoryWatch.popupEnable) {
-//                        if (fastScrollerIndexViewBinding.popupIndex.isShown) {
-//
-//                            recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
-//
-//                            fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_out))
-//                            fastScrollerIndexViewBinding.popupIndex.visibility = View.INVISIBLE
-//                        }
-//                    } else {
-//
-//                        recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
-//
-//                    }
-//                }
-//                MotionEvent.ACTION_CANCEL -> {
-//                    if (indexedFastScrollerFactoryWatch.popupEnable) {
-//                        if (fastScrollerIndexViewBinding.popupIndex.isShown) {
-//
-//                            recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
-//
-//                            fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_out))
-//                            fastScrollerIndexViewBinding.popupIndex.visibility = View.INVISIBLE
-//                        }
-//                    } else {
-//
-//                        recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
-//
-//                    }
-//                }
-//            }
-//
-//            true
-//        }
+            when(motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    if (indexedFastScrollerFactoryWatch.popupEnable) {
+                        val indexText = mapRangeIndex[motionEvent.y.toInt()]
+
+                        if (indexText != null) {
+                            fastScrollerIndexViewBinding.popupIndex.text = indexText
+
+                            fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
+                            fastScrollerIndexViewBinding.popupIndex.visibility = View.VISIBLE
+                        }
+                    }
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    if (indexedFastScrollerFactoryWatch.popupEnable) {
+                        val indexText = mapRangeIndex[motionEvent.y.toInt()]
+
+                        if (indexText != null) {
+                            if (!fastScrollerIndexViewBinding.popupIndex.isShown) {
+                                fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
+                                fastScrollerIndexViewBinding.popupIndex.visibility = View.VISIBLE
+                            }
+
+                            fastScrollerIndexViewBinding.popupIndex.text = indexText
+
+                            recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
+
+                        } else {
+                            if (fastScrollerIndexViewBinding.popupIndex.isShown) {
+                                fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_out))
+                                fastScrollerIndexViewBinding.popupIndex.visibility = View.INVISIBLE
+                            }
+                        }
+                    }
+                }
+                MotionEvent.ACTION_UP -> {
+                    if (indexedFastScrollerFactoryWatch.popupEnable) {
+                        if (fastScrollerIndexViewBinding.popupIndex.isShown) {
+
+                            recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
+
+                            fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_out))
+                            fastScrollerIndexViewBinding.popupIndex.visibility = View.INVISIBLE
+                        }
+                    } else {
+
+                        recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
+
+                    }
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    if (indexedFastScrollerFactoryWatch.popupEnable) {
+                        if (fastScrollerIndexViewBinding.popupIndex.isShown) {
+
+                            recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
+
+                            fastScrollerIndexViewBinding.popupIndex.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_out))
+                            fastScrollerIndexViewBinding.popupIndex.visibility = View.INVISIBLE
+                        }
+                    } else {
+
+                        recyclerView.smoothScrollToPosition(mapIndexFirstItem.get(mapRangeIndex[motionEvent.y.toInt()])!!)
+
+                    }
+                }
+            }
+
+            true
+        }
+
+
+
     }
 }

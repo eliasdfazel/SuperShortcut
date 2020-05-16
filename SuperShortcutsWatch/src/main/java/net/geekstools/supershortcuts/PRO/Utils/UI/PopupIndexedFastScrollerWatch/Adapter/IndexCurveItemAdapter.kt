@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/15/20 11:18 AM
+ * Last modified 5/15/20 4:21 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,6 +11,7 @@ package net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactoryWatch
+import java.util.*
 
-class CurveIndexItemAdapter(private val context: Context,
-                            private val itemsIndex: ArrayList<String>) : RecyclerView.Adapter<CurveIndexItemAdapter.ViewHolder>() {
+class IndexCurveItemAdapter(private val context: Context,
+                            private val indexedFastScrollerFactoryWatch: IndexedFastScrollerFactoryWatch,
+                            private val itemsIndex: ArrayList<String>) : RecyclerView.Adapter<IndexCurveItemAdapter.ViewHolder>() {
 
     var functionsClass: FunctionsClass = FunctionsClass(context)
 
@@ -32,30 +36,12 @@ class CurveIndexItemAdapter(private val context: Context,
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(viewHolderBinder: ViewHolder, position: Int) {
 
-        viewHolderBinder.itemIndexView.text = itemsIndex[position]
+        viewHolderBinder.itemIndexView.text = itemsIndex[position].toUpperCase(Locale.getDefault())
 
-        viewHolderBinder.itemIndexView.setOnClickListener {
+        viewHolderBinder.itemIndexView.typeface = indexedFastScrollerFactoryWatch.indexItemFont
+        viewHolderBinder.itemIndexView.setTextColor(indexedFastScrollerFactoryWatch.indexItemTextColor)
+        viewHolderBinder.itemIndexView.setTextSize(TypedValue.COMPLEX_UNIT_SP, indexedFastScrollerFactoryWatch.indexItemSize)
 
-            println(itemsIndex[position])
-
-        }
-
-//
-//        viewHolderBinder.itemIndexView.setOnTouchListener { view, motionEvent ->
-//
-//            when (motionEvent.action) {
-//                MotionEvent.ACTION_DOWN -> {
-//
-//                }
-//                MotionEvent.ACTION_MOVE -> {
-//
-//                }
-//                MotionEvent.ACTION_UP -> {
-//
-//                }
-//            }
-//            true
-//        }
     }
 
     override fun getItemCount(): Int {

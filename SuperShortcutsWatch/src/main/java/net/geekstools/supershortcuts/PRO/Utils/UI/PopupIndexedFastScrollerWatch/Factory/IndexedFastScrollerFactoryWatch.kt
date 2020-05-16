@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/15/20 9:51 AM
+ * Last modified 5/15/20 3:28 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -63,20 +63,6 @@ data class IndexedFastScrollerFactoryWatch(
          * Enable Popup View Of Index Text.
          **/
         var popupEnable: Boolean = true,
-        /**
-         * Set Integer Number Of Offset For Popup View Of Index Text.
-         * It Will Automatically Convert It To DP.
-         *
-         * Default Value Is 7dp.
-         **/
-        var popupVerticalOffset: Float = 1F,
-        /**
-         * Set Integer Number Of Offset For Popup View Of Index Text.
-         * It Will Automatically Convert It To DP.
-         *
-         * Default Value Is 1dp.
-         **/
-        var popupHorizontalOffset: Float = 1F,
         /**
          * Set Color Of Text For Popup View.
          **/

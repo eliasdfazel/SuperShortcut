@@ -3,37 +3,58 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/15/20 11:12 AM
+  ~ Last modified 5/15/20 4:00 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <androidx.wear.widget.WearableRecyclerView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedIndexScrollView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
+        android:foregroundGravity="center_vertical"
         android:background="@android:color/transparent"
-        android:visibility="invisible">
+        android:visibility="invisible"
 
-    </androidx.wear.widget.WearableRecyclerView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintWidth_percent="0.3">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/indexView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:background="@android:color/transparent"
+            android:orientation="vertical"/>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/popupIndex"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:layout_toStartOf="@id/nestedIndexScrollView"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
         android:gravity="center"
         android:textColor="@color/light"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:fontFamily="monospace"
         android:background="@drawable/ic_launcher_balloon"
-        android:visibility="invisible" />
+        android:visibility="invisible"
 
-</RelativeLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
