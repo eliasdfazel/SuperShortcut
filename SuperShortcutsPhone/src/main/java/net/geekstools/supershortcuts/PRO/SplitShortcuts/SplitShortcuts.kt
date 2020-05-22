@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 9:31 AM
+ * Last modified 5/21/20 10:22 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -105,7 +105,7 @@ class SplitShortcuts : AppCompatActivity(),
 
         initializeLoadingProcess()
 
-        functionsClassDialogues.changeLog()
+        functionsClassDialogues.changeLog(!functionsClass.isFirstToCheckTutorial)
 
         //In-App Billing
         PurchasesCheckpoint(this@SplitShortcuts).trigger()

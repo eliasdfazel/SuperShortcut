@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/7/20 12:09 PM
+ * Last modified 5/21/20 10:55 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,7 +28,8 @@ import net.geekstools.supershortcuts.PRO.R
 
 class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsClass: FunctionsClass) {
 
-    fun changeLog() {
+    fun changeLog(loadVideoTutorial: Boolean) {
+
         val layoutParams = WindowManager.LayoutParams()
         val dialogueWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 370f, activity.resources.displayMetrics).toInt()
         val dialogueHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 430f, activity.resources.displayMetrics).toInt()
@@ -42,13 +43,26 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         val dialog = Dialog(activity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialogue_message)
-        dialog.window?.attributes = layoutParams
+        dialog.setCancelable(true)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.decorView?.setBackgroundColor(Color.TRANSPARENT)
-        dialog.setCancelable(true)
+        dialog.window?.attributes = layoutParams
 
         val dialogueView: View = dialog.findViewById<RelativeLayout>(R.id.dialogueView)
         dialogueView.backgroundTintList = ColorStateList.valueOf(activity.getColor(R.color.light))
+
+        if (loadVideoTutorial) {
+            dialog.webViewTutorial.settings.setAppCacheEnabled(false)
+            dialog.webViewTutorial.settings.javaScriptEnabled = true
+
+            dialog.webViewTutorial.clearCache(true)
+            dialog.webViewTutorial.loadUrl("https://geeksempire.net/Projects/Android/SuperShortcuts/OverviewVideo.html")
+
+            dialog.webViewTutorial.visibility = View.VISIBLE
+            dialog.dialogueTitle.visibility = View.INVISIBLE
+
+            functionsClass.isFirstToCheckTutorial(true)
+        }
 
         dialog.dialogueTitle.text = activity.getString(R.string.whatsnew)
         dialog.dialogueMessage.text = Html.fromHtml(activity.getString(R.string.changelog))
@@ -90,6 +104,11 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
                 dialog.show()
             }
 
+        } else if (loadVideoTutorial) {
+
+            if (!activity.isFinishing) {
+                dialog.show()
+            }
         }
     }
 

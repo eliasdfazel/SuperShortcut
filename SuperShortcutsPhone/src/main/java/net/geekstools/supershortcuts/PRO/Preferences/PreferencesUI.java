@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 9:31 AM
+ * Last modified 5/21/20 10:53 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -87,7 +87,7 @@ public class PreferencesUI extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         functionsClass = new FunctionsClass(getApplicationContext());
-        new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog();
+        new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog(!functionsClass.isFirstToCheckTutorial());
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
         getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
@@ -215,7 +215,17 @@ public class PreferencesUI extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog();
+                new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog(false);
+            }
+        });
+
+        preferenceViewBinding.newsView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog(true);
+
+                return true;
             }
         });
 

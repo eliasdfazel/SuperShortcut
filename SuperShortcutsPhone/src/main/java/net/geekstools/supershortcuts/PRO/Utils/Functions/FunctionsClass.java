@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/14/20 2:38 PM
+ * Last modified 5/21/20 10:20 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -2516,6 +2516,14 @@ public class FunctionsClass {
     }
 
     /*Firebase Remote Config*/
+    public void isFirstToCheckTutorial(Boolean firstTimeTutorial) {
+        savePreference(".Tutorial", "Checked", firstTimeTutorial);
+    }
+
+    public Boolean isFirstToCheckTutorial() {
+        return readPreference(".Tutorial", "Checked", false);
+    }
+
     public boolean joinedBetaProgram() {
         return readDefaultPreference("JoinedBetaProgrammer", false);
     }
