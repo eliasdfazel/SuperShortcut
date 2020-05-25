@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 11:31 AM
+ * Last modified 5/24/20 7:50 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -42,53 +42,58 @@ class SwipeGestureListener(private val context: Context,
     private var swipeMode: Int = 0
 
 
-    override fun onFling(downMotionEvent: MotionEvent, moveMotionEvent: MotionEvent, initVelocityX: Float, initVelocityY: Float) : Boolean {
-
-        val xDistance = abs(downMotionEvent.x - moveMotionEvent.x)
-        val yDistance = abs(downMotionEvent.y - moveMotionEvent.y)
+    override fun onFling(downMotionEvent: MotionEvent?, moveMotionEvent: MotionEvent?, initVelocityX: Float, initVelocityY: Float) : Boolean {
 
         var motionEventConsumed = false
 
-        if (abs(initVelocityY) >= this.swipeMinVelocity && yDistance > this.swipeMinDistance && xDistance < yDistance) {//Vertical
+        if (downMotionEvent != null && moveMotionEvent != null) {
 
-            swipeMode = if (downMotionEvent.y > moveMotionEvent.y) {//Down -> Up
+            val xDistance = abs(downMotionEvent.x - moveMotionEvent.x)
+            val yDistance = abs(downMotionEvent.y - moveMotionEvent.y)
 
-                gestureListenerInterface.onSwipeGesture(
-                    GestureConstants.SwipeVertical(
-                        GestureListenerConstants.SWIPE_UP), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
-                GestureListenerConstants.SWIPE_UP
 
-            } else {//Up -> Down
+            if (abs(initVelocityY) >= this.swipeMinVelocity && yDistance > this.swipeMinDistance && xDistance < yDistance) {//Vertical
 
-                gestureListenerInterface.onSwipeGesture(
-                    GestureConstants.SwipeVertical(
-                        GestureListenerConstants.SWIPE_DOWN), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
-                GestureListenerConstants.SWIPE_DOWN
+                swipeMode = if (downMotionEvent.y > moveMotionEvent.y) {//Down -> Up
 
+                    gestureListenerInterface.onSwipeGesture(
+                            GestureConstants.SwipeVertical(
+                                    GestureListenerConstants.SWIPE_UP), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
+                    GestureListenerConstants.SWIPE_UP
+
+                } else {//Up -> Down
+
+                    gestureListenerInterface.onSwipeGesture(
+                            GestureConstants.SwipeVertical(
+                                    GestureListenerConstants.SWIPE_DOWN), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
+                    GestureListenerConstants.SWIPE_DOWN
+
+                }
+
+                motionEventConsumed = true
             }
 
-            motionEventConsumed = true
-        }
+            if (abs(initVelocityX) >= this.swipeMinVelocity && xDistance > this.swipeMinDistance && yDistance < xDistance) {//Horizontal
 
-        if (abs(initVelocityX) >= this.swipeMinVelocity && xDistance > this.swipeMinDistance && yDistance < xDistance) {//Horizontal
+                swipeMode = if (downMotionEvent.x > moveMotionEvent.x) {//Right -> Left
 
-            swipeMode = if (downMotionEvent.x > moveMotionEvent.x) {//Right -> Left
+                    gestureListenerInterface.onSwipeGesture(
+                            GestureConstants.SwipeHorizontal(
+                                    GestureListenerConstants.SWIPE_LEFT), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
+                    GestureListenerConstants.SWIPE_LEFT
 
-                gestureListenerInterface.onSwipeGesture(
-                    GestureConstants.SwipeHorizontal(
-                        GestureListenerConstants.SWIPE_LEFT), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
-                GestureListenerConstants.SWIPE_LEFT
+                } else {//Left -> Right
 
-            } else {//Left -> Right
+                    gestureListenerInterface.onSwipeGesture(
+                            GestureConstants.SwipeHorizontal(
+                                    GestureListenerConstants.SWIPE_RIGHT), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
+                    GestureListenerConstants.SWIPE_RIGHT
 
-                gestureListenerInterface.onSwipeGesture(
-                    GestureConstants.SwipeHorizontal(
-                        GestureListenerConstants.SWIPE_RIGHT), downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
-                GestureListenerConstants.SWIPE_RIGHT
+                }
 
+                motionEventConsumed = true
             }
 
-            motionEventConsumed = true
         }
 
         return motionEventConsumed
