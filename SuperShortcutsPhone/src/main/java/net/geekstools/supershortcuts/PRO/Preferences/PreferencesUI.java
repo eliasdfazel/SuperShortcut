@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/21/20 10:53 PM
+ * Last modified 6/8/20 10:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -55,6 +55,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
+import net.geekstools.supershortcuts.PRO.Preferences.Adapter.CustomIconsThemeAdapter;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;

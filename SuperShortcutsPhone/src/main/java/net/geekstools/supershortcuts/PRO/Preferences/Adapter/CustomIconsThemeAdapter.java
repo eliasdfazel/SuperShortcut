@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/30/20 11:45 AM
+ * Last modified 6/8/20 10:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.Preferences;
+package net.geekstools.supershortcuts.PRO.Preferences.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
