@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/15/20 4:21 PM
+ * Last modified 6/3/20 2:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -117,12 +117,7 @@ class IndexedFastScrollerWatch(private val context: Context,
             }
         }
 
-
-
         //Curve Index View
-        /*Repositioning Process*/
-//        val nestedIndexScrollViewCurve = rootView.findViewById<WearableRecyclerView>(R.id.nestedIndexScrollViewCurve)
-
         val fastScrollerCurvedIndexView = layoutInflater.inflate(R.layout.fast_scroller_curved_index_view, null) as RelativeLayout
         val nestedIndexScrollViewCurve = fastScrollerCurvedIndexView.findViewById<WearableRecyclerView>(R.id.nestedIndexScrollViewCurve)
         rootView.addView(fastScrollerCurvedIndexView, 0)
@@ -152,8 +147,7 @@ class IndexedFastScrollerWatch(private val context: Context,
         delay(500)
         nestedIndexScrollViewCurve.smoothScrollToPosition(itemsIndex.size/2)
         nestedIndexScrollViewCurve.visibility = View.VISIBLE
-        ///
-
+        //Curve Index View
 
         var sideIndexItemLayout = layoutInflater.inflate(R.layout.fast_scroller_side_index_item, null) as ConstraintLayout
 
