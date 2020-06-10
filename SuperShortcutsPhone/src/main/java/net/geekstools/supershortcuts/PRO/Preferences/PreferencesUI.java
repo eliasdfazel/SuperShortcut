@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/8/20 10:37 AM
+ * Last modified 6/10/20 7:44 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,7 +12,6 @@ package net.geekstools.supershortcuts.PRO.Preferences;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.app.AppOpsManager;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,11 +19,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -33,21 +29,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,7 +49,6 @@ import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
@@ -69,148 +57,25 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PreferencesUI extends AppCompatActivity {
 
     FunctionsClass functionsClass;
 
-    FirebaseRemoteConfig firebaseRemoteConfig;
 
     PreferenceViewBinding preferenceViewBinding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        preferenceViewBinding = PreferenceViewBinding.inflate(getLayoutInflater());
-        setContentView(preferenceViewBinding.getRoot());
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        functionsClass = new FunctionsClass(getApplicationContext());
-        new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog(!functionsClass.isFirstToCheckTutorial());
-
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.default_color_darker)));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY));
-        getSupportActionBar().setSubtitle(Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + functionsClass.appVersionName(getPackageName()) + "</font></small>", Html.FROM_HTML_MODE_LEGACY));
-
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getColor(R.color.default_color_darker));
-        window.setNavigationBarColor(getColor(R.color.light));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-        }
-
-        preferenceViewBinding.prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
-        preferenceViewBinding.customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
-
-        if (!functionsClass.mixShortcutsPurchased()) {
-            BillingClient billingClient = BillingClient.newBuilder(PreferencesUI.this).setListener(new PurchasesUpdatedListener() {
-                @Override
-                public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> purchases) {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
-
-                    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
-
-                    } else {
-
-                    }
-
-                }
-            }).enablePendingPurchases().build();
-            billingClient.startConnection(new BillingClientStateListener() {
-                @Override
-                public void onBillingSetupFinished(BillingResult billingResult) {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                        functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false);
-
-                        List<Purchase> purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).getPurchasesList();
-                        for (Purchase purchase : purchases) {
-                            FunctionsClassDebug.Companion.PrintDebug("*** Purchased Item: " + purchase + " ***");
-
-                            functionsClass.savePreference(".PurchasedItem", purchase.getSku(), true);
-                        }
-                    }
-                }
-
-                @Override
-                public void onBillingServiceDisconnected() {
-
-                }
-            });
-        }
-    }
 
     @Override
     public void onStart() {
         super.onStart();
-        preferenceViewBinding.prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher));
 
-        preferenceViewBinding.smartView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("smart", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                if (sharedPreferences.getBoolean("smartPick", false) == true) {
-                    preferenceViewBinding.prefSwitch.setChecked(false);
-                    editor.putBoolean("smartPick", false);
-                    editor.apply();
 
-                    Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                    startActivity(intent);
-                    finish();
-                } else if (sharedPreferences.getBoolean("smartPick", false) == false) {
-                    functionsClass.UsageAccess(PreferencesUI.this, preferenceViewBinding.prefSwitch);
-                }
-            }
-        });
 
-        preferenceViewBinding.splitView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!functionsClass.AccessibilityServiceEnabled()) {
-                    functionsClass.AccessibilityService(PreferencesUI.this, false);
-                } else {
-                    Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-            }
-        });
 
-        preferenceViewBinding.mixView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (functionsClass.mixShortcutsPurchased()) {
-                    try {
-                        functionsClass.deleteSelectedFiles();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
-                        preferenceViewBinding.mixSwitch.setChecked(false);
-                        editor.putBoolean("mixShortcuts", false);
-                        editor.apply();
-                    } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
-                        preferenceViewBinding.mixSwitch.setChecked(true);
-                        editor.putBoolean("mixShortcuts", true);
-                        editor.apply();
-                    }
-                } else {
 
-                    startActivity(new Intent(getApplicationContext(), InitializeInAppBilling.class)
-                                    .putExtra(InitializeInAppBilling.Entry.PurchaseType, InitializeInAppBilling.Entry.OneTimePurchase)
-                                    .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemMixShortcuts)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            , ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.down_up, android.R.anim.fade_out).toBundle());
 
-                }
-            }
-        });
 
         preferenceViewBinding.newsView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,7 +163,7 @@ public class PreferencesUI extends AppCompatActivity {
         preferenceViewBinding.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareAll();
+                shareSuperShortcuts();
             }
         });
         preferenceViewBinding.rate.setOnClickListener(new View.OnClickListener() {
@@ -405,7 +270,7 @@ public class PreferencesUI extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default);
         firebaseRemoteConfig.fetch(0)
                 .addOnCompleteListener(PreferencesUI.this, new OnCompleteListener<Void>() {
@@ -434,24 +299,16 @@ public class PreferencesUI extends AppCompatActivity {
                     }
                 });
 
-        try {
-            SharedPreferences sharedPreferences = getSharedPreferences("smart", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = getSharedPreferences("smart", MODE_PRIVATE).edit();
 
-            AppOpsManager appOps = (AppOpsManager) getSystemService(APP_OPS_SERVICE);
-            int mode = appOps.checkOp("android:get_usage_stats", android.os.Process.myUid(), getPackageName());
-            if (mode == AppOpsManager.MODE_ALLOWED) {
-                preferenceViewBinding.prefSwitch.setChecked(true);
-                editor.putBoolean("smartPick", true);
-                editor.apply();
-            } else {
-                preferenceViewBinding.prefSwitch.setChecked(false);
-                editor.putBoolean("smartPick", false);
-                editor.apply();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            ;
+        if (functionsClass.UsageAccessEnabled()) {
+            preferenceViewBinding.prefSwitch.setChecked(true);
+            editor.putBoolean("smartPick", true);
+            editor.apply();
+        } else {
+            preferenceViewBinding.prefSwitch.setChecked(false);
+            editor.putBoolean("smartPick", false);
+            editor.apply();
         }
 
         if (functionsClass.AccessibilityServiceEnabled()) {
@@ -460,10 +317,9 @@ public class PreferencesUI extends AppCompatActivity {
             preferenceViewBinding.splitSwitch.setChecked(false);
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("mix", MODE_PRIVATE);
-        if (sharedPreferences.getBoolean("mixShortcuts", false) == true) {
+        if (getSharedPreferences("mix", MODE_PRIVATE).getBoolean("mixShortcuts", false)) {
             preferenceViewBinding.mixSwitch.setChecked(true);
-        } else if (sharedPreferences.getBoolean("mixShortcuts", false) == false) {
+        } else if (!getSharedPreferences("mix", MODE_PRIVATE).getBoolean("mixShortcuts", false)) {
             preferenceViewBinding.mixSwitch.setChecked(false);
         }
 
@@ -471,34 +327,26 @@ public class PreferencesUI extends AppCompatActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
-        try {
-            SharedPreferences sharedPreferences = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE);
-            String tabView = sharedPreferences.getString("TabsView", NormalAppShortcutsSelectionListPhone.class.getSimpleName());
-            if (tabView.equals(NormalAppShortcutsSelectionListPhone.class.getSimpleName())) {
-                startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
-            } else if (tabView.equals(SplitShortcuts.class.getSimpleName())) {
-                startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
 
-            } else if (tabView.equals(FolderShortcuts.class.getSimpleName())) {
-                startActivity(new Intent(getApplicationContext(), FolderShortcuts.class),
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
-            } else {
-                startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
-                        ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
-            }
-            this.finish();
-        } catch (Exception e) {
-            e.printStackTrace();
+        String tabView = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE).getString("TabsView", NormalAppShortcutsSelectionListPhone.class.getSimpleName());
+        if (tabView.equals(NormalAppShortcutsSelectionListPhone.class.getSimpleName())) {
+            startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
+                    ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
+        } else if (tabView.equals(SplitShortcuts.class.getSimpleName())) {
+            startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
+                    ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
+
+        } else if (tabView.equals(FolderShortcuts.class.getSimpleName())) {
+            startActivity(new Intent(getApplicationContext(), FolderShortcuts.class),
+                    ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
+        } else {
+            startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
+                    ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
         }
+
+        PreferencesUI.this.finish();
     }
 
     @Override
@@ -540,35 +388,33 @@ public class PreferencesUI extends AppCompatActivity {
                 break;
             }
             case android.R.id.home: {
-                try {
-                    SharedPreferences sharedPreferences = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE);
-                    String tabView = sharedPreferences.getString("TabsView", NormalAppShortcutsSelectionListPhone.class.getSimpleName());
-                    if (tabView.equals(NormalAppShortcutsSelectionListPhone.class.getSimpleName())) {
-                        startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
-                                ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
-                    } else if (tabView.equals(SplitShortcuts.class.getSimpleName())) {
-                        startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
-                                ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
 
-                    } else if (tabView.equals(FolderShortcuts.class.getSimpleName())) {
-                        startActivity(new Intent(getApplicationContext(), FolderShortcuts.class),
-                                ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
-                    } else {
-                        startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
-                                ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
-                    }
-                    this.finish();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                String tabView = getSharedPreferences("ShortcutsModeView", MODE_PRIVATE).getString("TabsView", NormalAppShortcutsSelectionListPhone.class.getSimpleName());
+                if (tabView.equals(NormalAppShortcutsSelectionListPhone.class.getSimpleName())) {
+                    startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
+                } else if (tabView.equals(SplitShortcuts.class.getSimpleName())) {
+                    startActivity(new Intent(getApplicationContext(), SplitShortcuts.class),
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
+
+                } else if (tabView.equals(FolderShortcuts.class.getSimpleName())) {
+                    startActivity(new Intent(getApplicationContext(), FolderShortcuts.class),
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
+                } else {
+                    startActivity(new Intent(getApplicationContext(), NormalAppShortcutsSelectionListPhone.class),
+                            ActivityOptions.makeCustomAnimation(getApplicationContext(), android.R.anim.fade_in, R.anim.go_up).toBundle());
                 }
+
+                PreferencesUI.this.finish();
+
                 break;
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /********************Functions*************************/
-    public void shareAll() {
+    /* Functions */
+    private void shareSuperShortcuts() {
         String shareText = getString(R.string.invitation_title) +
                 "\n" + getString(R.string.invitation_message) +
                 "\n" + getString(R.string.play_store_link) + getPackageName();
