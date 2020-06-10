@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/10/20 12:26 PM
+ * Last modified 6/10/20 1:05 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,28 +11,16 @@
 package net.geekstools.supershortcuts.PRO.Preferences;
 
 import android.app.ActivityOptions;
-import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.text.Html;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.OrientationHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,19 +29,13 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone;
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts;
-import net.geekstools.supershortcuts.PRO.Preferences.Adapter.CustomIconsThemeAdapter;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
-import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues;
-import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling;
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData;
-import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
 import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding;
-
-import java.util.ArrayList;
 
 public class PreferencesUI extends AppCompatActivity {
 
@@ -82,86 +64,6 @@ public class PreferencesUI extends AppCompatActivity {
 
 
 
-        preferenceViewBinding.customIconView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                int dialogueWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 313, getResources().getDisplayMetrics());
-
-                layoutParams.width = dialogueWidth;
-                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                layoutParams.windowAnimations = android.R.style.Animation_Dialog;
-
-                final Dialog dialog = new Dialog(PreferencesUI.this);
-                dialog.setContentView(R.layout.custom_icons);
-                dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.dark) + "'>" + getString(R.string.customIconTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY));
-                dialog.getWindow().setAttributes(layoutParams);
-                dialog.getWindow().getDecorView().setBackgroundColor(getColor(R.color.light));
-                dialog.setCancelable(true);
-
-                TextView defaultTheme = (TextView) dialog.findViewById(R.id.setDefault);
-                RecyclerView customIconList = (RecyclerView) dialog.findViewById(R.id.customIconList);
-
-                RecycleViewSmoothLayout recyclerViewLayoutManager = new RecycleViewSmoothLayout(getApplicationContext(), OrientationHelper.VERTICAL, false);
-                customIconList.setLayoutManager(recyclerViewLayoutManager);
-                customIconList.removeAllViews();
-                final ArrayList<AdapterItemsData> navDrawerItems = new ArrayList<AdapterItemsData>();
-                navDrawerItems.clear();
-                for (String packageName : PublicVariable.customIconsPackages) {
-                    navDrawerItems.add(new AdapterItemsData(
-                            functionsClass.appName(packageName),
-                            packageName,
-                            functionsClass.appIconDrawable(packageName)
-                    ));
-                }
-                CustomIconsThemeAdapter customIconsThemeAdapter = new CustomIconsThemeAdapter(PreferencesUI.this, getApplicationContext(), navDrawerItems);
-                customIconList.setAdapter(customIconsThemeAdapter);
-
-                defaultTheme.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sendBroadcast(new Intent("CUSTOM_DIALOGUE_DISMISS"));
-
-                        functionsClass.saveDefaultPreference("customIcon", getPackageName());
-                        preferenceViewBinding.customIconIcon.setImageDrawable(getDrawable(R.drawable.draw_pref_custom_icon));
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        navDrawerItems.clear();
-                    }
-                });
-                dialog.show();
-
-                IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction("CUSTOM_DIALOGUE_DISMISS");
-                BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-                        if (intent.getAction().equals("CUSTOM_DIALOGUE_DISMISS")) {
-                            preferenceViewBinding.customIconIcon.setImageDrawable(functionsClass.customIconsEnable() ? functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getDrawable(R.drawable.draw_pref_custom_icon));
-                            preferenceViewBinding.customIconDesc.setText(functionsClass.customIconsEnable() ? functionsClass.appName(functionsClass.readDefaultPreference("customIcon", getPackageName())) : getString(R.string.customIconDesc));
-                            if (functionsClass.customIconsEnable()) {
-                                if (functionsClass.mixShortcuts()) {
-                                    functionsClass.addMixAppShortcutsCustomIconsPref();
-                                } else if (functionsClass.AppShortcutsMode().equals("AppShortcuts")) {
-                                    functionsClass.addAppShortcutsCustomIconsPref();
-                                } else if (functionsClass.AppShortcutsMode().equals("SplitShortcuts")) {
-                                    functionsClass.addAppsShortcutSplitCustomIconsPref();
-                                } else if (functionsClass.AppShortcutsMode().equals("CategoryShortcuts")) {
-                                    functionsClass.addAppsShortcutCategoryCustomIconsPref();
-                                }
-                            }
-                            dialog.dismiss();
-                        }
-                    }
-                };
-                registerReceiver(broadcastReceiver, intentFilter);
-            }
-        });
     }
 
     @Override

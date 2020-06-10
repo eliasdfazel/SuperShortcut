@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/8/20 10:37 AM
+ * Last modified 6/10/20 1:05 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,9 +10,7 @@
 
 package net.geekstools.supershortcuts.PRO.Preferences.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.geekstools.supershortcuts.PRO.R;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
+import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.CustomIconInterface;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 
 import java.util.ArrayList;
@@ -33,44 +32,50 @@ import java.util.ArrayList;
 public class CustomIconsThemeAdapter extends RecyclerView.Adapter<CustomIconsThemeAdapter.ViewHolder> {
 
     FunctionsClass functionsClass;
-    View view;
-    ViewHolder viewHolder;
+
     private Context context;
-    private Activity activity;
-    private ArrayList<AdapterItemsData> navDrawerItems;
+    private ArrayList<AdapterItemsData> adapterItemsData;
 
-    public CustomIconsThemeAdapter(Activity activity, Context context, ArrayList<AdapterItemsData> navDrawerItems) {
-        this.activity = activity;
+    CustomIconInterface customIconInterface;
+
+    public CustomIconsThemeAdapter(Context context, ArrayList<AdapterItemsData> adapterItemsData, FunctionsClass functionsClass,CustomIconInterface customIconInterface) {
         this.context = context;
-        this.navDrawerItems = navDrawerItems;
+        this.adapterItemsData = adapterItemsData;
 
-        functionsClass = new FunctionsClass(context);
+        this.customIconInterface = customIconInterface;
+
+        this.functionsClass = functionsClass;
     }
 
     @Override
     public CustomIconsThemeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.custom_icon_items, parent, false);
-        viewHolder = new ViewHolder(view);
-        return viewHolder;
+
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.custom_icon_items, parent, false));
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolderBinder, final int position) {
-        viewHolderBinder.appName.setText(navDrawerItems.get(position).getAppName());
-        viewHolderBinder.appIcon.setImageDrawable(navDrawerItems.get(position).getAppIcon());
+
+        viewHolderBinder.appName.setText(adapterItemsData.get(position).getAppName());
+        viewHolderBinder.appIcon.setImageDrawable(adapterItemsData.get(position).getAppIcon());
+
         viewHolderBinder.customIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                functionsClass.saveDefaultPreference("customIcon", navDrawerItems.get(position).getPackageName());
-                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, navDrawerItems.get(position).getPackageName());
+
+                functionsClass.saveDefaultPreference("customIcon", adapterItemsData.get(position).getPackageName());
+
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, adapterItemsData.get(position).getPackageName());
                 loadCustomIcons.load();
-                context.sendBroadcast(new Intent("CUSTOM_DIALOGUE_DISMISS"));
+
+                customIconInterface.customIconPackageSelected(adapterItemsData.get(position).getPackageName());
+
             }
         });
         viewHolderBinder.customIcon.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, navDrawerItems.get(position).getPackageName());
+                LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, adapterItemsData.get(position).getPackageName());
                 loadCustomIcons.load();
                 functionsClass.Toast(String.valueOf(loadCustomIcons.getTotalIcons()), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
 
@@ -81,7 +86,7 @@ public class CustomIconsThemeAdapter extends RecyclerView.Adapter<CustomIconsThe
 
     @Override
     public int getItemCount() {
-        return navDrawerItems.size();
+        return adapterItemsData.size();
     }
 
     @Override

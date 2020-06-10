@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/10/20 12:26 PM
+ * Last modified 6/10/20 1:05 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geekstools.supershortcuts.PRO.Preferences
 
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -20,18 +21,27 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Html
+import android.util.TypedValue
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import net.geekstools.supershortcuts.PRO.BuildConfig
+import net.geekstools.supershortcuts.PRO.Preferences.Adapter.CustomIconsThemeAdapter
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
+import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
+import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.CustomIconInterface
+import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout
 import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding
 import java.util.*
 
@@ -283,7 +293,84 @@ class PreferencesUIXYZ : AppCompatActivity() {
 
         }
 
+        preferenceViewBinding.customIconView.setOnClickListener {
 
+            val layoutParams = WindowManager.LayoutParams()
+
+            layoutParams.width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 313f, resources.displayMetrics).toInt()
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            layoutParams.windowAnimations = android.R.style.Animation_Dialog
+
+            val dialog = Dialog(this@PreferencesUIXYZ)
+            dialog.setContentView(R.layout.custom_icons)
+            dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.dark) + "'>" + getString(R.string.customIconTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY))
+            dialog.window!!.attributes = layoutParams
+            dialog.window!!.decorView.setBackgroundColor(getColor(R.color.light))
+            dialog.setCancelable(true)
+
+            val defaultTheme = dialog.findViewById<View>(R.id.setDefault) as TextView
+            val customIconList = dialog.findViewById<View>(R.id.customIconList) as RecyclerView
+
+            val recyclerViewLayoutManager = RecycleViewSmoothLayout(applicationContext, OrientationHelper.VERTICAL, false)
+            customIconList.layoutManager = recyclerViewLayoutManager
+            customIconList.removeAllViews()
+
+            val adapterItemsData = ArrayList<AdapterItemsData>()
+            adapterItemsData.clear()
+
+            PublicVariable.customIconsPackages.forEach { customIconsPackage ->
+
+                adapterItemsData.add(AdapterItemsData(
+                        functionsClass.appName(customIconsPackage),
+                        customIconsPackage,
+                        functionsClass.appIconDrawable(customIconsPackage)
+                ))
+
+            }
+
+            val customIconsThemeAdapter = CustomIconsThemeAdapter(applicationContext, adapterItemsData, functionsClass, object : CustomIconInterface {
+
+                override fun customIconPackageSelected(selectedPackageName: String) {
+
+                    preferenceViewBinding.customIconIcon.setImageDrawable(if (functionsClass.customIconsEnable()) functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", packageName)) else getDrawable(R.drawable.draw_pref_custom_icon))
+                    preferenceViewBinding.customIconDesc.text = if (functionsClass.customIconsEnable()) functionsClass.appName(functionsClass.readDefaultPreference("customIcon", packageName)) else getString(R.string.customIconDesc)
+
+                    if (functionsClass.customIconsEnable()) {
+                        if (functionsClass.mixShortcuts()) {
+                            functionsClass.addMixAppShortcutsCustomIconsPref()
+                        } else if (functionsClass.AppShortcutsMode() == "AppShortcuts") {
+                            functionsClass.addAppShortcutsCustomIconsPref()
+                        } else if (functionsClass.AppShortcutsMode() == "SplitShortcuts") {
+                            functionsClass.addAppsShortcutSplitCustomIconsPref()
+                        } else if (functionsClass.AppShortcutsMode() == "CategoryShortcuts") {
+                            functionsClass.addAppsShortcutCategoryCustomIconsPref()
+                        }
+                    }
+
+                    dialog.dismiss()
+
+                }
+            })
+            customIconList.adapter = customIconsThemeAdapter
+
+            defaultTheme.setOnClickListener {
+                sendBroadcast(Intent("CUSTOM_DIALOGUE_DISMISS"))
+                functionsClass.saveDefaultPreference("customIcon", packageName)
+                preferenceViewBinding.customIconIcon.setImageDrawable(getDrawable(R.drawable.draw_pref_custom_icon))
+                dialog.dismiss()
+            }
+
+            dialog.setOnDismissListener {
+
+                adapterItemsData.clear()
+
+            }
+            dialog.show()
+
+
+
+
+        }
 
     }
 
