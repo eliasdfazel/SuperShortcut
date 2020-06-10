@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/10/20 1:05 PM
+ * Last modified 6/10/20 1:13 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,9 +30,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.BuildConfig
+import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.Preferences.Adapter.CustomIconsThemeAdapter
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
@@ -45,7 +49,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout
 import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding
 import java.util.*
 
-class PreferencesUIXYZ : AppCompatActivity() {
+class PreferencesUI : AppCompatActivity() {
 
     private val functionsClass: FunctionsClass by lazy {
         FunctionsClass(applicationContext)
@@ -60,7 +64,7 @@ class PreferencesUIXYZ : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        FunctionsClassDialogues(this@PreferencesUIXYZ, functionsClass).changeLog(!functionsClass.isFirstToCheckTutorial)
+        FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(!functionsClass.isFirstToCheckTutorial)
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.default_color_darker)))
         supportActionBar?.title = Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY)
@@ -76,7 +80,7 @@ class PreferencesUIXYZ : AppCompatActivity() {
 
         if (!functionsClass.mixShortcutsPurchased()) {
 
-            val billingClient = BillingClient.newBuilder(this@PreferencesUIXYZ).setListener { billingResult, purchases ->
+            val billingClient = BillingClient.newBuilder(this@PreferencesUI).setListener { billingResult, purchases ->
 
             }.enablePendingPurchases().build()
 
@@ -126,11 +130,11 @@ class PreferencesUIXYZ : AppCompatActivity() {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                 startActivity(intent)
 
-                this@PreferencesUIXYZ.finish()
+                this@PreferencesUI.finish()
 
             } else if (!sharedPreferences.getBoolean("smartPick", false)) {
 
-                functionsClass.UsageAccess(this@PreferencesUIXYZ, preferenceViewBinding.prefSwitch)
+                functionsClass.UsageAccess(this@PreferencesUI, preferenceViewBinding.prefSwitch)
 
             }
         }
@@ -139,7 +143,7 @@ class PreferencesUIXYZ : AppCompatActivity() {
 
             if (!functionsClass.AccessibilityServiceEnabled()) {
 
-                functionsClass.AccessibilityService(this@PreferencesUIXYZ, false)
+                functionsClass.AccessibilityService(this@PreferencesUI, false)
 
             } else {
 
@@ -188,13 +192,13 @@ class PreferencesUIXYZ : AppCompatActivity() {
 
         preferenceViewBinding.newsView.setOnClickListener {
 
-            FunctionsClassDialogues(this@PreferencesUIXYZ, functionsClass).changeLog(false)
+            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(false)
 
         }
 
         preferenceViewBinding.newsView.setOnLongClickListener {
 
-            FunctionsClassDialogues(this@PreferencesUIXYZ, functionsClass).changeLog(true)
+            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(true)
 
             true
         }
@@ -213,7 +217,7 @@ class PreferencesUIXYZ : AppCompatActivity() {
                     "Join Beta Program",
                     "Rate & Write Review")
 
-            val alertBuilder = AlertDialog.Builder(this@PreferencesUIXYZ, R.style.GeeksEmpire_Dialogue_Light)
+            val alertBuilder = AlertDialog.Builder(this@PreferencesUI, R.style.GeeksEmpire_Dialogue_Light)
             alertBuilder.setTitle(getString(R.string.supportTitle))
             alertBuilder.setSingleChoiceItems(contactOption, 0, null)
             alertBuilder.setPositiveButton(android.R.string.ok) { dialog, whichButton ->
@@ -301,7 +305,7 @@ class PreferencesUIXYZ : AppCompatActivity() {
             layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
             layoutParams.windowAnimations = android.R.style.Animation_Dialog
 
-            val dialog = Dialog(this@PreferencesUIXYZ)
+            val dialog = Dialog(this@PreferencesUI)
             dialog.setContentView(R.layout.custom_icons)
             dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.dark) + "'>" + getString(R.string.customIconTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY))
             dialog.window!!.attributes = layoutParams
@@ -367,9 +371,6 @@ class PreferencesUIXYZ : AppCompatActivity() {
             }
             dialog.show()
 
-
-
-
         }
 
     }
@@ -377,19 +378,92 @@ class PreferencesUIXYZ : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
+        firebaseRemoteConfig.fetch(0)
+                .addOnSuccessListener {
+
+                    firebaseRemoteConfig.activate().addOnSuccessListener {
+
+                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(packageName)) {
+
+                            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLogPreference(
+                                    firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()), firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
+                        }
+
+                        if (firebaseRemoteConfig.getBoolean("boolean_new_floating_shortcuts_pref_desc")) {
+                            preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc"), Html.FROM_HTML_MODE_LEGACY)
+                        }
+
+                    }
+                }
+
         preferenceViewBinding.prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher))
         preferenceViewBinding.customIconDesc.text = if (functionsClass.customIconsEnable()) {
             functionsClass.appName(functionsClass.readDefaultPreference("customIcon", packageName))
         } else {
             getString(R.string.customIconDesc)
         }
+
+        val editor = getSharedPreferences("smart", Context.MODE_PRIVATE).edit()
+
+        if (functionsClass.UsageAccessEnabled()) {
+            preferenceViewBinding.prefSwitch.isChecked = true
+            editor.putBoolean("smartPick", true)
+            editor.apply()
+        } else {
+            preferenceViewBinding.prefSwitch.isChecked = false
+            editor.putBoolean("smartPick", false)
+            editor.apply()
+        }
+
+        preferenceViewBinding.splitSwitch.isChecked = functionsClass.AccessibilityServiceEnabled()
+
+        if (getSharedPreferences("mix", Context.MODE_PRIVATE).getBoolean("mixShortcuts", false)) {
+            preferenceViewBinding.mixSwitch.isChecked = true
+        } else if (!getSharedPreferences("mix", Context.MODE_PRIVATE).getBoolean("mixShortcuts", false)) {
+            preferenceViewBinding.mixSwitch.isChecked = false
+        }
+
+        preferenceViewBinding.customIconIcon.setImageDrawable(if (functionsClass.customIconsEnable()) functionsClass.appIconDrawable(functionsClass.readDefaultPreference("customIcon", packageName)) else getDrawable(R.drawable.draw_pref_custom_icon))
     }
 
     override fun onBackPressed() {
 
+        val tabView = getSharedPreferences("ShortcutsModeView", Context.MODE_PRIVATE).getString("TabsView", NormalAppShortcutsSelectionListPhone::class.java.simpleName)
+        if (tabView == NormalAppShortcutsSelectionListPhone::class.java.simpleName) {
+            startActivity(Intent(applicationContext, NormalAppShortcutsSelectionListPhone::class.java),
+                    ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+        } else if (tabView == SplitShortcuts::class.java.simpleName) {
+            startActivity(Intent(applicationContext, SplitShortcuts::class.java),
+                    ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+        } else if (tabView == FolderShortcuts::class.java.simpleName) {
+            startActivity(Intent(applicationContext, FolderShortcuts::class.java),
+                    ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+        } else {
+            startActivity(Intent(applicationContext, NormalAppShortcutsSelectionListPhone::class.java),
+                    ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+        }
+
+        this@PreferencesUI.finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menu?.let {
+
+            val inflater = menuInflater
+            inflater.inflate(R.menu.preferences_menu, menu)
+
+            val gift = menu.findItem(R.id.donate)
+
+            if (!functionsClass.alreadyDonated()) {
+
+            } else {
+                gift.isVisible = false
+            }
+        }
+
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -398,6 +472,44 @@ class PreferencesUIXYZ : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.facebook -> {
+
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook_app))))
+
+            }
+            R.id.donate -> {
+
+                startActivity(Intent(applicationContext, InitializeInAppBilling::class.java)
+                        .putExtra(InitializeInAppBilling.Entry.PurchaseType, InitializeInAppBilling.Entry.OneTimePurchase)
+                        .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemDonation)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        , ActivityOptions.makeCustomAnimation(applicationContext, R.anim.down_up, android.R.anim.fade_out).toBundle())
+
+            }
+            android.R.id.home -> {
+
+                val tabView = getSharedPreferences("ShortcutsModeView", Context.MODE_PRIVATE).getString("TabsView", NormalAppShortcutsSelectionListPhone::class.java.simpleName)
+
+                if (tabView == NormalAppShortcutsSelectionListPhone::class.java.simpleName) {
+                    startActivity(Intent(applicationContext, NormalAppShortcutsSelectionListPhone::class.java),
+                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+                } else if (tabView == SplitShortcuts::class.java.simpleName) {
+                    startActivity(Intent(applicationContext, SplitShortcuts::class.java),
+                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+                } else if (tabView == FolderShortcuts::class.java.simpleName) {
+                    startActivity(Intent(applicationContext, FolderShortcuts::class.java),
+                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+                } else {
+                    startActivity(Intent(applicationContext, NormalAppShortcutsSelectionListPhone::class.java),
+                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
+                }
+
+                this@PreferencesUI.finish()
+            }
+        }
+
         return super.onOptionsItemSelected(item)
     }
 
