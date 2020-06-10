@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/10/20 7:44 AM
+ * Last modified 6/10/20 12:26 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,17 +11,16 @@
 package net.geekstools.supershortcuts.PRO.Preferences
 
 import android.app.ActivityOptions
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Html
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
@@ -34,6 +33,7 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
 import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding
+import java.util.*
 
 class PreferencesUIXYZ : AppCompatActivity() {
 
@@ -141,7 +141,9 @@ class PreferencesUIXYZ : AppCompatActivity() {
         }
 
         preferenceViewBinding.mixView.setOnClickListener {
+
             if (functionsClass.mixShortcutsPurchased()) {
+
                 functionsClass.deleteSelectedFiles()
 
                 val sharedPreferences = getSharedPreferences("mix", Context.MODE_PRIVATE)
@@ -171,7 +173,118 @@ class PreferencesUIXYZ : AppCompatActivity() {
                         ActivityOptions.makeCustomAnimation(applicationContext, R.anim.down_up, android.R.anim.fade_out).toBundle())
 
             }
+
         }
+
+        preferenceViewBinding.newsView.setOnClickListener {
+
+            FunctionsClassDialogues(this@PreferencesUIXYZ, functionsClass).changeLog(false)
+
+        }
+
+        preferenceViewBinding.newsView.setOnLongClickListener {
+
+            FunctionsClassDialogues(this@PreferencesUIXYZ, functionsClass).changeLog(true)
+
+            true
+        }
+
+
+
+
+
+
+        preferenceViewBinding.supportView.setOnClickListener {
+
+            val contactOption = arrayOf<String>(
+                    "Send an Email",
+                    "Send a Message",
+                    "Contact via Forum",
+                    "Join Beta Program",
+                    "Rate & Write Review")
+
+            val alertBuilder = AlertDialog.Builder(this@PreferencesUIXYZ, R.style.GeeksEmpire_Dialogue_Light)
+            alertBuilder.setTitle(getString(R.string.supportTitle))
+            alertBuilder.setSingleChoiceItems(contactOption, 0, null)
+            alertBuilder.setPositiveButton(android.R.string.ok) { dialog, whichButton ->
+
+                val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+
+                if (selectedPosition == 0) {
+
+                    val emailEssentialContent = "[Essential Information] ${functionsClass.deviceName} | API ${Build.VERSION.SDK_INT} | ${functionsClass.countryIso.toUpperCase(Locale.ROOT)}"
+
+                    val email = Intent(Intent.ACTION_SEND)
+                    email.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support)))
+                    email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_tag) + " [" + functionsClass.appVersionName(packageName) + "] ")
+                    email.putExtra(Intent.EXTRA_TEXT, emailEssentialContent)
+                    email.type = "message/*"
+                    email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(Intent.createChooser(email, getString(R.string.feedback_tag)))
+
+                } else if (selectedPosition == 1) {
+
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook_app))))
+
+                } else if (selectedPosition == 2) {
+
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda))))
+
+                } else if (selectedPosition == 3) {
+
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_alpha))))
+
+                    functionsClass.Toast(getString(R.string.alphaTitle), Gravity.BOTTOM)
+
+                } else if (selectedPosition == 4) {
+
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + packageName)))
+
+                }
+            }
+            alertBuilder.setNegativeButton(android.R.string.cancel) { dialog, whichButton ->
+
+                dialog.dismiss()
+            }
+            alertBuilder.show()
+        }
+
+        preferenceViewBinding.translatorView.setOnClickListener {
+
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda_translator))))
+
+        }
+
+        preferenceViewBinding.floatingView.setOnClickListener {
+
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_floating_shortcuts))))
+
+        }
+
+        preferenceViewBinding.share.setOnClickListener {
+            shareSuperShortcuts()
+        }
+
+        preferenceViewBinding.rate.setOnClickListener {
+
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + packageName)))
+
+        }
+
+        preferenceViewBinding.twitter.setOnClickListener {
+
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_twitter))))
+
+        }
+
+        preferenceViewBinding.facebook.setOnClickListener {
+
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook))))
+
+        }
+
+
+
     }
 
     override fun onResume() {

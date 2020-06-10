@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/10/20 7:44 AM
+ * Last modified 6/10/20 12:26 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,7 +11,6 @@
 package net.geekstools.supershortcuts.PRO.Preferences;
 
 import android.app.ActivityOptions;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,10 +19,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.text.Html;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -77,113 +74,13 @@ public class PreferencesUI extends AppCompatActivity {
 
 
 
-        preferenceViewBinding.newsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog(false);
-            }
-        });
 
-        preferenceViewBinding.newsView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
 
-                new FunctionsClassDialogues(PreferencesUI.this, functionsClass).changeLog(true);
 
-                return true;
-            }
-        });
 
-        preferenceViewBinding.supportView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String[] contactOption = new String[]{
-                        "Send an Email",
-                        "Send a Message",
-                        "Contact via Forum",
-                        "Join Beta Program",
-                        "Rate & Write Review"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(PreferencesUI.this, R.style.GeeksEmpire_Dialogue_Light);
-                builder.setTitle(getString(R.string.supportTitle));
-                builder.setSingleChoiceItems(contactOption, 0, null);
-                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        if (selectedPosition == 0) {
-                            String textMsg = "\n\n\n\n\n"
-                                    + "[Essential Information]" + "\n"
-                                    + functionsClass.getDeviceName() + " | " + "API " + Build.VERSION.SDK_INT + " | " + functionsClass.getCountryIso().toUpperCase();
-                            Intent email = new Intent(Intent.ACTION_SEND);
-                            email.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.support)});
-                            email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_tag) + " [" + functionsClass.appVersionName(getPackageName()) + "] ");
-                            email.putExtra(Intent.EXTRA_TEXT, textMsg);
-                            email.setType("message/*");
-                            email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(Intent.createChooser(email, getString(R.string.feedback_tag)));
-                        } else if (selectedPosition == 1) {
-                            Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook_app)));
-                            startActivity(r);
-                        } else if (selectedPosition == 2) {
-                            Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda)));
-                            startActivity(r);
-                        } else if (selectedPosition == 3) {
-                            Intent a = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_alpha)));
-                            startActivity(a);
 
-                            functionsClass.Toast(getString(R.string.alphaTitle), Gravity.BOTTOM);
-                        } else if (selectedPosition == 4) {
-                            Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + getPackageName()));
-                            startActivity(r);
-                        }
-                    }
-                });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                });
-                builder.show();
-            }
-        });
 
-        preferenceViewBinding.translatorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda_translator))));
-            }
-        });
-
-        preferenceViewBinding.floatingView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_floating_shortcuts))));
-            }
-        });
-
-        preferenceViewBinding.share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareSuperShortcuts();
-            }
-        });
-        preferenceViewBinding.rate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + getPackageName())));
-            }
-        });
-        preferenceViewBinding.twitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_twitter))));
-            }
-        });
-        preferenceViewBinding.facebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook))));
-            }
-        });
 
         preferenceViewBinding.customIconView.setOnClickListener(new View.OnClickListener() {
             @Override
