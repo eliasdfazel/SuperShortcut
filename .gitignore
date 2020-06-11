@@ -9,3 +9,8 @@
 .externalNativeBuild
 /LicenseLibrary/build/
 /.idea/
+/.settings/org.eclipse.buildship.core.prefs
+/.project
+/LicenseLibrary/.settings/org.eclipse.buildship.core.prefs
+/LicenseLibrary/.classpath
+/LicenseLibrary/.project
