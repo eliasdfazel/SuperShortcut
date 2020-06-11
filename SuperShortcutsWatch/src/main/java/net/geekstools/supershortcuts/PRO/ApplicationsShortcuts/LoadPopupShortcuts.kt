@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/10/20 10:11 AM
+ * Last modified 6/11/20 11:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -39,10 +39,13 @@ class LoadPopupShortcuts : WearableActivity() {
 
             entryViewBinding.rootView.post {
 
-                functionsClass.showPopupItem(this@LoadPopupShortcuts,
-                        entryViewBinding.popupAnchorView,
-                        getString(R.string.app_name),
-                        functionsClass.readFileLine(NormalAppShortcutsSelectionListWatch.NormalApplicationsShortcutsFile))
+                if (!this@LoadPopupShortcuts.isFinishing) {
+
+                    functionsClass.showPopupItem(this@LoadPopupShortcuts,
+                            entryViewBinding.popupAnchorView,
+                            getString(R.string.app_name),
+                            functionsClass.readFileLine(NormalAppShortcutsSelectionListWatch.NormalApplicationsShortcutsFile))
+                }
             }
 
             val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
