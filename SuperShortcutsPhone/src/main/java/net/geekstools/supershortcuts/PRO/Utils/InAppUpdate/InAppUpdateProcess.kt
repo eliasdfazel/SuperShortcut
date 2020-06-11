@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/3/20 6:37 AM
+ * Last modified 6/11/20 8:18 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -70,9 +70,6 @@ class InAppUpdateProcess : AppCompatActivity() {
 
         installStateUpdatedListener = InstallStateUpdatedListener {
             when (it.installStatus()) {
-                InstallStatus.REQUIRES_UI_INTENT -> {
-                    FunctionsClassDebug.PrintDebug("*** UPDATE Requires UI Intent ***")
-                }
                 InstallStatus.DOWNLOADING -> {
                     FunctionsClassDebug.PrintDebug("*** UPDATE Downloading ***")
                 }
@@ -121,12 +118,16 @@ class InAppUpdateProcess : AppCompatActivity() {
             if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                     && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
 
-                appUpdateManager.startUpdateFlowForResult(
-                        updateInfo,
-                        AppUpdateType.FLEXIBLE,
-                        this@InAppUpdateProcess,
-                        IN_APP_UPDATE_REQUEST
-                )
+                if (!this@InAppUpdateProcess.isFinishing) {
+
+                    appUpdateManager.startUpdateFlowForResult(
+                            updateInfo,
+                            AppUpdateType.FLEXIBLE,
+                            this@InAppUpdateProcess,
+                            IN_APP_UPDATE_REQUEST
+                    )
+                }
+
             } else {
                 val inAppUpdateTriggeredTime: Int = "${Calendar.getInstance().get(Calendar.YEAR)}${Calendar.getInstance().get(Calendar.MONTH)}${Calendar.getInstance().get(Calendar.DATE)}".toInt()
                 functionsClass.savePreference("InAppUpdate", "TriggeredDate", inAppUpdateTriggeredTime)
@@ -168,6 +169,10 @@ class InAppUpdateProcess : AppCompatActivity() {
             val inAppUpdateTriggeredTime: Int = "${Calendar.getInstance().get(Calendar.YEAR)}${Calendar.getInstance().get(Calendar.MONTH)}${Calendar.getInstance().get(Calendar.DATE)}".toInt()
             functionsClass.savePreference("InAppUpdate", "TriggeredDate", inAppUpdateTriggeredTime)
 
+            appUpdateManager.unregisterListener {
+
+            }
+
             this@InAppUpdateProcess.finish()
 
             false
@@ -181,11 +186,15 @@ class InAppUpdateProcess : AppCompatActivity() {
             if (appUpdateInfo.updateAvailability()
                     == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
 
-                appUpdateManager.startUpdateFlowForResult(
-                        appUpdateInfo,
-                        AppUpdateType.FLEXIBLE,
-                        this@InAppUpdateProcess,
-                        IN_APP_UPDATE_REQUEST)
+                if (!this@InAppUpdateProcess.isFinishing) {
+
+                    appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            AppUpdateType.FLEXIBLE,
+                            this@InAppUpdateProcess,
+                            IN_APP_UPDATE_REQUEST
+                    )
+                }
             }
 
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
