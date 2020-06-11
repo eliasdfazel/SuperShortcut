@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/11/20 10:25 AM
+ * Last modified 6/11/20 11:49 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -265,8 +265,8 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         }
     }
 
-    override fun dispatchTouchEvent(motionEvent: MotionEvent): Boolean {
-        swipeGestureListener.onTouchEvent(motionEvent)
+    override fun dispatchTouchEvent(motionEvent: MotionEvent?): Boolean {
+        motionEvent?.let { swipeGestureListener.onTouchEvent(it) }
 
         return super.dispatchTouchEvent(motionEvent)
     }

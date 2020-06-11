@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/21/20 10:22 PM
+ * Last modified 6/11/20 11:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -286,8 +286,8 @@ class SplitShortcuts : AppCompatActivity(),
         }
     }
 
-    override fun dispatchTouchEvent(motionEvent: MotionEvent): Boolean {
-        swipeGestureListener.onTouchEvent(motionEvent)
+    override fun dispatchTouchEvent(motionEvent: MotionEvent?): Boolean {
+        motionEvent?.let { swipeGestureListener.onTouchEvent(it) }
 
         return super.dispatchTouchEvent(motionEvent)
     }

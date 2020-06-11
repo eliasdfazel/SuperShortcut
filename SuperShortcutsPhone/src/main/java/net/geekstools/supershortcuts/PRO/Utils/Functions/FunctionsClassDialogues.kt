@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/21/20 10:55 PM
+ * Last modified 6/11/20 11:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -77,15 +77,15 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         dialog.followIt.setTextColor(activity.getColor(R.color.light))
 
         dialog.rateIt.setOnClickListener {
-            dialog.dismiss()
-
             activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.play_store_link))))
+
+            dialog.dismiss()
         }
 
         dialog.followIt.setOnClickListener {
-            dialog.dismiss()
-
             activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.link_facebook_app))))
+
+            dialog.dismiss()
         }
 
         dialog.setOnDismissListener {
