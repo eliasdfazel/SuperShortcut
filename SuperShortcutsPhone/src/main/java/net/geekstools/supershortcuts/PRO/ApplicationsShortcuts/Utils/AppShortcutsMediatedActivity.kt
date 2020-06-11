@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 9:05 AM
+ * Last modified 6/11/20 10:50 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Utils
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 
@@ -33,7 +34,11 @@ class AppShortcutsMediatedActivity : Activity() {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     addCategory(Intent.CATEGORY_DEFAULT)
 
-                    startActivity(this)
+                    try {
+                        startActivity(this@apply)
+                    } catch (e: ActivityNotFoundException) {
+                        e.printStackTrace()
+                    }
                 }
 
             }

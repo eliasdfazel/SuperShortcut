@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/4/20 12:47 PM
+ * Last modified 6/11/20 10:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -246,7 +246,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                 if (functionsClass.customIconsEnable()) {
                     loadCustomIcons.load();
                     if (BuildConfig.DEBUG) {
-                        FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIcons());
+                        FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIconsNumber());
                     }
                 }
 

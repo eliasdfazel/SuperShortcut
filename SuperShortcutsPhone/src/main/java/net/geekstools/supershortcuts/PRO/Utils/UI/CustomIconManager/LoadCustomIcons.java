@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/11/20 8:21 AM
+ * Last modified 6/11/20 10:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -218,6 +219,30 @@ public class LoadCustomIcons {
         }
     }
 
+    private Drawable loadDrawable(ActivityInfo activityInfo, String drawableName) {
+        int id = iconPackResources.getIdentifier(drawableName, "drawable", packageNameIconPack);
+        if (id > 0) {
+            Drawable bitmap = iconPackResources.getDrawable(id, iconPackResources.newTheme());
+            return bitmap;
+        } else {
+            try {
+                Drawable iconback = functionsClass.bitmapToDrawable(backIconMask);
+                Drawable appIcon = functionsClass.activityIcon(activityInfo);
+                LayerDrawable layerDrawableIcon = new LayerDrawable(new Drawable[]{
+                        iconback,
+                        appIcon
+                });
+                layerDrawableIcon.setLayerInset(1, 77, 77, 77, 77);
+
+                return layerDrawableIcon;
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                return functionsClass.activityIcon(activityInfo);
+            }
+        }
+    }
+
     public Drawable getDrawableIconForPackage(String appPackageName, Drawable defaultDrawable) {
         if (!iconsLoaded) {
             load();
@@ -246,6 +271,40 @@ public class LoadCustomIcons {
                         drawable = componentName.substring(start, end).toLowerCase(Locale.getDefault()).replace(".", "_").replace("/", "_");
                         if (iconPackResources.getIdentifier(drawable, "drawable", packageNameIconPack) > 0)
                             return loadDrawable(appPackageName, drawable);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return defaultDrawable;
+    }
+
+    public Drawable getDrawableIconForPackage(ActivityInfo activityInfo, Drawable defaultDrawable) {
+        if (!iconsLoaded) {
+            load();
+        }
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            Intent launchIntent = packageManager.getLaunchIntentForPackage(activityInfo.packageName);
+
+            String componentName = null;
+            if (launchIntent != null) {
+                componentName = packageManager.getLaunchIntentForPackage(activityInfo.packageName).getComponent().toString();
+            }
+
+            String drawable = mapPackagesDrawables.get(componentName);
+            if (drawable != null) {
+                return loadDrawable(activityInfo, drawable);
+            } else {
+                // try to get a resource with the component filename
+                if (componentName != null) {
+                    int start = componentName.indexOf("{") + 1;
+                    int end = componentName.indexOf("}", start);
+                    if (end > start) {
+                        drawable = componentName.substring(start, end).toLowerCase(Locale.getDefault()).replace(".", "_").replace("/", "_");
+                        if (iconPackResources.getIdentifier(drawable, "drawable", packageNameIconPack) > 0)
+                            return loadDrawable(activityInfo, drawable);
                     }
                 }
             }

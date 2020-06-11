@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/7/20 10:06 AM
+ * Last modified 6/11/20 11:15 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ class FunctionsClassIO (private val context: Context) {
         val file: File? = context.getFileStreamPath(fileName)
 
         return if (file != null) {
-            if (file.exists()) {
+            if (file.exists() && file.isFile) {
                 file.readLines(Charset.defaultCharset()).toTypedArray()
             } else {
                 null
@@ -34,7 +34,7 @@ class FunctionsClassIO (private val context: Context) {
         val file: File? = context.getFileStreamPath(fileName)
 
         return if (file != null) {
-            if (file.exists()) {
+            if (file.exists() && file.isFile) {
                 file.readLines(Charset.defaultCharset()).size
             } else {
                 0
@@ -48,7 +48,7 @@ class FunctionsClassIO (private val context: Context) {
         val file: File? = context.getFileStreamPath(fileName)
 
         return if (file != null) {
-            if (file.exists()) {
+            if (file.exists() && file.isFile) {
                 file.readText(Charset.defaultCharset())
             } else {
                 null

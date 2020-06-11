@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/10/20 1:05 PM
+ * Last modified 6/11/20 10:12 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -77,7 +77,7 @@ public class CustomIconsThemeAdapter extends RecyclerView.Adapter<CustomIconsThe
             public boolean onLongClick(View view) {
                 LoadCustomIcons loadCustomIcons = new LoadCustomIcons(context, adapterItemsData.get(position).getPackageName());
                 loadCustomIcons.load();
-                functionsClass.Toast(String.valueOf(loadCustomIcons.getTotalIcons()), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
+                functionsClass.Toast(String.valueOf(loadCustomIcons.getTotalIconsNumber()), context.getColor(R.color.light), context.getColor(R.color.dark), Gravity.BOTTOM, true);
 
                 return true;
             }

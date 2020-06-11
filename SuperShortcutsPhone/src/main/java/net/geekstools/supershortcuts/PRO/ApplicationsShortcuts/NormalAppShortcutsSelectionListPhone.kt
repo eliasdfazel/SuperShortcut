@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/21/20 10:21 PM
+ * Last modified 6/11/20 10:25 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts
 
 import android.app.ActivityOptions
 import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -287,23 +288,28 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
 
                 for (aSavedLine in it) {
 
-                    val aLineSplit = aSavedLine.split("|")
+                    try {
+                        val aLineSplit = aSavedLine.split("|")
 
-                    val packageName = aLineSplit[0]
-                    val className = aLineSplit[1]
+                        val packageName = aLineSplit[0]
+                        val className = aLineSplit[1]
 
-                    val activityInfo = packageManager.getActivityInfo(ComponentName(packageName, className), 0)
+                        val activityInfo = packageManager.getActivityInfo(ComponentName(packageName, className), 0)
 
-                    selectedAppsListItem.add(AdapterItemsData(
-                            functionsClass.activityLabel(activityInfo),
-                            packageName,
-                            className,
-                            if (functionsClass.customIconsEnable()) {
-                                loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(activityInfo))
-                            } else {
-                                functionsClass.activityIcon(activityInfo)
-                            }
-                    ))
+                        selectedAppsListItem.add(AdapterItemsData(
+                                functionsClass.activityLabel(activityInfo),
+                                packageName,
+                                className,
+                                if (functionsClass.customIconsEnable()) {
+                                    loadCustomIcons.getDrawableIconForPackage(packageName, functionsClass.activityIcon(activityInfo))
+                                } else {
+                                    functionsClass.activityIcon(activityInfo)
+                                }
+                        ))
+
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        e.printStackTrace()
+                    }
                 }
 
                 val savedAppsListPopupAdapter = SavedAppsListPopupAdapter(
