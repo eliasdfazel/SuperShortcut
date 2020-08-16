@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/11/20 11:39 AM
+ * Last modified 8/16/20 2:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,6 +25,7 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.dialogue_message.*
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.Utils.InAppReview.InAppReviewProcess
 
 class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsClass: FunctionsClass) {
 
@@ -89,7 +90,19 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         }
 
         dialog.setOnDismissListener {
+
+            if (functionsClass.appVersionCode(activity.packageName) > functionsClass.readFile(".Updated")?.toInt()?:0) {
+
+                if (!activity.isFinishing) {
+
+                    InAppReviewProcess(activity as AppCompatActivity).start()
+
+                }
+
+            }
+
             functionsClass.saveFile(".Updated", functionsClass.appVersionCode(activity.packageName).toString())
+
         }
 
         if (!activity.getFileStreamPath(".Updated").exists()) {

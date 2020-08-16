@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/28/20 12:00 PM
+ * Last modified 8/16/20 2:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -74,7 +74,7 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
     /**
      * Callback After Purchase Dialogue Flow Get Closed
      **/
-    override fun onPurchasesUpdated(billingResult: BillingResult?, purchasesList: List<Purchase>?) {
+    override fun onPurchasesUpdated(billingResult: BillingResult, purchasesList: MutableList<Purchase>?) {
         Log.d(this@OneTimePurchase.javaClass.simpleName, "Purchases Updated: ${billingResult?.debugMessage}")
 
         billingResult?.let {
@@ -125,7 +125,7 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                 purchaseFlowController.purchaseFlowDisrupted(null)
             }
 
-            override fun onBillingSetupFinished(billingResult: BillingResult?) {
+            override fun onBillingSetupFinished(billingResult: BillingResult) {
 
                 val skuDetailsParams = SkuDetailsParams.newBuilder()
                         .setSkusList(listOfItems)

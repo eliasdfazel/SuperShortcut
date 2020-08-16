@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/10/20 1:13 PM
+ * Last modified 8/16/20 2:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -92,10 +92,12 @@ class PreferencesUI : AppCompatActivity() {
                         functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false)
 
                         val purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList
-                        for (purchase in purchases) {
-                            FunctionsClassDebug.PrintDebug("*** Purchased Item: $purchase ***")
+                        if (purchases != null) {
+                            for (purchase in purchases) {
+                                FunctionsClassDebug.PrintDebug("*** Purchased Item: $purchase ***")
 
-                            functionsClass.savePreference(".PurchasedItem", purchase.sku, true)
+                                functionsClass.savePreference(".PurchasedItem", purchase.sku, true)
+                            }
                         }
 
                     }

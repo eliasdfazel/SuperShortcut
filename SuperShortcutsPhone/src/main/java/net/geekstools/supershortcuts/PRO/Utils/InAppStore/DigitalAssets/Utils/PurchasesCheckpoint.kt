@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/5/20 2:02 PM
+ * Last modified 8/16/20 2:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -36,7 +36,7 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
             //Restore Purchased Item
             billingClient.startConnection(object : BillingClientStateListener {
 
-                override fun onBillingSetupFinished(billingResult: BillingResult?) {
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
 
                     billingResult?.let {
                         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
@@ -83,7 +83,7 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
         return billingClient
     }
 
-    override fun onPurchasesUpdated(billingResult: BillingResult?, purchasesList: List<Purchase>?) {
+    override fun onPurchasesUpdated(billingResult: BillingResult, purchasesList: List<Purchase>?) {
 
         billingResult?.let {
             if (!purchasesList.isNullOrEmpty()) {
