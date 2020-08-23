@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/11/20 8:18 AM
+ * Last modified 8/20/20 8:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -113,7 +113,7 @@ class InAppUpdateProcess : AppCompatActivity() {
 
         val appUpdateInfo: Task<AppUpdateInfo> = appUpdateManager.appUpdateInfo
         appUpdateInfo.addOnSuccessListener { updateInfo ->
-            FunctionsClassDebug.PrintDebug("*** Update Availability == ${updateInfo.updateAvailability()} ||| Available Version Code == ${updateInfo.availableVersionCode()} ***")
+            FunctionsClassDebug.PrintDebug("*** Update Availability == ${updateInfo.updateAvailability()} || Available Version Code == ${updateInfo.availableVersionCode()} ***")
 
             if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                     && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {

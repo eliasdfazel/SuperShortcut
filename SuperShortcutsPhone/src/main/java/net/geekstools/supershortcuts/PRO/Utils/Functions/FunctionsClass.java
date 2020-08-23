@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/21/20 10:20 PM
+ * Last modified 8/23/20 3:18 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -1735,23 +1735,6 @@ public class FunctionsClass {
                 dialog.dismiss();
                 Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.play_store_link) + context.getPackageName()));
                 r.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                instanceOfActivity.startActivity(r);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Uri packageUri = Uri.parse("package:" + context.getPackageName());
-                        Intent uninstallIntent =
-                                new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageUri);
-                        uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        instanceOfActivity.startActivity(uninstallIntent);
-                    }
-                }, 2333);
-            }
-        });
-        alertDialog.setNegativeButton(context.getString(R.string.free), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.play_store_link) + context.getPackageName().replace(".PRO", "")));
                 instanceOfActivity.startActivity(r);
                 new Handler().postDelayed(new Runnable() {
                     @Override
