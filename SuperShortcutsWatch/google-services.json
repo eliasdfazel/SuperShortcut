@@ -15,19 +15,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "675774672524-5nek7t1jhvj3qnccm9mlk3qvhm10jtqb.apps.googleusercontent.com",
+          "client_id": "675774672524-9k32225t6tmqigcc22b0cbovr2mvgjpf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.geekstools.supershortcuts.PRO",
-            "certificate_hash": "c4f7ba6ff825ee77e200fa6c3edc4a749be7baac"
+            "certificate_hash": "1d15eb4e4e7fc488f568267af689e34209fc705f"
           }
         },
         {
-          "client_id": "675774672524-d9mku0lj042tobau11bmvp43fm7ucur3.apps.googleusercontent.com",
+          "client_id": "675774672524-dst95pq2bbm7ihskqbi4kf5ogb6toigb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.geekstools.supershortcuts.PRO",
-            "certificate_hash": "d78f7c692ea27c0cda6df8d10c73a60959946064"
+            "certificate_hash": "f61cc2dbfa399b4bf388acd9513e25ba30570e02"
           }
         },
         {
