@@ -15,19 +15,27 @@
       },
       "oauth_client": [
         {
-          "client_id": "675774672524-9k32225t6tmqigcc22b0cbovr2mvgjpf.apps.googleusercontent.com",
+          "client_id": "675774672524-trvubgtgchldet4sk2knknq9rvakqncf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.geekstools.supershortcuts.PRO",
-            "certificate_hash": "1d15eb4e4e7fc488f568267af689e34209fc705f"
+            "certificate_hash": "d78f7c692ea27c0cda6df8d10c73a60959946064"
           }
         },
         {
-          "client_id": "675774672524-dst95pq2bbm7ihskqbi4kf5ogb6toigb.apps.googleusercontent.com",
+          "client_id": "675774672524-uhgr2d7iop0eh7gj1k3l95p2j714bdnc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.geekstools.supershortcuts.PRO",
             "certificate_hash": "f61cc2dbfa399b4bf388acd9513e25ba30570e02"
+          }
+        },
+        {
+          "client_id": "675774672524-3ivltbaeb5151f79voce2qge93vktbl8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.geekstools.supershortcuts.PRO",
+            "certificate_hash": "1d15eb4e4e7fc488f568267af689e34209fc705f"
           }
         },
         {
