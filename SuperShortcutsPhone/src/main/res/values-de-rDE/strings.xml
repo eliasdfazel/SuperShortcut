@@ -2,7 +2,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/2/20 7:42 AM
+  ~ Last modified 10/16/20 6:24 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -91,7 +91,5 @@
 
     <string name="purchase"> Kaufen 💸  </string>
     <string name="donate"> Freiwillige Spende 🎁 </string>
-    <string name="restorePurchase">ℹ Käufe Wiederherstellen ℹ</string>
-    <string name="thanks">Danke im voraus 🙏 </string>
 
 </resources>
