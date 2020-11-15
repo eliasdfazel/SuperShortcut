@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 10/15/20 9:30 AM
+ * Last modified 11/15/20 8:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.1'
 
         classpath 'com.google.gms:google-services:4.3.4'
 

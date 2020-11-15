@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 10/16/20 6:31 AM
+ * Last modified 11/15/20 8:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,7 +28,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 30
 
-        versionCode 210
+        versionCode 212
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
 
         wearAppUnbundled true
@@ -106,27 +106,27 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
 
-    implementation 'com.google.android.play:core:1.8.2'
+    implementation 'com.google.android.play:core:1.8.3'
     implementation 'com.google.android.play:core-ktx:1.8.1'
 
 
     implementation 'com.google.android.material:material:1.3.0-alpha03'
 
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
 
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
 
-    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation 'com.google.firebase:firebase-auth:20.0.0'
 
-    implementation 'com.google.firebase:firebase-config:19.2.0'
+    implementation 'com.google.firebase:firebase-config:20.0.0'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
 
-    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.1.1'
-    implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.1.2'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
     implementation 'com.google.firebase:firebase-appindexing:19.1.0'
 
     implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
