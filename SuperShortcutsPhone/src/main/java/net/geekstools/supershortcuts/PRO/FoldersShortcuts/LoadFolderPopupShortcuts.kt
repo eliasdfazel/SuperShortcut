@@ -2,7 +2,7 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/7/20 12:25 PM
+ * Last modified 11/15/20 8:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,7 +28,7 @@ class LoadFolderPopupShortcuts : Activity() {
         LoadCustomIcons(applicationContext, functionsClass.customIconPackageName())
     }
 
-    private lateinit var folderName: String
+    private var folderName: String? = null
 
     private lateinit var folderPopupViewBinding: FolderPopupViewBinding
 
@@ -51,33 +51,37 @@ class LoadFolderPopupShortcuts : Activity() {
                     folderName = intent.getStringExtra(Intent.EXTRA_TEXT)!!
                 }
 
-                if (functionsClass.countLineInnerFile(folderName) > 0) {
+                folderName?.let { folderName ->
 
-                    if (functionsClass.customIconsEnable()) {
-                        loadCustomIcons.load()
-                    }
+                    if (functionsClass.countLineInnerFile(folderName) > 0) {
 
-                    folderPopupViewBinding.popupAnchorView.post {
-
-                        if (intent.action == "load_category_action") {
-
-                            functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                                    folderPopupViewBinding.popupAnchorView,
-                                    folderName.replace(".CategorySelected", ""),
-                                    loadCustomIcons)
-
-                        } else if (intent.action == "load_category_action_shortcut") {
-
-                            functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                                    folderPopupViewBinding.popupAnchorView,
-                                    folderName,
-                                    loadCustomIcons)
-
+                        if (functionsClass.customIconsEnable()) {
+                            loadCustomIcons.load()
                         }
-                    }
-                } else {
 
-                    this@LoadFolderPopupShortcuts.finish()
+                        folderPopupViewBinding.popupAnchorView.post {
+
+                            if (intent.action == "load_category_action") {
+
+                                functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                                        folderPopupViewBinding.popupAnchorView,
+                                        folderName.replace(".CategorySelected", ""),
+                                        loadCustomIcons)
+
+                            } else if (intent.action == "load_category_action_shortcut") {
+
+                                functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                                        folderPopupViewBinding.popupAnchorView,
+                                        folderName,
+                                        loadCustomIcons)
+
+                            }
+                        }
+                    } else {
+
+                        this@LoadFolderPopupShortcuts.finish()
+
+                    }
 
                 }
 
