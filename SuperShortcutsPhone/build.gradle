@@ -2,7 +2,7 @@
  * Copyright © 2021 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/22/21 9:57 AM
+ * Last modified 4/22/21 10:11 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -105,7 +105,7 @@ dependencies {
 
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
 
@@ -113,23 +113,23 @@ dependencies {
     implementation 'com.google.android.play:core-ktx:1.8.1'
 
 
-    implementation 'com.google.android.material:material:1.4.0-alpha01'
+    implementation 'com.google.android.material:material:1.4.0-alpha02'
 
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
 
-    implementation 'com.google.firebase:firebase-analytics:18.0.2'
+    implementation 'com.google.firebase:firebase-analytics:18.0.3'
 
-    implementation 'com.google.firebase:firebase-auth:20.0.3'
+    implementation 'com.google.firebase:firebase-auth:20.0.4'
 
     implementation 'com.google.firebase:firebase-config:20.0.4'
-    implementation 'com.google.firebase:firebase-storage:19.2.1'
+    implementation 'com.google.firebase:firebase-storage:19.2.2'
 
     implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.1.5'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-messaging:21.1.0'
     implementation 'com.google.firebase:firebase-appindexing:19.2.0'
 
-    implementation 'com.google.firebase:firebase-crashlytics:17.3.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.4.1'
 
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
@@ -137,7 +137,4 @@ dependencies {
 
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.31"
 }
