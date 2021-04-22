@@ -1,8 +1,8 @@
 /*
- * Copyright © 2020 By Geeks Empire.
+ * Copyright © 2021 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 8/16/20 2:28 AM
+ * Last modified 4/22/21 10:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,7 +29,7 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppReview.InAppReviewProcess
 
 class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsClass: FunctionsClass) {
 
-    fun changeLog(loadVideoTutorial: Boolean) {
+    fun changeLog(loadVideoTutorial: Boolean, forceShow: Boolean) {
 
         val layoutParams = WindowManager.LayoutParams()
         val dialogueWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 370f, activity.resources.displayMetrics).toInt()
@@ -117,7 +117,7 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
                 dialog.show()
             }
 
-        } else if (loadVideoTutorial) {
+        } else if (forceShow) {
 
             if (!activity.isFinishing) {
                 dialog.show()

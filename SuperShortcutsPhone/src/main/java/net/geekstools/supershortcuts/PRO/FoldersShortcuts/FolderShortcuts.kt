@@ -1,8 +1,8 @@
 /*
- * Copyright © 2020 By Geeks Empire.
+ * Copyright © 2021 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 6/11/20 11:48 AM
+ * Last modified 4/22/21 10:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -105,7 +105,7 @@ class FolderShortcuts : AppCompatActivity(),
 
         initializeLoadingProcess()
 
-        functionsClassDialogues.changeLog(!functionsClass.isFirstToCheckTutorial)
+        functionsClassDialogues.changeLog(!functionsClass.isFirstToCheckTutorial, false)
 
         //In-App Billing
         PurchasesCheckpoint(this@FolderShortcuts).trigger()

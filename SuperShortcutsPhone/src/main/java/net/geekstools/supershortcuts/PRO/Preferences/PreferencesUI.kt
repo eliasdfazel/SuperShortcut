@@ -1,8 +1,8 @@
 /*
- * Copyright © 2020 By Geeks Empire.
+ * Copyright © 2021 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 8/16/20 2:29 AM
+ * Last modified 4/22/21 10:07 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -64,7 +64,7 @@ class PreferencesUI : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(!functionsClass.isFirstToCheckTutorial)
+        FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(!functionsClass.isFirstToCheckTutorial, false)
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.default_color_darker)))
         supportActionBar?.title = Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY)
@@ -194,21 +194,16 @@ class PreferencesUI : AppCompatActivity() {
 
         preferenceViewBinding.newsView.setOnClickListener {
 
-            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(false)
+            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(false, true)
 
         }
 
         preferenceViewBinding.newsView.setOnLongClickListener {
 
-            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(true)
+            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(true, true)
 
             true
         }
-
-
-
-
-
 
         preferenceViewBinding.supportView.setOnClickListener {
 
