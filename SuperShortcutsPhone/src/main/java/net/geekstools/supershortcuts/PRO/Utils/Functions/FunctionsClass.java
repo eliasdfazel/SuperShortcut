@@ -1,14 +1,17 @@
 /*
- * Copyright © 2020 By Geeks Empire.
+ * Copyright © 2021 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 8/23/20 3:18 AM
+ * Last modified 10/5/21, 6:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
 package net.geekstools.supershortcuts.PRO.Utils.Functions;
+
+import static android.content.Context.APP_OPS_SERVICE;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -98,9 +101,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static android.content.Context.APP_OPS_SERVICE;
-import static android.content.Context.MODE_PRIVATE;
 
 public class FunctionsClass {
 
@@ -2403,7 +2403,7 @@ public class FunctionsClass {
                 .setUrl(setAppIndexUrl)
                 .build();
 
-        Task<Void> updateTask = FirebaseAppIndex.getInstance().update(articleToIndex);
+        Task<Void> updateTask = FirebaseAppIndex.getInstance(context).update(articleToIndex);
         updateTask.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -2418,7 +2418,7 @@ public class FunctionsClass {
             }
         });
 
-        Task<Void> startTask = FirebaseUserActions.getInstance().start(getAction(setAppIndex, setAppIndexUrl));
+        Task<Void> startTask = FirebaseUserActions.getInstance(context).start(getAction(setAppIndex, setAppIndexUrl));
         startTask.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -2436,7 +2436,7 @@ public class FunctionsClass {
 
     public void endIndexAppInfo() {
         try {
-            FirebaseUserActions.getInstance().end(null);
+            FirebaseUserActions.getInstance(context).end(null);
         } catch (Exception e) {
             e.printStackTrace();
         }

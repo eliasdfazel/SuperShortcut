@@ -3,7 +3,7 @@
   ~ Copyright © 2021 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 3/14/21 10:30 AM
+  ~ Last modified 10/5/21, 6:15 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -62,6 +62,7 @@
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:resizeableActivity="true"
+            android:exported="true"
             android:theme="@style/GeekySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -83,6 +84,7 @@
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:excludeFromRecents="true"
+            android:exported="false"
             android:theme="@style/Transparent">
             <intent-filter>
                 <action android:name="MEDIATED_ACTIVITY_PRO" />
@@ -107,7 +109,7 @@
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".FoldersShortcuts.LoadFolderPopupShortcuts"
             android:excludeFromRecents="true"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/app_name"
             android:resizeableActivity="true"
             android:theme="@style/Transparent">
@@ -137,7 +139,7 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:noHistory="true"
-            android:exported="true"
+            android:exported="false"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/Transparent">
@@ -154,7 +156,7 @@
             android:name=".SplitShortcuts.SplitServices.SplitTransparentSingle"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
-            android:exported="true"
+            android:exported="false"
             android:noHistory="true"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
@@ -171,6 +173,7 @@
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".Preferences.PreferencesUI"
             android:label="@string/pref"
+            android:exported="true"
             android:theme="@style/GeeksEmpire">
             <intent-filter
                 android:autoVerify="true"
@@ -195,6 +198,7 @@
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".Utils.RemoteTask.DeepLinkedShortcuts"
+            android:exported="true"
             android:theme="@style/Transparent">
             <intent-filter
                 android:autoVerify="true"
@@ -220,6 +224,7 @@
             android:name=".Utils.InAppStore.DigitalAssets.InitializeInAppBilling"
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:exported="false"
             android:theme="@style/GeeksEmpire.Material.IAP.DARK">
             <intent-filter>
                 <action android:name="In_App_Store"/>
@@ -230,6 +235,7 @@
 
         <service
             android:name=".SplitShortcuts.SplitServices.SplitScreenService"
+            android:exported="false"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -243,6 +249,7 @@
             android:name=".Utils.RemoteProcess.LicenseValidator" />
         <service
             android:name=".Utils.RemoteProcess.CloudNotificationHandler"
+            android:exported="false"
             android:icon="@drawable/ic_launcher">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

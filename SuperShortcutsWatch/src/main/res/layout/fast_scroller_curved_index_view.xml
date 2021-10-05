@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright © 2020 By Geeks Empire.
+  ~ Copyright © 2021 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/15/20 4:17 PM
+  ~ Last modified 10/5/21, 6:31 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionListWatch">
 
     <androidx.wear.widget.WearableRecyclerView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-
         android:id="@+id/nestedIndexScrollViewCurve"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,4 +30,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

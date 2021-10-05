@@ -1,8 +1,8 @@
 /*
- * Copyright © 2020 By Geeks Empire.
+ * Copyright © 2021 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/29/20 11:19 AM
+ * Last modified 10/5/21, 6:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -185,7 +185,7 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
 
         functionsClass
                 .savePreference(".PurchasedItem",
-                        purchase.sku,
+                        purchase.skus.first(),
                         true)
 
         this@InitializeInAppBilling.finish()

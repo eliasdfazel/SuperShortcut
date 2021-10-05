@@ -2,7 +2,7 @@
  * Copyright © 2021 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 4/22/21 10:07 AM
+ * Last modified 10/5/21, 6:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,12 +25,15 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.queryPurchasesAsync
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import kotlinx.coroutines.async
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
@@ -91,13 +94,16 @@ class PreferencesUI : AppCompatActivity() {
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                         functionsClass.savePreference(".PurchasedItem", "mix.shortcuts", false)
 
-                        val purchases = billingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList
-                        if (purchases != null) {
+                        lifecycleScope.async {
+
+                            val purchases = billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP).purchasesList
                             for (purchase in purchases) {
                                 FunctionsClassDebug.PrintDebug("*** Purchased Item: $purchase ***")
 
-                                functionsClass.savePreference(".PurchasedItem", purchase.sku, true)
+                                functionsClass.savePreference(".PurchasedItem", purchase.skus.first(), true)
+
                             }
+
                         }
 
                     }
