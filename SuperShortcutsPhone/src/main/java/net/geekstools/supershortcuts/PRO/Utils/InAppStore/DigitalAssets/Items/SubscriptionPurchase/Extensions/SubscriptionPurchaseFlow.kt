@@ -11,28 +11,33 @@
 package net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.SubscriptionPurchase.Extensions
 
 import com.android.billingclient.api.BillingFlowParams
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.ProductDetails
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.SubscriptionPurchase.SubscriptionPurchase
 
-fun SubscriptionPurchase.subscriptionPurchaseFlow(skuDetails: SkuDetails) {
+fun SubscriptionPurchase.subscriptionPurchaseFlow(productDetails: ProductDetails) {
 
     inAppBillingSubscriptionPurchaseViewBinding.centerPurchaseButton.root.setOnClickListener {
 
-        purchaseFlowCommand(skuDetails)
+        purchaseFlowCommand(productDetails)
     }
 
     inAppBillingSubscriptionPurchaseViewBinding.bottomPurchaseButton.root.setOnClickListener {
 
-        purchaseFlowCommand(skuDetails)
+        purchaseFlowCommand(productDetails)
     }
 }
 
-private fun SubscriptionPurchase.purchaseFlowCommand(skuDetails: SkuDetails) {
+private fun SubscriptionPurchase.purchaseFlowCommand(productDetails: ProductDetails) {
+
     val billingFlowParams = BillingFlowParams.newBuilder()
-            .setSkuDetails(skuDetails)
-            .build()
+        .setProductDetailsParamsList(listOf(
+            BillingFlowParams.ProductDetailsParams.newBuilder()
+                .setProductDetails(productDetails)
+                .build()
+        ))
+        .build()
 
     val billingResult = billingClient.launchBillingFlow(requireActivity() as InitializeInAppBilling, billingFlowParams)
-    purchaseFlowController.purchaseFlowInitial(billingResult)
+    purchaseFlowController?.purchaseFlowInitial(billingResult)
 }

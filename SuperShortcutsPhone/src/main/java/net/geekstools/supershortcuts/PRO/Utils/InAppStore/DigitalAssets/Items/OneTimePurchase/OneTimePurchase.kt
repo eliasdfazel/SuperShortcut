@@ -35,7 +35,10 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.*
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToItemTitle
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigDescriptionKey
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigPriceInformation
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToStorageScreenshotsDirectory
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.OneTimePurchase.Extensions.oneTimePurchaseFlow
@@ -43,8 +46,8 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.On
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.OneTimePurchase.Extensions.setupOneTimePurchaseUI
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchaseFlowController
 import net.geekstools.supershortcuts.PRO.databinding.InAppBillingOneTimePurchaseViewBinding
+
 import java.util.*
-import kotlin.collections.ArrayList
 
 class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListener {
 
@@ -54,14 +57,17 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
         BillingClient.newBuilder(requireActivity())//.build()
     }
 
-    lateinit var purchaseFlowController: PurchaseFlowController
+    var purchaseFlowController: PurchaseFlowController? = null
     lateinit var inAppBillingData: InAppBillingData
 
     private val requestManager: RequestManager by lazy {
         Glide.with(requireContext())
     }
 
-    private val listOfItems: ArrayList<String> = ArrayList<String>()
+    private var itemToPurchase: QueryProductDetailsParams.Product = QueryProductDetailsParams.Product.newBuilder()
+        .setProductId(InAppBillingData.SKU.InAppItemDonation)
+        .setProductType(BillingClient.ProductType.INAPP)
+        .build()
 
     val mapIndexDrawable = TreeMap<Int, Drawable>()
     val mapIndexURI = TreeMap<Int, Uri>()
@@ -77,21 +83,21 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
     override fun onPurchasesUpdated(billingResult: BillingResult, purchasesList: MutableList<Purchase>?) {
         Log.d(this@OneTimePurchase.javaClass.simpleName, "Purchases Updated: ${billingResult?.debugMessage}")
 
-        billingResult?.let {
+        billingResult.let {
             if (!purchasesList.isNullOrEmpty()) {
 
                 when (billingResult.responseCode) {
                     BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
 
-                        purchaseFlowController.purchaseFlowPaid(billingClient, purchasesList[0])
+                        purchaseFlowController?.purchaseFlowPaid(billingClient, purchasesList[0])
                     }
                     BillingClient.BillingResponseCode.OK -> {
 
-                        purchaseFlowController.purchaseFlowPaid(billingClient, purchasesList[0])
+                        purchaseFlowController?.purchaseFlowPaid(billingClient, purchasesList[0])
                     }
                     else -> {
 
-                        purchaseFlowController.purchaseFlowDisrupted(billingResult.debugMessage)
+                        purchaseFlowController?.purchaseFlowDisrupted(billingResult.debugMessage)
                     }
                 }
             }
@@ -102,7 +108,11 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        listOfItems.add(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
+        itemToPurchase = QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
+            .setProductType(BillingClient.ProductType.INAPP)
+            .build()
+
     }
 
     override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -122,84 +132,88 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
 
             override fun onBillingServiceDisconnected() {
 
-                purchaseFlowController.purchaseFlowDisrupted(null)
+                purchaseFlowController?.purchaseFlowDisrupted(null)
             }
 
             override fun onBillingSetupFinished(billingResult: BillingResult) {
 
-                val skuDetailsParams = SkuDetailsParams.newBuilder()
-                        .setSkusList(listOfItems)
-                        .setType(BillingClient.SkuType.INAPP)
-                        .build()
+                val queryProductDetailsParams = QueryProductDetailsParams.newBuilder()
+                    .setProductList(listOf(itemToPurchase))
+                    .build()
 
-                billingClient.querySkuDetailsAsync(skuDetailsParams) { queryBillingResult, skuDetailsListInApp ->
-                    FunctionsClassDebug.PrintDebug("Billing Result: ${queryBillingResult.debugMessage} | Sku Details List In App Purchase: $skuDetailsListInApp")
+                billingClient.queryProductDetailsAsync(queryProductDetailsParams) { queryBillingResult, productsDetailsListInApp ->
+                    FunctionsClassDebug.PrintDebug("Billing Result: ${queryBillingResult.debugMessage} | Sku Details List In App Purchase: $productsDetailsListInApp")
 
                     when (queryBillingResult.responseCode) {
                         BillingClient.BillingResponseCode.ERROR -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.USER_CANCELED -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
 
-                            if (!skuDetailsListInApp.isNullOrEmpty()) {
+                            if (!productsDetailsListInApp.isNullOrEmpty()) {
 
-                                purchaseFlowController.purchaseFlowPaid(skuDetails = skuDetailsListInApp[0])
+                                purchaseFlowController?.purchaseFlowPaid(productDetails = productsDetailsListInApp[0])
                             }
                         }
                         BillingClient.BillingResponseCode.OK -> {
 
-                            if (!skuDetailsListInApp.isNullOrEmpty()) {
+                            if (!productsDetailsListInApp.isNullOrEmpty()) {
 
-                                purchaseFlowController.purchaseFlowSucceeded(skuDetails = skuDetailsListInApp[0])
+                                purchaseFlowController?.purchaseFlowSucceeded(productDetails = productsDetailsListInApp[0])
 
-                                oneTimePurchaseFlow(skuDetailsListInApp[0])
+                                oneTimePurchaseFlow(productsDetailsListInApp[0])
 
-                                if (listOfItems[0] == InAppBillingData.SKU.InAppItemDonation) {
+                                val queriedProduct = QueryProductDetailsParams.Product.newBuilder()
+                                    .setProductId(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
+                                    .setProductType(BillingClient.ProductType.INAPP)
+                                    .build()
+
+                                if (itemToPurchase == queriedProduct) {
 
                                     inAppBillingOneTimePurchaseViewBinding.itemTitleView.visibility = View.GONE
                                     inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.text =
-                                            Html.fromHtml("<br/>" +
-                                                    "<big>${skuDetailsListInApp[0].title}</big>" +
-                                                    "<br/>" +
-                                                    "<br/>" +
-                                                    "${skuDetailsListInApp[0].description}" +
-                                                    "<br/>")
+                                        Html.fromHtml("<br/>" +
+                                                "<big>${productsDetailsListInApp[0].title}</big>" +
+                                                "<br/>" +
+                                                "<br/>" +
+                                                productsDetailsListInApp[0].description +
+                                                "<br/>", Html.FROM_HTML_MODE_COMPACT)
 
                                     (inAppBillingOneTimePurchaseViewBinding
-                                            .centerPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
+                                        .centerPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
                                     (inAppBillingOneTimePurchaseViewBinding
-                                            .bottomPurchaseButton.root as MaterialButton).visibility = View.INVISIBLE
+                                        .bottomPurchaseButton.root as MaterialButton).visibility = View.INVISIBLE
 
                                     inAppBillingOneTimePurchaseViewBinding.itemScreenshotsView.visibility = View.GONE
 
                                 } else {
 
-                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = (listOfItems[0].convertToItemTitle())
+                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.first().productId.convertToItemTitle())
 
                                     val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
                                     firebaseRemoteConfig.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
@@ -207,51 +221,58 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                                     firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener {
 
                                         inAppBillingOneTimePurchaseViewBinding
-                                                .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(listOfItems[0].convertToRemoteConfigDescriptionKey()))
+                                            .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
 
                                         (inAppBillingOneTimePurchaseViewBinding
-                                                .centerPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(listOfItems[0].convertToRemoteConfigPriceInformation())
+                                            .centerPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigPriceInformation())
                                         (inAppBillingOneTimePurchaseViewBinding
-                                                .bottomPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(listOfItems[0].convertToRemoteConfigPriceInformation())
+                                            .bottomPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigPriceInformation())
 
-                                        screenshotsNumber = firebaseRemoteConfig.getLong(listOfItems[0].convertToRemoteConfigScreenshotNumberKey()).toInt()
+                                        val firebaseStorage = FirebaseStorage.getInstance()
+                                        val firebaseStorageReference = firebaseStorage.reference
+                                        firebaseStorageReference
+                                            .child("Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/IAP.Demo/")
+                                            .listAll()
+                                            .addOnSuccessListener { itemsStorageReference ->
 
-                                        for (i in 1..screenshotsNumber) {
-                                            val firebaseStorage = FirebaseStorage.getInstance()
-                                            val firebaseStorageReference = firebaseStorage.reference
-                                            val storageReference = firebaseStorageReference
-                                                    .child("Assets/Images/Screenshots/${listOfItems[0].convertToStorageScreenshotsDirectory()}/IAP.Demo/${listOfItems[0].convertToStorageScreenshotsFileName(i)}")
-                                            storageReference.downloadUrl.addOnSuccessListener { screenshotLink ->
+                                                screenshotsNumber = itemsStorageReference.items.size
 
-                                                requestManager
-                                                        .load(screenshotLink)
-                                                        .diskCacheStrategy(DiskCacheStrategy.DATA)
-                                                        .addListener(object : RequestListener<Drawable> {
-                                                            override fun onLoadFailed(glideException: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                                itemsStorageReference.items.forEachIndexed { index, storageReference ->
 
-                                                                return false
-                                                            }
+                                                    storageReference.downloadUrl.addOnSuccessListener { screenshotLink ->
 
-                                                            override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                                                glideLoadCounter++
+                                                        requestManager
+                                                            .load(screenshotLink)
+                                                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                                            .addListener(object : RequestListener<Drawable> {
+                                                                override fun onLoadFailed(glideException: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
 
-                                                                val beforeToken: String = screenshotLink.toString().split("?alt=media&token=")[0]
-                                                                val drawableIndex = beforeToken[beforeToken.length - 5].toString().toInt()
-
-                                                                mapIndexDrawable[drawableIndex] = resource
-                                                                mapIndexURI[drawableIndex] = screenshotLink
-
-                                                                if (glideLoadCounter == screenshotsNumber) {
-
-                                                                    setScreenshots()
+                                                                    return false
                                                                 }
 
-                                                                return false
-                                                            }
+                                                                override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                                                    glideLoadCounter++
 
-                                                        }).submit()
+                                                                    val beforeToken: String = screenshotLink.toString().split("?alt=media&token=")[0]
+                                                                    val drawableIndex = beforeToken[beforeToken.length - 5].toString().toInt()
+
+                                                                    mapIndexDrawable[drawableIndex] = resource
+                                                                    mapIndexURI[drawableIndex] = screenshotLink
+
+                                                                    if (glideLoadCounter == screenshotsNumber) {
+
+                                                                        setScreenshots()
+                                                                    }
+
+                                                                    return false
+                                                                }
+
+                                                            }).submit()
+                                                    }
+
+                                                }
+
                                             }
-                                        }
 
                                     }.addOnFailureListener {
 
@@ -282,18 +303,43 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
     override fun onDetach() {
         super.onDetach()
 
-        listOfItems.clear()
+        billingClient.endConnection()
+
+        itemToPurchase = QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(InAppBillingData.SKU.InAppItemDonation)
+            .setProductType(BillingClient.ProductType.INAPP)
+            .build()
     }
 
     override fun onClick(view: View?) {
 
         when(view) {
             is ImageView -> {
-                Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse(view.getTag().toString())
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    requireContext().startActivity(this@apply)
+
+                if (view.tag.toString().contains("_Youtube")) {
+
+                    val youtubeVideoId = view.tag.toString()
+                        .split("/Assets%2FImages%2FScreenshots%2FFloatingWidgets%2FIAP.Demo%2F")[1]
+                        .split("?alt=media&token")[0]
+                        .split("_Youtube")[0]
+                    val youtubeLink = "https://www.youtube.com/watch?v=".plus(youtubeVideoId)
+
+                    Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(youtubeLink)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        requireContext().startActivity(this@apply)
+                    }
+
+                } else {
+
+                    Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(view.getTag().toString())
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        requireContext().startActivity(this@apply)
+                    }
+
                 }
+
             }
         }
     }

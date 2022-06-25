@@ -11,28 +11,33 @@
 package net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.OneTimePurchase.Extensions
 
 import com.android.billingclient.api.BillingFlowParams
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.ProductDetails
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.OneTimePurchase.OneTimePurchase
 
-fun OneTimePurchase.oneTimePurchaseFlow(skuDetails: SkuDetails) {
+fun OneTimePurchase.oneTimePurchaseFlow(productDetails: ProductDetails) {
 
     inAppBillingOneTimePurchaseViewBinding.centerPurchaseButton.root.setOnClickListener {
 
-        purchaseFlowCommand(skuDetails)
+        purchaseFlowCommand(productDetails)
     }
 
     inAppBillingOneTimePurchaseViewBinding.bottomPurchaseButton.root.setOnClickListener {
 
-        purchaseFlowCommand(skuDetails)
+        purchaseFlowCommand(productDetails)
     }
 }
 
-private fun OneTimePurchase.purchaseFlowCommand(skuDetails: SkuDetails) {
+private fun OneTimePurchase.purchaseFlowCommand(productDetails: ProductDetails) {
+
     val billingFlowParams = BillingFlowParams.newBuilder()
-            .setSkuDetails(skuDetails)
-            .build()
+        .setProductDetailsParamsList(listOf(
+            BillingFlowParams.ProductDetailsParams.newBuilder()
+                .setProductDetails(productDetails)
+                .build()
+        ))
+        .build()
 
     val billingResult = billingClient.launchBillingFlow(requireActivity() as InitializeInAppBilling, billingFlowParams)
-    purchaseFlowController.purchaseFlowInitial(billingResult)
+    purchaseFlowController?.purchaseFlowInitial(billingResult)
 }

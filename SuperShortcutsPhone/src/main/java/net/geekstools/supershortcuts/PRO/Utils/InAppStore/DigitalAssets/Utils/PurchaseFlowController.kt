@@ -12,13 +12,13 @@ package net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils
 
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.SkuDetails
 
 interface PurchaseFlowController {
     fun purchaseFlowInitial(billingResult: BillingResult?)
     fun purchaseFlowDisrupted(errorMessage: String?)
-    fun purchaseFlowSucceeded(skuDetails: SkuDetails)
+    fun purchaseFlowSucceeded(productDetails: ProductDetails)
     fun purchaseFlowPaid(billingClient: BillingClient, purchase: Purchase)
-    fun purchaseFlowPaid(skuDetails: SkuDetails)
+    fun purchaseFlowPaid(productDetails: ProductDetails)
 }

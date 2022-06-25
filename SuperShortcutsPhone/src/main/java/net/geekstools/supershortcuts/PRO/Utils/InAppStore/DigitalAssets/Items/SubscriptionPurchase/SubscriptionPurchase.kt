@@ -44,7 +44,6 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.Su
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchaseFlowController
 import net.geekstools.supershortcuts.PRO.databinding.InAppBillingSubscriptionPurchaseViewBinding
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListener {
 
@@ -54,14 +53,14 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
         BillingClient.newBuilder(requireActivity())//.build()
     }
 
-    lateinit var purchaseFlowController: PurchaseFlowController
+    var purchaseFlowController: PurchaseFlowController? = null
     lateinit var inAppBillingData: InAppBillingData
 
     private val requestManager: RequestManager by lazy {
         Glide.with(requireContext())
     }
 
-    private val listOfItems: ArrayList<String> = ArrayList<String>()
+    private val listOfItems: ArrayList<QueryProductDetailsParams.Product> = ArrayList<QueryProductDetailsParams.Product>()
 
     val mapIndexDrawable = TreeMap<Int, Drawable>()
     val mapIndexURI = TreeMap<Int, Uri>()
@@ -77,21 +76,21 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
     override fun onPurchasesUpdated(billingResult: BillingResult, purchasesList: MutableList<Purchase>?) {
         Log.d(this@SubscriptionPurchase.javaClass.simpleName, "Purchases Updated: ${billingResult?.debugMessage}")
 
-        billingResult?.let {
+        billingResult.let {
             if (!purchasesList.isNullOrEmpty()) {
 
                 when (billingResult.responseCode) {
                     BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
 
-                        purchaseFlowController.purchaseFlowPaid(billingClient, purchasesList[0])
+                        purchaseFlowController?.purchaseFlowPaid(billingClient, purchasesList[0])
                     }
                     BillingClient.BillingResponseCode.OK -> {
 
-                        purchaseFlowController.purchaseFlowPaid(billingClient, purchasesList[0])
+                        purchaseFlowController?.purchaseFlowPaid(billingClient, purchasesList[0])
                     }
                     else -> {
 
-                        purchaseFlowController.purchaseFlowDisrupted(billingResult.debugMessage)
+                        purchaseFlowController?.purchaseFlowDisrupted(billingResult.debugMessage)
                     }
                 }
             }
@@ -102,7 +101,10 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        listOfItems.add(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
+        listOfItems.add(QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
+            .setProductType(BillingClient.ProductType.SUBS)
+            .build())
     }
 
     override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -122,111 +124,118 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
             override fun onBillingServiceDisconnected() {
 
-                purchaseFlowController.purchaseFlowDisrupted(null)
+                purchaseFlowController?.purchaseFlowDisrupted(null)
             }
 
             override fun onBillingSetupFinished(billingResult: BillingResult) {
 
-                val skuDetailsParams = SkuDetailsParams.newBuilder()
-                        .setSkusList(listOfItems)
-                        .setType(BillingClient.SkuType.SUBS)
-                        .build()
+                val queryProductDetailsParams = QueryProductDetailsParams.newBuilder()
+                    .setProductList(listOfItems)
+                    .build()
 
-                billingClient.querySkuDetailsAsync(skuDetailsParams) { queryBillingResult, skuDetailsListInApp ->
-                    FunctionsClassDebug.PrintDebug("Billing Result: ${queryBillingResult.debugMessage} | Sku Details List In App Purchase: $skuDetailsListInApp")
+                billingClient.queryProductDetailsAsync(queryProductDetailsParams) { queryBillingResult, productsDetailsListInApp ->
+                    FunctionsClassDebug.PrintDebug("Billing Result: ${queryBillingResult.debugMessage} | Sku Details List In App Purchase: $productsDetailsListInApp")
 
                     when (queryBillingResult.responseCode) {
                         BillingClient.BillingResponseCode.ERROR -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.USER_CANCELED -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> {
 
-                            purchaseFlowController.purchaseFlowDisrupted(queryBillingResult.debugMessage)
+                            purchaseFlowController?.purchaseFlowDisrupted(queryBillingResult.debugMessage)
                         }
                         BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
 
-                            if (skuDetailsListInApp != null) {
-                                if (skuDetailsListInApp.isNotEmpty()) {
+                            if (productsDetailsListInApp != null) {
+                                if (productsDetailsListInApp.isNotEmpty()) {
 
-                                    purchaseFlowController.purchaseFlowPaid(skuDetails = skuDetailsListInApp[0])
+                                    purchaseFlowController?.purchaseFlowPaid(productDetails = productsDetailsListInApp[0])
                                 }
                             }
                         }
                         BillingClient.BillingResponseCode.OK -> {
 
-                            if (skuDetailsListInApp != null) {
-                                if (skuDetailsListInApp.isNotEmpty()) {
+                            if (productsDetailsListInApp != null) {
+                                if (productsDetailsListInApp.isNotEmpty()) {
 
-                                    purchaseFlowController.purchaseFlowSucceeded(skuDetails = skuDetailsListInApp[0])
+                                    purchaseFlowController?.purchaseFlowSucceeded(productDetails = productsDetailsListInApp[0])
 
-                                    subscriptionPurchaseFlow(skuDetailsListInApp[0])
+                                    subscriptionPurchaseFlow(productsDetailsListInApp[0])
 
-                                    if (listOfItems[0] == InAppBillingData.SKU.InAppItemDonation) {
+                                    if (listOfItems.isNotEmpty()) {
 
-                                        inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.visibility = View.GONE
-                                        inAppBillingSubscriptionPurchaseViewBinding.itemDescriptionView.text =
+
+                                        val queriedProduct = QueryProductDetailsParams.Product.newBuilder()
+                                            .setProductId(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
+                                            .setProductType(BillingClient.ProductType.SUBS)
+                                            .build()
+
+                                        if (listOfItems[0] == queriedProduct) {
+
+                                            inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.visibility = View.GONE
+                                            inAppBillingSubscriptionPurchaseViewBinding.itemDescriptionView.text =
                                                 Html.fromHtml("<br/>" +
-                                                        "<big>${skuDetailsListInApp[0].title}</big>" +
+                                                        "<big>${productsDetailsListInApp[0].title}</big>" +
                                                         "<br/>" +
                                                         "<br/>" +
-                                                        "${skuDetailsListInApp[0].description}" +
-                                                        "<br/>")
+                                                        productsDetailsListInApp[0].description +
+                                                        "<br/>", Html.FROM_HTML_MODE_COMPACT)
 
-                                        (inAppBillingSubscriptionPurchaseViewBinding
+                                            (inAppBillingSubscriptionPurchaseViewBinding
                                                 .centerPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
-                                        (inAppBillingSubscriptionPurchaseViewBinding
+                                            (inAppBillingSubscriptionPurchaseViewBinding
                                                 .bottomPurchaseButton.root as MaterialButton).visibility = View.INVISIBLE
 
-                                        inAppBillingSubscriptionPurchaseViewBinding.itemScreenshotsView.visibility = View.GONE
+                                            inAppBillingSubscriptionPurchaseViewBinding.itemScreenshotsView.visibility = View.GONE
 
-                                    } else {
+                                        } else {
 
-                                        inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.text = (listOfItems[0].convertToItemTitle())
+                                            inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.first().productId.convertToItemTitle())
 
-                                        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-                                        firebaseRemoteConfig.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
-                                        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
-                                        firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener {
+                                            val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+                                            firebaseRemoteConfig.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
+                                            firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
+                                            firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener {
 
-                                            inAppBillingSubscriptionPurchaseViewBinding
-                                                    .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(listOfItems[0].convertToRemoteConfigDescriptionKey()))
+                                                inAppBillingSubscriptionPurchaseViewBinding
+                                                    .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
 
-                                            (inAppBillingSubscriptionPurchaseViewBinding
-                                                    .centerPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(listOfItems[0].convertToRemoteConfigPriceInformation())
-                                            (inAppBillingSubscriptionPurchaseViewBinding
-                                                    .bottomPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(listOfItems[0].convertToRemoteConfigPriceInformation())
+                                                (inAppBillingSubscriptionPurchaseViewBinding
+                                                    .centerPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigPriceInformation())
+                                                (inAppBillingSubscriptionPurchaseViewBinding
+                                                    .bottomPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigPriceInformation())
 
-                                            screenshotsNumber = firebaseRemoteConfig.getLong(listOfItems[0].convertToRemoteConfigScreenshotNumberKey()).toInt()
+                                                screenshotsNumber = firebaseRemoteConfig.getLong(productsDetailsListInApp.first().productId.convertToRemoteConfigScreenshotNumberKey()).toInt()
 
-                                            for (i in 1..screenshotsNumber) {
-                                                val firebaseStorage = FirebaseStorage.getInstance()
-                                                val firebaseStorageReference = firebaseStorage.reference
-                                                val storageReference = firebaseStorageReference
-                                                        .child("Assets/Images/Screenshots/${listOfItems[0].convertToStorageScreenshotsDirectory()}/IAP.Demo/${listOfItems[0].convertToStorageScreenshotsFileName(i)}")
-                                                storageReference.downloadUrl.addOnSuccessListener { screenshotLink ->
+                                                for (i in 1..screenshotsNumber) {
+                                                    val firebaseStorage = FirebaseStorage.getInstance()
+                                                    val firebaseStorageReference = firebaseStorage.reference
+                                                    val storageReference = firebaseStorageReference
+                                                        .child("Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/IAP.Demo/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsFileName(i)}")
+                                                    storageReference.downloadUrl.addOnSuccessListener { screenshotLink ->
 
-                                                    requestManager
+                                                        requestManager
                                                             .load(screenshotLink)
                                                             .diskCacheStrategy(DiskCacheStrategy.DATA)
                                                             .addListener(object : RequestListener<Drawable> {
@@ -253,13 +262,15 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
                                                                 }
 
                                                             }).submit()
+                                                    }
                                                 }
+
+                                            }.addOnFailureListener {
+
                                             }
-
-                                        }.addOnFailureListener {
-
                                         }
                                     }
+
                                 }
                             }
                         }
@@ -285,6 +296,8 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
     override fun onDetach() {
         super.onDetach()
+
+        billingClient.endConnection()
 
         listOfItems.clear()
     }

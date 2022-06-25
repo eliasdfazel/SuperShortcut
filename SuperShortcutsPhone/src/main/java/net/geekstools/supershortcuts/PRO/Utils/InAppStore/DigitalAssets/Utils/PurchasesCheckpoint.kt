@@ -42,7 +42,11 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
 
                             appCompatActivity.lifecycleScope.async {
 
-                                billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP).purchasesList.let { purchases ->
+                                val queryPurchasesParams = QueryPurchasesParams.newBuilder()
+                                    .setProductType(BillingClient.ProductType.INAPP)
+                                    .build()
+
+                                billingClient.queryPurchasesAsync(queryPurchasesParams).purchasesList.let { purchases ->
 
                                     for (purchase in purchases) {
                                         FunctionsClassDebug.PrintDebug("*** Purchased Item: $purchase ***")
@@ -87,7 +91,7 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
 
     override fun onPurchasesUpdated(billingResult: BillingResult, purchasesList: List<Purchase>?) {
 
-        billingResult?.let {
+        billingResult.let {
             if (!purchasesList.isNullOrEmpty()) {
 
                 when (billingResult.responseCode) {
@@ -110,7 +114,7 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
         fun purchaseAcknowledgeProcess(billingClient: BillingClient, purchase: Purchase, purchaseType: String) = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
 
             if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-                FunctionsClassDebug.PrintDebug("*** ${purchase.skus.first()} Purchase Acknowledged: ${purchase.isAcknowledged} ***")
+                FunctionsClassDebug.PrintDebug("*** ${purchase.products.first()} Purchase Acknowledged: ${purchase.isAcknowledged} ***")
 
                 if (!purchase.isAcknowledged) {
 
@@ -119,7 +123,7 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
 
                     val aPurchaseResult: BillingResult = billingClient.acknowledgePurchase(acknowledgePurchaseParams.build())
 
-                    FunctionsClassDebug.PrintDebug("*** Purchased Acknowledged Result: ${purchase.skus.first()} -> ${aPurchaseResult.debugMessage} ***")
+                    FunctionsClassDebug.PrintDebug("*** Purchased Acknowledged Result: ${purchase.products.first()} -> ${aPurchaseResult.debugMessage} ***")
                 }
             }
         }

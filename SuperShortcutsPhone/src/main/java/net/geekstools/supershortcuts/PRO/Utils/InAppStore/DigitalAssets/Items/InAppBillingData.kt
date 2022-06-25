@@ -28,7 +28,7 @@ class InAppBillingData {
     }
 
     init {
-        SKU.SKUS[BillingClient.SkuType.INAPP] = arrayListOf(SKU.InAppItemDonation, SKU.InAppItemMixShortcuts)
+        SKU.SKUS[BillingClient.ProductType.INAPP] = arrayListOf(SKU.InAppItemDonation, SKU.InAppItemMixShortcuts)
     }
 
     /**
@@ -36,7 +36,7 @@ class InAppBillingData {
      * OR
      * BillingClient.SkuType.SUBS
      **/
-    fun getAllSkusByType(@BillingClient.SkuType skuType: String) : ArrayList<String>? {
+    fun getAllSkusByType(@BillingClient.ProductType skuType: String) : ArrayList<String>? {
 
         return SKU.SKUS[skuType]
     }
