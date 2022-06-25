@@ -185,7 +185,6 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
                                     if (listOfItems.isNotEmpty()) {
 
-
                                         val queriedProduct = QueryProductDetailsParams.Product.newBuilder()
                                             .setProductId(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
                                             .setProductType(BillingClient.ProductType.SUBS)

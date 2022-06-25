@@ -14,7 +14,7 @@ fun String.convertToItemTitle() : String {
 
     val temporaryText = this.split(".")
 
-    return "${temporaryText[0][0].toUpperCase()}${temporaryText[0].substring(1)} ${temporaryText[1][0].toUpperCase()}${temporaryText[1].substring(1)}"
+    return "${temporaryText[0][0].uppercaseChar()}${temporaryText[0].substring(1)} ${temporaryText[1][0].uppercaseChar()}${temporaryText[1].substring(1)}"
 }
 
 fun String.convertToRemoteConfigDescriptionKey() : String {
@@ -36,12 +36,12 @@ fun String.convertToStorageScreenshotsDirectory() : String{
 
     val temporaryText = this.split(".")
 
-    return "${temporaryText[0][0].toUpperCase()}${temporaryText[0].substring(1)}${temporaryText[1][0].toUpperCase()}${temporaryText[1].substring(1)}"
+    return "${temporaryText[0][0].uppercaseChar()}${temporaryText[0].substring(1)}${temporaryText[1][0].uppercaseChar()}${temporaryText[1].substring(1)}"
 }
 
 fun String.convertToStorageScreenshotsFileName(numberOfScreenshot: Int) : String{
 
     val temporaryText = this.split(".")
 
-    return "${temporaryText[0][0].toUpperCase()}${temporaryText[0].substring(1)}${temporaryText[1][0].toUpperCase()}${temporaryText[1].substring(1)}" + "Demo" + numberOfScreenshot + ".png"
+    return "${temporaryText[0][0].uppercaseChar()}${temporaryText[0].substring(1)}${temporaryText[1][0].uppercaseChar()}${temporaryText[1].substring(1)}" + "Demo" + numberOfScreenshot + ".png"
 }

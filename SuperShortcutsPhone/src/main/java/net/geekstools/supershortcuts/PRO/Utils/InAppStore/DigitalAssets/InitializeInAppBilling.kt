@@ -181,7 +181,7 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
     override fun purchaseFlowPaid(billingClient: BillingClient, purchase: Purchase) {
         Log.d(this@InitializeInAppBilling.javaClass.simpleName, "Purchase Flow Paid: ${purchase}")
 
-        PurchasesCheckpoint.purchaseAcknowledgeProcess(billingClient, purchase, BillingClient.SkuType.INAPP)
+        PurchasesCheckpoint.purchaseAcknowledgeProcess(billingClient, purchase, BillingClient.ProductType.INAPP)
 
         functionsClass
                 .savePreference(".PurchasedItem",
