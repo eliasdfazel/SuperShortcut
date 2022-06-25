@@ -51,7 +51,6 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterfa
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.SplitShortcutsViewBinding
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SplitShortcuts : AppCompatActivity(),
         GestureListenerInterface {
@@ -283,6 +282,7 @@ class SplitShortcuts : AppCompatActivity(),
                     }
                 }
             }
+            else -> {}
         }
     }
 

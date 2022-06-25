@@ -52,6 +52,12 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
 import java.lang.String
 import java.util.*
+import kotlin.Boolean
+import kotlin.Float
+import kotlin.apply
+import kotlin.getValue
+import kotlin.lazy
+import kotlin.let
 
 class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         GestureListenerInterface,
@@ -262,6 +268,7 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
                     }
                 }
             }
+            else -> {}
         }
     }
 

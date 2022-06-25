@@ -20,8 +20,8 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.SkuDetails
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import net.geekstools.supershortcuts.PRO.R
@@ -173,8 +173,8 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
         snackbar.show()
     }
 
-    override fun purchaseFlowSucceeded(skuDetails: SkuDetails) {
-        Log.d(this@InitializeInAppBilling.javaClass.simpleName, "Purchase Flow Succeeded: ${skuDetails}")
+    override fun purchaseFlowSucceeded(productDetails: ProductDetails) {
+        Log.d(this@InitializeInAppBilling.javaClass.simpleName, "Purchase Flow Succeeded: ${productDetails}")
 
     }
 
@@ -185,18 +185,18 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
 
         functionsClass
                 .savePreference(".PurchasedItem",
-                        purchase.skus.first(),
+                        purchase.products.first(),
                         true)
 
         this@InitializeInAppBilling.finish()
     }
 
-    override fun purchaseFlowPaid(skuDetails: SkuDetails) {
-        Log.d(this@InitializeInAppBilling.javaClass.simpleName, "Purchase Flow Paid: ${skuDetails}")
+    override fun purchaseFlowPaid(productDetails: ProductDetails) {
+        Log.d(this@InitializeInAppBilling.javaClass.simpleName, "Purchase Flow Paid: ${productDetails}")
 
         functionsClass
                 .savePreference(".PurchasedItem",
-                        skuDetails.sku,
+                        productDetails.productId,
                         true)
 
         this@InitializeInAppBilling.finish()

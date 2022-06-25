@@ -281,6 +281,7 @@ class FolderShortcuts : AppCompatActivity(),
                     }
                 }
             }
+            else -> {}
         }
     }
 
