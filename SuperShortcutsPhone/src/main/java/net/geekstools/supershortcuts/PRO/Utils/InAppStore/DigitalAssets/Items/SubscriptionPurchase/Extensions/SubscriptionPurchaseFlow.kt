@@ -30,10 +30,13 @@ fun SubscriptionPurchase.subscriptionPurchaseFlow(productDetails: ProductDetails
 
 private fun SubscriptionPurchase.purchaseFlowCommand(productDetails: ProductDetails) {
 
+    val offerToken = productDetails.subscriptionOfferDetails?.get(0)?.offerToken ?: ""
+
     val billingFlowParams = BillingFlowParams.newBuilder()
         .setProductDetailsParamsList(listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
                 .setProductDetails(productDetails)
+                .setOfferToken(offerToken)
                 .build()
         ))
         .build()
