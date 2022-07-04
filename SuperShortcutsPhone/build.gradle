@@ -32,8 +32,6 @@ android {
 
         versionCode 228
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
-
-        wearAppUnbundled true
     }
 
     buildTypes {

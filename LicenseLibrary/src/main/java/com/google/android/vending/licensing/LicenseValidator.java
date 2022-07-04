@@ -114,7 +114,7 @@ class LicenseValidator {
             // Parse and validate response.
             try {
                 data = ResponseData.parse(signedData);
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
                 Log.e(TAG, "Could not parse response.");
                 handleInvalidResponse();
                 return;

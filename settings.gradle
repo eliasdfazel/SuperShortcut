@@ -8,5 +8,5 @@
  * https://opensource.org/licenses/MIT
  */
 
-include ':SuperShortcutsPhone', ':SuperShortcutsWatch', ':LoadingSpin'
+include ':SuperShortcutsPhone', ':LoadingSpin'
 include ':LicenseLibrary'
