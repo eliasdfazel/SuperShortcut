@@ -30,7 +30,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 32
 
-        versionCode 228
+        versionCode 229
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
     }
 
@@ -107,6 +107,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+    implementation 'androidx.biometric:biometric:1.1.0'
+
 
     implementation 'com.google.android.play:app-update-ktx:2.0.0'
     implementation 'com.google.android.play:review-ktx:2.0.0'
@@ -117,23 +119,25 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
 
-    implementation 'com.google.firebase:firebase-analytics:21.0.0'
-    implementation 'com.google.firebase:firebase-perf:20.1.0'
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
 
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.11'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-perf-ktx'
 
-    implementation 'com.google.firebase:firebase-auth:21.0.6'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
-    implementation 'com.google.firebase:firebase-config:21.1.0'
-    implementation 'com.google.firebase:firebase-storage:20.0.1'
+    implementation 'com.google.firebase:firebase-auth-ktx'
 
-    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:20.1.2'
-    implementation 'com.google.firebase:firebase-messaging:23.0.6'
-    implementation 'com.google.firebase:firebase-appindexing:20.0.0'
+    implementation 'com.google.firebase:firebase-config-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+    implementation 'com.google.firebase:firebase-inappmessaging-display-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-appindexing-ktx'
 
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
 
     implementation 'com.github.bumptech.glide:glide:4.13.2'

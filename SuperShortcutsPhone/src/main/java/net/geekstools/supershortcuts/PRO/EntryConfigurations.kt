@@ -15,6 +15,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.WindowManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -69,9 +70,7 @@ class EntryConfigurations : AppCompatActivity() {
                     .build()
 
             val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-            googleSignInClient.signInIntent.run {
-                startActivityForResult(this, Google.SignInRequest)
-            }
+            googleSignInResult.launch(googleSignInClient.signInIntent)
 
             waitingDialogueLiveData = ViewModelProvider(this@EntryConfigurations).get(WaitingDialogueLiveData::class.java)
             waitingDialogueLiveData.run {
@@ -129,45 +128,45 @@ class EntryConfigurations : AppCompatActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private val googleSignInResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                Google.SignInRequest -> {
-                    val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
+        if (it.resultCode == Activity.RESULT_OK) {
 
-                    val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
-                    firebaseAuth.signInWithCredential(authCredential)
-                            .addOnSuccessListener {
-                                val firebaseUser = firebaseAuth.currentUser
-                                if (firebaseUser != null) {
-                                    FunctionsClassDebug.PrintDebug("Firebase Activities Done Successfully")
+            val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+            val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
 
-                                    functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
+            val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
+            firebaseAuth.signInWithCredential(authCredential)
+                .addOnSuccessListener {
+                    val firebaseUser = firebaseAuth.currentUser
+                    if (firebaseUser != null) {
+                        FunctionsClassDebug.PrintDebug("Firebase Activities Done Successfully")
 
-                                    functionsClass.Toast(getString(R.string.signinFinished), Gravity.TOP)
+                        functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
 
-                                    shortcutModeEntryPoint()
+                        functionsClass.Toast(getString(R.string.signinFinished), Gravity.TOP)
 
-                                    waitingDialogue.dismiss()
-                                }
-                            }.addOnFailureListener { exception ->
+                        shortcutModeEntryPoint()
 
-                                waitingDialogueLiveData.run {
-                                    this.dialogueTitle.value = getString(R.string.error)
-                                    this.dialogueMessage.value = exception.message
-                                }
-                            }
+                        waitingDialogue.dismiss()
+                    }
+                }.addOnFailureListener { exception ->
+
+                    waitingDialogueLiveData.run {
+                        this.dialogueTitle.value = getString(R.string.error)
+                        this.dialogueMessage.value = exception.message
+                    }
                 }
-            }
+
         } else {
+
             waitingDialogueLiveData.run {
                 this.dialogueTitle.value = getString(R.string.error)
                 this.dialogueMessage.value = Activity.RESULT_CANCELED.toString()
             }
+
         }
+
     }
 
     private fun loadInstalledCustomIconPackages() = CoroutineScope(SupervisorJob() + Dispatchers.IO).async {

@@ -19,12 +19,15 @@ import android.text.Html
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.common.IntentSenderForResultStarter
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.install.model.AppUpdateType
@@ -188,12 +191,23 @@ class InAppUpdateProcess : AppCompatActivity() {
 
                 if (!this@InAppUpdateProcess.isFinishing) {
 
+                    val updateIntentSend = IntentSenderForResultStarter { intentSender, i, intent, flagsValues, flagsMask, i4, bundle ->
+
+                        val request = IntentSenderRequest.Builder(intentSender)
+                            .setFillInIntent(intent)
+                            .setFlags(flagsValues, flagsMask)
+                            .build()
+
+                        applicationUpdateResult.launch(request)
+                    }
+
                     appUpdateManager.startUpdateFlowForResult(
-                            appUpdateInfo,
-                            AppUpdateType.FLEXIBLE,
-                            this@InAppUpdateProcess,
-                            IN_APP_UPDATE_REQUEST
+                        appUpdateInfo,
+                        AppUpdateType.FLEXIBLE,
+                        updateIntentSend,
+                        IN_APP_UPDATE_REQUEST
                     )
+
                 }
             }
 
@@ -213,32 +227,29 @@ class InAppUpdateProcess : AppCompatActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    private val applicationUpdateResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
 
-        if (requestCode == IN_APP_UPDATE_REQUEST) {
-            when (resultCode) {
-                RESULT_CANCELED -> {
-                    FunctionsClassDebug.PrintDebug("*** RESULT CANCELED ***")
+        when (it.resultCode) {
+            RESULT_CANCELED -> {
+                FunctionsClassDebug.PrintDebug("*** RESULT CANCELED ***")
 
-                    val inAppUpdateTriggeredTime: Int = "${Calendar.getInstance().get(Calendar.YEAR)}${Calendar.getInstance().get(Calendar.MONTH)}${Calendar.getInstance().get(Calendar.DATE)}".toInt()
-                    functionsClass.savePreference("InAppUpdate", "TriggeredDate", inAppUpdateTriggeredTime)
+                val inAppUpdateTriggeredTime: Int = "${Calendar.getInstance().get(Calendar.YEAR)}${Calendar.getInstance().get(Calendar.MONTH)}${Calendar.getInstance().get(Calendar.DATE)}".toInt()
+                functionsClass.savePreference("InAppUpdate", "TriggeredDate", inAppUpdateTriggeredTime)
 
-                    appUpdateManager.unregisterListener(installStateUpdatedListener)
-                    this@InAppUpdateProcess.finish()
+                appUpdateManager.unregisterListener(installStateUpdatedListener)
+                this@InAppUpdateProcess.finish()
 
-                }
-                RESULT_OK -> {
-                    FunctionsClassDebug.PrintDebug("*** RESULT OK ***")
-
-                }
-                ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> {
-                    FunctionsClassDebug.PrintDebug("*** RESULT IN APP UPDATE FAILED ***")
-
-                }
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            RESULT_OK -> {
+                FunctionsClassDebug.PrintDebug("*** RESULT OK ***")
+
+            }
+            ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> {
+                FunctionsClassDebug.PrintDebug("*** RESULT IN APP UPDATE FAILED ***")
+
+            }
         }
+
     }
 
     private fun showCompleteConfirmation() {
