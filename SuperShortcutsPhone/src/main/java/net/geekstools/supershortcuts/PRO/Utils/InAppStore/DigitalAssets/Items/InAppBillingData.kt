@@ -10,8 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items
 
-import com.android.billingclient.api.BillingClient
-
 class InAppBillingData {
 
     object SKU {
@@ -21,23 +19,16 @@ class InAppBillingData {
          * One Time Purchase: Sku for Donation - Sku: donation
          **/
         const val InAppItemDonation = "donation"
+
         /**
-         * One Time Purchase: Sku for Floating Widgets - Sku: floating.widgets
+         * One Time Purchase: Sku for Mix Shortcuts - Sku: mix.shortcuts
          **/
         const val InAppItemMixShortcuts = "mix.shortcuts"
+
+        /**
+         * Subscription Purchase: Sku for Security Services - Sku: security.services
+         **/
+        const val InAppItemSecurityServices = "security.services"
     }
 
-    init {
-        SKU.SKUS[BillingClient.ProductType.INAPP] = arrayListOf(SKU.InAppItemDonation, SKU.InAppItemMixShortcuts)
-    }
-
-    /**
-     * BillingClient.SkuType.INAPP
-     * OR
-     * BillingClient.SkuType.SUBS
-     **/
-    fun getAllSkusByType(@BillingClient.ProductType skuType: String) : ArrayList<String>? {
-
-        return SKU.SKUS[skuType]
-    }
 }

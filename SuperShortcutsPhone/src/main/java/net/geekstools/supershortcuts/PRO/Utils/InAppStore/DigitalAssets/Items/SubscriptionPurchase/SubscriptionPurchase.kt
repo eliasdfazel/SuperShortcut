@@ -97,7 +97,6 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

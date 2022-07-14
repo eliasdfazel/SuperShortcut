@@ -147,7 +147,7 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
         snackbar.setBackgroundTint(getColor(R.color.default_color))
         snackbar.setTextColor(getColor(R.color.light))
         snackbar.setActionTextColor(getColor(R.color.default_color_game_light))
-        snackbar.setAction(Html.fromHtml(getString(R.string.retry))) {
+        snackbar.setAction(Html.fromHtml(getString(R.string.retry), Html.FROM_HTML_MODE_COMPACT)) {
 
         }
         snackbar.addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
