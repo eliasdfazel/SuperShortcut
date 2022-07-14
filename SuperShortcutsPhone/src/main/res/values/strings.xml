@@ -90,6 +90,8 @@
         ]]>
     </string>
 
+    <string name="notAuthorized">Not Authorized 🔒</string>
+
     <string name="purchase"> Purchase 💸 </string>
     <string name="donate"> Send Gift 🎁 </string>
 

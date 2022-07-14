@@ -133,7 +133,8 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-inappmessaging-display-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx'
-    implementation 'com.google.firebase:firebase-appindexing-ktx'
+
+    implementation 'com.google.firebase:firebase-appindexing'
 
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'

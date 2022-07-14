@@ -10,7 +10,6 @@
 
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +24,16 @@ import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import net.geekstools.supershortcuts.PRO.R;
+import net.geekstools.supershortcuts.PRO.SecurityServices.Protection;
+import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
 
-public class SplitTransparentPair extends Activity {
+public class SplitTransparentPair extends AppCompatActivity {
 
     FunctionsClass functionsClass;
 
@@ -38,6 +43,41 @@ public class SplitTransparentPair extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SecurityServicesProcess securityServicesProcess = new SecurityServicesProcess(SplitTransparentPair.this);
+
+        if (securityServicesProcess.securityServiceEnabled()) {
+
+            securityServicesProcess.protectIt(new Protection() {
+
+                @Override
+                public void processNotProtected() {
+
+                    splitProcess();
+
+                }
+
+                @Override
+                public void processProtected() {
+
+                    Toast.makeText(getApplicationContext(), getString(R.string.notAuthorized), Toast.LENGTH_LONG).show();
+
+                    SplitTransparentPair.this.finish();
+
+                }
+
+            });
+
+        } else {
+
+            splitProcess();
+
+        }
+
+    }
+
+    void splitProcess() {
+
         try {
             functionsClass = new FunctionsClass(getApplicationContext());
 
@@ -126,5 +166,6 @@ public class SplitTransparentPair extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }

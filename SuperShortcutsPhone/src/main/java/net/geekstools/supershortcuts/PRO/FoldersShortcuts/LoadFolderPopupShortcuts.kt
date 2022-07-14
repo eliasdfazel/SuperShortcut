@@ -9,16 +9,20 @@
  */
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SecurityServices.Protection
+import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons
 import net.geekstools.supershortcuts.PRO.databinding.FolderPopupViewBinding
 
-class LoadFolderPopupShortcuts : Activity() {
+class LoadFolderPopupShortcuts : AppCompatActivity() {
 
     private val functionsClass: FunctionsClass by lazy {
         FunctionsClass(applicationContext)
@@ -31,6 +35,10 @@ class LoadFolderPopupShortcuts : Activity() {
     private var folderName: String? = null
 
     private lateinit var folderPopupViewBinding: FolderPopupViewBinding
+
+    private val securityServicesProcess: SecurityServicesProcess by lazy {
+        SecurityServicesProcess(this@LoadFolderPopupShortcuts)
+    }
 
     override fun onCreate(saved: Bundle?) {
         super.onCreate(saved)
@@ -55,28 +63,32 @@ class LoadFolderPopupShortcuts : Activity() {
 
                     if (functionsClass.countLineInnerFile(folderName) > 0) {
 
-                        if (functionsClass.customIconsEnable()) {
-                            loadCustomIcons.load()
+                        if (securityServicesProcess.securityServiceEnabled()) {
+
+                            securityServicesProcess.protectIt(object : Protection {
+
+                                override fun processProtected() {
+
+                                    openFolder()
+
+                                }
+
+                                override fun processNotProtected() {
+
+                                    Toast.makeText(applicationContext, getString(R.string.notAuthorized), Toast.LENGTH_LONG).show()
+
+                                    this@LoadFolderPopupShortcuts.finish()
+
+                                }
+
+                            })
+
+                        } else {
+
+                            openFolder()
+
                         }
 
-                        folderPopupViewBinding.popupAnchorView.post {
-
-                            if (intent.action == "load_category_action") {
-
-                                functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                                        folderPopupViewBinding.popupAnchorView,
-                                        folderName.replace(".CategorySelected", ""),
-                                        loadCustomIcons)
-
-                            } else if (intent.action == "load_category_action_shortcut") {
-
-                                functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
-                                        folderPopupViewBinding.popupAnchorView,
-                                        folderName,
-                                        loadCustomIcons)
-
-                            }
-                        }
                     } else {
 
                         this@LoadFolderPopupShortcuts.finish()
@@ -103,4 +115,36 @@ class LoadFolderPopupShortcuts : Activity() {
             true
         }
     }
+
+    fun openFolder() {
+
+        if (functionsClass.customIconsEnable()) {
+            loadCustomIcons.load()
+        }
+
+        folderName?.let { folderName ->
+
+            folderPopupViewBinding.popupAnchorView.post {
+
+                if (intent.action == "load_category_action") {
+
+                    functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                        folderPopupViewBinding.popupAnchorView,
+                        folderName.replace(".CategorySelected", ""),
+                        loadCustomIcons)
+
+                } else if (intent.action == "load_category_action_shortcut") {
+
+                    functionsClass.showPopupCategoryItem(this@LoadFolderPopupShortcuts,
+                        folderPopupViewBinding.popupAnchorView,
+                        folderName,
+                        loadCustomIcons)
+
+                }
+            }
+
+        }
+
+    }
+
 }

@@ -89,6 +89,8 @@
         ]]>
     </string>
 
+    <string name="notAuthorized">Nicht Berechtigt 🔒</string>
+
     <string name="purchase"> Kaufen 💸  </string>
     <string name="donate"> Freiwillige Spende 🎁 </string>
 
