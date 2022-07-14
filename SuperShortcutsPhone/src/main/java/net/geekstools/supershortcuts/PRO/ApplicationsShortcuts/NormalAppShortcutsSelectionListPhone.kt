@@ -36,6 +36,7 @@ import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
@@ -108,6 +109,8 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         normalAppSelectionBinding = NormalAppSelectionBinding.inflate(layoutInflater)
         setContentView(normalAppSelectionBinding.root)
+
+        SecurityServicesProcess(this@NormalAppShortcutsSelectionListPhone).switchSecurityServices(normalAppSelectionBinding.securityServicesSwitchView)
 
         /* Check Shortcuts Information */
         evaluateShortcutsInfo()

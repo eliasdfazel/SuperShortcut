@@ -33,6 +33,7 @@ import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.Adapters.SplitShortcutsAdapter
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.Extensions.evaluateShortcutsInfo
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.Extensions.loadCreatedSplitsData
@@ -93,6 +94,8 @@ class SplitShortcuts : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         splitShortcutsViewBinding = SplitShortcutsViewBinding.inflate(layoutInflater)
         setContentView(splitShortcutsViewBinding.root)
+
+        SecurityServicesProcess(this@SplitShortcuts).switchSecurityServices(splitShortcutsViewBinding.securityServicesSwitchView)
 
         /* Check Shortcuts Information */
         evaluateShortcutsInfo()

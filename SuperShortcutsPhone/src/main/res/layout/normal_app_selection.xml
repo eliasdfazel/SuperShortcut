@@ -175,7 +175,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mixShortcutsSwitchView"
-        android:layout_width="wrap_content"
+        android:layout_width="179dp"
         android:layout_height="73dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
@@ -190,11 +190,34 @@
 
         apps:icon="@drawable/w_mix"
         apps:iconGravity="start"
-        apps:iconSize="23sp"
+        apps:iconSize="29sp"
+        apps:iconPadding="0dp"
         apps:iconTint="@color/red"
         apps:backgroundTint="@color/lighter"
         apps:rippleColor="@color/default_color_transparent"
         apps:cornerRadius="51dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/securityServicesSwitchView"
+        android:layout_width="73dp"
+        android:layout_height="73dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@id/mixShortcutsSwitchView"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginBottom="13dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+
+        apps:icon="@drawable/security_icon"
+        apps:iconGravity="textStart"
+        apps:iconPadding="0dp"
+        apps:iconSize="59sp"
+        apps:iconTintMode="multiply"
+        apps:backgroundTint="@color/red"
+        apps:rippleColor="@color/default_color_transparent"
+        apps:cornerRadius="51dp" />
 
     <TextView
         android:id="@+id/selected_shortcut_counter_view"

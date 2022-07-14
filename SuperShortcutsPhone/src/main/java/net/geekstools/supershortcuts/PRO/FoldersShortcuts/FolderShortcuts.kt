@@ -37,6 +37,7 @@ import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions.smartPickPr
 import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
@@ -94,6 +95,7 @@ class FolderShortcuts : AppCompatActivity(),
         folderShortcutsViewBinding = FolderShortcutsViewBinding.inflate(layoutInflater)
         setContentView(folderShortcutsViewBinding.root)
 
+        SecurityServicesProcess(this@FolderShortcuts).switchSecurityServices(folderShortcutsViewBinding.securityServicesSwitchView)
 
         /* Check Shortcuts Information */
         evaluateShortcutsInfo()
