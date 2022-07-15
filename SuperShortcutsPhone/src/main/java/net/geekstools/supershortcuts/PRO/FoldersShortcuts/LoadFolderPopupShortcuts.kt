@@ -65,7 +65,7 @@ class LoadFolderPopupShortcuts : AppCompatActivity() {
 
                         if (securityServicesProcess.securityServiceEnabled()) {
 
-                            securityServicesProcess.protectIt(object : Protection {
+                            securityServicesProcess.protectIt(folderName.replace(".CategorySelected", ""), object : Protection {
 
                                 override fun processProtected() {
 

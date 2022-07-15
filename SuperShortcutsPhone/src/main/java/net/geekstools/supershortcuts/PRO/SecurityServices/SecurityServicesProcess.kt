@@ -22,18 +22,19 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
 
     val functionsClass = FunctionsClass(context)
 
-    fun protectIt(protection: Protection) {
+    fun protectIt(nameToOpen: String, protection: Protection) {
 
         if (securityServicePurchased()) {
 
             val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(context.getString(R.string.securityServicesTitle))
-                .setSubtitle(context.getString(R.string.securityServicesDescription))
+                .setSubtitle(context.getString(R.string.securityServicesDescription) + " $nameToOpen")
                 .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
                 .setConfirmationRequired(true)
                 .build()
 
             val executor = ContextCompat.getMainExecutor(context)
+
             val biometricPrompt = BiometricPrompt(context, executor,
                 object : BiometricPrompt.AuthenticationCallback() {
 

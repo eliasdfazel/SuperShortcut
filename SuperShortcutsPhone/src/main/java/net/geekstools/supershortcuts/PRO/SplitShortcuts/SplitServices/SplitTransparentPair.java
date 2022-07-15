@@ -48,7 +48,7 @@ public class SplitTransparentPair extends AppCompatActivity {
 
         if (securityServicesProcess.securityServiceEnabled()) {
 
-            securityServicesProcess.protectIt(new Protection() {
+            securityServicesProcess.protectIt(getIntent().getStringExtra(Intent.EXTRA_TEXT), new Protection() {
 
                 @Override
                 public void processNotProtected() {

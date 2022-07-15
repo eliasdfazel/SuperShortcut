@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.SecurityServices.Protection
 import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 
 class AppShortcutsMediatedActivity : AppCompatActivity() {
 
@@ -27,9 +28,11 @@ class AppShortcutsMediatedActivity : AppCompatActivity() {
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
 
+        val functionsClass = FunctionsClass(applicationContext);
+
         if (securityServicesProcess.securityServiceEnabled()) {
 
-            securityServicesProcess.protectIt(object : Protection {
+            securityServicesProcess.protectIt(functionsClass.appName(intent.getStringExtra("PackageName")), object : Protection {
 
                 override fun processProtected() {
 
