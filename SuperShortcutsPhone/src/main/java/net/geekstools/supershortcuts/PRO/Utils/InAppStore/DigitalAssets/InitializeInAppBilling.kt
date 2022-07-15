@@ -121,6 +121,11 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
                                 intent.getStringExtra(Entry.ItemToPurchase),
                                 true)
 
+                functionsClass
+                    .savePreference(".SubscribedItem",
+                        intent.getStringExtra(Entry.ItemToPurchase),
+                        true)
+
                 this@InitializeInAppBilling.finish()
             }
         }
@@ -188,6 +193,11 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
                         purchase.products.first(),
                         true)
 
+        functionsClass
+            .savePreference(".SubscribedItem",
+                purchase.products.first(),
+                true)
+
         this@InitializeInAppBilling.finish()
     }
 
@@ -198,6 +208,11 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
                 .savePreference(".PurchasedItem",
                         productDetails.productId,
                         true)
+
+        functionsClass
+            .savePreference(".SubscribedItem",
+                productDetails.productId,
+                true)
 
         this@InitializeInAppBilling.finish()
     }
