@@ -22,7 +22,9 @@
     <color name="default_color_game_transparent">#80ae2357</color>
 
     <color name="red">#9b000e</color>
+    <color name="redLight">#FFB3B9</color>
     <color name="red_transparent">#4d9b000e</color>
+    <color name="blueLight">#A8E0FF</color>
 
     <color name="light">#f2f7ff</color>
     <color name="lighter">#fafbff</color>

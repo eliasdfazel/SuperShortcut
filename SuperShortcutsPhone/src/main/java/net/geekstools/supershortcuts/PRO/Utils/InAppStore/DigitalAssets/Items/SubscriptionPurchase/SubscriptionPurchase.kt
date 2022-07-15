@@ -254,6 +254,7 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
                                                                     if (glideLoadCounter == screenshotsNumber) {
 
                                                                         setScreenshots()
+
                                                                     }
 
                                                                     return false

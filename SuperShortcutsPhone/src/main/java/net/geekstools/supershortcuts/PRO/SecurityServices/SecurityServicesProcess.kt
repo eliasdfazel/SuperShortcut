@@ -86,6 +86,16 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
 
     fun switchSecurityServices(securityServicesSwitch: MaterialButton) {
 
+        securityServicesSwitch.backgroundTintList = if (securityServiceEnabled()) {
+
+            ColorStateList.valueOf(context.getColor(R.color.default_color_light))
+
+        } else {
+
+            ColorStateList.valueOf(context.getColor(R.color.redLight))
+
+        }
+
         securityServicesSwitch.setOnClickListener {
 
             if (securityServicePurchased()) {
@@ -94,7 +104,7 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
 
                     FunctionsClass(context).savePreference("SecurityServices", "ProtectionEnabled", false)
 
-                    ColorStateList.valueOf(context.getColor(R.color.red))
+                    ColorStateList.valueOf(context.getColor(R.color.redLight))
 
                 } else {
 

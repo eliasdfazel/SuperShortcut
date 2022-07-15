@@ -206,12 +206,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/securityServicesSwitchView"
-        android:layout_width="73dp"
-        android:layout_height="73dp"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@id/mixShortcutsSwitchView"
         android:layout_marginHorizontal="3dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="17dp"
         android:insetLeft="0dp"
         android:insetTop="0dp"
         android:insetRight="0dp"
@@ -222,7 +222,7 @@
         apps:iconPadding="0dp"
         apps:iconSize="59sp"
         apps:iconTintMode="multiply"
-        apps:backgroundTint="@color/red"
+        apps:backgroundTint="@color/redLight"
         apps:rippleColor="@color/default_color_transparent"
         apps:cornerRadius="51dp" />
 
