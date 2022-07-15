@@ -77,12 +77,12 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
 
     fun securityServiceEnabled() : Boolean {
 
-        return functionsClass.readPreference("SecurityServices", "ProtectionEnabled", true)
+        return functionsClass.readPreference("SecurityServices", "ProtectionEnabled", false)
     }
 
     fun securityServicePurchased() : Boolean {
 
-        return functionsClass.readPreference(".SubscribedItem", "ProtectionPurchased", true)
+        return functionsClass.readPreference(".SubscribedItem", "ProtectionPurchased", false)
     }
 
     fun switchSecurityServices(securityServicesSwitch: MaterialButton) {
