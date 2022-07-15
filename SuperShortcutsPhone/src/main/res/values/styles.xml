@@ -60,7 +60,7 @@
         <item name="android:dropDownHorizontalOffset">107dp</item>
     </style>
 
-    <style name="Transparent" parent="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar">
+    <style name="Transparent" parent="GeeksEmpire">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>

@@ -92,6 +92,9 @@
 
     <string name="notAuthorized">Not Authorized 🔒</string>
 
+    <string name="securityServicesTitle">Security Services</string>
+    <string name="securityServicesDescription">Authenticate Your Identity To Open The Application/Game</string>
+
     <string name="purchase"> Purchase 💸 </string>
     <string name="donate"> Send Gift 🎁 </string>
 

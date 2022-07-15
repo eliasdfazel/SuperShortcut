@@ -27,9 +27,10 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
         if (securityServicePurchased()) {
 
             val promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric login for my app")
-                .setSubtitle("Log in using your biometric credential")
-                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+                .setTitle(context.getString(R.string.securityServicesTitle))
+                .setSubtitle(context.getString(R.string.securityServicesDescription))
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+                .setConfirmationRequired(true)
                 .build()
 
             val executor = ContextCompat.getMainExecutor(context)
@@ -76,19 +77,19 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
 
     fun securityServiceEnabled() : Boolean {
 
-        return functionsClass.readPreference("SecurityServices", "ProtectionEnabled", false)
+        return functionsClass.readPreference("SecurityServices", "ProtectionEnabled", true)
     }
 
     fun securityServicePurchased() : Boolean {
 
-        return functionsClass.readPreference(".SubscribedItem", "ProtectionPurchased", false)
+        return functionsClass.readPreference(".SubscribedItem", "ProtectionPurchased", true)
     }
 
     fun switchSecurityServices(securityServicesSwitch: MaterialButton) {
 
         securityServicesSwitch.backgroundTintList = if (securityServiceEnabled()) {
 
-            ColorStateList.valueOf(context.getColor(R.color.default_color_light))
+            ColorStateList.valueOf(context.getColor(R.color.blueLight))
 
         } else {
 
@@ -110,7 +111,7 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
 
                     FunctionsClass(context).savePreference("SecurityServices", "ProtectionEnabled", true)
 
-                    ColorStateList.valueOf(context.getColor(R.color.default_color_light))
+                    ColorStateList.valueOf(context.getColor(R.color.blueLight))
 
                 }
 
