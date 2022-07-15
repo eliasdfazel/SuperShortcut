@@ -16,6 +16,7 @@ import com.android.billingclient.api.*
 import kotlinx.coroutines.*
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug.Companion.PrintDebug
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
 
 class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesUpdatedListener {
@@ -51,17 +52,17 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
                                     for (purchase in purchases) {
                                         FunctionsClassDebug.PrintDebug("*** Purchased Item: $purchase ***")
 
-                                        functionsClass.savePreference(".PurchasedItem", purchase.skus.first(), true)
+                                        functionsClass.savePreference(".PurchasedItem", purchase.products.first(), true)
 
                                         //Consume Donation
-                                        if (purchase.skus.first() == InAppBillingData.SKU.InAppItemDonation
+                                        if (purchase.products.first() == InAppBillingData.SKU.InAppItemDonation
                                             && functionsClass.alreadyDonated()) {
 
                                             val consumeResponseListener = ConsumeResponseListener { billingResult, purchaseToken ->
                                                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                                                     FunctionsClassDebug.PrintDebug("*** Consumed Item: $purchaseToken ***")
 
-                                                    functionsClass.savePreference(".PurchasedItem", purchase.skus.first(), false)
+                                                    functionsClass.savePreference(".PurchasedItem", purchase.products.first(), false)
                                                 }
                                             }
                                             val consumeParams = ConsumeParams.newBuilder()
@@ -69,9 +70,46 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
                                             billingClient.consumeAsync(consumeParams.build(), consumeResponseListener)
                                         }
 
-                                        PurchasesCheckpoint.purchaseAcknowledgeProcess(billingClient, purchase, BillingClient.SkuType.INAPP)
+                                        PurchasesCheckpoint.purchaseAcknowledgeProcess(billingClient, purchase, BillingClient.ProductType.INAPP)
                                     }
 
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+
+                override fun onBillingServiceDisconnected() {
+
+                }
+            })
+
+            //Restore Subscribed Item
+            billingClient.startConnection(object : BillingClientStateListener {
+
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
+
+                    billingResult.let {
+                        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                            functionsClass.savePreference(".SubscribedItem", InAppBillingData.SKU.InAppItemSecurityServices, false)
+
+                            appCompatActivity.lifecycleScope.async {
+
+                                val queryPurchasesParams = QueryPurchasesParams.newBuilder()
+                                    .setProductType(BillingClient.ProductType.SUBS)
+                                    .build()
+
+                                billingClient.queryPurchasesAsync(queryPurchasesParams).purchasesList.let { purchases ->
+
+                                    for (purchase in purchases) {
+                                        PrintDebug("*** Subscribed Item: $purchase ***")
+
+                                        functionsClass.savePreference(".SubscribedItem", purchase.products.first(), true)
+
+                                        PurchasesCheckpoint.purchaseAcknowledgeProcess(billingClient, purchase, BillingClient.ProductType.SUBS)
+                                    }
                                 }
 
                             }
