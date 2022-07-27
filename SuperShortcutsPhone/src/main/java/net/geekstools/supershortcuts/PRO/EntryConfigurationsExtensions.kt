@@ -50,7 +50,7 @@ fun EntryConfigurations.shortcutModeEntryPoint() {
 
 }
 
-private fun EntryConfigurations.entryCheckpoint() {
+fun EntryConfigurations.entryCheckpoint() {
 
     when (getSharedPreferences("ShortcutsModeView", Context.MODE_PRIVATE).getString("TabsView", NormalAppShortcutsSelectionListPhone::class.java.simpleName)) {
         NormalAppShortcutsSelectionListPhone::class.java.simpleName -> {
