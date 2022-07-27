@@ -30,7 +30,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 32
 
-        versionCode 229
+        versionCode 230
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
     }
 
@@ -114,7 +114,7 @@ dependencies {
     implementation 'com.google.android.play:review-ktx:2.0.0'
 
 
-    implementation 'com.google.android.material:material:1.7.0-alpha02'
+    implementation 'com.google.android.material:material:1.7.0-alpha03'
 
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
