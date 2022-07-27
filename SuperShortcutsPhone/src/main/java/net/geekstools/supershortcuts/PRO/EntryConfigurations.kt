@@ -25,6 +25,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.*
+import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
@@ -37,18 +38,19 @@ class EntryConfigurations : AppCompatActivity() {
         FunctionsClass(applicationContext)
     }
 
+    val securityServicesProcess: SecurityServicesProcess by lazy {
+        SecurityServicesProcess(this@EntryConfigurations)
+    }
+
     private lateinit var waitingDialogue: Dialog
 
     private lateinit var waitingDialogueLiveData: WaitingDialogueLiveData
 
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    private object Google {
-        const val SignInRequest: Int = 666
-    }
-
     override fun onCreate(bundle: Bundle?) {
         super.onCreate(bundle)
+
         FirebaseApp.initializeApp(applicationContext)
 
         functionsClass.savePreference(".UserInformation", "isBetaTester", functionsClass.appVersionName(packageName).contains("[BETA]"))
@@ -84,6 +86,7 @@ class EntryConfigurations : AppCompatActivity() {
                     shortcutModeEntryPoint()
                 }
             }
+
         } else {
 
             CoroutineScope(Dispatchers.IO).launch {

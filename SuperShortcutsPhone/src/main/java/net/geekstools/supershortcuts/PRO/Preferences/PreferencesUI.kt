@@ -451,7 +451,7 @@ class PreferencesUI : AppCompatActivity() {
         this@PreferencesUI.finish()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
         menu?.let {
 
@@ -470,7 +470,7 @@ class PreferencesUI : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         return super.onPrepareOptionsMenu(menu)
     }
 
