@@ -21,6 +21,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.webkit.WebSettings
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.dialogue_message.*
@@ -53,7 +54,7 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         dialogueView.backgroundTintList = ColorStateList.valueOf(activity.getColor(R.color.light))
 
         if (loadVideoTutorial) {
-            dialog.webViewTutorial.settings.setAppCacheEnabled(false)
+            dialog.webViewTutorial.settings.cacheMode = WebSettings.LOAD_NO_CACHE
             dialog.webViewTutorial.settings.javaScriptEnabled = true
 
             dialog.webViewTutorial.clearCache(true)
