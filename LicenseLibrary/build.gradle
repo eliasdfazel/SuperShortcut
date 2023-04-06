@@ -35,4 +35,5 @@ android {
             targetCompatibility JavaVersion.VERSION_11
         }
     }
+    namespace 'com.google.android.vending.licensing'
 }

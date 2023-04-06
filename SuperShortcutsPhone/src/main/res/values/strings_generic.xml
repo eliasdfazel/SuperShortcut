@@ -22,7 +22,8 @@
     <string name="twitter" translatable="false">Follow Me on…</string>
 
     <string name="betaUpdate" translatable="false">βeta Change Log</string>
-    <string name="followIt" translatable="false">Follow App Page</string>
+    <string name="followIt" translatable="false">Follow Us</string>
+    <string name="deleteAccount" translatable="false">Delete Account</string>
     <string name="shareIt" translatable="false">Rate &amp; Share</string>
     <string name="invitation_title" translatable="false">
         *Install Super Shortcuts*

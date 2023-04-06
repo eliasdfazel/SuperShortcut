@@ -27,4 +27,11 @@
         app:showAsAction="always"
         android:title="@string/donate" />
 
+    <item
+        android:id="@+id/deleteAccount"
+        android:icon="@drawable/draw_delete_account"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        android:title="@string/deleteAccount" />
+
 </menu>

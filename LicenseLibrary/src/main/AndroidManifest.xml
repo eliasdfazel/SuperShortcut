@@ -8,7 +8,6 @@
   ~ https://opensource.org/licenses/MIT
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.google.android.vending.licensing"
     android:versionCode="2"
     android:versionName="1.5">
     <!-- Required permission to check licensing. -->

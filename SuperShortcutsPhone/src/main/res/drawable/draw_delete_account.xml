@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel on 3/24/20 1:15 PM
+  ~ Last modified 3/24/20 12:47 PM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/backgroundTemporary">
+        <shape
+            android:shape="oval">
+            <solid android:color="@color/default_color"/>
+        </shape>
+    </item>
+
+    <item
+        android:top="31dp"
+        android:bottom="31dp"
+        android:start="31dp"
+        android:end="31dp"
+        android:drawable="@drawable/delete_account">
+    </item>
+</layer-list>

@@ -22,5 +22,6 @@ android {
     lint {
         abortOnError false
     }
+    namespace 'net.geeksempire.loadingspin'
 
 }

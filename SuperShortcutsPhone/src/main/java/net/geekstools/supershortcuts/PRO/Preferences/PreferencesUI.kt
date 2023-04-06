@@ -32,6 +32,8 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.queryPurchasesAsync
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.async
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
@@ -458,13 +460,10 @@ class PreferencesUI : AppCompatActivity() {
             val inflater = menuInflater
             inflater.inflate(R.menu.preferences_menu, menu)
 
-            val gift = menu.findItem(R.id.donate)
+            val deleteAccount = menu.findItem(R.id.deleteAccount)
 
-            if (!functionsClass.alreadyDonated()) {
+            deleteAccount.isVisible = Firebase.auth.currentUser != null
 
-            } else {
-                gift.isVisible = false
-            }
         }
 
         return super.onCreateOptionsMenu(menu)
@@ -489,6 +488,15 @@ class PreferencesUI : AppCompatActivity() {
                         .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemDonation)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         , ActivityOptions.makeCustomAnimation(applicationContext, R.anim.down_up, android.R.anim.fade_out).toBundle())
+
+            }
+            R.id.deleteAccount -> {
+
+                Firebase.auth.currentUser?.delete()?.addOnSuccessListener {
+
+                    item.isVisible = false
+
+                }
 
             }
             android.R.id.home -> {
