@@ -22,8 +22,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.waiting_dialogue.*
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.databinding.WaitingDialogueBinding
 
 class WaitingDialogueLiveData() : ViewModel() {
     val dialogueTitle: MutableLiveData<String> by lazy {
@@ -51,27 +51,29 @@ class WaitingDialogue {
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
         layoutParams.dimAmount = 0.57f
 
+        val waitingDialogueBinding = WaitingDialogueBinding.inflate(initActivity.layoutInflater)
+
         val dialog = Dialog(initActivity)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.waiting_dialogue)
+        dialog.setContentView(waitingDialogueBinding.root)
         dialog.setCancelable(false)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.decorView?.setBackgroundColor(Color.TRANSPARENT)
         dialog.window?.attributes = layoutParams
 
-        dialog.dialogueView.backgroundTintList = ColorStateList.valueOf(initActivity.getColor(R.color.light))
+        waitingDialogueBinding.dialogueView.backgroundTintList = ColorStateList.valueOf(initActivity.getColor(R.color.light))
 
-        dialog.waitTextTitle.setTextColor(initActivity.getColor(R.color.dark))
-        dialog.waitTextMessage.setTextColor(initActivity.getColor(R.color.dark))
+        waitingDialogueBinding.waitTextTitle.setTextColor(initActivity.getColor(R.color.dark))
+        waitingDialogueBinding.waitTextMessage.setTextColor(initActivity.getColor(R.color.dark))
 
         waitingDialogueLiveData.dialogueTitle.observe(initActivity,
                 Observer<String> { dialogueTitle ->
-                    dialog.waitTextTitle.text = dialogueTitle
+                    waitingDialogueBinding.waitTextTitle.text = dialogueTitle
                 })
 
         waitingDialogueLiveData.dialogueMessage.observe(initActivity,
                 Observer<String> { dialogueMessage ->
-                    dialog.waitTextMessage.text = dialogueMessage
+                    waitingDialogueBinding.waitTextMessage.text = dialogueMessage
                 })
 
         dialog.setOnDismissListener {
