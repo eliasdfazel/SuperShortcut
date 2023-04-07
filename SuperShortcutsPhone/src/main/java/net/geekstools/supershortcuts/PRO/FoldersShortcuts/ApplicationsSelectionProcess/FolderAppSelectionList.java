@@ -147,7 +147,6 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
             PublicVariable.setAppIndex = PublicVariable.categoryName + " | " + "Category";
             PublicVariable.setAppIndexUrl = String.valueOf(PublicVariable.BASE_URL.buildUpon().appendPath(PublicVariable.setAppIndex).build());
 
-            functionsClass.IndexAppInfo(PublicVariable.setAppIndex, PublicVariable.setAppIndexUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,7 +155,6 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
     @Override
     public void onStop() {
         super.onStop();
-        functionsClass.endIndexAppInfo();
     }
 
     @Override

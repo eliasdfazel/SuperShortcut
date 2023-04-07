@@ -106,6 +106,7 @@
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:name=".FoldersShortcuts.ApplicationsSelectionProcess.FolderAppSelectionList"
+            android:exported="false"
             android:theme="@style/GeeksEmpire.Material"/>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
@@ -216,8 +217,6 @@
                     android:host="www.geeksempire.net"
                     android:pathPrefix="/FAQ/super.html"
                     android:scheme="https" />
-                <!-- https://www.geeksempire.net/FAQ/super.html/test_1540666270698%20%7C%20Split -->
-                <!-- adb shell am start -W -a android.intent.action.VIEW -d "https//...." net.geekstools.floatshort.PRO -->
             </intent-filter>
         </activity>
         <activity
@@ -244,6 +243,7 @@
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
             android:label="@string/app_name"
+            android:exported="false"
             android:targetActivity=".EntryConfigurationMediated">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

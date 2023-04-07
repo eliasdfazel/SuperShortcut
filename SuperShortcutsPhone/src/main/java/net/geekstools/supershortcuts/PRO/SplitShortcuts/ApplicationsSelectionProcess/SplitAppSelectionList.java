@@ -146,7 +146,6 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
             PublicVariable.setAppIndex = PublicVariable.categoryName + " | " + "Split";
             PublicVariable.setAppIndexUrl = String.valueOf(PublicVariable.BASE_URL.buildUpon().appendPath(PublicVariable.setAppIndex).build());
 
-            functionsClass.IndexAppInfo(PublicVariable.setAppIndex, PublicVariable.setAppIndexUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,7 +154,6 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
     @Override
     public void onStop() {
         super.onStop();
-        functionsClass.endIndexAppInfo();
     }
 
     @Override
