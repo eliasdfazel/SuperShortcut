@@ -20,8 +20,8 @@
     <string name="addToDesktop">Idagdag sa Home Screen</string>
     <string name="not_install">Ang Application ay Hindi Magagamit</string>
     <string name="maximum">"Tinatayang Halaga&#8194; "</string>
-    <string name="floatingTitle">Float It 🎈 </string>
-    <string name="floatingDesc">Quickly Switch Apps by Unlimited Floating Shortcuts</string>
+    <string name="floatingTitle">Lumulutang Multitasking</string>
+    <string name="floatingDesc">Mabilis na lumipat ng mga app at buksan ang lahat ng mga app Sa mga lumulutang na bintana sa pamamagitan ng mga lumulutang na shortcut, mga lumulutang na application</string>
     <string name="smartTitle">Smart Pick</string>
     <string name="smartDesc">I Will Select Essential Apps</string>
     <string name="customIconTitle">Theme of Icons</string>

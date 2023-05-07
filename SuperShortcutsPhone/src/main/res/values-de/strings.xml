@@ -20,8 +20,8 @@
     <string name="addToDesktop">Zum Startbildschirm hinzufügen</string>
     <string name="not_install">Die App ist nicht verfügbar</string>
     <string name="maximum">Geschätzt &#8194; </string>
-    <string name="floatingTitle">Float It 🎈 </string>
-    <string name="floatingDesc">Wechselte schnell Apps mit Unlimited Floating Shortcuts</string>
+    <string name="floatingTitle">Schwebendes Multitasking</string>
+    <string name="floatingDesc">Wechseln Sie schnell zwischen Apps und öffnen Sie alle Apps in schwebenden Fenstern durch schwebende Verknüpfungen, schwebende Anwendungen</string>
     <string name="smartTitle">Intelligente Auswahl</string>
     <string name="smartDesc">Es werden nur wichtige Apps gewählt</string>
     <string name="customIconTitle">Design der Icons</string>
