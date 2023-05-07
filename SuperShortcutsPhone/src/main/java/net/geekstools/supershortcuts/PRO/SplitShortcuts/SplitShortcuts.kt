@@ -11,16 +11,13 @@
 package net.geekstools.supershortcuts.PRO.SplitShortcuts
 
 import android.app.ActivityOptions
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
-import android.os.Handler
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -114,27 +111,6 @@ class SplitShortcuts : AppCompatActivity(),
 
     override fun onStart() {
         super.onStart()
-
-        if (!getFileStreamPath(".License").exists() && functionsClass.networkConnection()) {
-            startService(Intent(applicationContext, LicenseValidator::class.java))
-
-            val intentFilter = IntentFilter()
-            intentFilter.addAction(getString(R.string.license))
-            val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == getString(R.string.license)) {
-                        functionsClass.dialogueLicense(this@SplitShortcuts)
-
-                        Handler().postDelayed({
-                            stopService(Intent(applicationContext, LicenseValidator::class.java))
-                        }, 1000)
-
-                        unregisterReceiver(this)
-                    }
-                }
-            }
-            registerReceiver(broadcastReceiver, intentFilter)
-        }
 
         splitShortcutsViewBinding.confirmButton.setOnClickListener {
             if (functionsClass.mixShortcuts()) {

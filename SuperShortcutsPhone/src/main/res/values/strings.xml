@@ -44,7 +44,7 @@
     <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
     <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
     <string name="splitTitlePref">Split Shortcuts</string>
-    <string name="splitTitle">Split Super Shortcuts ᴾᴿᴼ</string>
+    <string name="splitTitle">Split Super Shortcuts</string>
     <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
     <string name="shortcut">SHORTCUTS</string>
     <string name="apps">App</string>

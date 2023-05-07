@@ -22,12 +22,12 @@
     <string name="maximum">"Tinatayang Halaga&#8194; "</string>
     <string name="floatingTitle">Lumulutang Multitasking</string>
     <string name="floatingDesc">Mabilis na lumipat ng mga app at buksan ang lahat ng mga app Sa mga lumulutang na bintana sa pamamagitan ng mga lumulutang na shortcut, mga lumulutang na application</string>
-    <string name="smartTitle">Smart Pick</string>
-    <string name="smartDesc">I Will Select Essential Apps</string>
-    <string name="customIconTitle">Theme of Icons</string>
-    <string name="customIconDesc">Click to Select Package of Icons</string>
-    <string name="defaultTheme">Set Default Theme of Icons</string>
-    <string name="cautionShortcutsHome">Move Super Shortcuts Icon to Home Screen</string>
+    <string name="smartTitle">Matalinong pumili</string>
+    <string name="smartDesc">Pipili ako ng mahahalagang app</string>
+    <string name="customIconTitle">Tema ng mga Icon</string>
+    <string name="customIconDesc">I-click upang Pumili ng Package ng mga Icon</string>
+    <string name="defaultTheme">Itakda ang Default na Tema ng mga Icon</string>
+    <string name="cautionShortcutsHome">Ilipat ang Super Shortcuts Icon sa Home Screen</string>
     <string name="smartPermission">
         <![CDATA[
                 <br/>
@@ -37,64 +37,69 @@
                 <br/>
         ]]>
     </string>
-    <string name="advanceTitle">Folder Shortcuts</string>
-    <string name="mixTitle">Mix Shortcuts</string>
-    <string name="mixDesc">Combine App/Folder/Split Shortcuts</string>
-    <string name="mixHint">Mix Shortcuts | Combine App/Folder/Split Shortcuts</string>
-    <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
-    <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
-    <string name="splitTitlePref">Split Shortcuts</string>
-    <string name="splitTitle">Split Super Shortcuts ᴾᴿᴼ</string>
-    <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
+    <string name="advanceTitle">Mga shortcut sa folder</string>
+    <string name="mixTitle">Paghaluin ang mga Shortcut</string>
+    <string name="mixDesc">Pagsamahin App/Folder/Split Shortcuts</string>
+    <string name="mixHint">Paghaluin ang mga Shortcut | Pagsamahin App/Folder/Split Shortcuts</string>
+    <string name="mixShortcutsEnable">Paghaluin ang mga Shortcut | Enabled</string>
+    <string name="mixShortcutsDisable">Paghaluin ang mga Shortcut | Disabled</string>
+    <string name="splitTitlePref">Mga Hati Shortcut</string>
+    <string name="splitTitle">Hati Super Shortcuts</string>
+    <string name="splitPermission">Kailangan ko ng serbisyo ng accessibility para makapasok sa Multi-Window mode.</string>
     <string name="shortcut">SHORTCUTS</string>
     <string name="apps">App</string>
-    <string name="split">Split</string>
+    <string name="split">Hati</string>
     <string name="folder">Folder</string>
     <string name="appsEnable">App Shortcuts</string>
-    <string name="splitEnable">Split Shortcuts</string>
+    <string name="splitEnable">Hati Shortcuts</string>
     <string name="folderEnable">Folder Shortcuts</string>
-    <string name="typeFolderName">First Type Folder Name</string>
-    <string name="typeSplitName">First Type Split Name</string>
-    <string name="grant">Grant Permission</string>
+    <string name="typeFolderName">Unang Uri ng Pangalan ng Folder</string>
+    <string name="typeSplitName">Unang Uri ng Hati Name</string>
+    <string name="grant">Pinayagang pahintulot</string>
 
     <string name="split_service_desc">
-        Split Super Shortcuts ᴾᴿᴼ | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+        Hati Super Shortcuts | Ang pahintulot na ito ay nagbibigay sa akin ng kakayahang lumikha ng Multi-Window &amp; Buksan ang Apps sa Hati Screen Sabay-sabay (Android 7 &amp; Higher)
+        \n\n
+        ♿ Paano Ito Nakakatulong sa Mga Taong May Kapansanan?
+        \n
+        Mahirap para sa mga taong may kapansanan na magbukas ng app O lumipat sa pagitan ng mga app. Gumagamit ako ng Serbisyo ng Accessibility para pumasok sa Multi-Window Mode para magbukas ng dalawang app nang magkasama.
     </string>
     <string name="split_service_summary">
-        Split Shortcuts | This Permission Gives Me An Ability To Create Multi-Window &amp; Open Apps in Split Screen Simultaneously
+        Hati Shortcuts | Ang Pahintulot na Ito ay Nagbibigay sa Akin ng Kakayahang Gumawa ng Multi-Window &amp; Buksan ang Apps sa Hati Screen Sabay-sabay
     </string>
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)<br/><br/>
-                ♿ <b>How it Helps People with Disability</b>?<br/>
-                It is Difficult for People with Disability to Open an App Or Switch Between Apps.<br/>
-                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.<br/>
+                Ang Pahintulot na Ito ay Nagbibigay-daan sa Akin na Gumawa ng Multi-Window Mode &amp; Buksan ang Pares ng Apps sa Hati Screen Sabay-sabay.
+                <br/>(<big>Android 7 & Higher</big>)<br/><br/>
+                ♿ <b>Paano Ito Nakakatulong sa Mga Taong May Kapansanan</b>?<br/>
+                Mahirap para sa mga taong may kapansanan na magbukas ng isang app o lumipat sa pagitan ng mga app.<br/>
+                Kaya, Gumagamit Ako ng Serbisyo ng Accessibility para Gumawa ng Multi-Window Mode para Magbukas ng Dalawang App nang Magkasama.<br/>
         ]]>
     </string>
 
     <string name="smartInfo">
       <![CDATA[
-               <b><p>Apps Selected by Smart Pick</p></b>
-               <small>Go to Preferences to Disable it</small>
+               <b><p>Mga App na Pinili ng Matalinong pumili</p></b>
+               <small>Pumunta sa mga kagustuhan upang huwag paganahin ito</small>
        ]]>
     </string>
     <string name="mixDemoDescriptions">
         <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
-            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠 <br/>
-            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
-            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
-            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+            🔵 <b><big>Paghaluin ang mga Shortcut</big></b> 💠 | Palitan ang ilang shortcut at folder ng isang super shortcut na may mga karagdagang tampok <br/>
+            💠 <big>Pagsamahin App/Split/Folder Shortcuts Magkasama</big> 💠 <br/>
+            &bull; <b>App Shortcuts</b>: Magbukas ng isang app mula sa super shortcut<br/>
+            &bull; <b>Split Shortcuts</b>: Buksan ang Dalawang Apps Sabay-sabay sa Hati Screen (Multi Window)<br/>
+            &bull; <b>Folder Shortcuts</b>: Buksan ang Listahan ng Mga App mula sa Super Shortcut (Pindutin nang matagal ang Bawat Apps sa Listahan para Buksan ang mga ito sa Hati Screen)<br/>
         ]]>
     </string>
 
-    <string name="notAuthorized">Not Authorized 🔒</string>
+    <string name="notAuthorized">Hindi Awtorisado 🔒</string>
 
-    <string name="securityServicesTitle">Security Services</string>
-    <string name="securityServicesDescription">Authenticate Your Identity To Open </string>
+    <string name="securityServicesTitle">Mga serbisyo ng seguridad</string>
+    <string name="securityServicesDescription">Patunayan ang Iyong Pagkakakilanlan Para Mabuksan</string>
 
-    <string name="purchase"> Purchase 💸 </string>
-    <string name="donate"> Send Gift 🎁 </string>
+    <string name="purchase">" Bumili 💸 "</string>
+    <string name="donate">"Magpadala ng regalo 🎁 "</string>
 
 </resources>
