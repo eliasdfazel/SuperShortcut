@@ -21,7 +21,6 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "33.0.0"
 
     defaultConfig {
         applicationId "net.geekstools.supershortcuts.PRO"
@@ -29,7 +28,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 33
 
-        versionCode 236
+        versionCode 237
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
     }
 
@@ -92,19 +91,18 @@ static def getDateDay() {
 }
 
 dependencies {
-    implementation project(':LicenseLibrary')
     implementation project(':LoadingSpin')
 
 
-    implementation 'com.android.billingclient:billing-ktx:5.1.0'
+    implementation 'com.android.billingclient:billing-ktx:5.2.0'
 
 
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'androidx.biometric:biometric:1.1.0'
