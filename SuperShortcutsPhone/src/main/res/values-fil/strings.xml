@@ -11,16 +11,15 @@
 <resources>
 
     <string name="app_name">Super Shortcuts</string>
-    <string name="pref">Preferences</string>
-    <string name="done">Done</string>
-    <string name="edit_advanced_shortcut">Edit: </string>
-    <string name="option">Option for </string>
-    <string name="deleteFolder">Delete</string>
-    <string name="addSuper">Add to Super Shortcut</string>
-    <string name="addToDesktop">Add to Home Screen</string>
-    <string name="not_install">The Application is Not Available</string>
-    <string name="maximum">Estimated Amount&#8194; </string>
-    <string name="license_validating">Retrieving License Information from Google Play Store</string>
+    <string name="pref">Mga Kagustuhan</string>
+    <string name="done">Tapos na</string>
+    <string name="edit_advanced_shortcut">"I-edit: "</string>
+    <string name="option">Pagpipilian para sa</string>
+    <string name="deleteFolder">Tanggalin</string>
+    <string name="addSuper">Idagdag sa Super Shortcut</string>
+    <string name="addToDesktop">Idagdag sa Home Screen</string>
+    <string name="not_install">Ang Application ay Hindi Magagamit</string>
+    <string name="maximum">"Tinatayang Halaga&#8194; "</string>
     <string name="floatingTitle">Float It 🎈 </string>
     <string name="floatingDesc">Quickly Switch Apps by Unlimited Floating Shortcuts</string>
     <string name="smartTitle">Smart Pick</string>

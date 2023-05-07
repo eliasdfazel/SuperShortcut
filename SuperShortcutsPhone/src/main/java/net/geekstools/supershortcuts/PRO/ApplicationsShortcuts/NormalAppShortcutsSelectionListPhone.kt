@@ -11,14 +11,15 @@
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts
 
 import android.app.ActivityOptions
-import android.content.*
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
-import android.os.Handler
 import android.view.Gravity
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +30,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
-import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.*
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.evaluateShortcutsInfo
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.loadInstalledAppsData
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupConfirmButtonUI
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupUI
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.smartPickProcess
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButtonPhone
 import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
@@ -43,7 +48,6 @@ import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchasesCheckpoint
 import net.geekstools.supershortcuts.PRO.Utils.InAppUpdate.InAppUpdateProcess
-import net.geekstools.supershortcuts.PRO.Utils.RemoteProcess.LicenseValidator
 import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureConstants
@@ -52,7 +56,7 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterfa
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
 import java.lang.String
-import java.util.*
+import java.util.Calendar
 import kotlin.Boolean
 import kotlin.Float
 import kotlin.apply
@@ -132,27 +136,6 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
 
     override fun onStart() {
         super.onStart()
-
-        if (!getFileStreamPath(".License").exists() && functionsClass.networkConnection()) {
-            startService(Intent(applicationContext, LicenseValidator::class.java))
-
-            val intentFilter = IntentFilter()
-            intentFilter.addAction(getString(R.string.license))
-            val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    if (intent.action == getString(R.string.license)) {
-                        functionsClass.dialogueLicense(this@NormalAppShortcutsSelectionListPhone)
-
-                        Handler().postDelayed({
-                            stopService(Intent(applicationContext, LicenseValidator::class.java))
-                        }, 1000)
-
-                        unregisterReceiver(this)
-                    }
-                }
-            }
-            registerReceiver(broadcastReceiver, intentFilter)
-        }
 
         normalAppSelectionBinding.autoCategories.setOnClickListener {
 

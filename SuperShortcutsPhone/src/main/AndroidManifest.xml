@@ -250,8 +250,6 @@
                 android:resource="@xml/split_screen_config" />
         </service>
         <service
-            android:name=".Utils.RemoteProcess.LicenseValidator" />
-        <service
             android:name=".Utils.RemoteProcess.CloudNotificationHandler"
             android:exported="false"
             android:icon="@drawable/ic_launcher">
