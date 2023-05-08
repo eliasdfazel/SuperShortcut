@@ -28,15 +28,6 @@
     <string name="customIconDesc">아이콘 패키지를 선택하려면 클릭하십시오</string>
     <string name="defaultTheme">아이콘의 기본 테마 설정</string>
     <string name="cautionShortcutsHome">Super Shortcuts 아이콘을 홈 화면으로 이동</string>
-    <string name="smartPermission">
-        <![CDATA[
-                <br/>
-                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
-                <br/><br/>
-                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
-                <br/>
-        ]]>
-    </string>
     <string name="advanceTitle">폴더 바로 가기</string>
     <string name="mixTitle">단축키 혼합</string>
     <string name="mixDesc">앱/폴더/분할 바로 가기 결합</string>
@@ -57,35 +48,59 @@
     <string name="typeSplitName">첫 번째 유형 스플릿 이름</string>
     <string name="grant">권한 부여</string>
 
+    <string name="smartPermission">
+        <![CDATA[
+                <br/>
+                이 권한을 통해 가장 많이 사용하는 앱 목록을 가져와 슈퍼 바로가기로 설정할 수 있습니다.
+                <br/><br/>
+                <small>사용 권한을 부여한 후 앱을 다시 시작하고 완료될 때까지 기다리세요! 메시지</small>
+                <br/>
+        ]]>
+    </string>
     <string name="split_service_desc">
-        Split Super Shortcuts | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+        슈퍼 바로 가기 분할 | 이 권한은 다중 창을 만들고 분할 화면에서 앱을 동시에 열 수 있는 기능을 제공합니다. (Android 7 &amp; Higher)
+        \n
+        \n
+        ♿ 장애가 있는 사람들에게 어떻게 도움이 됩니까?
+        \n
+        장애가 있는 사람은 앱을 열거나 앱 간에 전환하기가 어렵습니다. 접근성 서비스를 사용하여 두 개의 앱을 함께 여는 다중 창 모드로 들어가고 있습니다.
     </string>
     <string name="split_service_summary">
-        Split Shortcuts | This Permission Gives Me An Ability To Create Multi-Window &amp; Open Apps in Split Screen Simultaneously
+        분할 바로 가기 | 이 권한은 다중 창을 만들고 동시에 분할 화면에서 앱을 열 수 있는 기능을 제공합니다.
     </string>
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)<br/><br/>
-                ♿ <b>How it Helps People with Disability</b>?<br/>
-                It is Difficult for People with Disability to Open an App Or Switch Between Apps.<br/>
-                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.<br/>
+                이 권한을 통해 다중 창 모드를 생성하고 동시에 분할 화면에서 한 쌍의 앱을 열 수 있습니다.<br/>(<big>Android 7 & Higher</big>)
+                <br/>
+                <br/>
+                ♿ <b>장애가 있는 사람들을 돕는 방법</b>?
+                <br/>
+                장애가 있는 사람이 앱을 열거나 앱 간에 전환하는 것은 어렵습니다.
+                <br/>
+                그래서 접근성 서비스를 사용하여 두 개의 앱을 함께 여는 다중 창 모드를 만들고 있습니다.
+                <br/>
         ]]>
     </string>
 
     <string name="smartInfo">
       <![CDATA[
-               <b><p>Apps Selected by Smart Pick</p></b>
-               <small>Go to Preferences to Disable it</small>
+               <b><p>스마트하게 선택한 앱</p></b>
+               <small>비활성화하려면 환경 설정으로 이동하십시오.</small>
        ]]>
     </string>
     <string name="mixDemoDescriptions">
         <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
-            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠 <br/>
-            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
-            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
-            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+            🔵 <b><big>혼합 단축키</big></b> 💠 | 여러 바로 가기 및 폴더를 추가 기능이 있는 하나의 슈퍼 바로 가기로 교체
+            <br/>
+            💠 <big>앱/분할/폴더 바로 가기 결합</big> 💠
+            <br/>
+            &bull; 앱 바로가기: Super Shortcut에서 하나의 앱 열기
+            <br/>
+            &bull; <b>분할 바로 가기</b>: 분할 화면에서 동시에 두 개의 앱 열기 (Multi Window)
+            <br/>
+            &bull; <b>폴더 바로 가기</b>: Super Shortcut에서 앱 목록 열기 (목록의 각 앱을 길게 눌러 분할 화면에서 엽니다.)
+            <br/>
         ]]>
     </string>
 

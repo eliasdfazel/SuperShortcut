@@ -36,7 +36,7 @@
     <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
     <string name="splitTitlePref">Split Shortcuts</string>
     <string name="splitTitle">Split Super Shortcuts</string>
-    <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
+    <string name="splitPermission">I need Accessibility Service to enter Multi-Window mode</string>
     <string name="shortcut">SHORTCUTS</string>
     <string name="apps">App</string>
     <string name="split">Split</string>
@@ -58,7 +58,10 @@
         ]]>
     </string>
     <string name="split_service_desc">
-        Split Super Shortcuts | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+        Split Super Shortcuts | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)
+        \n
+        \n
+        ♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
     </string>
     <string name="split_service_summary">
         Split Shortcuts | This Permission Gives Me An Ability To Create Multi-Window &amp; Open Apps in Split Screen Simultaneously
@@ -66,10 +69,15 @@
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)<br/><br/>
-                ♿ <b>How it Helps People with Disability</b>?<br/>
-                It is Difficult for People with Disability to Open an App Or Switch Between Apps.<br/>
-                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.<br/>
+                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)
+                <br/>
+                <br/>
+                ♿ <b>How it Helps People with Disability</b>?
+                <br/>
+                It is Difficult for People with Disability to Open an App Or Switch Between Apps.
+                <br/>
+                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.
+                <br/>
         ]]>
     </string>
 
@@ -81,11 +89,16 @@
     </string>
     <string name="mixDemoDescriptions">
         <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
-            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠 <br/>
-            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
-            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
-            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features
+            <br/>
+            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠
+            <br/>
+            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut
+            <br/>
+            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)
+            <br/>
+            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)
+            <br/>
         ]]>
     </string>
 

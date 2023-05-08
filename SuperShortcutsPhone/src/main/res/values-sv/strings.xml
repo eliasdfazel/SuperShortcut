@@ -11,90 +11,105 @@
 <resources>
 
     <string name="app_name">Super Shortcuts</string>
-    <string name="pref">Preferences</string>
-    <string name="done">Done</string>
-    <string name="edit_advanced_shortcut">Edit: </string>
-    <string name="option">Option for </string>
-    <string name="deleteFolder">Delete</string>
-    <string name="addSuper">Add to Super Shortcut</string>
-    <string name="addToDesktop">Add to Home Screen</string>
-    <string name="not_install">The Application is Not Available</string>
-    <string name="maximum">Estimated Amount&#8194; </string>
-    <string name="floatingTitle">Float It; Floating Multitasking</string>
-    <string name="floatingDesc">Quickly switch apps and open all apps In floating windows by floating shortcuts, floating applications</string>
-    <string name="smartTitle">Smart Pick</string>
-    <string name="smartDesc">I Will Select Essential Apps</string>
-    <string name="customIconTitle">Theme of Icons</string>
-    <string name="customIconDesc">Click to Select Package of Icons</string>
-    <string name="defaultTheme">Set Default Theme of Icons</string>
-    <string name="cautionShortcutsHome">Move Super Shortcuts Icon to Home Screen</string>
+    <string name="pref">Inställningar</string>
+    <string name="done">Gjort</string>
+    <string name="edit_advanced_shortcut">"Redigera: "</string>
+    <string name="option">Alternativ för</string>
+    <string name="deleteFolder">Radera</string>
+    <string name="addSuper">Lägg till Super Genväg</string>
+    <string name="addToDesktop">Lägg till på hemskärmen</string>
+    <string name="not_install">Applikationen är inte tillgänglig</string>
+    <string name="maximum">"Uppskattad mängd&#8194; "</string>
+    <string name="floatingTitle">Float It; Flytande multitasking</string>
+    <string name="floatingDesc">Byt snabbt appar och öppna alla appar i flytande fönster genom flytande genvägar, flytande applikationer</string>
+    <string name="smartTitle">Välj smart</string>
+    <string name="smartDesc">Jag kommer att välja viktiga appar</string>
+    <string name="customIconTitle">Tema för ikoner</string>
+    <string name="customIconDesc">Klicka för att välja paket med ikoner</string>
+    <string name="defaultTheme">Ställ in standardtema för ikoner</string>
+    <string name="cautionShortcutsHome">Flytta supergenvägar-ikonen till startskärmen</string>
+    <string name="advanceTitle">Mappgenvägar</string>
+    <string name="mixTitle">Blanda genvägar</string>
+    <string name="mixDesc">Kombinera app/mapp/dela genvägar</string>
+    <string name="mixHint">Blanda genvägar | Kombinera app/mapp/dela genvägar</string>
+    <string name="mixShortcutsEnable">Blanda genvägar | Aktiverad</string>
+    <string name="mixShortcutsDisable">Blanda genvägar | Inaktiverad</string>
+    <string name="splitTitlePref">Dela genvägar</string>
+    <string name="splitTitle">Dela supergenvägar</string>
+    <string name="splitPermission">Jag behöver tillgänglighetstjänst för att gå in i Multi-Window-läge</string>
+    <string name="shortcut">Genvägar</string>
+    <string name="apps">App</string>
+    <string name="split">Dela</string>
+    <string name="folder">Mapp</string>
+    <string name="appsEnable">App-genvägar</string>
+    <string name="splitEnable">Dela genvägar</string>
+    <string name="folderEnable">Mappgenvägar</string>
+    <string name="typeFolderName">Första typ av mappnamn</string>
+    <string name="typeSplitName">Första typ delat namn</string>
+    <string name="grant">Tillåta</string>
+
     <string name="smartPermission">
         <![CDATA[
                 <br/>
-                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
+                Denna behörighet tillåter mig att få en lista över dina mest använda appar för att ställa in dem som <b>supergenvägar</b>
                 <br/><br/>
-                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
+                <small>Efter att ha beviljat åtkomstbehörighet för användning, starta om appen och vänta på att se <b>Klart!</b> meddelande</small>
                 <br/>
         ]]>
     </string>
-    <string name="advanceTitle">Folder Shortcuts</string>
-    <string name="mixTitle">Mix Shortcuts</string>
-    <string name="mixDesc">Combine App/Folder/Split Shortcuts</string>
-    <string name="mixHint">Mix Shortcuts | Combine App/Folder/Split Shortcuts</string>
-    <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
-    <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
-    <string name="splitTitlePref">Split Shortcuts</string>
-    <string name="splitTitle">Split Super Shortcuts</string>
-    <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
-    <string name="shortcut">SHORTCUTS</string>
-    <string name="apps">App</string>
-    <string name="split">Split</string>
-    <string name="folder">Folder</string>
-    <string name="appsEnable">App Shortcuts</string>
-    <string name="splitEnable">Split Shortcuts</string>
-    <string name="folderEnable">Folder Shortcuts</string>
-    <string name="typeFolderName">First Type Folder Name</string>
-    <string name="typeSplitName">First Type Split Name</string>
-    <string name="grant">Grant Permission</string>
-
     <string name="split_service_desc">
-        Split Super Shortcuts ᴾᴿᴼ | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+        Dela supergenvägar | Denna behörighet ger mig möjligheten att skapa Multi-Window &amp; Öppna appar på delad skärm samtidigt (Android 7 &amp; Higher)
+        \n
+        \n
+        ♿ Hur hjälper det människor med funktionshinder?
+        \n
+        Det är svårt för personer med funktionsnedsättning att öppna en app eller växla mellan appar. Jag använder Accessibility Service för att gå in i Multi-Window Mode för att öppna två appar tillsammans.
     </string>
     <string name="split_service_summary">
-        Split Shortcuts | This Permission Gives Me An Ability To Create Multi-Window &amp; Open Apps in Split Screen Simultaneously
+        Dela genvägar | Denna behörighet ger mig en förmåga att skapa flera fönster &amp; Öppna appar på delad skärm samtidigt
     </string>
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)<br/><br/>
-                ♿ <b>How it Helps People with Disability</b>?<br/>
-                It is Difficult for People with Disability to Open an App Or Switch Between Apps.<br/>
-                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.<br/>
+                Denna behörighet tillåter mig att skapa flerfönsterläge &amp; Öppna ett par appar på delad skärm samtidigt.<br/>(<big>Android 7 & Higher</big>)
+                <br/>
+                <br/>
+                ♿ <b>Hur hjälper det människor med funktionshinder</b>?
+                <br/>
+                Det är svårt för personer med funktionshinder att öppna en app eller växla mellan appar.
+                <br/>
+                Så jag använder tillgänglighetstjänsten för att skapa flerfönsterläge för att öppna två appar tillsammans.
+                <br/>
         ]]>
     </string>
 
     <string name="smartInfo">
       <![CDATA[
-               <b><p>Apps Selected by Smart Pick</p></b>
-               <small>Go to Preferences to Disable it</small>
+               <b><p>Valda appar väljer smart</p></b>
+               <small>Gå till Inställningar för att inaktivera den</small>
        ]]>
     </string>
     <string name="mixDemoDescriptions">
         <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
-            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠 <br/>
-            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
-            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
-            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+            🔵 <b><big>Blanda genvägar</big></b> 💠 | Ersätt flera genvägar och mappar med en supergenväg med extrafunktioner
+            <br/>
+            💠 <big>Kombinera genvägar för app/dela/mapp tillsammans</big> 💠
+            <br/>
+            &bull; <b>Appgenvägar</b>: Öppna en app från Supergenväg
+            <br/>
+            &bull; <b>Delade genvägar</b>: Öppna två appar samtidigt på delad skärm (Multi Window)
+            <br/>
+            &bull; <b>Mappgenvägar</b>: Öppna lista över appar från Supergenväg (Tryck och håll in varje app på listan för att öppna dem på delad skärm)
+            <br/>
         ]]>
     </string>
 
-    <string name="notAuthorized">Not Authorized 🔒</string>
+    <string name="notAuthorized">Inte behörig 🔒</string>
 
-    <string name="securityServicesTitle">Security Services</string>
-    <string name="securityServicesDescription">Authenticate Your Identity To Open </string>
+    <string name="securityServicesTitle">Säkerhetstjänster</string>
+    <string name="securityServicesDescription">Autentisera din identitet för att öppna</string>
 
-    <string name="purchase"> Purchase 💸 </string>
-    <string name="donate"> Send Gift 🎁 </string>
+    <string name="purchase">" Inköp 💸 "</string>
+    <string name="donate">"Skicka gåva 🎁 "</string>
 
 </resources>
