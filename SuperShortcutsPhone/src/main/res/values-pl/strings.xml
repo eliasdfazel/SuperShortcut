@@ -58,46 +58,48 @@
         ]]>
     </string>
     <string name="split_service_desc">
-        Split Super Shortcuts | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)
+        Dziel superskróty | To uprawnienie daje mi możliwość tworzenia wielu okien &amp; Otwórz aplikacje na podzielonym ekranie jednocześnie (Android 7 &amp; Higher)
         \n
         \n
-        ♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+        ♿ Jak pomaga osobom niepełnosprawnym?
+        \n
+        Osobom niepełnosprawnym trudno jest otworzyć aplikację lub przełączać się między aplikacjami. Korzystam z usługi ułatwień dostępu, aby przejść do trybu wielu okien i otworzyć dwie aplikacje jednocześnie.
     </string>
     <string name="split_service_summary">
-        Split Shortcuts | This Permission Gives Me An Ability To Create Multi-Window &amp; Open Apps in Split Screen Simultaneously
+        Dzielone skróty | To uprawnienie daje mi możliwość tworzenia wielu okien &amp; Otwórz aplikacje na podzielonym ekranie jednocześnie
     </string>
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)
+                To uprawnienie pozwala mi tworzyć tryb wielu okien &amp; Otwórz parę aplikacji jednocześnie na podzielonym ekranie.<br/>(<big>Android 7 & Higher</big>)
                 <br/>
                 <br/>
-                ♿ <b>How it Helps People with Disability</b>?
+                ♿ <b>Jak pomaga osobom niepełnosprawnym</b>?
                 <br/>
-                It is Difficult for People with Disability to Open an App Or Switch Between Apps.
+                Osobom niepełnosprawnym trudno jest otworzyć aplikację lub przełączać się między aplikacjami.
                 <br/>
-                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.
+                Korzystam więc z usługi ułatwień dostępu, aby utworzyć tryb wielu okien, aby razem otwierać dwie aplikacje.
                 <br/>
         ]]>
     </string>
 
     <string name="smartInfo">
       <![CDATA[
-               <b><p>Apps Selected by Smart Pick</p></b>
-               <small>Go to Preferences to Disable it</small>
+               <b><p>Aplikacje wybrane przez inteligentne wybieranie</p></b>
+               <small>Przejdź do Preferencji, aby go wyłączyć</small>
        ]]>
     </string>
     <string name="mixDemoDescriptions">
         <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features
+            🔵 <b><big>Mieszaj skróty</big></b> 💠 | Zastąp kilka skrótów i folderów jednym superskrótem z dodatkowymi funkcjami
             <br/>
-            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠
+            💠 <big>Połącz ze sobą skróty do aplikacji/podziału/folderów</big> 💠
             <br/>
-            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut
+            &bull; <b>Skróty do aplikacji</b>: otwórz jedną aplikację z Super skrótu
             <br/>
-            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)
+            &bull; <b>Podział skrótów</b>: jednoczesne otwieranie dwóch aplikacji na podzielonym ekranie (Multi Window)
             <br/>
-            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)
+            &bull; <b>Skróty do folderów</b>: otwórz listę aplikacji z Super skrótu (Naciśnij i przytrzymaj każdą aplikację na liście, aby otworzyć je na podzielonym ekranie)
             <br/>
         ]]>
     </string>
