@@ -67,15 +67,21 @@
     <string name="whatsnew" translatable="false">What\'s New…</string>
     <string name="changelog" translatable="false">
         <![CDATA[
+            🔵 We Recently <b>Translated</b> Applications <br/>
+            &bull; Please, Let us know If you found any errors on the translations <br/>
+            &bull; Also, send request for translating to your native language via Support@GeeksEmpire.co
+            <br/>
+            <br/>
             🔵 <b>Security Services 🔒</b><br/>
             &bull; Lock Your Applications/Games To Protect Your Privacy <br/>
-            &bull; Protect Your Data from Malwares/Spywares (We Warn You About Opening A Malicious Applications) <br/>
+            &bull; Protect Your Data from Malwares/Spywares (We Warn You About Opening A Malicious Applications)
+            <br/>
+            <br/>
             🔵 <b>Mix Shortcuts 💠</b><br/>
             &bull; Combine App/Split/Folder Shortcuts Together<br/>
-            &bull; Go to Preferences ⚙ to Enable It.<br/>
-            🔴 <b>Remove All</b><br/>
-            &bull; If Any Issue Occurred, Press & Hold on Confirm Button ✔️ to Remove All Selected Shortcuts <br/>
-            <br/><br/>
+            &bull; Go to Preferences ⚙ to Enable It.
+            <br/>
+            <br/>
             /* <b>Please, Go to App Page for More Details</b> ⭐👍*/
         ]]>
     </string>

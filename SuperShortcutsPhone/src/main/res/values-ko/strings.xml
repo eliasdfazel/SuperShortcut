@@ -1,0 +1,100 @@
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 5/6/20 11:05 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<resources>
+
+    <string name="app_name">Super Shortcuts</string>
+    <string name="pref">기본 설정</string>
+    <string name="done">완료</string>
+    <string name="edit_advanced_shortcut">"편집하다: "</string>
+    <string name="option">옵션</string>
+    <string name="deleteFolder">삭제</string>
+    <string name="addSuper">슈퍼 바로가기에 추가</string>
+    <string name="addToDesktop">홈 화면에 추가</string>
+    <string name="not_install">응용 프로그램을 사용할 수 없습니다</string>
+    <string name="maximum">"예상 금액&#8194; "</string>
+    <string name="floatingTitle">Float It; 플로팅 멀티태스킹</string>
+    <string name="floatingDesc">앱을 빠르게 전환하고 모든 앱 열기 플로팅 바로 가기, 플로팅 애플리케이션으로 플로팅 창에서</string>
+    <string name="smartTitle">똑똑하게 고르세요</string>
+    <string name="smartDesc">필수 앱을 선택하겠습니다.</string>
+    <string name="customIconTitle">아이콘의 주제</string>
+    <string name="customIconDesc">아이콘 패키지를 선택하려면 클릭하십시오</string>
+    <string name="defaultTheme">아이콘의 기본 테마 설정</string>
+    <string name="cautionShortcutsHome">Super Shortcuts 아이콘을 홈 화면으로 이동</string>
+    <string name="smartPermission">
+        <![CDATA[
+                <br/>
+                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
+                <br/><br/>
+                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
+                <br/>
+        ]]>
+    </string>
+    <string name="advanceTitle">폴더 바로 가기</string>
+    <string name="mixTitle">단축키 혼합</string>
+    <string name="mixDesc">앱/폴더/분할 바로 가기 결합</string>
+    <string name="mixHint">믹스 단축키 | 앱/폴더/분할 바로 가기 결합</string>
+    <string name="mixShortcutsEnable">믹스 단축키 | 사용</string>
+    <string name="mixShortcutsDisable">믹스 단축키 | 장애가 있는</string>
+    <string name="splitTitlePref">분할 바로 가기</string>
+    <string name="splitTitle">슈퍼 바로 가기 분할</string>
+    <string name="splitPermission">다중 창 모드로 들어가려면 접근성 서비스가 필요합니다</string>
+    <string name="shortcut">바로 가기</string>
+    <string name="apps">앱</string>
+    <string name="split">나뉘다</string>
+    <string name="folder">폴더</string>
+    <string name="appsEnable">앱 바로가기</string>
+    <string name="splitEnable">분할 바로 가기</string>
+    <string name="folderEnable">폴더 바로 가기</string>
+    <string name="typeFolderName">첫 번째 유형 폴더 이름</string>
+    <string name="typeSplitName">첫 번째 유형 스플릿 이름</string>
+    <string name="grant">권한 부여</string>
+
+    <string name="split_service_desc">
+        Split Super Shortcuts | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
+    </string>
+    <string name="split_service_summary">
+        Split Shortcuts | This Permission Gives Me An Ability To Create Multi-Window &amp; Open Apps in Split Screen Simultaneously
+    </string>
+    <string name="observeDesc">
+        <![CDATA[
+                <br/>
+                This Permission Allows Me to Create Multi-Window Mode &amp; Open Pair of Apps in Split Screen Simultaneously.<br/>(<big>Android 7 & Higher</big>)<br/><br/>
+                ♿ <b>How it Helps People with Disability</b>?<br/>
+                It is Difficult for People with Disability to Open an App Or Switch Between Apps.<br/>
+                So, I am Using Accessibility Service to Create Multi-Window Mode to Open Two Apps Together.<br/>
+        ]]>
+    </string>
+
+    <string name="smartInfo">
+      <![CDATA[
+               <b><p>Apps Selected by Smart Pick</p></b>
+               <small>Go to Preferences to Disable it</small>
+       ]]>
+    </string>
+    <string name="mixDemoDescriptions">
+        <![CDATA[
+            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features <br/>
+            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠 <br/>
+            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut<br/>
+            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)<br/>
+            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)<br/>
+        ]]>
+    </string>
+
+    <string name="notAuthorized">승인되지 않음 🔒</string>
+
+    <string name="securityServicesTitle">보안 서비스</string>
+    <string name="securityServicesDescription">열려면 신원을 인증하십시오</string>
+
+    <string name="purchase">" 구입 💸 "</string>
+    <string name="donate">"선물을 보내다 🎁 "</string>
+
+</resources>
