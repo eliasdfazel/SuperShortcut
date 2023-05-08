@@ -28,15 +28,6 @@
     <string name="customIconDesc">Click to Select Package of Icons</string>
     <string name="defaultTheme">Set Default Theme of Icons</string>
     <string name="cautionShortcutsHome">Move Super Shortcuts Icon to Home Screen</string>
-    <string name="smartPermission">
-        <![CDATA[
-                <br/>
-                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
-                <br/><br/>
-                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
-                <br/>
-        ]]>
-    </string>
     <string name="advanceTitle">Folder Shortcuts</string>
     <string name="mixTitle">Mix Shortcuts</string>
     <string name="mixDesc">Combine App/Folder/Split Shortcuts</string>
@@ -57,6 +48,15 @@
     <string name="typeSplitName">First Type Split Name</string>
     <string name="grant">Grant Permission</string>
 
+    <string name="smartPermission">
+        <![CDATA[
+                <br/>
+                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
+                <br/><br/>
+                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
+                <br/>
+        ]]>
+    </string>
     <string name="split_service_desc">
         Split Super Shortcuts | This permission gives me the ability to create Multi-Window &amp; Open Apps in Split Screen Simultaneously (Android 7 &amp; Higher)\n\n♿ How it Helps People with Disability?\nIt is difficult for people with disability to open an app Or switch between apps. I am using Accessibility Service to enter Multi-Window Mode to open two apps together.
     </string>
