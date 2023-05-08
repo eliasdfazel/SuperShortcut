@@ -11,49 +11,49 @@
 <resources>
 
     <string name="app_name">Super Shortcuts</string>
-    <string name="pref">Preferences</string>
-    <string name="done">Done</string>
-    <string name="edit_advanced_shortcut">Edit: </string>
-    <string name="option">Option for </string>
-    <string name="deleteFolder">Delete</string>
-    <string name="addSuper">Add to Super Shortcut</string>
-    <string name="addToDesktop">Add to Home Screen</string>
-    <string name="not_install">The Application is Not Available</string>
-    <string name="maximum">Estimated Amount&#8194; </string>
-    <string name="floatingTitle">Float It; Floating Multitasking</string>
-    <string name="floatingDesc">Quickly switch apps and open all apps In floating windows by floating shortcuts, floating applications</string>
-    <string name="smartTitle">Smart Pick</string>
-    <string name="smartDesc">I Will Select Essential Apps</string>
-    <string name="customIconTitle">Theme of Icons</string>
-    <string name="customIconDesc">Click to Select Package of Icons</string>
-    <string name="defaultTheme">Set Default Theme of Icons</string>
-    <string name="cautionShortcutsHome">Move Super Shortcuts Icon to Home Screen</string>
-    <string name="advanceTitle">Folder Shortcuts</string>
-    <string name="mixTitle">Mix Shortcuts</string>
-    <string name="mixDesc">Combine App/Folder/Split Shortcuts</string>
-    <string name="mixHint">Mix Shortcuts | Combine App/Folder/Split Shortcuts</string>
-    <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
-    <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
-    <string name="splitTitlePref">Split Shortcuts</string>
-    <string name="splitTitle">Split Super Shortcuts</string>
-    <string name="splitPermission">I Need Accessibility Service to Enter Multi-Window Mode</string>
-    <string name="shortcut">SHORTCUTS</string>
-    <string name="apps">App</string>
-    <string name="split">Split</string>
-    <string name="folder">Folder</string>
-    <string name="appsEnable">App Shortcuts</string>
+    <string name="pref">Preferencje</string>
+    <string name="done">Zrobione</string>
+    <string name="edit_advanced_shortcut">"Edytować: "</string>
+    <string name="option">Opcja dla</string>
+    <string name="deleteFolder">Usuwać</string>
+    <string name="addSuper">Dodaj do superskrótu</string>
+    <string name="addToDesktop">Dodaj do ekranu głównego</string>
+    <string name="not_install">Aplikacja jest niedostępna</string>
+    <string name="maximum">"Przewidywana ilość&#8194; "</string>
+    <string name="floatingTitle">Float It; Pływająca wielozadaniowość</string>
+    <string name="floatingDesc">Szybko przełączaj aplikacje i otwieraj wszystkie aplikacje w pływających oknach za pomocą pływających skrótów, pływających aplikacji</string>
+    <string name="smartTitle">Wybierz mądrze</string>
+    <string name="smartDesc">Wybiorę niezbędne aplikacje</string>
+    <string name="customIconTitle">Temat ikon</string>
+    <string name="customIconDesc">Kliknij, aby wybrać pakiet ikon</string>
+    <string name="defaultTheme">Ustaw domyślny motyw ikon</string>
+    <string name="cautionShortcutsHome">Przenieś ikonę Super skrótów na ekran główny</string>
+    <string name="advanceTitle">Skróty do folderów</string>
+    <string name="mixTitle">Skróty do miksowania</string>
+    <string name="mixDesc">Połącz skróty aplikacji / folderu / podziału</string>
+    <string name="mixHint">Skróty do miksowania | Połącz skróty aplikacji / folderu / podziału</string>
+    <string name="mixShortcutsEnable">Skróty do miksowania | Włączony</string>
+    <string name="mixShortcutsDisable">Skróty do miksowania | Wyłączony</string>
+    <string name="splitTitlePref">Dzielone skróty</string>
+    <string name="splitTitle">Dziel superskróty</string>
+    <string name="splitPermission">Potrzebuję usługi ułatwień dostępu, aby przejść do trybu wielu okien</string>
+    <string name="shortcut">SKRÓTY</string>
+    <string name="apps">Aplikacja</string>
+    <string name="split">Podział</string>
+    <string name="folder">Teczka</string>
+    <string name="appsEnable">Skróty aplikacji</string>
     <string name="splitEnable">Split Shortcuts</string>
-    <string name="folderEnable">Folder Shortcuts</string>
-    <string name="typeFolderName">First Type Folder Name</string>
-    <string name="typeSplitName">First Type Split Name</string>
-    <string name="grant">Grant Permission</string>
+    <string name="folderEnable">Skróty do folderów</string>
+    <string name="typeFolderName">Nazwa folderu pierwszego typu</string>
+    <string name="typeSplitName">Nazwa podziału pierwszego typu</string>
+    <string name="grant">Dać pozwolenie</string>
 
     <string name="smartPermission">
         <![CDATA[
                 <br/>
-                This Permission Allows me to Get List of your Most Used Apps to Set them as <b>Super Shortcuts</b>
+                To uprawnienie pozwala mi uzyskać listę najczęściej używanych aplikacji i ustawić je jako <b>superskróty</b>
                 <br/><br/>
-                <small>After Granting Usage Access Permission, Restart App & Wait to See <b>Done!</b> Message</small>
+                <small>Po przyznaniu uprawnień dostępu do użytkowania uruchom ponownie aplikację i poczekaj na komunikat <b>Gotowe!</b></small>
                 <br/>
         ]]>
     </string>
@@ -102,12 +102,12 @@
         ]]>
     </string>
 
-    <string name="notAuthorized">Not Authorized 🔒</string>
+    <string name="notAuthorized">Nieautoryzowany 🔒</string>
 
-    <string name="securityServicesTitle">Security Services</string>
-    <string name="securityServicesDescription">Authenticate Your Identity To Open </string>
+    <string name="securityServicesTitle">Służby Bezpieczeństwa</string>
+    <string name="securityServicesDescription">Uwierzytelnij swoją tożsamość, aby otworzyć</string>
 
-    <string name="purchase"> Purchase 💸 </string>
-    <string name="donate"> Send Gift 🎁 </string>
+    <string name="purchase">" Zakup 💸 "</string>
+    <string name="donate">"Wysłać prezent 🎁 "</string>
 
 </resources>
