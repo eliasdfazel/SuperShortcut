@@ -16,7 +16,11 @@ import android.content.pm.ResolveInfo
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.R
@@ -24,8 +28,7 @@ import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactory
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.IndexedFastScroller
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 fun NormalAppShortcutsSelectionListPhone.loadInstalledAppsData() = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
     installedAppsListItem.clear()
@@ -113,9 +116,11 @@ fun NormalAppShortcutsSelectionListPhone.loadInstalledAppsData() = CoroutineScop
             recyclerView = normalAppSelectionBinding.recyclerViewList,
             fastScrollerIndexViewBinding = normalAppSelectionBinding.fastScrollerIndexInclude,
             indexedFastScrollerFactory = IndexedFastScrollerFactory(
-                    popupEnable = true,
-                    popupTextColor = getColor(R.color.light),
-                    indexItemTextColor = getColor(R.color.dark))
+                popupEnable = true,
+                popupTextColor = getColor(R.color.light),
+                indexItemTextColor = getColor(R.color.dark),
+                popupVerticalOffset = (77/3).toFloat()
+            )
     )
     indexedFastScroller.initializeIndexView().await()
             .loadIndexData(listOfNewCharOfItemsForIndex = listOfNewCharOfItemsForIndex).await()
