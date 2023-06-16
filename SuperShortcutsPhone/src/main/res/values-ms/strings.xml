@@ -1,0 +1,113 @@
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last modified 5/6/20 11:05 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<resources>
+
+    <string name="app_name">Super Shortcuts</string>
+    <string name="pref">Keutamaan</string>
+    <string name="done">Selesai</string>
+    <string name="edit_advanced_shortcut">"Sunting: "</string>
+    <string name="option">Pilihan untuk</string>
+    <string name="deleteFolder">Padam</string>
+    <string name="addSuper">Tambah ke Super Shortcut</string>
+    <string name="addToDesktop">Tambahkan pada Skrin Utama</string>
+    <string name="not_install">Permohonan Tidak Tersedia</string>
+    <string name="maximum">"Anggaran Jumlah&#8194; "</string>
+    <string name="floatingTitle">Float It; Berbilang tugas Terapung</string>
+    <string name="floatingDesc">Tukar apl dengan pantas dan buka semua apl Dalam tetingkap terapung dengan pintasan terapung, aplikasi terapung</string>
+    <string name="smartTitle">Pilih Pintar</string>
+    <string name="smartDesc">Saya akan memilih Apl penting</string>
+    <string name="customIconTitle">Tema Ikon</string>
+    <string name="customIconDesc">Klik untuk Pilih Pakej Ikon</string>
+    <string name="defaultTheme">Tetapkan Tema Lalai Ikon</string>
+    <string name="cautionShortcutsHome">Alihkan Ikon Pintasan Super ke Skrin Utama</string>
+    <string name="advanceTitle">Pintasan Folder</string>
+    <string name="mixTitle">Campurkan Pintasan</string>
+    <string name="mixDesc">Gabungkan Apl/Folder/Pintasan Pisahkan</string>
+    <string name="mixHint">Pintasan Campuran | Gabungkan Apl/Folder/Pintasan Pisahkan</string>
+    <string name="mixShortcutsEnable">Pintasan Campuran | Didayakan</string>
+    <string name="mixShortcutsDisable">Pintasan Campuran | Dilumpuhkan</string>
+    <string name="splitTitlePref">Pintasan Pisahkan</string>
+    <string name="splitTitle">Pintasan Pisahkan</string>
+    <string name="splitPermission">Saya memerlukan Perkhidmatan Kebolehcapaian untuk memasuki mod Berbilang Tetingkap</string>
+    <string name="shortcut">PINTAS</string>
+    <string name="apps">Aplikasi</string>
+    <string name="split">Berpisah</string>
+    <string name="folder">Folder</string>
+    <string name="appsEnable">Pintasan Apl</string>
+    <string name="splitEnable">Pintasan Pisahkan</string>
+    <string name="folderEnable">Pintasan Folder</string>
+    <string name="typeFolderName">Nama Folder Jenis Pertama</string>
+    <string name="typeSplitName">Nama Pisah Jenis Pertama</string>
+    <string name="grant">Berikan Kebenaran</string>
+
+    <string name="smartPermission">
+        <![CDATA[
+                <br/>
+                Kebenaran Ini Membenarkan saya Mendapatkan Senarai Apl Paling Digunakan anda untuk Menetapkannya sebagai <b>Pintasan Super</b>
+                <br/><br/>
+                <small>Selepas Memberi Kebenaran Akses Penggunaan, Mulakan Semula Apl & Tunggu untuk Lihat <b>Selesai!</b> Mesej</small>
+                <br/>
+        ]]>
+    </string>
+    <string name="split_service_desc">
+        Split Super Shortcuts | Kebenaran ini memberi saya keupayaan untuk mencipta Berbilang Tetingkap &amp; Buka Apl dalam Skrin Pisah Serentak (Android 7 &amp; Higher)
+        \n
+        \n
+        ♿ Bagaimana ia Membantu Orang Kurang Upaya?\nSukar bagi orang kurang upaya untuk membuka aplikasi Atau bertukar antara apl. Saya menggunakan Perkhidmatan Kebolehcapaian untuk memasuki Mod Berbilang Tetingkap untuk membuka dua apl bersama-sama.
+    </string>
+    <string name="split_service_summary">
+        Split Shortcuts | Kebenaran Ini Memberi Saya Keupayaan Untuk Mencipta Berbilang Tetingkap &amp; Buka Apl dalam Skrin Pisah Serentak
+    </string>
+    <string name="observeDesc">
+        <![CDATA[
+                <br/>
+                Kebenaran Ini Membenarkan Saya Mencipta Mod Berbilang Tetingkap &amp; Buka Sepasang Apl dalam Skrin Pisah Serentak.<br/>(<big>Android 7 & Higher</big>)
+                <br/>
+                <br/>
+                ♿ <b>Bagaimana ia Membantu Orang Kurang Upaya</b>?
+                <br/>
+                Sukar untuk Orang Kurang Upaya Membuka Apl Atau Beralih Antara Apl.
+                <br/>
+                Jadi, saya menggunakan Perkhidmatan Kebolehcapaian untuk Mencipta Mod Berbilang Tetingkap untuk Membuka Dua Apl Bersama.
+                <br/>
+        ]]>
+    </string>
+
+    <string name="smartInfo">
+      <![CDATA[
+               <b><p>Apl Dipilih oleh Smart Pick</p></b>
+               <small>Pergi ke Keutamaan untuk Melumpuhkannya</small>
+       ]]>
+    </string>
+    <string name="mixDemoDescriptions">
+        <![CDATA[
+            🔵 <b><big>Campurkan Pintasan</big></b> 💠 | Gantikan Beberapa Pintasan dan Folder dengan Satu Pintasan Super dengan Ciri Tambahan
+            <br/>
+            💠 <big>Gabungkan Pintasan Apl/Split/Folder Bersama-sama</big> 💠
+            <br/>
+            &bull; <b>App Shortcuts</b>: Buka Satu Apl daripada Pintasan Super
+            <br/>
+            &bull; <b>Split Shortcuts</b>: Buka Dua Apl Serentak dalam Skrin Pisah (Multi Window)
+            <br/>
+            &bull; <b>Folder Shortcuts</b>: Buka Senarai Apl daripada Pintasan Super (Tekan & Tahan pada Setiap Apl pada Senarai untuk Membukanya dalam Skrin Pisah)
+            <br/>
+        ]]>
+    </string>
+
+    <string name="notAuthorized">Tidak Dibenarkan 🔒</string>
+
+    <string name="securityServicesTitle">Perkhidmatan Keselamatan</string>
+    <string name="securityServicesDescription">Sahkan Identiti Anda Untuk Dibuka</string>
+
+    <string name="purchase">Beli 💸</string>
+    <string name="donate">Hantar Hadiah 🎁</string>
+
+</resources>
