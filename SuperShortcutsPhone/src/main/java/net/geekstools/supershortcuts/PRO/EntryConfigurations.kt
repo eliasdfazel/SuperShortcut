@@ -24,7 +24,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
@@ -157,7 +161,7 @@ class EntryConfigurations : AppCompatActivity() {
 
                     waitingDialogueLiveData.run {
                         this.dialogueTitle.value = getString(R.string.error)
-                        this.dialogueMessage.value = exception.message
+                        this.dialogueMessage.value = "Sign In Failed"
                     }
                 }
 
@@ -165,7 +169,7 @@ class EntryConfigurations : AppCompatActivity() {
 
             waitingDialogueLiveData.run {
                 this.dialogueTitle.value = getString(R.string.error)
-                this.dialogueMessage.value = Activity.RESULT_CANCELED.toString()
+                this.dialogueMessage.value = "Google Account Result"
             }
 
         }
