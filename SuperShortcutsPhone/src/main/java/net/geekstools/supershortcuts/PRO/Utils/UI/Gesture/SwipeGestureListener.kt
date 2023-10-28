@@ -41,7 +41,7 @@ class SwipeGestureListener(private val context: Context,
     private var mode: Int = GestureListenerConstants.MODE_DYNAMIC
     private var swipeMode: Int = 0
 
-    override fun onFling(downMotionEvent: MotionEvent, moveMotionEvent: MotionEvent, initVelocityX: Float, initVelocityY: Float) : Boolean {
+    override fun onFling(downMotionEvent: MotionEvent?, moveMotionEvent: MotionEvent, initVelocityX: Float, initVelocityY: Float) : Boolean {
 
         var motionEventConsumed = false
 
