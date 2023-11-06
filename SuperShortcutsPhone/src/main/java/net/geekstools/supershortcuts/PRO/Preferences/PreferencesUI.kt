@@ -32,6 +32,8 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.queryPurchasesAsync
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -274,12 +276,6 @@ class PreferencesUI : AppCompatActivity() {
 
         }
 
-        preferenceViewBinding.floatingView.setOnClickListener {
-
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_floating_shortcuts))))
-
-        }
-
         preferenceViewBinding.share.setOnClickListener {
             shareSuperShortcuts()
         }
@@ -396,8 +392,18 @@ class PreferencesUI : AppCompatActivity() {
                                     firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()), firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
                         }
 
-                        if (firebaseRemoteConfig.getBoolean("boolean_new_floating_shortcuts_pref_desc")) {
-                            preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("string_floating_shortcuts_pref_desc"), Html.FROM_HTML_MODE_LEGACY)
+                        preferenceViewBinding.prefTitlefloating.text = Html.fromHtml(firebaseRemoteConfig.getString("adTitle"), Html.FROM_HTML_MODE_LEGACY)
+                        preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("adDescription"), Html.FROM_HTML_MODE_LEGACY)
+
+                        Glide.with(applicationContext)
+                            .load(firebaseRemoteConfig.getString("adImage"))
+                            .transform(RoundedCorners(19))
+                            .into(preferenceViewBinding.prefIconfloating)
+
+                        preferenceViewBinding.floatingView.setOnClickListener {
+
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(firebaseRemoteConfig.getString("adLink"))))
+
                         }
 
                     }
