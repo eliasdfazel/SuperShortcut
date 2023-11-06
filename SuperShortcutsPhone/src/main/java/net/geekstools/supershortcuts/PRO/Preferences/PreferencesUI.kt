@@ -22,7 +22,12 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Html
 import android.util.TypedValue
-import android.view.*
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -54,7 +59,7 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.In
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.CustomIconInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout
 import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding
-import java.util.*
+import java.util.Locale
 
 class PreferencesUI : AppCompatActivity() {
 
@@ -397,7 +402,7 @@ class PreferencesUI : AppCompatActivity() {
 
                         Glide.with(applicationContext)
                             .load(firebaseRemoteConfig.getString("adImage"))
-                            .transform(RoundedCorners(19))
+                            .transform(RoundedCorners(99))
                             .into(preferenceViewBinding.prefIconfloating)
 
                         preferenceViewBinding.floatingView.setOnClickListener {
