@@ -440,6 +440,7 @@ class PreferencesUI : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
 
         val tabView = getSharedPreferences("ShortcutsModeView", Context.MODE_PRIVATE).getString("TabsView", NormalAppShortcutsSelectionListPhone::class.java.simpleName)
         if (tabView == NormalAppShortcutsSelectionListPhone::class.java.simpleName) {
