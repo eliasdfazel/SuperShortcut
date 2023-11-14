@@ -180,24 +180,6 @@
             android:label="@string/pref"
             android:exported="true"
             android:theme="@style/GeeksEmpire">
-            <intent-filter
-                android:autoVerify="true"
-                android:label="@string/app_name">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="geeksempire.net"
-                    android:pathPrefix="/FAQ/super.html"
-                    android:scheme="http" />
-                <data
-                    android:host="geeksempire.net"
-                    android:pathPrefix="/FAQ/super.html"
-                    android:scheme="https" />
-
-            </intent-filter>
         </activity>
         <activity
             android:icon="@mipmap/ic_launcher_adaptive"
@@ -213,10 +195,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="www.geeksempire.net"
-                    android:pathPrefix="/FAQ/super.html"
-                    android:scheme="https" />
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:host="geeksempire.co"/>
+                <data android:pathPrefix="/2023/10/28/multitasking/super-shortcuts-android-multitasking"/>
+
             </intent-filter>
         </activity>
         <activity
