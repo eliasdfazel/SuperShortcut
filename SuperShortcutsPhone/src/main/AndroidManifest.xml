@@ -138,9 +138,9 @@
             android:exported="false"
             android:theme="@style/GeeksEmpire.Material"/>
         <activity
+            android:name=".SplitShortcuts.SplitServices.SplitTransparentPair"
             android:icon="@mipmap/ic_launcher_adaptive"
             android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-            android:name=".SplitShortcuts.SplitServices.SplitTransparentPair"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:noHistory="true"
