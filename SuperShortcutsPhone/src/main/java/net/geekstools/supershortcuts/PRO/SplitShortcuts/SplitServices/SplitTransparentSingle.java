@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -63,13 +64,17 @@ public class SplitTransparentSingle extends Activity {
             intentFilter.addAction("split_single_finish");
             intentFilter.addAction("Split_Apps_Single_" + SplitTransparentSingle.class.getSimpleName());
             BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
                 @Override
                 public void onReceive(Context context, Intent intent) {
+
                     if (intent.getAction().equals("Split_Apps_Single_" + SplitTransparentSingle.class.getSimpleName())) {
 
                         new Handler().postDelayed(new Runnable() {
+
                             @Override
                             public void run() {
+
                                 Intent splitOne = getPackageManager().getLaunchIntentForPackage(packageNameSplit);
                                 splitOne.addCategory(Intent.CATEGORY_LAUNCHER);
                                 splitOne.setFlags(
@@ -81,12 +86,26 @@ public class SplitTransparentSingle extends Activity {
 
                             }
                         }, 500);
+
                     } else if (intent.getAction().equals("split_single_finish")) {
+
                         SplitTransparentSingle.this.finish();
+
                     }
                 }
+
             };
-            registerReceiver(broadcastReceiver, intentFilter);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+                registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+
+            } else {
+
+                registerReceiver(broadcastReceiver, intentFilter);
+
+            }
+
         }
     }
 }

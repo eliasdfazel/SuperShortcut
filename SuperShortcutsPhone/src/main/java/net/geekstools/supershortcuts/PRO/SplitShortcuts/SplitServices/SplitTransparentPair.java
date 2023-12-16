@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -116,11 +117,13 @@ public class SplitTransparentPair extends AppCompatActivity {
                 BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
+
                         if (intent.getAction().equals("Split_Apps_Pair_" + SplitTransparentPair.class.getSimpleName())) {
 
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+
                                     Intent splitOne = getPackageManager().getLaunchIntentForPackage(packageNameSplitOne);
                                     splitOne.addCategory(Intent.CATEGORY_LAUNCHER);
                                     splitOne.setFlags(
@@ -128,40 +131,61 @@ public class SplitTransparentPair extends AppCompatActivity {
                                                     Intent.FLAG_ACTIVITY_NEW_TASK |
                                                     Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
-                                    final Intent splitTwo = getPackageManager().getLaunchIntentForPackage(packageNameSplitTwo);
-                                    splitTwo.addCategory(Intent.CATEGORY_LAUNCHER);
-                                    splitTwo.setFlags(
-                                            Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                                    Intent.FLAG_ACTIVITY_NEW_TASK |
-                                                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-
                                     startActivity(splitOne);
 
+                                    functionsClass.Toast(functionsClass.appName(packageNameSplitOne), Gravity.TOP);
+
                                     new Handler().postDelayed(new Runnable() {
+
                                         @Override
                                         public void run() {
+
+                                            final Intent splitTwo = getPackageManager().getLaunchIntentForPackage(packageNameSplitTwo);
+                                            splitTwo.addCategory(Intent.CATEGORY_LAUNCHER);
+                                            splitTwo.setFlags(
+                                                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
+                                                            Intent.FLAG_ACTIVITY_NEW_TASK |
+                                                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
                                             startActivity(splitTwo);
 
+                                            functionsClass.Toast(functionsClass.appName(packageNameSplitTwo), Gravity.BOTTOM);
+
                                             new Handler().postDelayed(new Runnable() {
+
                                                 @Override
                                                 public void run() {
+
                                                     sendBroadcast(new Intent("split_pair_finish"));
+
                                                 }
+
                                             }, 500);
                                         }
+
                                     }, 200);
 
-                                    functionsClass.Toast(functionsClass.appName(packageNameSplitOne), Gravity.TOP);
-                                    functionsClass.Toast(functionsClass.appName(packageNameSplitTwo), Gravity.BOTTOM);
                                 }
                             }, 500);
 
                         } else if (intent.getAction().equals("split_pair_finish")) {
+
                             SplitTransparentPair.this.finish();
+
                         }
                     }
                 };
-                registerReceiver(broadcastReceiver, intentFilter);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+                    registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+
+                } else {
+
+                    registerReceiver(broadcastReceiver, intentFilter);
+
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
