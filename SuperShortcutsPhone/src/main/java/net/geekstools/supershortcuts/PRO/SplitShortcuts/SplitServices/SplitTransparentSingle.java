@@ -34,6 +34,8 @@ public class SplitTransparentSingle extends Activity {
 
     String packageNameSplit;
 
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,7 @@ public class SplitTransparentSingle extends Activity {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction("split_single_finish");
             intentFilter.addAction("Split_Apps_Single_" + SplitTransparentSingle.class.getSimpleName());
-            BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            broadcastReceiver = new BroadcastReceiver() {
 
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -76,11 +78,9 @@ public class SplitTransparentSingle extends Activity {
                             public void run() {
 
                                 Intent splitOne = getPackageManager().getLaunchIntentForPackage(packageNameSplit);
-                                splitOne.addCategory(Intent.CATEGORY_LAUNCHER);
-                                splitOne.setFlags(
+                                splitOne.addFlags(
                                         Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                                Intent.FLAG_ACTIVITY_NEW_TASK |
-                                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                                                Intent.FLAG_ACTIVITY_NEW_TASK);
 
                                 startActivity(splitOne);
 
@@ -107,5 +107,32 @@ public class SplitTransparentSingle extends Activity {
             }
 
         }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (broadcastReceiver != null) {
+
+            try {
+
+                unregisterReceiver(broadcastReceiver);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        SplitTransparentSingle.this.finish();
+
     }
 }

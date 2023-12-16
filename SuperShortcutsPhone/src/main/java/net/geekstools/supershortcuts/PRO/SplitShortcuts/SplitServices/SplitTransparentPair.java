@@ -73,17 +73,7 @@ public class SplitTransparentPair extends AppCompatActivity {
 
         } else {
 
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    splitProcess();
-
-
-                }
-
-            }, 500);
+            splitProcess();
 
         }
 
