@@ -41,6 +41,8 @@ public class SplitTransparentPair extends AppCompatActivity {
     String packageNameSplitOne,
             packageNameSplitTwo;
 
+    BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,23 +104,29 @@ public class SplitTransparentPair extends AppCompatActivity {
                 accessibilityManager.sendAccessibilityEvent(event);
 
                 if (getIntent().getAction().equals("load_split_action_pair")) {
+
                     packageNameSplitOne = getIntent().getStringArrayExtra("packages")[0];
                     packageNameSplitTwo = getIntent().getStringArrayExtra("packages")[1];
+
                 } else if (getIntent().getAction().equals("load_split_action_pair_shortcut")) {
+
                     String categoryName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
                     packageNameSplitOne = functionsClass.readFileLine(categoryName)[0];
                     packageNameSplitTwo = functionsClass.readFileLine(categoryName)[1];
-                }
 
+                }
 
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction("split_pair_finish");
                 intentFilter.addAction("Split_Apps_Pair_" + SplitTransparentPair.class.getSimpleName());
-                BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+                broadcastReceiver = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
 
                         if (intent.getAction().equals("Split_Apps_Pair_" + SplitTransparentPair.class.getSimpleName())) {
+
+                            System.out.println("Split It; Received, Received, Received");
 
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -135,21 +143,25 @@ public class SplitTransparentPair extends AppCompatActivity {
 
                                     functionsClass.Toast(functionsClass.appName(packageNameSplitOne), Gravity.TOP);
 
+                                    final Intent splitTwo = getPackageManager().getLaunchIntentForPackage(packageNameSplitTwo);
+                                    splitTwo.addCategory(Intent.CATEGORY_LAUNCHER);
+                                    splitTwo.setFlags(
+                                            Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
+                                                    Intent.FLAG_ACTIVITY_NEW_TASK |
+                                                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+                                    startActivity(splitTwo);
+
+                                    Intent[] activities = {splitOne, splitTwo};
+
+                                    startActivities(activities);
+
+                                    functionsClass.Toast(functionsClass.appName(packageNameSplitTwo), Gravity.BOTTOM);
+
                                     new Handler().postDelayed(new Runnable() {
 
                                         @Override
                                         public void run() {
-
-                                            final Intent splitTwo = getPackageManager().getLaunchIntentForPackage(packageNameSplitTwo);
-                                            splitTwo.addCategory(Intent.CATEGORY_LAUNCHER);
-                                            splitTwo.setFlags(
-                                                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                                            Intent.FLAG_ACTIVITY_NEW_TASK |
-                                                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-
-                                            startActivity(splitTwo);
-
-                                            functionsClass.Toast(functionsClass.appName(packageNameSplitTwo), Gravity.BOTTOM);
 
                                             new Handler().postDelayed(new Runnable() {
 
@@ -192,4 +204,23 @@ public class SplitTransparentPair extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (broadcastReceiver != null) {
+
+            try {
+
+                unregisterReceiver(broadcastReceiver);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
 }
