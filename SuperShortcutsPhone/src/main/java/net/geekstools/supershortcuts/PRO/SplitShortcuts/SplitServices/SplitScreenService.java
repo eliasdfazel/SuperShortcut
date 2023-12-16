@@ -27,15 +27,19 @@ public class SplitScreenService extends AccessibilityService {
         switch (event.getEventType()) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                 if (event.getAction() == 10296) {
+
                     className = (String) event.getClassName();
 
                     performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN);
                     sendBroadcast(new Intent("Split_Apps_Pair_" + className));
+
                 } else if (event.getAction() == 69201) {
+
                     className = (String) event.getClassName();
 
                     performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN);
                     sendBroadcast(new Intent("Split_Apps_Single_" + className));
+
                 }
 
                 break;
