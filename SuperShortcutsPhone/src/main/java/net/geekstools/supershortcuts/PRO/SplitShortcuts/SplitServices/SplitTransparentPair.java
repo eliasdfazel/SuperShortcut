@@ -10,14 +10,9 @@
 
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -38,10 +33,7 @@ public class SplitTransparentPair extends AppCompatActivity {
 
     FunctionsClass functionsClass;
 
-    String packageNameSplitOne,
-            packageNameSplitTwo;
-
-    BroadcastReceiver broadcastReceiver;
+    static String splitPackageOne, splitPackageTwo = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +74,7 @@ public class SplitTransparentPair extends AppCompatActivity {
     void splitProcess() {
 
         try {
+
             functionsClass = new FunctionsClass(getApplicationContext());
 
             Window window = getWindow();
@@ -91,10 +84,27 @@ public class SplitTransparentPair extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
 
-            final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
             if (!functionsClass.AccessibilityServiceEnabled() && !functionsClass.SettingServiceRunning(SplitScreenService.class)) {
+
                 functionsClass.AccessibilityService(this, true);
+
             } else {
+
+                final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
+
+                if (getIntent().getAction().equals("load_split_action_pair")) {
+
+                    splitPackageOne = getIntent().getStringArrayExtra("packages")[0];
+                    splitPackageTwo = getIntent().getStringArrayExtra("packages")[1];
+
+                } else if (getIntent().getAction().equals("load_split_action_pair_shortcut")) {
+
+                    String categoryName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
+                    splitPackageOne = functionsClass.readFileLine(categoryName)[0];
+                    splitPackageTwo = functionsClass.readFileLine(categoryName)[1];
+
+                }
 
                 AccessibilityEvent accessibilityEvent = AccessibilityEvent.obtain();
                 accessibilityEvent.setSource(new Button(getApplicationContext()));
@@ -104,81 +114,17 @@ public class SplitTransparentPair extends AppCompatActivity {
                 accessibilityEvent.getText().add(getPackageName());
                 accessibilityManager.sendAccessibilityEvent(accessibilityEvent);
 
-                if (getIntent().getAction().equals("load_split_action_pair")) {
+                Intent splitOne = getPackageManager().getLaunchIntentForPackage(splitPackageOne);
+                splitOne.addFlags(
+                        Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
+                                Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    packageNameSplitOne = getIntent().getStringArrayExtra("packages")[0];
-                    packageNameSplitTwo = getIntent().getStringArrayExtra("packages")[1];
+                startActivity(splitOne);
 
-                } else if (getIntent().getAction().equals("load_split_action_pair_shortcut")) {
-
-                    String categoryName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-
-                    packageNameSplitOne = functionsClass.readFileLine(categoryName)[0];
-                    packageNameSplitTwo = functionsClass.readFileLine(categoryName)[1];
-
-                }
-
-                IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction("split_pair_finish");
-                intentFilter.addAction("Split_Apps_Pair_" + SplitTransparentPair.class.getSimpleName());
-                broadcastReceiver = new BroadcastReceiver() {
-
-                    @Override
-                    public void onReceive(Context context, Intent intent) {
-
-                        if (intent.getAction().equals("Split_Apps_Pair_" + SplitTransparentPair.class.getSimpleName())) {
-
-                            System.out.println("Split It; Received, Received, Received");
-
-                            new Handler().postDelayed(new Runnable() {
-
-                                @Override
-                                public void run() {
-
-                                    Intent splitOne = getPackageManager().getLaunchIntentForPackage(packageNameSplitOne);
-                                    splitOne.addFlags(
-                                            Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                                    Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                                    startActivity(splitOne);
-
-                                    functionsClass.Toast(functionsClass.appName(packageNameSplitOne), Gravity.TOP);
-
-                                    final Intent splitTwo = getPackageManager().getLaunchIntentForPackage(packageNameSplitTwo);
-                                    splitTwo.addFlags(
-                                            Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                                    Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                                    startActivity(splitTwo);
-
-                                    functionsClass.Toast(functionsClass.appName(packageNameSplitTwo), Gravity.BOTTOM);
-
-                                    sendBroadcast(new Intent("split_pair_finish"));
-
-                                }
-
-                            }, 500);
-
-                        } else if (intent.getAction().equals("split_pair_finish")) {
-
-                            SplitTransparentPair.this.finish();
-
-                        }
-                    }
-
-                };
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-
-                    registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
-
-                } else {
-
-                    registerReceiver(broadcastReceiver, intentFilter);
-
-                }
+                functionsClass.Toast(functionsClass.appName(splitPackageOne), Gravity.TOP);
 
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -188,19 +134,6 @@ public class SplitTransparentPair extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-
-        if (broadcastReceiver != null) {
-
-            try {
-
-                unregisterReceiver(broadcastReceiver);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
     }
 
     @Override
