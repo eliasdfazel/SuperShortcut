@@ -27,10 +27,12 @@ class SplitScreenService : AccessibilityService() {
 
                 className = event.className as String?
 
-                performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
+                val globalAction = performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
 
                 val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageOne)
-                splitIntent?.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+                splitIntent?.addFlags(
+                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                            Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(splitIntent)
                 Log.d(this@SplitScreenService.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageOne}")
 

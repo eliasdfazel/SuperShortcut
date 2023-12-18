@@ -104,7 +104,10 @@ class SplitTransparentPair : AppCompatActivity() {
                 accessibilityManager.sendAccessibilityEvent(accessibilityEvent)
 
                 val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo)
-                splitIntent?.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+                splitIntent?.addFlags(
+                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                            Intent.FLAG_ACTIVITY_NEW_TASK
+                )
                 startActivity(splitIntent)
                 Log.d(this@SplitTransparentPair.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageTwo}")
 
