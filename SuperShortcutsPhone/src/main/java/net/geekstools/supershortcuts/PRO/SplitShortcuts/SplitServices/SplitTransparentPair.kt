@@ -7,138 +7,120 @@
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityManager
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SecurityServices.Protection
+import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityManager;
-import android.widget.Button;
-import android.widget.Toast;
+class SplitTransparentPair : AppCompatActivity() {
 
-import androidx.appcompat.app.AppCompatActivity;
+    companion object {
+        var splitPackageOne = ""
+        var splitPackageTwo = ""
+    }
 
-import net.geekstools.supershortcuts.PRO.R;
-import net.geekstools.supershortcuts.PRO.SecurityServices.Protection;
-import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess;
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-public class SplitTransparentPair extends AppCompatActivity {
-
-    FunctionsClass functionsClass;
-
-    static String splitPackageOne, splitPackageTwo = "";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        SecurityServicesProcess securityServicesProcess = new SecurityServicesProcess(SplitTransparentPair.this);
+        val securityServicesProcess = SecurityServicesProcess(this@SplitTransparentPair)
 
         if (securityServicesProcess.securityServiceEnabled()) {
 
-            securityServicesProcess.protectIt(getIntent().getStringExtra(Intent.EXTRA_TEXT), new Protection() {
+            securityServicesProcess.protectIt(intent.getStringExtra(Intent.EXTRA_TEXT)!!,
+                object : Protection {
 
-                @Override
-                public void processNotProtected() {
+                    override fun processNotProtected() {
+                        splitProcess()
+                    }
 
-                    splitProcess();
+                    override fun processProtected() {
+                        Toast.makeText(applicationContext, getString(R.string.notAuthorized), Toast.LENGTH_LONG).show()
 
-                }
+                        this@SplitTransparentPair.finish()
 
-                @Override
-                public void processProtected() {
+                    }
 
-                    Toast.makeText(getApplicationContext(), getString(R.string.notAuthorized), Toast.LENGTH_LONG).show();
-
-                    SplitTransparentPair.this.finish();
-
-                }
-
-            });
+                })
 
         } else {
 
-            splitProcess();
+            splitProcess()
 
         }
-
     }
 
-    void splitProcess() {
-
+    fun splitProcess() {
         try {
 
-            functionsClass = new FunctionsClass(getApplicationContext());
+            val functionsClass: FunctionsClass = FunctionsClass(applicationContext)
 
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            getWindow().setNavigationBarColor(Color.TRANSPARENT);
+            val window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.statusBarColor = Color.TRANSPARENT
+            getWindow().navigationBarColor = Color.TRANSPARENT
 
-            if (!functionsClass.AccessibilityServiceEnabled() && !functionsClass.SettingServiceRunning(SplitScreenService.class)) {
+            if (!functionsClass.AccessibilityServiceEnabled() && !functionsClass!!.SettingServiceRunning(SplitScreenService::class.java)) {
 
-                functionsClass.AccessibilityService(this, true);
+                functionsClass.AccessibilityService(this, true)
 
             } else {
+                val accessibilityManager = getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
 
-                final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
+                if (intent.action == "load_split_action_pair") {
 
-                if (getIntent().getAction().equals("load_split_action_pair")) {
+                    splitPackageOne = intent.getStringArrayExtra("packages")!![0]
+                    splitPackageTwo = intent.getStringArrayExtra("packages")!![1]
 
-                    splitPackageOne = getIntent().getStringArrayExtra("packages")[0];
-                    splitPackageTwo = getIntent().getStringArrayExtra("packages")[1];
+                } else if (intent.action == "load_split_action_pair_shortcut") {
 
-                } else if (getIntent().getAction().equals("load_split_action_pair_shortcut")) {
+                    val categoryName = intent.getStringExtra(Intent.EXTRA_TEXT)
 
-                    String categoryName = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-
-                    splitPackageOne = functionsClass.readFileLine(categoryName)[0];
-                    splitPackageTwo = functionsClass.readFileLine(categoryName)[1];
+                    splitPackageOne = functionsClass.readFileLine(categoryName)!![0]
+                    splitPackageTwo = functionsClass.readFileLine(categoryName)!![1]
 
                 }
 
-                AccessibilityEvent accessibilityEvent = AccessibilityEvent.obtain();
-                accessibilityEvent.setSource(new Button(getApplicationContext()));
-                accessibilityEvent.setEventType(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
-                accessibilityEvent.setAction(10296);
-                accessibilityEvent.setClassName(SplitTransparentPair.class.getSimpleName());
-                accessibilityEvent.getText().add(getPackageName());
-                accessibilityManager.sendAccessibilityEvent(accessibilityEvent);
+                val accessibilityEvent = AccessibilityEvent.obtain()
+                accessibilityEvent.setSource(Button(applicationContext))
+                accessibilityEvent.eventType = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+                accessibilityEvent.action = 10296
+                accessibilityEvent.className = SplitTransparentPair::class.java.simpleName
+                accessibilityEvent.text.add(packageName)
+                accessibilityManager.sendAccessibilityEvent(accessibilityEvent)
 
-                Intent splitIntent = getPackageManager().getLaunchIntentForPackage(splitPackageTwo);
-                splitIntent.addFlags(
-                        Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                startActivity(splitIntent);
+                val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo)
+                splitIntent!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(splitIntent)
+                Log.d(this@SplitTransparentPair.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageTwo}")
 
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+    public override fun onPause() {
+        super.onPause()
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        SplitTransparentPair.this.finish();
-
+    public override fun onDestroy() {
+        super.onDestroy()
+        finish()
     }
 
 }

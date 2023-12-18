@@ -7,62 +7,54 @@
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
+import android.accessibilityservice.AccessibilityService
+import android.content.Intent
+import android.util.Log
+import android.view.accessibility.AccessibilityEvent
 
-import android.accessibilityservice.AccessibilityService;
-import android.content.Intent;
-import android.view.accessibility.AccessibilityEvent;
+class SplitScreenService : AccessibilityService() {
 
-public class SplitScreenService extends AccessibilityService {
+    var className: String? = "Default"
 
-    String className = "Default";
+    override fun onServiceConnected() {}
 
-    @Override
-    protected void onServiceConnected() {
-    }
+    override fun onAccessibilityEvent(event: AccessibilityEvent) {
 
-    @Override
-    public void onAccessibilityEvent(final AccessibilityEvent event) {
-        switch (event.getEventType()) {
-            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                if (event.getAction() == 10296) {
+        when (event.eventType) {
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> if (event.action == 10296) {
 
-                    className = (String) event.getClassName();
+                className = event.className as String?
 
-                    performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN);
+                performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
 
-                    final Intent splitIntent = getPackageManager().getLaunchIntentForPackage(SplitTransparentPair.splitPackageOne);
-                    splitIntent.addFlags(
-                            Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                    Intent.FLAG_ACTIVITY_NEW_TASK);
+                val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageOne)
+                splitIntent!!.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(splitIntent)
+                Log.d(this@SplitScreenService.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageOne}")
 
-                    startActivity(splitIntent);
+            } else if (event.action == 69201) {
 
-                } else if (event.getAction() == 69201) {
+                className = event.className as String?
 
-                    className = (String) event.getClassName();
+                performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
 
-                    performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN);
-
-                }
-
-                break;
+            }
         }
+
     }
 
-    @Override
-    public void onInterrupt() {
-        startService(new Intent(getApplicationContext(), SplitScreenService.class));
+    override fun onInterrupt() {
+        startService(Intent(applicationContext, SplitScreenService::class.java))
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    override fun onCreate() {
+        super.onCreate()
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    override fun onDestroy() {
+        super.onDestroy()
     }
+
 }
