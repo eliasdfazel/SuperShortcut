@@ -43,46 +43,20 @@
     <string name="buy" translatable="false">Purchase</string>
     <string name="free" translatable="false">Free Edition</string>
     <string name="contact" translatable="false">Contact me</string>
-    <string name="license_info" translatable="false">License Issuing</string>
-    <string name="license_info_desc" translatable="false">Retrieving License Information from Google Play Store</string>
-    <string name="license_title" translatable="false">
-        <![CDATA[
-            <b>License Validating Issue</b>
-        ]]>
-    </string>
-    <string name="license_msg" translatable="false">
-        <![CDATA[
-            <br/>
-            <b>Hi</b>&#8230; &#9786;<br/>
-            <small>Super Shortcuts has been installed illegally & It can cause Security Risk ⚠️<br/><br/>
-            <b>Please, Consider following Solutions</b>&#8230;<br/>
-            1. Purchase Super Shortcuts from Google Play Store <big>💳</big><br/>
-            2. Install Free Edition from Google Play Store <big>🆓</big><br/>
-            3. Always Ready to Help, Contact me! <big>📧</big></small>
-        ]]>
-    </string>
 
     <string name="translatorTitle" translatable="false">🌎🌍🌏 Translated With 💖 By... </string>
 
     <string name="whatsnew" translatable="false">What\'s New…</string>
     <string name="changelog" translatable="false">
         <![CDATA[
-            🔵 We Recently <b>Translated</b> Applications <br/>
-            &bull; Please, Let us know If you found any errors on the translations <br/>
-            &bull; Also, send request for translating to your native language via Support@GeeksEmpire.co
-            <br/>
-            <br/>
             🔵 <b>Security Services 🔒</b><br/>
             &bull; Lock Your Applications/Games To Protect Your Privacy <br/>
-            &bull; Protect Your Data from Malwares/Spywares (We Warn You About Opening A Malicious Applications)
-            <br/>
+            &bull; Protect Your Data from Malwares/Spywares (We Warn You About Opening A Malicious Applications)<br/>
             <br/>
             🔵 <b>Mix Shortcuts 💠</b><br/>
             &bull; Combine App/Split/Folder Shortcuts Together<br/>
-            &bull; Go to Preferences ⚙ to Enable It.
+            &bull; Go to Preferences ⚙ to Enable It.<br/>
             <br/>
-            <br/>
-            /* <b>Please, Go to App Page for More Details</b> ⭐👍*/
         ]]>
     </string>
 

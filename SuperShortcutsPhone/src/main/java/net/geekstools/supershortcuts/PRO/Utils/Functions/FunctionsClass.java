@@ -49,7 +49,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -1712,96 +1711,6 @@ public class FunctionsClass {
         AppOpsManager appOps = (AppOpsManager) context.getSystemService(APP_OPS_SERVICE);
         int mode = appOps.checkOp("android:get_usage_stats", android.os.Process.myUid(), context.getPackageName());
         return (mode == AppOpsManager.MODE_ALLOWED);
-    }
-
-    public void dialogueLicense(Activity instanceOfActivity) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(instanceOfActivity, R.style.GeeksEmpire_Dialogue_Light);
-        alertDialog.setTitle(Html.fromHtml(context.getString(R.string.license_title), Html.FROM_HTML_MODE_LEGACY));
-        alertDialog.setMessage(Html.fromHtml(context.getString(R.string.license_msg), Html.FROM_HTML_MODE_LEGACY));
-        alertDialog.setIcon(R.drawable.ic_launcher);
-        alertDialog.setCancelable(false);
-
-        alertDialog.setPositiveButton(context.getString(R.string.buy), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.play_store_link) + context.getPackageName()));
-                r.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                instanceOfActivity.startActivity(r);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Uri packageUri = Uri.parse("package:" + context.getPackageName());
-                        Intent uninstallIntent =
-                                new Intent(Intent.ACTION_UNINSTALL_PACKAGE, packageUri);
-                        uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        instanceOfActivity.startActivity(uninstallIntent);
-                    }
-                }, 2333);
-            }
-        });
-        alertDialog.setNeutralButton(context.getString(R.string.contact), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                //dialog.dismiss();
-                String[] contactOption = new String[]{
-                        "Send an Email",
-                        "Contact via Forum"};
-                AlertDialog.Builder builder = new AlertDialog.Builder(instanceOfActivity);
-                builder.setTitle(context.getString(R.string.supportTitle));
-                builder.setSingleChoiceItems(contactOption, 0, null);
-                builder.setCancelable(false);
-                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                        if (selectedPosition == 0) {
-                            String textMsg = "\n\n\n\n\n"
-                                    + "[Essential Information]" + "\n"
-                                    + getDeviceName() + " | " + "API " + Build.VERSION.SDK_INT + " | " + getCountryIso().toUpperCase();
-                            Intent email = new Intent(Intent.ACTION_SEND);
-                            email.putExtra(Intent.EXTRA_EMAIL, new String[]{context.getString(R.string.support)});
-                            email.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.feedback_tag) + " [" + appVersionName(context.getPackageName()) + "] ");
-                            email.putExtra(Intent.EXTRA_TEXT, textMsg);
-                            email.setType("message/*");
-                            email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            instanceOfActivity.startActivity(Intent.createChooser(email, context.getString(R.string.feedback_tag)));
-                        } else if (selectedPosition == 1) {
-                            Intent r = new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.link_xda)));
-                            r.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            instanceOfActivity.startActivity(r);
-                        }
-                    }
-                });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        instanceOfActivity.finish();
-                    }
-                });
-                builder.show();
-            }
-        });
-        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                dialog.dismiss();
-            }
-        });
-        try {
-            alertDialog.show();
-        } catch (Exception e) {
-            instanceOfActivity.finish();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    context.startActivity(context.getPackageManager().getLaunchIntentForPackage(context.getPackageName()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                }
-            }, 300);
-        }
     }
 
     public void upcomingChangeLog(Activity activity, String updateInfo, String versionCode) {
