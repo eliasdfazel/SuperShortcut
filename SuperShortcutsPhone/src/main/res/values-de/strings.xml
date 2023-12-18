@@ -57,7 +57,11 @@
     <string name="typeSplitName">Erstmaliger Splitname</string>
     <string name="grant">Grant Permission</string>
     <string name="split_service_desc">
-        Split Super Shortcuts ᴾᴿᴼ | Diese Berechtigung berechtigt die App Multi-Fenster zu nutzen &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen (Android 7 &amp; höher)\n\nâ™¿ Wie hilft die App Behinderten?\nIt Es ist für Behinderte unter Umständen schwer eine App zu öffnen oder zwischen Apps zu wechseln. Die Bedienhilfe-Services erlauben der App den Multi-Fenster Modus zu starten.
+        Split Super Shortcuts
+        \n
+        \n
+        ℹ️ Erlaubnis für den Barrierefreiheitsdienst;\n
+        Zum gleichzeitigen Erstellen mehrerer Fenster und offener Anwendungen im geteilten Bildschirm, um die Produktivität und das Multitasking zu steigern.\n
     </string>
     <string name="split_service_summary">
         Split Shortcuts | Diese Berechtigung erlaubt der App den Multi-Fenster Modus zu starten. &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen
@@ -65,10 +69,8 @@
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                Diese Berechtigung erlaubt der App den Multi-Fenster Modus zu starten. &amp; Zwei Apps im Split-Screen Modus gleichzeitig öffnen.<br/>(<big>Android 7 & höher</big>)<br/><br/>
-                ♿ <b>Wie hilft es Behinderten</b>?<br/>
-                Es ist für Behinderte unter Umständen schwer eine App zu öffnen oder zwischen Apps zu wechseln.<br/>
-                Daher verwendet die App die Bedienhilfe-Services um den Multi-Fenster Modus zu nutzen.<br/>
+                ℹ️ Erlaubnis für den Barrierefreiheitsdienst;<br/>
+                Zum gleichzeitigen Erstellen mehrerer Fenster und offener Anwendungen im geteilten Bildschirm, um die Produktivität und das Multitasking zu steigern.<br/>
         ]]>
     </string>
 

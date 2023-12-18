@@ -58,12 +58,11 @@
         ]]>
     </string>
     <string name="split_service_desc">
-        Dziel superskróty | To uprawnienie daje mi możliwość tworzenia wielu okien &amp; Otwórz aplikacje na podzielonym ekranie jednocześnie (Android 7 &amp; Higher)
+        Dziel superskróty
         \n
         \n
-        ♿ Jak pomaga osobom niepełnosprawnym?
-        \n
-        Osobom niepełnosprawnym trudno jest otworzyć aplikację lub przełączać się między aplikacjami. Korzystam z usługi ułatwień dostępu, aby przejść do trybu wielu okien i otworzyć dwie aplikacje jednocześnie.
+        ℹ️ Zezwolenie na usługę ułatwień dostępu;\n
+        Aby jednocześnie tworzyć aplikacje obsługujące wiele okien i otwarte na podzielonym ekranie, aby zwiększyć produktywność i wielozadaniowość.\n
     </string>
     <string name="split_service_summary">
         Dzielone skróty | To uprawnienie daje mi możliwość tworzenia wielu okien &amp; Otwórz aplikacje na podzielonym ekranie jednocześnie
@@ -71,14 +70,8 @@
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                To uprawnienie pozwala mi tworzyć tryb wielu okien &amp; Otwórz parę aplikacji jednocześnie na podzielonym ekranie.<br/>(<big>Android 7 & Higher</big>)
-                <br/>
-                <br/>
-                ♿ <b>Jak pomaga osobom niepełnosprawnym</b>?
-                <br/>
-                Osobom niepełnosprawnym trudno jest otworzyć aplikację lub przełączać się między aplikacjami.
-                <br/>
-                Korzystam więc z usługi ułatwień dostępu, aby utworzyć tryb wielu okien, aby razem otwierać dwie aplikacje.
+                ℹ️ Zezwolenie na usługę ułatwień dostępu;<br/>
+                Aby jednocześnie tworzyć aplikacje obsługujące wiele okien i otwarte na podzielonym ekranie, aby zwiększyć produktywność i wielozadaniowość.<br/>
                 <br/>
         ]]>
     </string>

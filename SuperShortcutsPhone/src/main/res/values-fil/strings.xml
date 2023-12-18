@@ -58,11 +58,10 @@
     <string name="grant">Pinayagang pahintulot</string>
 
     <string name="split_service_desc">
-        Hati Super Shortcuts | Ang pahintulot na ito ay nagbibigay sa akin ng kakayahang lumikha ng Multi-Window &amp; Buksan ang Apps sa Hati Screen Sabay-sabay (Android 7 &amp; Higher)
+        Hati Super Shortcuts
         \n\n
-        ♿ Paano Ito Nakakatulong sa Mga Taong May Kapansanan?
-        \n
-        Mahirap para sa mga taong may kapansanan na magbukas ng app O lumipat sa pagitan ng mga app. Gumagamit ako ng Serbisyo ng Accessibility para pumasok sa Multi-Window Mode para magbukas ng dalawang app nang magkasama.
+        ℹ️ Pahintulot sa Serbisyo sa Accessibility;\n
+        Upang Gumawa ng Multi-Window at Magbukas ng Mga Application sa Split Screen nang Sabay-sabay upang Palakihin ang Produktibidad at Multitasking.\n
     </string>
     <string name="split_service_summary">
         Hati Shortcuts | Ang Pahintulot na Ito ay Nagbibigay sa Akin ng Kakayahang Gumawa ng Multi-Window &amp; Buksan ang Apps sa Hati Screen Sabay-sabay
@@ -70,11 +69,8 @@
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                Ang Pahintulot na Ito ay Nagbibigay-daan sa Akin na Gumawa ng Multi-Window Mode &amp; Buksan ang Pares ng Apps sa Hati Screen Sabay-sabay.
-                <br/>(<big>Android 7 & Higher</big>)<br/><br/>
-                ♿ <b>Paano Ito Nakakatulong sa Mga Taong May Kapansanan</b>?<br/>
-                Mahirap para sa mga taong may kapansanan na magbukas ng isang app o lumipat sa pagitan ng mga app.<br/>
-                Kaya, Gumagamit Ako ng Serbisyo ng Accessibility para Gumawa ng Multi-Window Mode para Magbukas ng Dalawang App nang Magkasama.<br/>
+                ℹ️ Pahintulot sa Serbisyo sa Accessibility;<br/>
+                Upang Gumawa ng Multi-Window at Magbukas ng Mga Application sa Split Screen nang Sabay-sabay upang Palakihin ang Produktibidad at Multitasking.<br/>
         ]]>
     </string>
 

@@ -58,12 +58,11 @@
         ]]>
     </string>
     <string name="split_service_desc">
-        Dela supergenvägar | Denna behörighet ger mig möjligheten att skapa Multi-Window &amp; Öppna appar på delad skärm samtidigt (Android 7 &amp; Higher)
+        Dela supergenvägar
         \n
         \n
-        ♿ Hur hjälper det människor med funktionshinder?
-        \n
-        Det är svårt för personer med funktionsnedsättning att öppna en app eller växla mellan appar. Jag använder Accessibility Service för att gå in i Multi-Window Mode för att öppna två appar tillsammans.
+        ℹ️ Tillstånd för tillgänglighetstjänst;\n
+        Att skapa flera fönster och öppna applikationer i delad skärm samtidigt för att öka produktiviteten och multitasking.\n
     </string>
     <string name="split_service_summary">
         Dela genvägar | Denna behörighet ger mig en förmåga att skapa flera fönster &amp; Öppna appar på delad skärm samtidigt
@@ -71,14 +70,8 @@
     <string name="observeDesc">
         <![CDATA[
                 <br/>
-                Denna behörighet tillåter mig att skapa flerfönsterläge &amp; Öppna ett par appar på delad skärm samtidigt.<br/>(<big>Android 7 & Higher</big>)
-                <br/>
-                <br/>
-                ♿ <b>Hur hjälper det människor med funktionshinder</b>?
-                <br/>
-                Det är svårt för personer med funktionshinder att öppna en app eller växla mellan appar.
-                <br/>
-                Så jag använder tillgänglighetstjänsten för att skapa flerfönsterläge för att öppna två appar tillsammans.
+                ℹ️ Tillstånd för tillgänglighetstjänst;<br/>
+                Att skapa flera fönster och öppna applikationer i delad skärm samtidigt för att öka produktiviteten och multitasking.<br/>
                 <br/>
         ]]>
     </string>
