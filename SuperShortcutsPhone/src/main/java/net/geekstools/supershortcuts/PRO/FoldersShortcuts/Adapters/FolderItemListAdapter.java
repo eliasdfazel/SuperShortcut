@@ -107,6 +107,8 @@ public class FolderItemListAdapter extends BaseAdapter {
                         .putExtra("package", adapterItemsData.get(position).getPackageName())
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
+                listPopupWindow.dismiss();
+
                 return true;
             }
         });

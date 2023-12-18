@@ -116,6 +116,13 @@ class LoadFolderPopupShortcuts : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        this@LoadFolderPopupShortcuts.finish()
+
+    }
+
     fun openFolder() {
 
         if (functionsClass.customIconsEnable()) {

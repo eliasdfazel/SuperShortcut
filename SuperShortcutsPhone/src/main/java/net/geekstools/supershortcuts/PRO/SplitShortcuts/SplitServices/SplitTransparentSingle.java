@@ -11,14 +11,9 @@
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,13 +27,12 @@ public class SplitTransparentSingle extends Activity {
 
     FunctionsClass functionsClass;
 
-    String packageNameSplit;
-
-    BroadcastReceiver broadcastReceiver;
+    static String splitPackageOne = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         functionsClass = new FunctionsClass(getApplicationContext());
 
         Window window = getWindow();
@@ -48,10 +42,23 @@ public class SplitTransparentSingle extends Activity {
         window.setStatusBarColor(Color.TRANSPARENT);
         getWindow().setNavigationBarColor(Color.TRANSPARENT);
 
-        final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
         if (!functionsClass.AccessibilityServiceEnabled()) {
+
             functionsClass.AccessibilityService(this, true);
+
         } else {
+
+            final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
+
+            splitPackageOne = getIntent().getStringExtra("package");
+
+            Intent splitOne = getPackageManager().getLaunchIntentForPackage(splitPackageOne);
+            splitOne.addFlags(
+                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            startActivity(splitOne);
+
             AccessibilityEvent event = AccessibilityEvent.obtain();
             event.setSource(new Button(getApplicationContext()));
             event.setEventType(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
@@ -60,72 +67,14 @@ public class SplitTransparentSingle extends Activity {
             event.getText().add(getPackageName());
             accessibilityManager.sendAccessibilityEvent(event);
 
-            packageNameSplit = getIntent().getStringExtra("package");
-
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("split_single_finish");
-            intentFilter.addAction("Split_Apps_Single_" + SplitTransparentSingle.class.getSimpleName());
-            broadcastReceiver = new BroadcastReceiver() {
-
-                @Override
-                public void onReceive(Context context, Intent intent) {
-
-                    if (intent.getAction().equals("Split_Apps_Single_" + SplitTransparentSingle.class.getSimpleName())) {
-
-                        new Handler().postDelayed(new Runnable() {
-
-                            @Override
-                            public void run() {
-
-                                Intent splitOne = getPackageManager().getLaunchIntentForPackage(packageNameSplit);
-                                splitOne.addFlags(
-                                        Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                                                Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                                startActivity(splitOne);
-
-                            }
-                        }, 500);
-
-                    } else if (intent.getAction().equals("split_single_finish")) {
-
-                        SplitTransparentSingle.this.finish();
-
-                    }
-                }
-
-            };
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-
-                registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
-
-            } else {
-
-                registerReceiver(broadcastReceiver, intentFilter);
-
-            }
-
         }
+
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-
-        if (broadcastReceiver != null) {
-
-            try {
-
-                unregisterReceiver(broadcastReceiver);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
     }
 
     @Override

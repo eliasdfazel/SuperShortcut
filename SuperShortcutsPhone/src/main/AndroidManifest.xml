@@ -165,7 +165,7 @@
             android:noHistory="true"
             android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
-            android:theme="@style/Transparent">
+            android:theme="@android:style/Theme.Material.Wallpaper.NoTitleBar">
             <intent-filter>
                 <action android:name="load_split_action_single" />
                 <action android:name="load_split_action_single_shortcut" />

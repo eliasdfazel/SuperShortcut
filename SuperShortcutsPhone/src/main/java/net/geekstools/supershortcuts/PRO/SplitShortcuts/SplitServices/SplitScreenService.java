@@ -32,12 +32,12 @@ public class SplitScreenService extends AccessibilityService {
 
                     performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN);
 
-                    final Intent splitTwo = getPackageManager().getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo);
-                    splitTwo.addFlags(
+                    final Intent splitIntent = getPackageManager().getLaunchIntentForPackage(SplitTransparentPair.splitPackageOne);
+                    splitIntent.addFlags(
                             Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
                                     Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                    startActivity(splitTwo);
+                    startActivity(splitIntent);
 
                 } else if (event.getAction() == 69201) {
 

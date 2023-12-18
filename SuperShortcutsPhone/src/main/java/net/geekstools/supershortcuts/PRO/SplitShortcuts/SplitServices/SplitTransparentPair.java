@@ -13,7 +13,6 @@ package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -114,14 +113,12 @@ public class SplitTransparentPair extends AppCompatActivity {
                 accessibilityEvent.getText().add(getPackageName());
                 accessibilityManager.sendAccessibilityEvent(accessibilityEvent);
 
-                Intent splitOne = getPackageManager().getLaunchIntentForPackage(splitPackageOne);
-                splitOne.addFlags(
+                Intent splitIntent = getPackageManager().getLaunchIntentForPackage(splitPackageTwo);
+                splitIntent.addFlags(
                         Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
                                 Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                startActivity(splitOne);
-
-                functionsClass.Toast(functionsClass.appName(splitPackageOne), Gravity.TOP);
+                startActivity(splitIntent);
 
             }
 
