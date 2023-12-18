@@ -10,13 +10,8 @@
   -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/shadow_circle" />
     <item
-        android:id="@+id/temporaryBackground"
-        android:bottom="1dp"
-        android:left="1dp"
-        android:right="1dp"
-        android:top="1dp">
+        android:id="@+id/temporaryBackground">
         <shape android:shape="oval">
             <solid android:color="@color/light" />
         </shape>

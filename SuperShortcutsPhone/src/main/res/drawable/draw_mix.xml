@@ -3,7 +3,7 @@
   ~ Copyright © 2020 By Geeks Empire.
   ~
   ~ Created by Elias Fazel
-  ~ Last modified 5/1/20 2:29 PM
+  ~ Last modified 5/1/20 1:25 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -16,5 +16,5 @@
         </shape>
     </item>
 
-    <item android:drawable="@drawable/w_mix"/>
+    <item android:drawable="@drawable/w_mix"></item>
 </layer-list>
