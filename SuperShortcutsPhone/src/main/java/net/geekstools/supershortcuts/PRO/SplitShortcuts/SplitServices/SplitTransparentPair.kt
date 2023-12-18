@@ -24,12 +24,17 @@ import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.SecurityServices.Protection
 import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
+import net.geekstools.supershortcuts.PRO.Utils.Functions.SystemInformation
 
 class SplitTransparentPair : AppCompatActivity() {
 
     companion object {
         var splitPackageOne = ""
         var splitPackageTwo = ""
+    }
+
+    val systemInformation by lazy {
+        SystemInformation(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
