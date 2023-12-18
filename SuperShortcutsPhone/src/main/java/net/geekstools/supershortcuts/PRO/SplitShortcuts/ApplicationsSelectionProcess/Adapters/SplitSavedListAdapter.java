@@ -12,7 +12,6 @@ package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionPr
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,8 +80,6 @@ public class SplitSavedListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 context.deleteFile(navDrawerItems.get(position).getPackageName() + PublicVariable.categoryName);
                 functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
-                context.sendBroadcast(new Intent(context.getString(R.string.checkboxActionSplit)));
-                context.sendBroadcast(new Intent(context.getString(R.string.counterActionSplit)));
             }
         });
 

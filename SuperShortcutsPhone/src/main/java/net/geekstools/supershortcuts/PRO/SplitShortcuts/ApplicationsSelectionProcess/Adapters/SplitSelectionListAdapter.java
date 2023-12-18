@@ -11,7 +11,6 @@
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess.Adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -126,10 +125,6 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.counterActionSplit)));
-
-                            appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.savedActionHideSplit)));
-                            appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.visibilityActionSplit)));
                         } else {
                             if (PublicVariable.SplitMaxAppShortcutsCounter < PublicVariable.SplitMaxAppShortcuts) {
                                 functionsClass.saveFile(
@@ -155,8 +150,6 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                                 translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
                                     public void onAnimationStart(Animation animation) {
-                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.savedActionHideSplit)));
-                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.visibilityActionSplit)));
 
                                         tempIcon.setVisibility(View.VISIBLE);
                                     }
@@ -164,8 +157,6 @@ public class SplitSelectionListAdapter extends RecyclerView.Adapter<SplitSelecti
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         tempIcon.setVisibility(View.INVISIBLE);
-                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.animtaionActionSplit)));
-                                        appCompatActivity.sendBroadcast(new Intent(appCompatActivity.getString(R.string.counterActionSplit)));
                                     }
 
                                     @Override

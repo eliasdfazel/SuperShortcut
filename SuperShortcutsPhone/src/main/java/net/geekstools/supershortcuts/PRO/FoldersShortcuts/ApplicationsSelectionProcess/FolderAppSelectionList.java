@@ -290,7 +290,6 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
                     if (!resetAdapter) {
                         folderAppsSelectionViewBinding.loadingSplash.startAnimation(anim);
                     }
-                    sendBroadcast(new Intent(getString(R.string.visibilityActionAdvance)));
 
                     PublicVariable.advMaxAppShortcutsCounter = functionsClass.countLine(PublicVariable.categoryName);
                     resetAdapter = false;

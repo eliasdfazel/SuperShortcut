@@ -364,7 +364,6 @@ class PreferencesUI : AppCompatActivity() {
             customIconList.adapter = customIconsThemeAdapter
 
             defaultTheme.setOnClickListener {
-                sendBroadcast(Intent("CUSTOM_DIALOGUE_DISMISS"))
                 functionsClass.saveDefaultPreference("customIcon", packageName)
                 preferenceViewBinding.customIconIcon.setImageDrawable(getDrawable(R.drawable.draw_pref_custom_icon))
                 dialog.dismiss()

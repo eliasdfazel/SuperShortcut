@@ -11,7 +11,6 @@
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess;
 
 import android.app.ActivityOptions;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
@@ -291,7 +290,6 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                     if (!resetAdapter) {
                         splitAppSelectionListBinding.loadingSplash.startAnimation(anim);
                     }
-                    sendBroadcast(new Intent(getString(R.string.visibilityActionSplit)));
 
                     PublicVariable.SplitMaxAppShortcutsCounter = functionsClass.countLine(PublicVariable.categoryName);
                     resetAdapter = false;

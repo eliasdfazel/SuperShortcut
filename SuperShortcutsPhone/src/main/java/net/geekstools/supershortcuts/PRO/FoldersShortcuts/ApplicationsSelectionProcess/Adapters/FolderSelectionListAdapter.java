@@ -13,7 +13,6 @@ package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelection
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -125,10 +124,6 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                             context.deleteFile(pack + PublicVariable.categoryName);
                             functionsClass.removeLine(PublicVariable.categoryName, navDrawerItems.get(position).getPackageName());
                             viewHolderBinder.autoChoice.setChecked(false);
-                            context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
-
-                            context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideAdvance)));
-                            context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionAdvance)));
                         } else {
                             if (PublicVariable.advMaxAppShortcutsCounter < PublicVariable.advMaxAppShortcuts) {
                                 functionsClass.saveFile(
@@ -149,8 +144,6 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                                 translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
                                     public void onAnimationStart(Animation animation) {
-                                        context.sendBroadcast(new Intent(context.getString(R.string.savedActionHideAdvance)));
-                                        context.sendBroadcast(new Intent(context.getString(R.string.visibilityActionAdvance)));
 
                                         tempIcon.setVisibility(View.VISIBLE);
                                     }
@@ -158,7 +151,6 @@ public class FolderSelectionListAdapter extends RecyclerView.Adapter<FolderSelec
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         tempIcon.setVisibility(View.INVISIBLE);
-                                        context.sendBroadcast(new Intent(context.getString(R.string.counterActionAdvance)));
                                     }
 
                                     @Override
