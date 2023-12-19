@@ -12,6 +12,8 @@ package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -108,13 +110,17 @@ class SplitTransparentPair : AppCompatActivity() {
                 accessibilityEvent.text.add(packageName)
                 accessibilityManager.sendAccessibilityEvent(accessibilityEvent)
 
-                val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo)
-                splitIntent?.addFlags(
-                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
-                            Intent.FLAG_ACTIVITY_NEW_TASK
-                )
-                startActivity(splitIntent)
-                Log.d(this@SplitTransparentPair.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageTwo}")
+                Handler(Looper.getMainLooper()).postDelayed({
+
+                    val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo)
+                    splitIntent?.addFlags(
+                        Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                                Intent.FLAG_ACTIVITY_NEW_TASK
+                    )
+                    startActivity(splitIntent)
+                    Log.d(this@SplitTransparentPair.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageTwo}")
+
+                }, 666)
 
             }
         } catch (e: Exception) {

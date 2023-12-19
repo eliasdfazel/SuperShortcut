@@ -11,8 +11,14 @@
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/default_color" />
-    <item>
+    <item
+        android:drawable="@color/default_color" />
+
+    <item
+        android:left="37dp"
+        android:right="37dp"
+        android:top="37dp"
+        android:bottom="37dp">
         <bitmap
             android:gravity="center"
             android:src="@drawable/ic_launcher" />
