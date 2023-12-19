@@ -7,81 +7,75 @@
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices;
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
+import android.os.Build
+import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityManager
+import android.widget.Button
+import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityManager;
-import android.widget.Button;
+class SplitTransparentSingle : Activity() {
 
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
+    companion object {
+        var splitPackageOne: String? = ""
+    }
 
-public class SplitTransparentSingle extends Activity {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    FunctionsClass functionsClass;
+        val functionsClass = FunctionsClass(applicationContext)
 
-    static String splitPackageOne = "";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        functionsClass = new FunctionsClass(getApplicationContext());
-
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        window.setStatusBarColor(Color.TRANSPARENT);
-        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+        val window = window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.statusBarColor = Color.TRANSPARENT
+        getWindow().navigationBarColor = Color.TRANSPARENT
 
         if (!functionsClass.AccessibilityServiceEnabled()) {
 
-            functionsClass.AccessibilityService(this, true);
+            functionsClass.AccessibilityService(this, true)
 
         } else {
 
-            final AccessibilityManager accessibilityManager = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
 
-            splitPackageOne = getIntent().getStringExtra("package");
+            splitPackageOne = intent.getStringExtra("package")
+            val splitOne = packageManager.getLaunchIntentForPackage(splitPackageOne!!)
+            splitOne!!.addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(splitOne)
 
-            Intent splitOne = getPackageManager().getLaunchIntentForPackage(splitPackageOne);
-            splitOne.addFlags(
-                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT |
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
+            val accessibilityManager = getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
 
-            startActivity(splitOne);
+            val accessibilityEvent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                AccessibilityEvent()
+            } else {
+                AccessibilityEvent.obtain()
+            }
+            accessibilityEvent.setSource(Button(applicationContext))
+            accessibilityEvent.eventType = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+            accessibilityEvent.action = 69201
+            accessibilityEvent.className = SplitTransparentSingle::class.java.simpleName
+            accessibilityEvent.text.add(packageName)
 
-            AccessibilityEvent event = AccessibilityEvent.obtain();
-            event.setSource(new Button(getApplicationContext()));
-            event.setEventType(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
-            event.setAction(69201);
-            event.setClassName(SplitTransparentSingle.class.getSimpleName());
-            event.getText().add(getPackageName());
-            accessibilityManager.sendAccessibilityEvent(event);
-
+            accessibilityManager.sendAccessibilityEvent(accessibilityEvent)
         }
-
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public override fun onPause() {
+        super.onPause()
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public override fun onDestroy() {
+        super.onDestroy()
 
-        SplitTransparentSingle.this.finish();
-
+       this@SplitTransparentSingle.finish()
     }
+
 }

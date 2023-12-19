@@ -11,9 +11,8 @@ package net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -102,25 +101,26 @@ class SplitTransparentPair : AppCompatActivity() {
 
                 }
 
-                val accessibilityEvent = AccessibilityEvent.obtain()
+                val accessibilityEvent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    AccessibilityEvent()
+                } else {
+                    AccessibilityEvent.obtain()
+                }
                 accessibilityEvent.setSource(Button(applicationContext))
                 accessibilityEvent.eventType = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
                 accessibilityEvent.action = 10296
                 accessibilityEvent.className = SplitTransparentPair::class.java.simpleName
                 accessibilityEvent.text.add(packageName)
+
                 accessibilityManager.sendAccessibilityEvent(accessibilityEvent)
 
-                Handler(Looper.getMainLooper()).postDelayed({
-
-                    val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo)
-                    splitIntent?.addFlags(
-                        Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
-                                Intent.FLAG_ACTIVITY_NEW_TASK
-                    )
-                    startActivity(splitIntent)
-                    Log.d(this@SplitTransparentPair.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageTwo}")
-
-                }, 666)
+                val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo)
+                splitIntent?.addFlags(
+//                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
+                            Intent.FLAG_ACTIVITY_NEW_TASK
+                )
+                startActivity(splitIntent)
+                Log.d(this@SplitTransparentPair.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageTwo}")
 
             }
         } catch (e: Exception) {
@@ -134,7 +134,9 @@ class SplitTransparentPair : AppCompatActivity() {
 
     public override fun onDestroy() {
         super.onDestroy()
-        finish()
+
+        this@SplitTransparentPair.finish()
+
     }
 
 }
