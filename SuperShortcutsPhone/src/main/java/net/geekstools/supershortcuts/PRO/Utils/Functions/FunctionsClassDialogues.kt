@@ -81,9 +81,17 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         dialogueMessageBinding.followIt.setTextColor(activity.getColor(R.color.light))
 
         dialogueMessageBinding.rateIt.setOnClickListener {
-            activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.play_store_link))))
 
-            dialog.dismiss()
+            val shareText = activity.getString(R.string.shareTitle) +
+                    "\n" + activity.getString(R.string.shareSummary) +
+                    "\n" + activity.getString(R.string.play_store_link) + activity.packageName
+            val sharingIntent = Intent(Intent.ACTION_SEND).apply {
+                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                this.putExtra(Intent.EXTRA_TEXT, shareText)
+                this.type = "text/plain"
+            }
+            activity.startActivity(sharingIntent)
+
         }
 
         dialogueMessageBinding.followIt.setOnClickListener {
@@ -164,20 +172,18 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         dialogueMessageBinding.rateIt.setTextColor(activity.getColor(R.color.light))
         dialogueMessageBinding.followIt.setTextColor(activity.getColor(R.color.light))
 
-        dialogueMessageBinding.rateIt.text = if (betaChangeLog.contains(activity.packageName)) {
-            activity.getString(R.string.shareIt)
-        } else {
-            activity.getString(R.string.betaUpdate)
-        }
         dialogueMessageBinding.rateIt.setOnClickListener {
-            dialog.dismiss()
 
-            if (dialogueMessageBinding.rateIt.text == activity.getString(R.string.shareIt)) {
-                activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.play_store_link).toString() + activity.getPackageName()))
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            } else if (dialogueMessageBinding.rateIt.text == activity.getString(R.string.betaUpdate)) {
-                functionsClass.upcomingChangeLog(activity, betaChangeLog, betaVersionCode)
+            val shareText = activity.getString(R.string.shareTitle) +
+                    "\n" + activity.getString(R.string.shareSummary) +
+                    "\n" + activity.getString(R.string.play_store_link) + activity.packageName
+            val sharingIntent = Intent(Intent.ACTION_SEND).apply {
+                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                this.putExtra(Intent.EXTRA_TEXT, shareText)
+                this.type = "text/plain"
             }
+            activity.startActivity(sharingIntent)
+
         }
 
         dialogueMessageBinding.followIt.setOnClickListener {

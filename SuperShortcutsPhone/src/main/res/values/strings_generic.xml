@@ -14,7 +14,7 @@
     <string name="retry" translatable="false">Retry Now</string>
 
     <string name="signinTitle" translatable="false">Welcome to Geeks Empire!</string>
-    <string name="signinMessage" translatable="false">Thanks for Joining to Our #SuperShortcuts 🦸‍♀️  Community.</string>
+    <string name="signinMessage" translatable="false">Thanks for Joining to Our #SuperShortcut 🦸‍♀️  Community.</string>
     <string name="signinFinished" translatable="false"> ⚡ Become Master Of Multitasking ⚡ </string>
 
     <string name="share" translatable="false">Share With Friends</string>
@@ -33,10 +33,10 @@
     </string>
 
     <string name="shareTitle" translatable="false">
-        #FloatIt To Become Master Of Multitasking ⚡
+        Super Shortcut: Android #Multitasking and #Productivity
     </string>
     <string name="shareSummary" translatable="false">
-        Only One Click to Switch Apps by Floating Shortcuts, Floating Folders &amp; Floating Widgets | By @GeeksEmpire
+        Multitasking From One Shortcut. Remove All Shortcuts and Replace Them with Only One Super Shortcut - By @GeeksEmpire
     </string>
 
     <string name="error" translatable="false">Error Occurred</string>
