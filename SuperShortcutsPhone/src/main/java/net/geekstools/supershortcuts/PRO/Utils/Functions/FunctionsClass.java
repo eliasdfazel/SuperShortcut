@@ -215,7 +215,6 @@ public class FunctionsClass {
                 maxLoop = appShortcuts.size();
             }
             for (int i = 0; i < maxLoop; i++) {
-                FunctionsClassDebug.Companion.PrintDebug(appShortcuts.get(i));
                 String packageName = appShortcuts.get(i).split("\\|")[0];
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (isAppInstalled(packageName) == false) {
@@ -280,7 +279,6 @@ public class FunctionsClass {
                 maxLoop = appShortcuts.size();
             }
             for (int i = 0; i < maxLoop; i++) {
-                FunctionsClassDebug.Companion.PrintDebug(appShortcuts.get(i));
                 String packageName = appShortcuts.get(i).split("\\|")[0];
                 String className = appShortcuts.get(i).split("\\|")[1];
                 if (isAppInstalled(packageName) == false) {

@@ -12,11 +12,23 @@ package net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.android.billingclient.api.*
-import kotlinx.coroutines.*
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.ConsumeResponseListener
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryPurchasesParams
+import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.queryPurchasesAsync
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug.Companion.PrintDebug
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
 
 class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesUpdatedListener {
@@ -50,7 +62,6 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
                                 billingClient.queryPurchasesAsync(queryPurchasesParams).purchasesList.let { purchases ->
 
                                     for (purchase in purchases) {
-                                        FunctionsClassDebug.PrintDebug("*** Purchased Item: $purchase ***")
 
                                         functionsClass.savePreference(".PurchasedItem", purchase.products.first(), true)
 
@@ -60,7 +71,6 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
 
                                             val consumeResponseListener = ConsumeResponseListener { billingResult, purchaseToken ->
                                                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                                                    FunctionsClassDebug.PrintDebug("*** Consumed Item: $purchaseToken ***")
 
                                                     functionsClass.savePreference(".PurchasedItem", purchase.products.first(), false)
                                                 }
@@ -104,7 +114,6 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
                                 billingClient.queryPurchasesAsync(queryPurchasesParams).purchasesList.let { purchases ->
 
                                     for (purchase in purchases) {
-                                        PrintDebug("*** Subscribed Item: $purchase ***")
 
                                         functionsClass.savePreference(".SubscribedItem", purchase.products.first(), true)
 
@@ -152,7 +161,6 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
         fun purchaseAcknowledgeProcess(billingClient: BillingClient, purchase: Purchase, purchaseType: String) = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
 
             if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-                FunctionsClassDebug.PrintDebug("*** ${purchase.products.first()} Purchase Acknowledged: ${purchase.isAcknowledged} ***")
 
                 if (!purchase.isAcknowledged) {
 
@@ -161,7 +169,6 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
 
                     val aPurchaseResult: BillingResult = billingClient.acknowledgePurchase(acknowledgePurchaseParams.build())
 
-                    FunctionsClassDebug.PrintDebug("*** Purchased Acknowledged Result: ${purchase.products.first()} -> ${aPurchaseResult.debugMessage} ***")
                 }
             }
         }

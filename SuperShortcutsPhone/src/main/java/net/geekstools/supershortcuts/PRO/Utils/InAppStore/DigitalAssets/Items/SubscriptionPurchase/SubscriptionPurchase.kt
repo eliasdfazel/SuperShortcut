@@ -21,7 +21,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.*
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
@@ -34,8 +39,12 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
 import net.geekstools.supershortcuts.PRO.R
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.*
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToItemTitle
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigDescriptionKey
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigPriceInformation
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigScreenshotNumberKey
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToStorageScreenshotsDirectory
+import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToStorageScreenshotsFileName
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.SubscriptionPurchase.Extensions.setScreenshots
@@ -43,7 +52,7 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.Su
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.SubscriptionPurchase.Extensions.subscriptionPurchaseFlow
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Utils.PurchaseFlowController
 import net.geekstools.supershortcuts.PRO.databinding.InAppBillingSubscriptionPurchaseViewBinding
-import java.util.*
+import java.util.TreeMap
 
 class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListener {
 
@@ -133,7 +142,6 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
                     .build()
 
                 billingClient.queryProductDetailsAsync(queryProductDetailsParams) { queryBillingResult, productsDetailsListInApp ->
-                    FunctionsClassDebug.PrintDebug("Billing Result: ${queryBillingResult.debugMessage} | Sku Details List In App Purchase: $productsDetailsListInApp")
 
                     when (queryBillingResult.responseCode) {
                         BillingClient.BillingResponseCode.ERROR -> {

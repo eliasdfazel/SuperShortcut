@@ -26,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
@@ -56,7 +55,6 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterfa
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
 import java.lang.String
-import java.util.Calendar
 import kotlin.Boolean
 import kotlin.Float
 import kotlin.apply
@@ -103,6 +101,10 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         SwipeGestureListener(applicationContext, this@NormalAppShortcutsSelectionListPhone)
     }
 
+    val inAppUpdateProcess: InAppUpdateProcess by lazy {
+        InAppUpdateProcess(this@NormalAppShortcutsSelectionListPhone, normalAppSelectionBinding.root)
+    }
+
     companion object {
         const val NormalApplicationsShortcutsFile = ".autoSuper"
     }
@@ -132,6 +134,9 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
 
         //In-App Billing
         PurchasesCheckpoint(this@NormalAppShortcutsSelectionListPhone).trigger()
+
+        inAppUpdateProcess.onCreate()
+
     }
 
     override fun onStart() {
@@ -191,30 +196,13 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
 
                             normalAppSelectionBinding.preferencesView.setImageDrawable(logoDrawable)
 
-                            functionsClass.notificationCreator(
-                                    getString(R.string.updateAvailable),
-                                    firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
-                                    firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toInt()
-                            )
-
-                            val inAppUpdateTriggeredTime =
-                                    (Calendar.getInstance()[Calendar.YEAR].toString() + Calendar.getInstance()[Calendar.MONTH].toString() + Calendar.getInstance()[Calendar.DATE].toString())
-                                            .toInt()
-
-                            if (FirebaseAuth.getInstance().currentUser != null
-                                    && functionsClass.readPreference("InAppUpdate", "TriggeredDate", 0) < inAppUpdateTriggeredTime) {
-
-                                startActivity(Intent(applicationContext, InAppUpdateProcess::class.java)
-                                        .putExtra("UPDATE_CHANGE_LOG", firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()))
-                                        .putExtra("UPDATE_VERSION", firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
-                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                        ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
-                            }
-
                             updateAvailable = true
                         }
                     }
                 }
+
+        inAppUpdateProcess.onResume()
+
     }
 
     override fun onPause() {

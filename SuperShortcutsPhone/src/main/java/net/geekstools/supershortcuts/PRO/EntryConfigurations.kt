@@ -31,7 +31,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupDialogue.WaitingDialogue
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupDialogue.WaitingDialogueLiveData
@@ -131,10 +130,6 @@ class EntryConfigurations : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-
-    }
-
     private val googleSignInResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
         if (it.resultCode == Activity.RESULT_OK) {
@@ -147,7 +142,6 @@ class EntryConfigurations : AppCompatActivity() {
                 .addOnSuccessListener {
                     val firebaseUser = firebaseAuth.currentUser
                     if (firebaseUser != null) {
-                        FunctionsClassDebug.PrintDebug("Firebase Activities Done Successfully")
 
                         functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
 
@@ -187,8 +181,6 @@ class EntryConfigurations : AppCompatActivity() {
 
         PublicVariable.customIconsPackages.clear()
         for (resolveInfo in resolveInfos) {
-            FunctionsClassDebug.PrintDebug("CustomIconPackages ::: " + resolveInfo.activityInfo.packageName)
-
             PublicVariable.customIconsPackages.add(resolveInfo.activityInfo.packageName)
         }
     }

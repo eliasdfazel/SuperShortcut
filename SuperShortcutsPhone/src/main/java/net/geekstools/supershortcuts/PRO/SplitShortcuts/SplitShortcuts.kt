@@ -22,7 +22,6 @@ import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.BuildConfig
@@ -47,7 +46,6 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstan
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.databinding.SplitShortcutsViewBinding
-import java.util.*
 
 class SplitShortcuts : AppCompatActivity(),
         GestureListenerInterface {
@@ -79,6 +77,10 @@ class SplitShortcuts : AppCompatActivity(),
         SwipeGestureListener(applicationContext, this@SplitShortcuts)
     }
 
+    val inAppUpdateProcess: InAppUpdateProcess by lazy {
+        InAppUpdateProcess(this@SplitShortcuts, splitShortcutsViewBinding.root)
+    }
+
     companion object {
         const val SplitShortcutsFile = ".SplitSuper"
         const val SplitShortcutsSelectedFile = ".SplitSuperSelected"
@@ -107,6 +109,9 @@ class SplitShortcuts : AppCompatActivity(),
 
         //In-App Billing
         PurchasesCheckpoint(this@SplitShortcuts).trigger()
+
+        inAppUpdateProcess.onCreate()
+
     }
 
     override fun onStart() {
@@ -195,30 +200,13 @@ class SplitShortcuts : AppCompatActivity(),
 
                             splitShortcutsViewBinding.preferencesView.setImageDrawable(logoDrawable)
 
-                            functionsClass.notificationCreator(
-                                    getString(R.string.updateAvailable),
-                                    firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogSummaryConfigKey()),
-                                    firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toInt()
-                            )
-
-                            val inAppUpdateTriggeredTime =
-                                    (Calendar.getInstance()[Calendar.YEAR].toString() + Calendar.getInstance()[Calendar.MONTH].toString() + Calendar.getInstance()[Calendar.DATE].toString())
-                                            .toInt()
-
-                            if (FirebaseAuth.getInstance().currentUser != null
-                                    && functionsClass.readPreference("InAppUpdate", "TriggeredDate", 0) < inAppUpdateTriggeredTime) {
-
-                                startActivity(Intent(applicationContext, InAppUpdateProcess::class.java)
-                                        .putExtra("UPDATE_CHANGE_LOG", firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()))
-                                        .putExtra("UPDATE_VERSION", firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
-                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                        ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
-                            }
-
                             updateAvailable = true
                         }
                     }
                 }
+
+        inAppUpdateProcess.onResume()
+
     }
 
     override fun onPause() {

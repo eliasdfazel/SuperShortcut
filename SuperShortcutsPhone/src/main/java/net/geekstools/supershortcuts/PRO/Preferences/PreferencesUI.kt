@@ -51,7 +51,6 @@ import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDialogues
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
@@ -107,7 +106,6 @@ class PreferencesUI : AppCompatActivity() {
 
                             val purchases = billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP).purchasesList
                             for (purchase in purchases) {
-                                FunctionsClassDebug.PrintDebug("*** Purchased Item: $purchase ***")
 
                                 functionsClass.savePreference(".PurchasedItem", purchase.skus.first(), true)
 

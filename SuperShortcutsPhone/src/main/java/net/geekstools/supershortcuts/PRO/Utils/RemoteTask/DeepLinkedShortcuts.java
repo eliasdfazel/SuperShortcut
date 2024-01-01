@@ -16,7 +16,6 @@ import android.os.Bundle;
 
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.LoadFolderPopupShortcuts;
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitServices.SplitTransparentPair;
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 
 
 public class DeepLinkedShortcuts extends Activity {
@@ -35,7 +34,6 @@ public class DeepLinkedShortcuts extends Activity {
             String incomingURI = getIntent().getDataString();
 
             shortcutInfo = incomingURI.substring(incomingURI.lastIndexOf(htmlSlash) + 1);
-            FunctionsClassDebug.Companion.PrintDebug("Shortcut Name >> " + shortcutInfo);
             shortcutName = shortcutInfo.split(htmlSymbol)[0];
             shortcutType = shortcutInfo.split(htmlSymbol)[1];
             if (shortcutType.equals("Category")) {

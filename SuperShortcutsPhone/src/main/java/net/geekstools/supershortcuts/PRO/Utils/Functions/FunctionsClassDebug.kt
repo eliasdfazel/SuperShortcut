@@ -12,7 +12,6 @@ package net.geekstools.supershortcuts.PRO.Utils.Functions
 
 import android.app.Activity
 import android.content.Context
-import net.geekstools.supershortcuts.PRO.BuildConfig
 
 class FunctionsClassDebug {
 
@@ -32,11 +31,4 @@ class FunctionsClassDebug {
 
     }
 
-    companion object {
-        fun PrintDebug(debugMessage: Any?) {
-            if (BuildConfig.DEBUG) {
-                println(debugMessage)
-            }
-        }
-    }
 }

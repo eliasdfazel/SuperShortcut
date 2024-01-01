@@ -39,7 +39,6 @@ import net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionPro
 import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts;
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass;
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClassDebug;
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable;
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.LoadCustomIcons;
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout;
@@ -243,7 +242,6 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                 if (functionsClass.customIconsEnable()) {
                     loadCustomIcons.load();
                     if (BuildConfig.DEBUG) {
-                        FunctionsClassDebug.Companion.PrintDebug("*** Total Custom Icon ::: " + loadCustomIcons.getTotalIconsNumber());
                     }
                 }
 
