@@ -34,9 +34,7 @@ import java.util.Calendar
 
 class InAppUpdateProcess (private val context: AppCompatActivity, private val anchorView: View) {
 
-    private val functionsClass: FunctionsClass by lazy {
-        FunctionsClass(context)
-    }
+    private val functionsClass: FunctionsClass = FunctionsClass(context)
 
     private var appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(context)
     private var installStateUpdatedListener: InstallStateUpdatedListener
