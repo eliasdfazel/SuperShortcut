@@ -24,11 +24,8 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import net.geekstools.supershortcuts.PRO.R
-import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 
 class InAppUpdateProcess (private val context: AppCompatActivity, private val anchorView: View) {
-
-    private val functionsClass: FunctionsClass = FunctionsClass(context)
 
     private var appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(context)
     private var installStateUpdatedListener: InstallStateUpdatedListener
