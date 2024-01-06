@@ -32,8 +32,8 @@
     <application
         android:allowBackup="true"
         android:appCategory="productivity"
-        android:icon="@mipmap/ic_launcher_adaptive"
-        android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:resizeableActivity="true"
@@ -60,8 +60,8 @@
 
         <activity
             android:name=".EntryConfigurations"
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:resizeableActivity="true"
             android:exported="true"
             android:theme="@style/GeekySplash">
@@ -73,14 +73,14 @@
         </activity>
         <activity
             android:name=".ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone"
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:resizeableActivity="true"
             android:exported="false"
             android:theme="@style/GeeksEmpire.Material"/>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".ApplicationsShortcuts.Utils.AppShortcutsMediatedActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:resizeableActivity="true"
@@ -95,22 +95,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".FoldersShortcuts.FolderShortcuts"
             android:resizeableActivity="true"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:exported="false"
             android:theme="@style/GeeksEmpire.Material"/>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".FoldersShortcuts.ApplicationsSelectionProcess.FolderAppSelectionList"
             android:exported="false"
             android:theme="@style/GeeksEmpire.Material"/>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".FoldersShortcuts.LoadFolderPopupShortcuts"
             android:excludeFromRecents="true"
             android:exported="false"
@@ -124,23 +124,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".SplitShortcuts.SplitShortcuts"
             android:resizeableActivity="true"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:exported="false"
             android:theme="@style/GeeksEmpire.Material"/>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".SplitShortcuts.ApplicationsSelectionProcess.SplitAppSelectionList"
             android:exported="false"
             android:theme="@style/GeeksEmpire.Material"/>
         <activity
             android:name=".SplitShortcuts.SplitServices.SplitTransparentPair"
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
             android:noHistory="true"
@@ -156,8 +156,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".SplitShortcuts.SplitServices.SplitTransparentSingle"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:excludeFromRecents="true"
@@ -174,16 +174,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".Preferences.PreferencesUI"
             android:label="@string/pref"
             android:exported="true"
             android:theme="@style/GeeksEmpire">
         </activity>
         <activity
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:name=".Utils.RemoteTask.DeepLinkedShortcuts"
             android:exported="true"
             android:theme="@style/Transparent">
@@ -204,8 +204,8 @@
         </activity>
         <activity
             android:name=".Utils.InAppStore.DigitalAssets.InitializeInAppBilling"
-            android:icon="@mipmap/ic_launcher_adaptive"
-            android:roundIcon="@mipmap/ic_launcher_adaptive_round"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:exported="false"
             android:theme="@style/GeeksEmpire.Material.IAP.DARK">
             <intent-filter>

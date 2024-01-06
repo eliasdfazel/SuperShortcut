@@ -21,7 +21,8 @@
         android:bottom="37dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_launcher" />
+
+            android:src="@drawable/logo_foreground" />
     </item>
 
 </layer-list>
