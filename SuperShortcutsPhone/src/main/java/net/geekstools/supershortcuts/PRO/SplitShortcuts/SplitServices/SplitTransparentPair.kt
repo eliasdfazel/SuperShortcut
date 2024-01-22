@@ -115,10 +115,16 @@ class SplitTransparentPair : AppCompatActivity() {
                 accessibilityManager.sendAccessibilityEvent(accessibilityEvent)
 
                 val splitIntent = packageManager.getLaunchIntentForPackage(SplitTransparentPair.splitPackageTwo)
-                splitIntent?.addFlags(
+                splitIntent?.flags = if (android.os.Build.MANUFACTURER.uppercase() == "Samsung".uppercase()) {
+
+                    Intent.FLAG_ACTIVITY_NEW_TASK
+
+                } else {
+
                     Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or
                             Intent.FLAG_ACTIVITY_NEW_TASK
-                )
+
+                }
                 startActivity(splitIntent)
                 Log.d(this@SplitTransparentPair.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageTwo}")
 
