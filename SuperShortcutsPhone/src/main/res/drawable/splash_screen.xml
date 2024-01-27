@@ -14,11 +14,7 @@
     <item
         android:drawable="@color/default_color" />
 
-    <item
-        android:left="37dp"
-        android:right="37dp"
-        android:top="37dp"
-        android:bottom="37dp">
+    <item>
         <bitmap
             android:gravity="center"
 
