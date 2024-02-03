@@ -14,10 +14,11 @@
     <item
         android:drawable="@color/default_color" />
 
-    <item>
+    <item
+        android:gravity="center"
+        android:height="301dp"
+        android:width="301dp">
         <bitmap
-            android:gravity="center"
-
             android:src="@drawable/logo_foreground" />
     </item>
 
