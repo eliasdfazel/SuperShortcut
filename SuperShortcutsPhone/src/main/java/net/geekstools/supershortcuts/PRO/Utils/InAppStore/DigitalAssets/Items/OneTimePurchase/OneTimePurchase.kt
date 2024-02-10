@@ -233,7 +233,7 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                                         val firebaseStorage = FirebaseStorage.getInstance()
                                         val firebaseStorageReference = firebaseStorage.reference
                                         firebaseStorageReference
-                                            .child("Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/IAP.Demo/")
+                                            .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/")
                                             .listAll()
                                             .addOnSuccessListener { itemsStorageReference ->
 

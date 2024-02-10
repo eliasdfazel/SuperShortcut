@@ -238,7 +238,7 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
                                                     val firebaseStorage = FirebaseStorage.getInstance()
                                                     val firebaseStorageReference = firebaseStorage.reference
                                                     val storageReference = firebaseStorageReference
-                                                        .child("Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/IAP.Demo/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsFileName(i)}")
+                                                        .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsFileName(i)}")
                                                     storageReference.downloadUrl.addOnSuccessListener { screenshotLink ->
 
                                                         requestManager
