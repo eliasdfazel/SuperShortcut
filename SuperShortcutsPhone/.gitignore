@@ -2,3 +2,4 @@
 /.settings/org.eclipse.buildship.core.prefs
 /.classpath
 /.project
+/src/main/res/values/strings_private.xml
