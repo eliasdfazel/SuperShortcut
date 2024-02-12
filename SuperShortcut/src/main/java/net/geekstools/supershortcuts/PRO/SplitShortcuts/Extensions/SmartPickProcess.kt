@@ -8,7 +8,7 @@
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions
+package net.geekstools.supershortcuts.PRO.SplitShortcuts.Extensions
 
 import android.app.Activity
 import android.app.usage.UsageStatsManager
@@ -19,21 +19,18 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.R
+import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
-import java.util.ArrayList
-import java.util.LinkedHashSet
-import kotlin.Comparator
 
-fun FolderShortcuts.smartPickProcess() {
+fun SplitShortcuts.smartPickProcess() {
 
-    folderShortcutsViewBinding.loadingProgress.visibility = View.INVISIBLE
-    folderShortcutsViewBinding.loadingLogo.setImageDrawable(getDrawable(R.drawable.draw_smart))
-    folderShortcutsViewBinding.loadingDescription.text = Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY)
+    splitShortcutsViewBinding.loadingProgress.visibility = View.INVISIBLE
+    splitShortcutsViewBinding.loadingLogo.setImageDrawable(getDrawable(R.drawable.draw_smart))
+    splitShortcutsViewBinding.loadingDescription.text = Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY)
 
-    folderShortcutsViewBinding.autoSelect.visibility = View.INVISIBLE
-    folderShortcutsViewBinding.estimatedShortcutCounterView.visibility = View.INVISIBLE
+    splitShortcutsViewBinding.autoSelect.visibility = View.INVISIBLE
+    splitShortcutsViewBinding.estimatedShortcutCounterView.visibility = View.INVISIBLE
 
     functionsClass.deleteSelectedFiles()
 

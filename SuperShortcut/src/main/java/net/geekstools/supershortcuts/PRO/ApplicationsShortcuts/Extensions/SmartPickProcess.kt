@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel
- * Last modified 5/6/20 9:09 AM
+ * Last modified 5/10/20 9:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geekstools.supershortcuts.PRO.SplitShortcuts.Extensions
+package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions
 
 import android.app.Activity
 import android.app.usage.UsageStatsManager
@@ -19,21 +19,18 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.R
-import net.geekstools.supershortcuts.PRO.SplitShortcuts.SplitShortcuts
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
-import java.util.ArrayList
-import java.util.LinkedHashSet
-import kotlin.Comparator
 
-fun SplitShortcuts.smartPickProcess() {
+fun NormalAppShortcutsSelectionListPhone.smartPickProcess() {
 
-    splitShortcutsViewBinding.loadingProgress.visibility = View.INVISIBLE
-    splitShortcutsViewBinding.loadingLogo.setImageDrawable(getDrawable(R.drawable.draw_smart))
-    splitShortcutsViewBinding.loadingDescription.text = Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY)
+    normalAppSelectionBinding.loadingProgress.visibility = View.INVISIBLE
+    normalAppSelectionBinding.loadingLogo.setImageDrawable(getDrawable(R.drawable.draw_smart))
+    normalAppSelectionBinding.loadingDescription.text = Html.fromHtml(getString(R.string.smartInfo), Html.FROM_HTML_MODE_LEGACY)
 
-    splitShortcutsViewBinding.autoSelect.visibility = View.INVISIBLE
-    splitShortcutsViewBinding.estimatedShortcutCounterView.visibility = View.INVISIBLE
+    normalAppSelectionBinding.autoSelect.visibility = View.INVISIBLE
+    normalAppSelectionBinding.estimatedShortcutCounterView.visibility = View.INVISIBLE
 
     functionsClass.deleteSelectedFiles()
 

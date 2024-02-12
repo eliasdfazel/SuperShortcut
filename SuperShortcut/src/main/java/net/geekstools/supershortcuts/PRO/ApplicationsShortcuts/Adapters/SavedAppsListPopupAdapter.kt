@@ -23,7 +23,6 @@ import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.UI.ConfirmButtonInterface.ConfirmButtonProcessInterface
-import java.util.*
 
 class SavedAppsListPopupAdapter(private val context: Context,
                                 private val functionsClass: FunctionsClass,
