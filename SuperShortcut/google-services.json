@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1002127527001-34natre93haea2n3858fdqjjpplgn7sh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.geeksempire.arwen.ai",
+            "certificate_hash": "401c7a540158a1000ca734a22ac5f3763bd71070"
+          }
+        },
+        {
           "client_id": "1002127527001-iv545ks51k864j2iq519ohi3hvjpef8m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
