@@ -15,11 +15,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.WindowManager
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -49,6 +52,10 @@ class EntryConfigurations : AppCompatActivity() {
 
     private lateinit var waitingDialogueLiveData: WaitingDialogueLiveData
 
+    private val googleSignInClient: SignInClient by lazy {
+        Identity.getSignInClient(this@EntryConfigurations)
+    }
+
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(bundle: Bundle?) {
@@ -69,25 +76,48 @@ class EntryConfigurations : AppCompatActivity() {
                 && functionsClass.readPreference(".UserInformation", "userEmail", null) == null
                 && firebaseAuth.currentUser == null) {
 
-            val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.webClientId))
-                    .requestEmail()
-                    .build()
+            val googleIdTokenRequestOptions = BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                .setSupported(true)
+                .setServerClientId(getString(R.string.webClientId))
+                .setFilterByAuthorizedAccounts(false)
+                .build()
 
-            val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-            googleSignInResult.launch(googleSignInClient.signInIntent)
+            val beginSignInRequest = BeginSignInRequest.builder()
+                .setGoogleIdTokenRequestOptions(googleIdTokenRequestOptions)
+                .setAutoSelectEnabled(true)
+                .build()
+
+            googleSignInClient.beginSignIn(beginSignInRequest)
+                .addOnSuccessListener(this@EntryConfigurations) { result ->
+
+                    try {
+
+                        googleSignInResult.launch(IntentSenderRequest.Builder(result.pendingIntent.intentSender).build())
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+
+                    }
+
+                }.addOnFailureListener(this@EntryConfigurations) { e ->
+                    e.printStackTrace()
+                }
 
             waitingDialogueLiveData = ViewModelProvider(this@EntryConfigurations).get(WaitingDialogueLiveData::class.java)
             waitingDialogueLiveData.run {
+
                 this.dialogueTitle.value = getString(R.string.signinTitle)
                 this.dialogueMessage.value = getString(R.string.signinMessage)
 
                 waitingDialogue = WaitingDialogue().initShow(this@EntryConfigurations)
                 waitingDialogue.setOnDismissListener {
+
                     waitingDialogue.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
                     shortcutModeEntryPoint()
+
                 }
+
             }
 
         } else {
@@ -101,71 +131,50 @@ class EntryConfigurations : AppCompatActivity() {
 
     }
 
-    override fun onPause() {
-        super.onPause()
+    private val googleSignInResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
 
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-        firebaseUser?.reload()?.addOnCompleteListener {
-            firebaseAuth.addAuthStateListener { firebaseAuth ->
-                val user = firebaseAuth.currentUser
-                if (user == null) {
-                    functionsClass.savePreference(".UserInformation", "userEmail", null)
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
 
-                    val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(getString(R.string.webClientId))
-                            .requestEmail()
-                            .build()
+                val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
 
-                    val googleSignInClient = GoogleSignIn.getClient(this@EntryConfigurations, googleSignInOptions)
-                    try {
-                        googleSignInClient.signOut()
-                        googleSignInClient.revokeAccess()
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
+                firebaseAuth.signInWithCredential(authCredential)
+                    .addOnSuccessListener {
+
+                        val firebaseUser = firebaseAuth.currentUser
+
+                        if (firebaseUser != null) {
+
+                            functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
+
+                            functionsClass.Toast(getString(R.string.signinFinished), Gravity.TOP)
+
+                            shortcutModeEntryPoint()
+
+                            waitingDialogue.dismiss()
+
+                        }
+
+                    }.addOnFailureListener { exception ->
+
+                        waitingDialogueLiveData.run {
+                            this.dialogueTitle.value = getString(R.string.error)
+                            this.dialogueMessage.value = "Sign In Failed"
+                        }
+
                     }
-                } else {
 
-                }
             }
-        }
-    }
+            else -> {
 
-    private val googleSignInResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-
-        if (it.resultCode == Activity.RESULT_OK) {
-
-            val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
-
-            val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
-            firebaseAuth.signInWithCredential(authCredential)
-                .addOnSuccessListener {
-                    val firebaseUser = firebaseAuth.currentUser
-                    if (firebaseUser != null) {
-
-                        functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
-
-                        functionsClass.Toast(getString(R.string.signinFinished), Gravity.TOP)
-
-                        shortcutModeEntryPoint()
-
-                        waitingDialogue.dismiss()
-                    }
-                }.addOnFailureListener { exception ->
-
-                    waitingDialogueLiveData.run {
-                        this.dialogueTitle.value = getString(R.string.error)
-                        this.dialogueMessage.value = "Sign In Failed"
-                    }
+                waitingDialogueLiveData.run {
+                    this.dialogueTitle.value = getString(R.string.error)
+                    this.dialogueMessage.value = "Google Account Result"
                 }
 
-        } else {
-
-            waitingDialogueLiveData.run {
-                this.dialogueTitle.value = getString(R.string.error)
-                this.dialogueMessage.value = "Google Account Result"
             }
-
         }
 
     }
