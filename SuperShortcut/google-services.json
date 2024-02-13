@@ -76,6 +76,14 @@
           }
         },
         {
+          "client_id": "1002127527001-npk0icptm7d5ubvgeuhi80saqmpdk2f3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.geekstools.floatshort.PRO",
+            "certificate_hash": "6fa2d23f54167ebdfcb1ce7cb183c0f709f8934e"
+          }
+        },
+        {
           "client_id": "1002127527001-vcho155evgpao1jajunjmkvj1jehgbfc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -118,6 +126,14 @@
           "android_info": {
             "package_name": "net.geekstools.supershortcuts.PRO",
             "certificate_hash": "9db15b202b98a72e398e43a52e1a1fc144d298b9"
+          }
+        },
+        {
+          "client_id": "1002127527001-a854f4rckqbehblbqioo9m5n1tvhmeur.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.geekstools.supershortcuts.PRO",
+            "certificate_hash": "6fa2d23f54167ebdfcb1ce7cb183c0f709f8934e"
           }
         },
         {
