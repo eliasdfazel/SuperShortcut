@@ -35,8 +35,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.auth.api.identity.SignInCredential
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -426,7 +426,7 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
             && firebaseAuth.currentUser == null) {
 
             val googleIdTokenRequestOptions = BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                .setSupported(false)
+                .setSupported(true)
                 .setServerClientId(getString(R.string.webClientId))
                 .setFilterByAuthorizedAccounts(false)
                 .build()
@@ -476,46 +476,50 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
 
     private val googleSignInResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
 
-        when (it.resultCode) {
-            Activity.RESULT_OK -> {
+        it.data?.let {intentResult ->
 
-                val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-                val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
+            when (it.resultCode) {
+                Activity.RESULT_OK -> {
 
-                val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
-                firebaseAuth.signInWithCredential(authCredential)
-                    .addOnSuccessListener {
+                    val signInCredential: SignInCredential = googleSignInClient.getSignInCredentialFromIntent(intentResult)
 
-                        val firebaseUser = firebaseAuth.currentUser
+                    val authenticationCredential: AuthCredential = GoogleAuthProvider.getCredential(signInCredential.googleIdToken, null)
 
-                        if (firebaseUser != null) {
+                    Firebase.auth.signInWithCredential(authenticationCredential)
+                        .addOnSuccessListener {
 
-                            functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
+                            val firebaseUser = firebaseAuth.currentUser
 
-                            functionsClass.Toast(getString(R.string.signinFinished), Gravity.TOP)
+                            if (firebaseUser != null) {
 
-                            waitingDialogue.dismiss()
+                                functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
+
+                                functionsClass.Toast(getString(R.string.signinFinished), Gravity.TOP)
+
+                                waitingDialogue.dismiss()
+
+                            }
+
+                        }.addOnFailureListener { exception ->
+
+                            waitingDialogueLiveData.run {
+                                this.dialogueTitle.value = getString(R.string.error)
+                                this.dialogueMessage.value = "Sign In Failed"
+                            }
 
                         }
 
-                    }.addOnFailureListener { exception ->
+                }
+                else -> {
 
-                        waitingDialogueLiveData.run {
-                            this.dialogueTitle.value = getString(R.string.error)
-                            this.dialogueMessage.value = "Sign In Failed"
-                        }
-
+                    waitingDialogueLiveData.run {
+                        this.dialogueTitle.value = getString(R.string.error)
+                        this.dialogueMessage.value = "Google Account Result"
                     }
 
-            }
-            else -> {
-
-                waitingDialogueLiveData.run {
-                    this.dialogueTitle.value = getString(R.string.error)
-                    this.dialogueMessage.value = "Google Account Result"
                 }
-
             }
+
         }
 
     }
