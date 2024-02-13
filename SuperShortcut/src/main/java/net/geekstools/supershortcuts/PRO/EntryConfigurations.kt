@@ -63,15 +63,6 @@ class EntryConfigurations : AppCompatActivity() {
 
         FirebaseApp.initializeApp(applicationContext)
 
-        functionsClass.savePreference(".UserInformation", "isBetaTester", functionsClass.appVersionName(packageName).contains("[BETA]"))
-        functionsClass.savePreference(".UserInformation", "installedVersionCode", functionsClass.appVersionCode(packageName))
-        functionsClass.savePreference(".UserInformation", "installedVersionName", functionsClass.appVersionName(packageName))
-        functionsClass.savePreference(".UserInformation", "deviceModel", functionsClass.deviceName)
-        functionsClass.savePreference(".UserInformation", "userRegion", functionsClass.countryIso)
-        if (functionsClass.appVersionName(packageName).contains("[BETA]")) {
-            functionsClass.saveDefaultPreference("JoinedBetaProgrammer", true)
-        }
-
         if (functionsClass.networkConnection()
                 && functionsClass.readPreference(".UserInformation", "userEmail", null) == null
                 && firebaseAuth.currentUser == null) {
