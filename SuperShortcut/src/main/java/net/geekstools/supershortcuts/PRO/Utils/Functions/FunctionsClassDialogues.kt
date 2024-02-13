@@ -60,7 +60,7 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
             dialogueMessageBinding.webViewTutorial.settings.javaScriptEnabled = true
 
             dialogueMessageBinding.webViewTutorial.clearCache(true)
-            dialogueMessageBinding.webViewTutorial.loadUrl("https://geeksempire.net/Projects/Android/SuperShortcuts/OverviewVideo.html")
+            dialogueMessageBinding.webViewTutorial.loadUrl("https://www.youtube.com/watch?v=84NgoS2ccs4&list=PLTs5v2BrWyWmEpqaArzs43ZRsMOleBNvw&index=1")
 
             dialogueMessageBinding.webViewTutorial.visibility = View.VISIBLE
             dialogueMessageBinding.dialogueTitle.visibility = View.INVISIBLE

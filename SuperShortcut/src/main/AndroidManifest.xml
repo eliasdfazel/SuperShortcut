@@ -38,6 +38,7 @@
         android:largeHeap="true"
         android:resizeableActivity="true"
         android:screenOrientation="sensorPortrait"
+        android:enableOnBackInvokedCallback="true"
         android:theme="@style/GeekySplash">
 
         <meta-data

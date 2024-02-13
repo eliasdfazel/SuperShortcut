@@ -10,7 +10,9 @@
 
 package net.geekstools.supershortcuts.PRO.ApplicationsShortcuts
 
+import android.app.Activity
 import android.app.ActivityOptions
+import android.app.Dialog
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -22,10 +24,22 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MotionEvent
+import android.view.WindowManager
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SavedAppsListPopupAdapter
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Adapters.SelectionListAdapter
@@ -53,14 +67,18 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureConstants
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstants
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupDialogue.WaitingDialogue
+import net.geekstools.supershortcuts.PRO.Utils.UI.PopupDialogue.WaitingDialogueLiveData
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
 import java.lang.String
 import kotlin.Boolean
+import kotlin.Exception
 import kotlin.Float
 import kotlin.apply
 import kotlin.getValue
 import kotlin.lazy
 import kotlin.let
+import kotlin.run
 
 class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         GestureListenerInterface,
@@ -105,6 +123,16 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         InAppUpdateProcess(this@NormalAppShortcutsSelectionListPhone, normalAppSelectionBinding.root)
     }
 
+    private lateinit var waitingDialogue: Dialog
+
+    private lateinit var waitingDialogueLiveData: WaitingDialogueLiveData
+
+    val firebaseAuth = Firebase.auth
+
+    private val googleSignInClient: SignInClient by lazy {
+        Identity.getSignInClient(this@NormalAppShortcutsSelectionListPhone)
+    }
+
     companion object {
         const val NormalApplicationsShortcutsFile = ".autoSuper"
     }
@@ -115,6 +143,8 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         normalAppSelectionBinding = NormalAppSelectionBinding.inflate(layoutInflater)
         setContentView(normalAppSelectionBinding.root)
+
+        authentication()
 
         SecurityServicesProcess(this@NormalAppShortcutsSelectionListPhone).switchSecurityServices(normalAppSelectionBinding.securityServicesSwitchView)
 
@@ -388,4 +418,106 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
             /* Load Installed Applications */
         }
     }
+
+    private fun authentication() {
+
+        if (functionsClass.networkConnection()
+            && functionsClass.readPreference(".UserInformation", "userEmail", null) == null
+            && firebaseAuth.currentUser == null) {
+
+            val googleIdTokenRequestOptions = BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                .setSupported(false)
+                .setServerClientId(getString(R.string.webClientId))
+                .setFilterByAuthorizedAccounts(false)
+                .build()
+
+            val beginSignInRequest = BeginSignInRequest.builder()
+                .setGoogleIdTokenRequestOptions(googleIdTokenRequestOptions)
+                .setAutoSelectEnabled(true)
+                .build()
+
+            googleSignInClient.beginSignIn(beginSignInRequest)
+                .addOnSuccessListener(this@NormalAppShortcutsSelectionListPhone) { result ->
+
+                    try {
+
+                        googleSignInResult.launch(IntentSenderRequest.Builder(result.pendingIntent.intentSender).build())
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+
+                    }
+
+                }.addOnFailureListener(this@NormalAppShortcutsSelectionListPhone) { e ->
+                    e.printStackTrace()
+                }
+
+            waitingDialogueLiveData = ViewModelProvider(this@NormalAppShortcutsSelectionListPhone).get(
+                WaitingDialogueLiveData::class.java)
+            waitingDialogueLiveData.run {
+
+                this.dialogueTitle.value = getString(R.string.signinTitle)
+                this.dialogueMessage.value = getString(R.string.signinMessage)
+
+                waitingDialogue = WaitingDialogue().initShow(this@NormalAppShortcutsSelectionListPhone)
+                waitingDialogue.setOnDismissListener {
+
+                    waitingDialogue.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+
+                }
+
+            }
+
+        } else {
+
+        }
+
+    }
+
+    private val googleSignInResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
+
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
+
+                val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
+
+                val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
+                firebaseAuth.signInWithCredential(authCredential)
+                    .addOnSuccessListener {
+
+                        val firebaseUser = firebaseAuth.currentUser
+
+                        if (firebaseUser != null) {
+
+                            functionsClass.savePreference(".UserInformation", "userEmail", firebaseUser.email)
+
+                            functionsClass.Toast(getString(R.string.signinFinished), Gravity.TOP)
+
+                            waitingDialogue.dismiss()
+
+                        }
+
+                    }.addOnFailureListener { exception ->
+
+                        waitingDialogueLiveData.run {
+                            this.dialogueTitle.value = getString(R.string.error)
+                            this.dialogueMessage.value = "Sign In Failed"
+                        }
+
+                    }
+
+            }
+            else -> {
+
+                waitingDialogueLiveData.run {
+                    this.dialogueTitle.value = getString(R.string.error)
+                    this.dialogueMessage.value = "Google Account Result"
+                }
+
+            }
+        }
+
+    }
+
 }
