@@ -2346,14 +2346,6 @@ public class FunctionsClass {
     }
 
     /*Firebase Remote Config*/
-    public void isFirstToCheckTutorial(Boolean firstTimeTutorial) {
-        savePreference(".Tutorial", "Checked", firstTimeTutorial);
-    }
-
-    public Boolean isFirstToCheckTutorial() {
-        return readPreference(".Tutorial", "Checked", false);
-    }
-
     public boolean joinedBetaProgram() {
         return readDefaultPreference("JoinedBetaProgrammer", false);
     }

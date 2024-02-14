@@ -105,7 +105,7 @@ class FolderShortcuts : AppCompatActivity(),
 
         initializeLoadingProcess()
 
-        functionsClassDialogues.changeLog(!functionsClass.isFirstToCheckTutorial, false)
+        functionsClassDialogues.changeLog(false)
 
         //In-App Billing
         PurchasesCheckpoint(this@FolderShortcuts).trigger()

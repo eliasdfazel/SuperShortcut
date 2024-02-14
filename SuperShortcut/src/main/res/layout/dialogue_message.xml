@@ -85,13 +85,4 @@
             android:background="@android:color/transparent"/>
     </ScrollView>
 
-    <WebView
-        android:id="@+id/webViewTutorial"
-        android:layout_width="370dp"
-        android:layout_height="430dp"
-        android:layout_below="@id/dialogueTitle"
-        android:layout_above="@id/rateIt"
-        android:visibility="invisible"
-        android:background="@color/light"/>
-
 </RelativeLayout>

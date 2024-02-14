@@ -75,7 +75,7 @@ class PreferencesUI : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(!functionsClass.isFirstToCheckTutorial, false)
+        FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(false)
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.default_color_darker)))
         supportActionBar?.title = Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY)
@@ -207,13 +207,13 @@ class PreferencesUI : AppCompatActivity() {
 
         preferenceViewBinding.newsView.setOnClickListener {
 
-            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(false, true)
+            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(true)
 
         }
 
         preferenceViewBinding.newsView.setOnLongClickListener {
 
-            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(true, true)
+            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLog(true)
 
             true
         }
