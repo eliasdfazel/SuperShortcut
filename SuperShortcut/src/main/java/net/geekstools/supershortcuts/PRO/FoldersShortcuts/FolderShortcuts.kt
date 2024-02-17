@@ -13,10 +13,6 @@ package net.geekstools.supershortcuts.PRO.FoldersShortcuts
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
-import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Adapters.FolderShortcutsAdapter
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions.evaluateShortcutsInfo
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions.loadCreatedFoldersData
@@ -180,29 +175,6 @@ class FolderShortcuts : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
-
-        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
-        firebaseRemoteConfig.fetch(0)
-                .addOnSuccessListener {
-
-                    firebaseRemoteConfig.activate().addOnSuccessListener {
-
-                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > BuildConfig.VERSION_CODE) {
-
-                            val layerDrawableNewUpdate = getDrawable(R.drawable.ic_update) as LayerDrawable?
-                            val gradientDrawableNewUpdate = layerDrawableNewUpdate?.findDrawableByLayerId(R.id.temporaryBackground) as BitmapDrawable?
-                            gradientDrawableNewUpdate?.setTint(getColor(R.color.default_color_game))
-
-                            val temporaryBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate)
-                            val scaleBitmap = Bitmap.createScaledBitmap(temporaryBitmap, temporaryBitmap.width / 4, temporaryBitmap.height / 4, false)
-                            val logoDrawable: Drawable = BitmapDrawable(resources, scaleBitmap)
-
-                            folderShortcutsViewBinding.preferencesView.setImageDrawable(logoDrawable)
-
-                            updateAvailable = true
-                        }
-                    }
-                }
 
         inAppUpdateProcess.onResume()
 

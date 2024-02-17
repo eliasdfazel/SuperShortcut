@@ -214,7 +214,6 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
 
                                     val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
                                     firebaseRemoteConfig.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
-                                    firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
                                     firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener {
 
                                         inAppBillingOneTimePurchaseViewBinding

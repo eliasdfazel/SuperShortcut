@@ -380,7 +380,6 @@ class PreferencesUI : AppCompatActivity() {
         super.onResume()
 
         val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
         firebaseRemoteConfig.fetch(0)
                 .addOnSuccessListener {
 
@@ -392,17 +391,17 @@ class PreferencesUI : AppCompatActivity() {
                                     firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()), firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
                         }
 
-                        preferenceViewBinding.prefTitlefloating.text = Html.fromHtml(firebaseRemoteConfig.getString("adTitle"), Html.FROM_HTML_MODE_LEGACY)
-                        preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("adDescription"), Html.FROM_HTML_MODE_LEGACY)
+                        preferenceViewBinding.prefTitlefloating.text = Html.fromHtml(firebaseRemoteConfig.getString("ad_title"), Html.FROM_HTML_MODE_LEGACY)
+                        preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("ad_description"), Html.FROM_HTML_MODE_LEGACY)
 
                         Glide.with(applicationContext)
-                            .load(firebaseRemoteConfig.getString("adImage"))
+                            .load(firebaseRemoteConfig.getString("ad_icon_link"))
                             .transform(RoundedCorners(99))
                             .into(preferenceViewBinding.prefIconfloating)
 
                         preferenceViewBinding.floatingView.setOnClickListener {
 
-                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(firebaseRemoteConfig.getString("adLink"))))
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(firebaseRemoteConfig.getString("ad_link"))))
 
                         }
 

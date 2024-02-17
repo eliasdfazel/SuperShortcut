@@ -38,7 +38,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
-import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToItemTitle
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigDescriptionKey
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigPriceInformation
@@ -205,7 +204,6 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
                                             val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
                                             firebaseRemoteConfig.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
-                                            firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
                                             firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener {
 
                                                 inAppBillingSubscriptionPurchaseViewBinding

@@ -103,14 +103,4 @@
     <string name="savedActionHideSplit" translatable="false">SAVED_ACTION_HIDE_SPLIT</string>
     <string name="checkboxActionSplit" translatable="false">CHECKBOX_ACTION_SPLIT</string>
 
-    <string name="integerVersionCodeNewUpdatePhone" translatable="false">integer_version_code_new_update_phone</string>
-    <string name="stringVersionNameNewUpdatePhone" translatable="false">string_version_name_new_update_phone</string>
-    <string name="stringUpcomingChangeLogPhone" translatable="false">string_upcoming_change_log_phone</string>
-    <string name="stringUpcomingChangeLogSummaryPhone" translatable="false">string_upcoming_change_log_summary_phone</string>
-
-    <string name="BETAintegerVersionCodeNewUpdatePhone" translatable="false">beta_integer_version_code_new_update_phone</string>
-    <string name="BETAstringVersionNameNewUpdatePhone" translatable="false">beta_string_version_name_new_update_phone</string>
-    <string name="BETAstringUpcomingChangeLogPhone" translatable="false">beta_string_upcoming_change_log_phone</string>
-    <string name="BETAstringUpcomingChangeLogSummaryPhone" translatable="false">beta_string_upcoming_change_log_summary_phone</string>
-    
 </resources>

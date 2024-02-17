@@ -16,10 +16,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MotionEvent
@@ -36,7 +32,6 @@ import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupC
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.setupUI
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.Extensions.smartPickProcess
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.UI.AppsConfirmButtonPhone
-import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.MixShortcuts.MixShortcutsProcess
 import net.geekstools.supershortcuts.PRO.Preferences.PreferencesUI
@@ -183,29 +178,6 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
-
-        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_default)
-        firebaseRemoteConfig.fetch(0)
-                .addOnSuccessListener {
-
-                    firebaseRemoteConfig.activate().addOnSuccessListener {
-
-                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > BuildConfig.VERSION_CODE) {
-
-                            val layerDrawableNewUpdate = getDrawable(R.drawable.ic_update) as LayerDrawable?
-                            val gradientDrawableNewUpdate = layerDrawableNewUpdate!!.findDrawableByLayerId(R.id.temporaryBackground) as BitmapDrawable
-                            gradientDrawableNewUpdate.setTint(getColor(R.color.default_color_game))
-
-                            val temporaryBitmap = functionsClass.drawableToBitmap(layerDrawableNewUpdate)
-                            val scaleBitmap = Bitmap.createScaledBitmap(temporaryBitmap, temporaryBitmap.width / 4, temporaryBitmap.height / 4, false)
-                            val logoDrawable: Drawable = BitmapDrawable(resources, scaleBitmap)
-
-                            normalAppSelectionBinding.preferencesView.setImageDrawable(logoDrawable)
-
-                            updateAvailable = true
-                        }
-                    }
-                }
 
         inAppUpdateProcess.onResume()
 
