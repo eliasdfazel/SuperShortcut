@@ -1538,7 +1538,6 @@ public class FunctionsClass {
 
             reader.close();
         } catch (Exception e) {
-            e.printStackTrace();
             nLines = 0;
         }
         return nLines;

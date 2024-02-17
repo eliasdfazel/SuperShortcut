@@ -197,21 +197,16 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
 
                                 if (itemToPurchase == queriedProduct) {
 
-                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.visibility = View.GONE
-                                    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.text =
-                                        Html.fromHtml("<br/>" +
-                                                "<big>${productsDetailsListInApp[0].title}</big>" +
-                                                "<br/>" +
-                                                "<br/>" +
-                                                productsDetailsListInApp[0].description +
-                                                "<br/>", Html.FROM_HTML_MODE_COMPACT)
+                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = Html.fromHtml(productsDetailsListInApp[0].title , Html.FROM_HTML_MODE_COMPACT)
+                                    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.text = Html.fromHtml(productsDetailsListInApp[0].description , Html.FROM_HTML_MODE_COMPACT)
 
                                     (inAppBillingOneTimePurchaseViewBinding
                                         .centerPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
                                     (inAppBillingOneTimePurchaseViewBinding
-                                        .bottomPurchaseButton.root as MaterialButton).visibility = View.INVISIBLE
+                                        .bottomPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
 
                                     inAppBillingOneTimePurchaseViewBinding.itemScreenshotsView.visibility = View.GONE
+                                    inAppBillingOneTimePurchaseViewBinding.waitingView.visibility = View.GONE
 
                                 } else {
 
@@ -233,7 +228,7 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                                         val firebaseStorage = FirebaseStorage.getInstance()
                                         val firebaseStorageReference = firebaseStorage.reference
                                         firebaseStorageReference
-                                            .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/")
+                                            .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}")
                                             .listAll()
                                             .addOnSuccessListener { itemsStorageReference ->
 

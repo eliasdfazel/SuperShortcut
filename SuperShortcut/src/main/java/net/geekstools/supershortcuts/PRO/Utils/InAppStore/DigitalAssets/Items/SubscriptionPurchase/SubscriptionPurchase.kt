@@ -42,9 +42,7 @@ import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToItemTitle
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigDescriptionKey
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigPriceInformation
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigScreenshotNumberKey
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToStorageScreenshotsDirectory
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToStorageScreenshotsFileName
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.SubscriptionPurchase.Extensions.setScreenshots
@@ -199,21 +197,7 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
                                         if (listOfItems[0] == queriedProduct) {
 
-                                            inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.visibility = View.GONE
-                                            inAppBillingSubscriptionPurchaseViewBinding.itemDescriptionView.text =
-                                                Html.fromHtml("<br/>" +
-                                                        "<big>${productsDetailsListInApp[0].title}</big>" +
-                                                        "<br/>" +
-                                                        "<br/>" +
-                                                        productsDetailsListInApp[0].description +
-                                                        "<br/>", Html.FROM_HTML_MODE_COMPACT)
-
-                                            (inAppBillingSubscriptionPurchaseViewBinding
-                                                .centerPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
-                                            (inAppBillingSubscriptionPurchaseViewBinding
-                                                .bottomPurchaseButton.root as MaterialButton).visibility = View.INVISIBLE
-
-                                            inAppBillingSubscriptionPurchaseViewBinding.itemScreenshotsView.visibility = View.GONE
+                                            requireActivity().finish()
 
                                         } else {
 
@@ -232,45 +216,51 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
                                                 (inAppBillingSubscriptionPurchaseViewBinding
                                                     .bottomPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigPriceInformation())
 
-                                                screenshotsNumber = firebaseRemoteConfig.getLong(productsDetailsListInApp.first().productId.convertToRemoteConfigScreenshotNumberKey()).toInt()
+                                                val firebaseStorage = FirebaseStorage.getInstance()
+                                                val firebaseStorageReference = firebaseStorage.reference
+                                                firebaseStorageReference
+                                                    .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}")
+                                                    .listAll()
+                                                    .addOnSuccessListener { itemsStorageReference ->
 
-                                                for (i in 1..screenshotsNumber) {
-                                                    val firebaseStorage = FirebaseStorage.getInstance()
-                                                    val firebaseStorageReference = firebaseStorage.reference
-                                                    val storageReference = firebaseStorageReference
-                                                        .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsFileName(i)}")
-                                                    storageReference.downloadUrl.addOnSuccessListener { screenshotLink ->
+                                                        screenshotsNumber = itemsStorageReference.items.size
 
-                                                        requestManager
-                                                            .load(screenshotLink)
-                                                            .diskCacheStrategy(DiskCacheStrategy.DATA)
-                                                            .addListener(object : RequestListener<Drawable> {
-                                                                override fun onLoadFailed(glideException: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                                        itemsStorageReference.items.forEachIndexed { index, storageReference ->
 
-                                                                    return false
-                                                                }
+                                                            storageReference.downloadUrl.addOnSuccessListener { screenshotLink ->
 
-                                                                override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                                                    glideLoadCounter++
+                                                                requestManager
+                                                                    .load(screenshotLink)
+                                                                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                                                    .addListener(object : RequestListener<Drawable> {
+                                                                        override fun onLoadFailed(glideException: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
 
-                                                                    val beforeToken: String = screenshotLink.toString().split("?alt=media&token=")[0]
-                                                                    val drawableIndex = beforeToken[beforeToken.length - 5].toString().toInt()
+                                                                            return false
+                                                                        }
 
-                                                                    mapIndexDrawable[drawableIndex] = resource
-                                                                    mapIndexURI[drawableIndex] = screenshotLink
+                                                                        override fun onResourceReady(resource: Drawable, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                                                            glideLoadCounter++
 
-                                                                    if (glideLoadCounter == screenshotsNumber) {
+                                                                            val beforeToken: String = screenshotLink.toString().split("?alt=media&token=")[0]
+                                                                            val drawableIndex = beforeToken[beforeToken.length - 5].toString().toInt()
 
-                                                                        setScreenshots()
+                                                                            mapIndexDrawable[drawableIndex] = resource
+                                                                            mapIndexURI[drawableIndex] = screenshotLink
 
-                                                                    }
+                                                                            if (glideLoadCounter == screenshotsNumber) {
 
-                                                                    return false
-                                                                }
+                                                                                setScreenshots()
+                                                                            }
 
-                                                            }).submit()
+                                                                            return false
+                                                                        }
+
+                                                                    }).submit()
+                                                            }
+
+                                                        }
+
                                                     }
-                                                }
 
                                             }.addOnFailureListener {
 

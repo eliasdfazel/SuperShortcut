@@ -22,14 +22,10 @@ fun String.convertToRemoteConfigDescriptionKey() : String {
     return this.replace(".", "_") + "_description"
 }
 
-fun String.convertToRemoteConfigScreenshotNumberKey() : String {
-
-    return this.replace(".", "_") + "_demo_screenshots"
-}
 
 fun String.convertToRemoteConfigPriceInformation() : String {
 
-    return this.replace(".", "_") + "_price_info"
+    return this.replace(".", "_") + "_price_information"
 }
 
 fun String.convertToStorageScreenshotsDirectory() : String{
@@ -37,11 +33,4 @@ fun String.convertToStorageScreenshotsDirectory() : String{
     val temporaryText = this.split(".")
 
     return "${temporaryText[0][0].uppercaseChar()}${temporaryText[0].substring(1)}${temporaryText[1][0].uppercaseChar()}${temporaryText[1].substring(1)}"
-}
-
-fun String.convertToStorageScreenshotsFileName(numberOfScreenshot: Int) : String{
-
-    val temporaryText = this.split(".")
-
-    return "${temporaryText[0][0].uppercaseChar()}${temporaryText[0].substring(1)}${temporaryText[1][0].uppercaseChar()}${temporaryText[1].substring(1)}" + "Demo" + numberOfScreenshot + ".png"
 }
