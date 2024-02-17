@@ -19,13 +19,13 @@ fun String.convertToItemTitle() : String {
 
 fun String.convertToRemoteConfigDescriptionKey() : String {
 
-    return this.replace(".", "_") + "_description"
+    return this.replace(".", "_") + "_descriptions"
 }
 
 
 fun String.convertToRemoteConfigPriceInformation() : String {
 
-    return this.replace(".", "_") + "_price_information"
+    return this.replace(".", "_") + "_prices_information"
 }
 
 fun String.convertToStorageScreenshotsDirectory() : String{

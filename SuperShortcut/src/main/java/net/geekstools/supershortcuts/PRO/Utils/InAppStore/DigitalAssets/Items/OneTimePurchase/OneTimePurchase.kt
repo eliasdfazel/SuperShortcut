@@ -195,10 +195,11 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                                     .setProductType(BillingClient.ProductType.INAPP)
                                     .build()
 
-                                if (itemToPurchase == queriedProduct) {
+                                if (itemToPurchase == queriedProduct ||
+                                    productsDetailsListInApp[0].title == InAppBillingData.SKU.InAppItemDonation) {
 
-                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = Html.fromHtml(productsDetailsListInApp[0].title , Html.FROM_HTML_MODE_COMPACT)
-                                    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.text = Html.fromHtml(productsDetailsListInApp[0].description , Html.FROM_HTML_MODE_COMPACT)
+                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = productsDetailsListInApp[0].title
+                                    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.text = productsDetailsListInApp[0].description
 
                                     (inAppBillingOneTimePurchaseViewBinding
                                         .centerPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
@@ -215,6 +216,9 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                                     val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
                                     firebaseRemoteConfig.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
                                     firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener {
+
+                                        println(">>> " + productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey())
+                                        println(">>> " + firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()))
 
                                         inAppBillingOneTimePurchaseViewBinding
                                             .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)

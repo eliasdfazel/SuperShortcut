@@ -385,14 +385,8 @@ class PreferencesUI : AppCompatActivity() {
 
                     firebaseRemoteConfig.activate().addOnSuccessListener {
 
-                        if (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()) > functionsClass.appVersionCode(packageName)) {
-
-                            FunctionsClassDialogues(this@PreferencesUI, functionsClass).changeLogPreference(
-                                    firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()), firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
-                        }
-
                         preferenceViewBinding.prefTitlefloating.text = Html.fromHtml(firebaseRemoteConfig.getString("ad_title"), Html.FROM_HTML_MODE_LEGACY)
-                        preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("ad_description"), Html.FROM_HTML_MODE_LEGACY)
+                        preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("ad_summaries"), Html.FROM_HTML_MODE_LEGACY)
 
                         Glide.with(applicationContext)
                             .load(firebaseRemoteConfig.getString("ad_icon_link"))

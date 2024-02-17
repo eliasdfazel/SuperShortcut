@@ -155,20 +155,9 @@ class SplitShortcuts : AppCompatActivity(),
 
         splitShortcutsViewBinding.preferencesView.setOnClickListener {
 
-            if (updateAvailable) {
+            startActivity(Intent(applicationContext, PreferencesUI::class.java),
+                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
 
-                FunctionsClassDialogues(this@SplitShortcuts, functionsClass).changeLogPreference(
-                        firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
-                        (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
-                )
-
-            } else {
-
-                startActivity(Intent(applicationContext, PreferencesUI::class.java),
-                        ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
-
-                this@SplitShortcuts.finish()
-            }
         }
 
         MixShortcutsProcess(applicationContext, splitShortcutsViewBinding.mixShortcutsSwitchView).initialize()

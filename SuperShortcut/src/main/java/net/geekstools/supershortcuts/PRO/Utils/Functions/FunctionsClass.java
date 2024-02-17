@@ -2349,50 +2349,10 @@ public class FunctionsClass {
         return readDefaultPreference("JoinedBetaProgrammer", false);
     }
 
-    public String versionCodeRemoteConfigKey() {
-        String versionCodeKey = null;
-        if (joinedBetaProgram()) {
-            versionCodeKey = context.getString(R.string.BETAintegerVersionCodeNewUpdatePhone);
-        } else {
-            versionCodeKey = context.getString(R.string.integerVersionCodeNewUpdatePhone);
-        }
-        return versionCodeKey;
-    }
-
-    public String versionNameRemoteConfigKey() {
-        String versionCodeKey = null;
-        if (joinedBetaProgram()) {
-            versionCodeKey = context.getString(R.string.BETAstringVersionNameNewUpdatePhone);
-        } else {
-            versionCodeKey = context.getString(R.string.stringVersionNameNewUpdatePhone);
-        }
-        return versionCodeKey;
-    }
-
-    public String upcomingChangeLogRemoteConfigKey() {
-        String versionCodeKey = null;
-        if (joinedBetaProgram()) {
-            versionCodeKey = context.getString(R.string.BETAstringUpcomingChangeLogPhone);
-        } else {
-            versionCodeKey = context.getString(R.string.stringUpcomingChangeLogPhone);
-        }
-        return versionCodeKey;
-    }
-
-    public String upcomingChangeLogSummaryConfigKey() {
-        String versionCodeKey = null;
-        if (joinedBetaProgram()) {
-            versionCodeKey = context.getString(R.string.BETAstringUpcomingChangeLogSummaryPhone);
-        } else {
-            versionCodeKey = context.getString(R.string.stringUpcomingChangeLogSummaryPhone);
-        }
-        return versionCodeKey;
-    }
-
     /*In-App Purchase*/
     public boolean mixShortcutsPurchased() {
 
-        return BuildConfig.DEBUG ? true :
+        return BuildConfig.DEBUG ? false :
                 readPreference(".PurchasedItem", "mix.shortcuts", false);
     }
 

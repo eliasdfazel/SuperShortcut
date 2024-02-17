@@ -51,13 +51,6 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterfa
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupDialogue.WaitingDialogueLiveData
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
-import java.lang.String
-import kotlin.Boolean
-import kotlin.Float
-import kotlin.apply
-import kotlin.getValue
-import kotlin.lazy
-import kotlin.let
 
 class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
         GestureListenerInterface,
@@ -157,20 +150,9 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
 
         normalAppSelectionBinding.preferencesView.setOnClickListener {
 
-            if (updateAvailable) {
+            startActivity(Intent(applicationContext, PreferencesUI::class.java),
+                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
 
-                FunctionsClassDialogues(this@NormalAppShortcutsSelectionListPhone, functionsClass).changeLogPreference(
-                        firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
-                        String.valueOf(firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()))
-                )
-
-            } else {
-
-                startActivity(Intent(applicationContext, PreferencesUI::class.java),
-                        ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
-
-                this@NormalAppShortcutsSelectionListPhone.finish()
-            }
         }
 
         MixShortcutsProcess(applicationContext, normalAppSelectionBinding.mixShortcutsSwitchView).initialize()

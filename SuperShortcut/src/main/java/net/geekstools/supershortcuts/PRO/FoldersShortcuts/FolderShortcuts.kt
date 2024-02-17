@@ -154,20 +154,9 @@ class FolderShortcuts : AppCompatActivity(),
 
         folderShortcutsViewBinding.preferencesView.setOnClickListener {
 
-            if (updateAvailable) {
+            startActivity(Intent(applicationContext, PreferencesUI::class.java),
+                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
 
-                FunctionsClassDialogues(this@FolderShortcuts, functionsClass).changeLogPreference(
-                        firebaseRemoteConfig.getString(functionsClass.upcomingChangeLogRemoteConfigKey()),
-                        (firebaseRemoteConfig.getLong(functionsClass.versionCodeRemoteConfigKey()).toString())
-                )
-
-            } else {
-
-                startActivity(Intent(applicationContext, PreferencesUI::class.java),
-                        ActivityOptions.makeCustomAnimation(applicationContext, R.anim.up_down, android.R.anim.fade_out).toBundle())
-
-                this@FolderShortcuts.finish()
-            }
         }
 
         MixShortcutsProcess(applicationContext, folderShortcutsViewBinding.mixShortcutsSwitchView).initialize()
