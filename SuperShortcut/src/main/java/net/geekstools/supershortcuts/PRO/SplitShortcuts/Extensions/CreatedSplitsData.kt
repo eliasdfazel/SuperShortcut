@@ -66,7 +66,7 @@ fun SplitShortcuts.loadCreatedSplitsData()  = CoroutineScope(SupervisorJob() + D
 
         splitShortcutsViewBinding.recyclerViewList.adapter = splitSelectionListAdapter
 
-        splitShortcutsViewBinding.loadingSplash.visibility = View.INVISIBLE
+        splitShortcutsViewBinding.loadingSplash.visibility = View.GONE
 
         if (!resetAdapter) {
             val animationFadeOut = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)

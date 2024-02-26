@@ -286,7 +286,7 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
                 @Override
                 public void run() {
                     Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
-                    folderAppsSelectionViewBinding.loadingSplash.setVisibility(View.INVISIBLE);
+                    folderAppsSelectionViewBinding.loadingSplash.setVisibility(View.GONE);
                     if (!resetAdapter) {
                         folderAppsSelectionViewBinding.loadingSplash.startAnimation(anim);
                     }

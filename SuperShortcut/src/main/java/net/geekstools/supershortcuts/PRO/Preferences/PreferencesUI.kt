@@ -42,7 +42,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.async
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
-import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
 import net.geekstools.supershortcuts.PRO.Preferences.Adapter.CustomIconsThemeAdapter
 import net.geekstools.supershortcuts.PRO.R
@@ -77,7 +76,6 @@ class PreferencesUI : AppCompatActivity() {
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.default_color_darker)))
         supportActionBar?.title = Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY)
-        supportActionBar?.subtitle = Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>" + BuildConfig.VERSION_NAME + "</font></small>", Html.FROM_HTML_MODE_LEGACY)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

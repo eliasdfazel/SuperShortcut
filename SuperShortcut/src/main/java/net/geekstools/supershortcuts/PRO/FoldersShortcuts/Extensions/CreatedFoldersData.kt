@@ -66,7 +66,7 @@ fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() +
 
         folderShortcutsViewBinding.recyclerViewList.adapter = folderSelectionListAdapter
 
-        folderShortcutsViewBinding.loadingSplash.visibility = View.INVISIBLE
+        folderShortcutsViewBinding.loadingSplash.visibility = View.GONE
 
         if (!resetAdapter) {
             val animationFadeOut = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)

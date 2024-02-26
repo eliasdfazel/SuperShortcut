@@ -75,7 +75,7 @@ fun NormalAppShortcutsSelectionListPhone.loadInstalledAppsData() = CoroutineScop
 
         normalAppSelectionBinding.recyclerViewList.adapter = appSelectionListAdapter
 
-        normalAppSelectionBinding.loadingSplash.visibility = View.INVISIBLE
+        normalAppSelectionBinding.loadingSplash.visibility = View.GONE
 
         if (!resetAdapter) {
             val animationFadeOut = AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out)

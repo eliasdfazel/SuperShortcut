@@ -54,7 +54,7 @@ fun NormalAppShortcutsSelectionListPhone.evaluateShortcutsInfo() {
 
         normalAppSelectionBinding.estimatedShortcutCounterView.text = Html.fromHtml("<small><font color='" + getColor(R.color.default_color) + "'>"
                 + getString(R.string.maximum) + "</font>"
-                + "<b><font color='" + getColor(R.color.default_color_darker) + "'>" + PublicVariable.maxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
+                + "<b><font color='" + getColor(R.color.default_color_darker) + "'> " + PublicVariable.maxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
 
     } else {
 
@@ -62,7 +62,7 @@ fun NormalAppShortcutsSelectionListPhone.evaluateShortcutsInfo() {
 
         normalAppSelectionBinding.estimatedShortcutCounterView.text = Html.fromHtml("<small><font color='" + getColor(R.color.default_color) + "'>"
                 + getString(R.string.maximum) + "</font>"
-                + "<b><font color='" + getColor(R.color.default_color_darker) + "'>" + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
+                + "<b><font color='" + getColor(R.color.default_color_darker) + "'> " + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
 
         PublicVariable.maxAppShortcuts = functionsClass.systemMaxAppShortcut
 

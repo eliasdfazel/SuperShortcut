@@ -284,7 +284,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
                 @Override
                 public void run() {
                     Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
-                    splitAppSelectionListBinding.loadingSplash.setVisibility(View.INVISIBLE);
+                    splitAppSelectionListBinding.loadingSplash.setVisibility(View.GONE);
                     if (!resetAdapter) {
                         splitAppSelectionListBinding.loadingSplash.startAnimation(anim);
                     }

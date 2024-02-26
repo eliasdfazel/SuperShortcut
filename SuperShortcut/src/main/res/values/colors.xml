@@ -10,11 +10,12 @@
   -->
 
 <resources>
-    <color name="default_color">#237DAE</color>
-    <color name="default_color_transparent">#33237dae</color>
-    <color name="default_color_transparent_twice">#80237dae</color>
-    <color name="default_color_light">#008dda</color>
-    <color name="default_color_darker">#0a415e</color>
+
+    <color name="default_color">#5D0064</color>
+    <color name="default_color_light">#BB00C8</color>
+    <color name="default_color_darker">#38003C</color>
+    <color name="default_color_transparent">#338D2095</color>
+    <color name="default_color_transparent_twice">#808D2095</color>
 
     <color name="default_color_game">#ae2357</color>
     <color name="default_color_game_light">#FF005D</color>
