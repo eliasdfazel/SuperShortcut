@@ -25,6 +25,7 @@
     <color name="red">#9b000e</color>
     <color name="redLight">#FFB3B9</color>
     <color name="red_transparent">#4d9b000e</color>
+    <color name="blue">#00A4FF</color>
     <color name="blueLight">#A8E0FF</color>
 
     <color name="light">#f2f7ff</color>

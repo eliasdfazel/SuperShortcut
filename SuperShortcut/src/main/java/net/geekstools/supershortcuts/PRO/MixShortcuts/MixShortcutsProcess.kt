@@ -41,7 +41,7 @@ class MixShortcutsProcess(private val context: Context,
             if (functionsClass.mixShortcutsPurchased()) {
                 if (functionsClass.mixShortcuts()) {
 
-                    mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.default_color_light))
+                    mixShortcutsSwitchView.iconTint = ColorStateList.valueOf(context.getColor(R.color.blue))
 
                 } else {
 

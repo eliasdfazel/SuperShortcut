@@ -2344,15 +2344,10 @@ public class FunctionsClass {
         return readPreference(".PopupShortcut", "PopupShortcutMode", "AppShortcuts");
     }
 
-    /*Firebase Remote Config*/
-    public boolean joinedBetaProgram() {
-        return readDefaultPreference("JoinedBetaProgrammer", false);
-    }
-
     /*In-App Purchase*/
     public boolean mixShortcutsPurchased() {
 
-        return BuildConfig.DEBUG ? false :
+        return BuildConfig.DEBUG ? true :
                 readPreference(".PurchasedItem", "mix.shortcuts", false);
     }
 
