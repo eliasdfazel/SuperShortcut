@@ -359,7 +359,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/suggestionTitle"
                 android:layout_marginTop="7dp"
-                android:paddingTop="13dp"
+                android:paddingTop="7dp"
                 android:paddingBottom="13dp"
                 android:background="@drawable/card_divider_prefs"
                 android:clickable="true">
