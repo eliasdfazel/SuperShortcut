@@ -21,24 +21,17 @@
     <string name="addToDesktop">Add to Home Screen</string>
     <string name="not_install">The Application is Not Available</string>
     <string name="maximum">Estimated Amount&#8194; </string>
-    <string name="floatingTitle">Float It; Floating Multitasking</string>
-    <string name="floatingDesc">Quickly switch apps and open all apps In floating windows by floating shortcuts, floating applications</string>
     <string name="smartTitle">Smart Pick</string>
     <string name="smartDesc">I will select essential Apps</string>
     <string name="customIconTitle">Theme of Icons</string>
     <string name="customIconDesc">Click to Select Package of Icons</string>
     <string name="defaultTheme">Set Default Theme of Icons</string>
     <string name="cautionShortcutsHome">Move Super Shortcuts Icon to Home Screen</string>
-    <string name="advanceTitle">Folder Shortcuts</string>
     <string name="mixTitle">Mix Shortcuts</string>
     <string name="mixDesc">Combine App/Folder/Split Shortcuts</string>
-    <string name="mixHint">Mix Shortcuts | Combine App/Folder/Split Shortcuts</string>
-    <string name="mixShortcutsEnable">Mix Shortcuts | Enabled</string>
-    <string name="mixShortcutsDisable">Mix Shortcuts | Disabled</string>
     <string name="splitTitlePref">Split Shortcuts</string>
     <string name="splitTitle">Split Super Shortcuts</string>
     <string name="splitPermission">I need Accessibility Service to enter Multi-Window mode</string>
-    <string name="shortcut">SHORTCUTS</string>
     <string name="apps">App</string>
     <string name="split">Split</string>
     <string name="folder">Folder</string>
@@ -82,20 +75,6 @@
                <b><p>Apps Selected by Smart Pick</p></b>
                <small>Go to Preferences to Disable it</small>
        ]]>
-    </string>
-    <string name="mixDemoDescriptions">
-        <![CDATA[
-            🔵 <b><big>Mix Shortcuts</big></b> 💠 | Replace Several Shortcuts & Folders with One Super Shortcuts with Extra Features
-            <br/>
-            💠 <big>Combine App/Split/Folder Shortcuts Together</big> 💠
-            <br/>
-            &bull; <b>App Shortcuts</b>: Open One App from Super Shortcut
-            <br/>
-            &bull; <b>Split Shortcuts</b>: Open Two Apps Simultaneously in Split Screen (Multi Window)
-            <br/>
-            &bull; <b>Folder Shortcuts</b>: Open List of Apps from Super Shortcut (Press & Hold on Each Apps on the List to Open them in Split Screen)
-            <br/>
-        ]]>
     </string>
 
     <string name="notAuthorized">Not Authorized 🔒</string>

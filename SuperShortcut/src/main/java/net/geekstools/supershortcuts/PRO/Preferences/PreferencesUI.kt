@@ -218,12 +218,6 @@ class PreferencesUI : AppCompatActivity() {
             startActivity(a)
         }
 
-        preferenceViewBinding.translatorView.setOnClickListener {
-
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda_translator))))
-
-        }
-
         preferenceViewBinding.share.setOnClickListener {
             shareSuperShortcuts()
         }

@@ -75,14 +75,6 @@
         <item name="android:textColor">@color/dark</item>
     </style>
 
-    <style name="TransparentInAppUpdate" parent="@style/GeeksEmpire.Material">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-
-        <item name="android:statusBarColor">@color/default_color</item>
-        <item name="android:navigationBarColor">@color/default_color</item>
-    </style>
-
     <style name="GeeksEmpire.Material.IAP.DARK" parent="Theme.MaterialComponents.NoActionBar">
         <item name="colorAccent">@color/default_color_light</item>
         <item name="colorPrimary">@color/default_color_light</item>

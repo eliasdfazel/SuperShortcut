@@ -15,16 +15,12 @@
     <color name="default_color_light">#BB00C8</color>
     <color name="default_color_darker">#38003C</color>
     <color name="default_color_transparent">#338D2095</color>
-    <color name="default_color_transparent_twice">#808D2095</color>
 
     <color name="default_color_game">#ae2357</color>
     <color name="default_color_game_light">#FF005D</color>
-    <color name="default_color_game_dark">#760F35</color>
-    <color name="default_color_game_transparent">#80ae2357</color>
 
     <color name="red">#9b000e</color>
     <color name="redLight">#FFB3B9</color>
-    <color name="red_transparent">#4d9b000e</color>
     <color name="blue">#00A4FF</color>
     <color name="blueLight">#A8E0FF</color>
 
@@ -32,7 +28,6 @@
     <color name="lighter">#fafbff</color>
     <color name="light_transparent">#b7f2f7ff</color>
     <color name="light_transparent_high">#0ff2f7ff</color>
-    <color name="light_transparent_high_twice">#8BFAFBFF</color>
 
     <color name="dark">#0a0f18</color>
     <color name="darker">#070b12</color>
