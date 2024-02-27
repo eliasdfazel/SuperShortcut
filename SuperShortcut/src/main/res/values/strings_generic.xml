@@ -88,6 +88,8 @@
     <string name="link_alpha" translatable="false">https://play.google.com/apps/testing/net.geekstools.supershortcuts.PRO</string>
 
     <string name="license" translatable="false">LICENSE</string>
+    <string name="link_contacts" translatable="false">https://www.GeeksEmpire.co/Contacts/</string>
+
 
     <string name="visibilityActionAdvance" translatable="false">VISIBILITY_ACTION_ADVANCE</string>
     <string name="counterActionAdvance" translatable="false">COUNTER_ACTION_ADVANCE</string>

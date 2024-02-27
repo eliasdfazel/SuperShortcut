@@ -339,36 +339,25 @@
                     android:textSize="13sp" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/translatorView"
+            <TextView
+                android:id="@+id/suggestionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/supportView"
-                android:layout_marginTop="2dp"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
-                android:background="@drawable/card_divider_prefs"
-                android:clickable="true">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:paddingStart="11dp"
-                    android:paddingTop="3dp"
-                    android:paddingEnd="11dp"
-                    android:paddingBottom="3dp"
-                    android:text="@string/translatorTitle"
-                    android:textColor="@color/darker"
-                    android:textSize="17sp" />
-            </RelativeLayout>
+                android:layout_marginTop="13dp"
+                android:paddingStart="19dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="11dp"
+                android:paddingBottom="1dp"
+                android:text="@string/geeksEmpire"
+                android:textColor="@color/default_color_darker"
+                android:textSize="21sp" />
 
             <RelativeLayout
                 android:id="@+id/floatingView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/translatorView"
+                android:layout_below="@id/suggestionTitle"
                 android:layout_marginTop="11dp"
                 android:paddingTop="13dp"
                 android:paddingBottom="13dp"
@@ -392,7 +381,6 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
-                    android:text="@string/floatingTitle"
                     android:textColor="@color/darker"
                     android:textSize="21sp" />
 
@@ -406,7 +394,6 @@
                     android:paddingTop="1dp"
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
-                    android:text="@string/floatingDesc"
                     android:textColor="@color/dark_transparent"
                     android:textSize="13sp" />
             </RelativeLayout>
@@ -425,24 +412,21 @@
                     android:id="@+id/twitter"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
+                    android:padding="3dp"
                     android:src="@drawable/ic_share_twitter" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/facebook"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
+                    android:padding="3dp"
                     android:src="@drawable/ic_share_fb" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/rate"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:src="@drawable/ic_rate" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/share"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
+                    android:padding="3dp"
                     android:src="@drawable/ic_share_full" />
             </LinearLayout>
 

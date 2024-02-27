@@ -11,7 +11,6 @@
 package net.geekstools.supershortcuts.PRO.Preferences
 
 import android.app.ActivityOptions
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -22,7 +21,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Html
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -55,7 +53,6 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.In
 import net.geekstools.supershortcuts.PRO.Utils.UI.CustomIconManager.CustomIconInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.RecycleViewSmoothLayout
 import net.geekstools.supershortcuts.PRO.databinding.PreferenceViewBinding
-import java.util.Locale
 
 class PreferencesUI : AppCompatActivity() {
 
@@ -216,57 +213,9 @@ class PreferencesUI : AppCompatActivity() {
 
         preferenceViewBinding.supportView.setOnClickListener {
 
-            val contactOption = arrayOf<String>(
-                    "Send an Email",
-                    "Send a Message",
-                    "Contact via Forum",
-                    "Join Beta Program",
-                    "Rate & Write Review")
-
-            val alertBuilder = AlertDialog.Builder(this@PreferencesUI, R.style.GeeksEmpire_Dialogue_Light)
-            alertBuilder.setTitle(getString(R.string.supportTitle))
-            alertBuilder.setSingleChoiceItems(contactOption, 0, null)
-            alertBuilder.setPositiveButton(android.R.string.ok) { dialog, whichButton ->
-
-                val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
-
-                if (selectedPosition == 0) {
-
-                    val emailEssentialContent = "[Essential Information] ${functionsClass.deviceName} | API ${Build.VERSION.SDK_INT} | ${functionsClass.countryIso.toUpperCase(Locale.ROOT)}"
-
-                    val email = Intent(Intent.ACTION_SEND)
-                    email.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support)))
-                    email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_tag) + " [" + functionsClass.appVersionName(packageName) + "] ")
-                    email.putExtra(Intent.EXTRA_TEXT, emailEssentialContent)
-                    email.type = "message/*"
-                    email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(Intent.createChooser(email, getString(R.string.feedback_tag)))
-
-                } else if (selectedPosition == 1) {
-
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook_app))))
-
-                } else if (selectedPosition == 2) {
-
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_xda))))
-
-                } else if (selectedPosition == 3) {
-
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_alpha))))
-
-                    functionsClass.Toast(getString(R.string.alphaTitle), Gravity.BOTTOM)
-
-                } else if (selectedPosition == 4) {
-
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + packageName)))
-
-                }
-            }
-            alertBuilder.setNegativeButton(android.R.string.cancel) { dialog, whichButton ->
-
-                dialog.dismiss()
-            }
-            alertBuilder.show()
+            val a = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_contacts)))
+            a.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(a)
         }
 
         preferenceViewBinding.translatorView.setOnClickListener {
@@ -277,12 +226,6 @@ class PreferencesUI : AppCompatActivity() {
 
         preferenceViewBinding.share.setOnClickListener {
             shareSuperShortcuts()
-        }
-
-        preferenceViewBinding.rate.setOnClickListener {
-
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.play_store_link) + packageName)))
-
         }
 
         preferenceViewBinding.twitter.setOnClickListener {
