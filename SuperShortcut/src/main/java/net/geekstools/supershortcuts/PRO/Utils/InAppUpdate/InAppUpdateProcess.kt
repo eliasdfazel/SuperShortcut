@@ -69,12 +69,12 @@ class InAppUpdateProcess (private val context: AppCompatActivity, private val an
         appUpdateManager.appUpdateInfo.addOnSuccessListener { updateInfo ->
 
             if (updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                    && updateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    && updateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
 
                 appUpdateManager.startUpdateFlowForResult(
                     updateInfo,
                     context,
-                    AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).setAppUpdateType(AppUpdateType.FLEXIBLE).build(),
+                    AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).setAppUpdateType(AppUpdateType.IMMEDIATE).build(),
                     IN_APP_UPDATE_REQUEST
                 )
 
@@ -97,7 +97,7 @@ class InAppUpdateProcess (private val context: AppCompatActivity, private val an
                 appUpdateManager.startUpdateFlowForResult(
                     appUpdateInfo,
                     context,
-                    AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).setAppUpdateType(AppUpdateType.FLEXIBLE).build(),
+                    AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).setAppUpdateType(AppUpdateType.IMMEDIATE).build(),
                     IN_APP_UPDATE_REQUEST
                 )
 
