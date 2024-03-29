@@ -2347,7 +2347,7 @@ public class FunctionsClass {
     /*In-App Purchase*/
     public boolean mixShortcutsPurchased() {
 
-        return BuildConfig.DEBUG ? true :
+        return BuildConfig.DEBUG ? false :
                 readPreference(".PurchasedItem", "mix.shortcuts", false);
     }
 
