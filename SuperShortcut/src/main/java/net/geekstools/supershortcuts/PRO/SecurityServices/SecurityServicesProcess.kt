@@ -8,7 +8,6 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
-import net.geekstools.supershortcuts.PRO.BuildConfig
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.Functions.FunctionsClass
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
@@ -79,15 +78,7 @@ class SecurityServicesProcess (val context: AppCompatActivity) {
 
     fun securityServiceEnabled() : Boolean {
 
-        return if (BuildConfig.DEBUG) {
-
-            functionsClass.readPreference("SecurityServices", "ProtectionEnabled", false)
-
-        } else {
-
-            true
-
-        }
+        return functionsClass.readPreference("SecurityServices", "ProtectionEnabled", false)
     }
 
     fun securityServicePurchased() : Boolean {
