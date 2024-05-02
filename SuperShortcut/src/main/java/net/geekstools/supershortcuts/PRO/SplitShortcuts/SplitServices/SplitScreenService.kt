@@ -20,12 +20,12 @@ class SplitScreenService : AccessibilityService() {
 
     override fun onServiceConnected() {}
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent) {
+    override fun onAccessibilityEvent(accessibilityEvent: AccessibilityEvent) {
 
-        when (event.eventType) {
-            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> if (event.action == 10296) {
+        when (accessibilityEvent.eventType) {
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> if (accessibilityEvent.action == 10296) {
 
-                className = event.className as String?
+                className = accessibilityEvent.className as String?
 
                 val globalAction = performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
 
@@ -36,9 +36,9 @@ class SplitScreenService : AccessibilityService() {
                 startActivity(splitIntent)
                 Log.d(this@SplitScreenService.javaClass.simpleName, "Split It: ${SplitTransparentPair.splitPackageOne}")
 
-            } else if (event.action == 69201) {
+            } else if (accessibilityEvent.action == 69201) {
 
-                className = event.className as String?
+                className = accessibilityEvent.className as String?
 
                 performGlobalAction(GLOBAL_ACTION_TOGGLE_SPLIT_SCREEN)
 
