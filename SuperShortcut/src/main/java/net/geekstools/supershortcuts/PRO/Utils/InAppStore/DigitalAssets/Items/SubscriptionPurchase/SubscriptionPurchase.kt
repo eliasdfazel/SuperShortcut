@@ -40,7 +40,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.firebase.storage.FirebaseStorage
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToItemTitle
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigDescriptionKey
-import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToRemoteConfigPriceInformation
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensions.convertToStorageScreenshotsDirectory
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.InAppBillingData
@@ -200,19 +199,20 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
                                         } else {
 
-                                            inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.first().productId.convertToItemTitle())
-
                                             val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
                                             firebaseRemoteConfig.setConfigSettingsAsync(FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(0).build())
                                             firebaseRemoteConfig.fetchAndActivate().addOnSuccessListener {
 
-                                                inAppBillingSubscriptionPurchaseViewBinding
-                                                    .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
+                                                activity?.runOnUiThread {
 
-                                                (inAppBillingSubscriptionPurchaseViewBinding
-                                                    .centerPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigPriceInformation())
-                                                (inAppBillingSubscriptionPurchaseViewBinding
-                                                    .bottomPurchaseButton.root as MaterialButton).text = firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigPriceInformation())
+                                                    inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.first().productId.convertToItemTitle())
+
+                                                    inAppBillingSubscriptionPurchaseViewBinding.itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
+
+                                                    (inAppBillingSubscriptionPurchaseViewBinding.centerPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.first().subscriptionOfferDetails!!.first().pricingPhases.pricingPhaseList[1].formattedPrice
+                                                    (inAppBillingSubscriptionPurchaseViewBinding.bottomPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.first().subscriptionOfferDetails!!.first().pricingPhases.pricingPhaseList[1].formattedPrice
+
+                                                }
 
                                                 val firebaseStorage = FirebaseStorage.getInstance()
                                                 val firebaseStorageReference = firebaseStorage.reference
