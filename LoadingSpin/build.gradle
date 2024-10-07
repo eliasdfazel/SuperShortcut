@@ -17,11 +17,21 @@ android {
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion 34
+    }
 
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
-    lint {
-        abortOnError false
-    }
+
     namespace 'net.geeksempire.loadingspin'
+
+}
+
+dependencies {
+
+    implementation 'androidx.annotation:annotation:1.8.1'
 
 }

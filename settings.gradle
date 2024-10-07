@@ -7,5 +7,5 @@
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
-
-include ':SuperShortcut', ':LoadingSpin'
+include ':SuperShortcut'
+include ':LoadingSpin'
