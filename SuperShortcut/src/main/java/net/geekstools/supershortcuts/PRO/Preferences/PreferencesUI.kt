@@ -37,7 +37,6 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.queryPurchasesAsync
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.async
 import net.geekstools.supershortcuts.PRO.ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
@@ -314,28 +313,20 @@ class PreferencesUI : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        firebaseRemoteConfig.fetch(0)
-                .addOnSuccessListener {
+        preferenceViewBinding.prefTitlefloating.text = Html.fromHtml(getString(R.string.adApp), Html.FROM_HTML_MODE_LEGACY)
+        preferenceViewBinding.prefDescfloating.text = Html.fromHtml(getString(R.string.adAppSummary), Html.FROM_HTML_MODE_LEGACY)
 
-                    firebaseRemoteConfig.activate().addOnSuccessListener {
+        Glide.with(applicationContext)
+            .load(getDrawable(R.drawable.arwen_ai_icon))
+            .transform(RoundedCorners(99))
+            .into(preferenceViewBinding.prefIconfloating)
 
-                        preferenceViewBinding.prefTitlefloating.text = Html.fromHtml(firebaseRemoteConfig.getString("ad_title"), Html.FROM_HTML_MODE_LEGACY)
-                        preferenceViewBinding.prefDescfloating.text = Html.fromHtml(firebaseRemoteConfig.getString("ad_summaries"), Html.FROM_HTML_MODE_LEGACY)
+        preferenceViewBinding.floatingView.setOnClickListener {
 
-                        Glide.with(applicationContext)
-                            .load(firebaseRemoteConfig.getString("ad_icon_link"))
-                            .transform(RoundedCorners(99))
-                            .into(preferenceViewBinding.prefIconfloating)
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_ad_app)))
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 
-                        preferenceViewBinding.floatingView.setOnClickListener {
-
-                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(firebaseRemoteConfig.getString("ad_link"))))
-
-                        }
-
-                    }
-                }
+        }
 
         preferenceViewBinding.prefIconNews.setImageDrawable(getDrawable(R.drawable.ic_launcher))
         preferenceViewBinding.customIconDesc.text = if (functionsClass.customIconsEnable()) {

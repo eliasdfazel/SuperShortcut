@@ -10,6 +10,17 @@
 
 <resources>
 
+    <string name="adApp" translatable="false">
+        <![CDATA[
+            <b>Arwen AI</b> - Better Multitasking and Productivity
+        ]]>
+    </string>
+    <string name="adAppSummary" translatable="false">
+        <![CDATA[
+            Beautiful, Advanced AI Powered Assistant for Better Lifestyle, Productivity. Arwen AI - One Of A Kind Multitasking AI; Helps users achieve better productivity.
+        ]]>
+    </string>
+
     <string name="purchaseFlowDisrupted" translatable="false">Purchase Flow Disrupted</string>
     <string name="retry" translatable="false">Retry Now</string>
 
@@ -64,6 +75,7 @@
     <string name="link_facebook_app" translatable="false">https://www.facebook.com/SuperShortcuts</string>
     <string name="link_xda_translator" translatable="false">https://forum.xda-developers.com/showpost.php?p=72735816&amp;postcount=4</string>
     <string name="play_store_link" translatable="false">https://play.google.com/store/apps/details?id=</string>
+    <string name="link_ad_app" translatable="false">https://play.google.com/store/apps/details?id=co.geeksempire.arwen.ai</string>
 
     <string name="link_contacts" translatable="false">https://www.GeeksEmpire.co/Contacts/</string>
 
