@@ -33,6 +33,15 @@ android {
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
     }
 
+    signingConfigs {
+        release {
+            storeFile file("D:\\Xine\\Android\\AppsScreenshotsKeys\\SuperShortcut\\supershortcut.jks")
+            storePassword '*arwen#10296$'
+            keyAlias 'arwenai'
+            keyPassword '*arwen#10296$'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
