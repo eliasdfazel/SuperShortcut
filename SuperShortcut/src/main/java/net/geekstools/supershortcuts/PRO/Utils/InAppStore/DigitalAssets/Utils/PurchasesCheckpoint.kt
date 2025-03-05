@@ -18,6 +18,7 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
 import com.android.billingclient.api.ConsumeResponseListener
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryPurchasesParams
@@ -39,7 +40,10 @@ class PurchasesCheckpoint(var appCompatActivity: AppCompatActivity) : PurchasesU
 
         val billingClient = BillingClient.newBuilder(appCompatActivity)
                 .setListener(this@PurchasesCheckpoint)
-                .enablePendingPurchases().build()
+                .enablePendingPurchases(PendingPurchasesParams.newBuilder()
+                    .enableOneTimeProducts()
+                    .enablePrepaidPlans()
+                    .build()).build()
 
         //In-App Billing
         if (functionsClass.networkConnection()) {

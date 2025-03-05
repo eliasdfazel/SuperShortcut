@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
@@ -123,7 +124,10 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
         setupOneTimePurchaseUI()
 
-        billingClient = billingClientBuilder.setListener(this@SubscriptionPurchase).enablePendingPurchases().build()
+        billingClient = billingClientBuilder.setListener(this@SubscriptionPurchase).enablePendingPurchases(PendingPurchasesParams.newBuilder()
+            .enableOneTimeProducts()
+            .enablePrepaidPlans()
+            .build()).build()
         billingClient.startConnection(object : BillingClientStateListener {
 
             override fun onBillingServiceDisconnected() {

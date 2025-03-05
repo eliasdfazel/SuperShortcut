@@ -21,15 +21,15 @@ plugins {
 
 android {
 
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "net.geekstools.supershortcuts.PRO"
 
         minSdkVersion 26
-        targetSdkVersion 34
+        targetSdkVersion 35
 
-        versionCode 271
+        versionCode 272
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
     }
 
