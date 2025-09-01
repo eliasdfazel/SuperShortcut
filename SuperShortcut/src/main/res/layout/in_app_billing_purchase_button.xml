@@ -29,6 +29,6 @@
     apps:layout_constraintWidth_percent="0.47"
 
     apps:rippleColor="@color/default_color_game_light"
-    apps:backgroundTint="@color/default_color_light"
+    apps:backgroundTint="@color/default_color"
     apps:elevation="13dp"
     apps:cornerRadius="51dp" />
