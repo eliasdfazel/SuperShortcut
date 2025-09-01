@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright © 2021 By Geeks Empire.
  *
@@ -21,15 +23,15 @@ plugins {
 
 android {
 
-    compileSdk 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId "net.geekstools.supershortcuts.PRO"
 
         minSdkVersion 26
-        targetSdkVersion 35
+        targetSdkVersion 36
 
-        versionCode 273
+        versionCode 275
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
     }
 
@@ -62,8 +64,10 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = '17'
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 
     buildFeatures {
@@ -110,7 +114,7 @@ dependencies {
     implementation project(':LoadingSpin')
 
 
-    implementation 'com.android.billingclient:billing-ktx:7.1.1'
+    implementation 'com.android.billingclient:billing-ktx:8.0.0'
 
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -127,10 +131,10 @@ dependencies {
 
 
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
-    implementation 'com.google.android.play:review-ktx:2.0.1'
+    implementation 'com.google.android.play:review-ktx:2.0.2'
 
 
-    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.google.android.material:material:1.12.0'
 
 
     implementation platform('com.google.firebase:firebase-bom:32.7.2')

@@ -16,7 +16,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Html
@@ -27,13 +26,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryPurchasesAsync
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -73,19 +78,26 @@ class PreferencesUI : AppCompatActivity() {
         supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.default_color_darker)))
         supportActionBar?.title = Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.pref) + "</font>", Html.FROM_HTML_MODE_LEGACY)
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = getColor(R.color.default_color_darker)
-        window.navigationBarColor = getColor(R.color.light)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        enableEdgeToEdge()
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+
+            controller.hide(WindowInsetsCompat.Type.statusBars())
+            controller.hide(WindowInsetsCompat.Type.navigationBars())
+
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
 
         if (!functionsClass.mixShortcutsPurchased()) {
 
             val billingClient = BillingClient.newBuilder(this@PreferencesUI).setListener { billingResult, purchases ->
 
-            }.enablePendingPurchases().build()
+            }.enablePendingPurchases(PendingPurchasesParams.newBuilder()
+                .enableOneTimeProducts()
+                .enablePrepaidPlans()
+                .build()).build()
 
             billingClient.startConnection(object : BillingClientStateListener {
 
@@ -96,10 +108,17 @@ class PreferencesUI : AppCompatActivity() {
 
                         lifecycleScope.async {
 
-                            val purchases = billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP).purchasesList
-                            for (purchase in purchases) {
+                            val queryPurchasesParams = QueryPurchasesParams.newBuilder()
+                                .setProductType(BillingClient.ProductType.INAPP)
+                                .build()
 
-                                functionsClass.savePreference(".PurchasedItem", purchase.skus.first(), true)
+                            billingClient.queryPurchasesAsync(queryPurchasesParams).purchasesList.let { purchases ->
+
+                                for (purchase in purchases) {
+
+                                    functionsClass.savePreference(".PurchasedItem", purchase.products.first(), true)
+
+                                }
 
                             }
 

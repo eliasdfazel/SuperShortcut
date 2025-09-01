@@ -175,20 +175,20 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
                         BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
 
                             if (productsDetailsListInApp != null) {
-                                if (productsDetailsListInApp.isNotEmpty()) {
+                                if (productsDetailsListInApp.productDetailsList.isNotEmpty()) {
 
-                                    purchaseFlowController?.purchaseFlowPaid(productDetails = productsDetailsListInApp[0])
+                                    purchaseFlowController?.purchaseFlowPaid(productDetails = productsDetailsListInApp.productDetailsList[0])
                                 }
                             }
                         }
                         BillingClient.BillingResponseCode.OK -> {
 
                             if (productsDetailsListInApp != null) {
-                                if (productsDetailsListInApp.isNotEmpty()) {
+                                if (productsDetailsListInApp.productDetailsList.isNotEmpty()) {
 
-                                    purchaseFlowController?.purchaseFlowSucceeded(productDetails = productsDetailsListInApp[0])
+                                    purchaseFlowController?.purchaseFlowSucceeded(productDetails = productsDetailsListInApp.productDetailsList[0])
 
-                                    subscriptionPurchaseFlow(productsDetailsListInApp[0])
+                                    subscriptionPurchaseFlow(productsDetailsListInApp.productDetailsList[0])
 
                                     if (listOfItems.isNotEmpty()) {
 
@@ -209,19 +209,19 @@ class SubscriptionPurchase : Fragment(), View.OnClickListener, PurchasesUpdatedL
 
                                                 activity?.runOnUiThread {
 
-                                                    inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.first().productId.convertToItemTitle())
+                                                    inAppBillingSubscriptionPurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.productDetailsList.first().productId.convertToItemTitle())
 
-                                                    inAppBillingSubscriptionPurchaseViewBinding.itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
+                                                    inAppBillingSubscriptionPurchaseViewBinding.itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.productDetailsList.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
 
-                                                    (inAppBillingSubscriptionPurchaseViewBinding.centerPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.first().subscriptionOfferDetails!!.first().pricingPhases.pricingPhaseList[1].formattedPrice
-                                                    (inAppBillingSubscriptionPurchaseViewBinding.bottomPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.first().subscriptionOfferDetails!!.first().pricingPhases.pricingPhaseList[1].formattedPrice
+                                                    (inAppBillingSubscriptionPurchaseViewBinding.centerPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.productDetailsList.first().subscriptionOfferDetails!!.first().pricingPhases.pricingPhaseList[1].formattedPrice
+                                                    (inAppBillingSubscriptionPurchaseViewBinding.bottomPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.productDetailsList.first().subscriptionOfferDetails!!.first().pricingPhases.pricingPhaseList[1].formattedPrice
 
                                                 }
 
                                                 val firebaseStorage = FirebaseStorage.getInstance()
                                                 val firebaseStorageReference = firebaseStorage.reference
                                                 firebaseStorageReference
-                                                    .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}")
+                                                    .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.productDetailsList.first().productId.convertToStorageScreenshotsDirectory()}")
                                                     .listAll()
                                                     .addOnSuccessListener { itemsStorageReference ->
 

@@ -181,18 +181,18 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                         }
                         BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
 
-                            if (!productsDetailsListInApp.isNullOrEmpty()) {
+                            if (productsDetailsListInApp.productDetailsList.isNotEmpty()) {
 
-                                purchaseFlowController?.purchaseFlowPaid(productDetails = productsDetailsListInApp[0])
+                                purchaseFlowController?.purchaseFlowPaid(productDetails = productsDetailsListInApp.productDetailsList[0])
                             }
                         }
                         BillingClient.BillingResponseCode.OK -> {
 
-                            if (!productsDetailsListInApp.isNullOrEmpty()) {
+                            if (productsDetailsListInApp.productDetailsList.isNotEmpty()) {
 
-                                purchaseFlowController?.purchaseFlowSucceeded(productDetails = productsDetailsListInApp[0])
+                                purchaseFlowController?.purchaseFlowSucceeded(productDetails = productsDetailsListInApp.productDetailsList[0])
 
-                                oneTimePurchaseFlow(productsDetailsListInApp[0])
+                                oneTimePurchaseFlow(productsDetailsListInApp.productDetailsList[0])
 
                                 val queriedProduct = QueryProductDetailsParams.Product.newBuilder()
                                     .setProductId(arguments?.getString(InitializeInAppBilling.Entry.ItemToPurchase) ?: InAppBillingData.SKU.InAppItemDonation)
@@ -200,10 +200,10 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
                                     .build()
 
                                 if (itemToPurchase == queriedProduct ||
-                                    productsDetailsListInApp[0].title == InAppBillingData.SKU.InAppItemDonation) {
+                                    productsDetailsListInApp.productDetailsList[0].title == InAppBillingData.SKU.InAppItemDonation) {
 
-                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = productsDetailsListInApp[0].title
-                                    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.text = productsDetailsListInApp[0].description
+                                    inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = productsDetailsListInApp.productDetailsList[0].title
+                                    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.text = productsDetailsListInApp.productDetailsList[0].description
 
                                     (inAppBillingOneTimePurchaseViewBinding
                                         .centerPurchaseButton.root as MaterialButton).text = getString(R.string.donate)
@@ -221,20 +221,20 @@ class OneTimePurchase : Fragment(), View.OnClickListener, PurchasesUpdatedListen
 
                                         activity?.runOnUiThread {
 
-                                            inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.first().productId.convertToItemTitle())
+                                            inAppBillingOneTimePurchaseViewBinding.itemTitleView.text = (productsDetailsListInApp.productDetailsList.first().productId.convertToItemTitle())
 
                                             inAppBillingOneTimePurchaseViewBinding
-                                                .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
+                                                .itemDescriptionView.text = Html.fromHtml(firebaseRemoteConfig.getString(productsDetailsListInApp.productDetailsList.first().productId.convertToRemoteConfigDescriptionKey()), Html.FROM_HTML_MODE_COMPACT)
 
-                                            (inAppBillingOneTimePurchaseViewBinding.centerPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.first().oneTimePurchaseOfferDetails?.formattedPrice
-                                            (inAppBillingOneTimePurchaseViewBinding.bottomPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.first().oneTimePurchaseOfferDetails?.formattedPrice
+                                            (inAppBillingOneTimePurchaseViewBinding.centerPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.productDetailsList.first().oneTimePurchaseOfferDetails?.formattedPrice
+                                            (inAppBillingOneTimePurchaseViewBinding.bottomPurchaseButton.root as MaterialButton).text = productsDetailsListInApp.productDetailsList.first().oneTimePurchaseOfferDetails?.formattedPrice
 
                                         }
 
                                         val firebaseStorage = FirebaseStorage.getInstance()
                                         val firebaseStorageReference = firebaseStorage.reference
                                         firebaseStorageReference
-                                            .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.first().productId.convertToStorageScreenshotsDirectory()}")
+                                            .child("SuperShortcut/Assets/Images/Screenshots/${productsDetailsListInApp.productDetailsList.first().productId.convertToStorageScreenshotsDirectory()}")
                                             .listAll()
                                             .addOnSuccessListener { itemsStorageReference ->
 
