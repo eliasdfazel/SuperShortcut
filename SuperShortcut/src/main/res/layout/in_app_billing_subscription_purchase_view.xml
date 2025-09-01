@@ -54,7 +54,7 @@
             android:textSize="17sp"
             android:linksClickable="true"
             android:autoLink="web"
-            android:textColorLink="@color/default_color_light"
+            android:textColorLink="@color/default_color"
             android:textColor="@color/light"
 
             apps:layout_constraintTop_toBottomOf="@id/itemTitleView"/>

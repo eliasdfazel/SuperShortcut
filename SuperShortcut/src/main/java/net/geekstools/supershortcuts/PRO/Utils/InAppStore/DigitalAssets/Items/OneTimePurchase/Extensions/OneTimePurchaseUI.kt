@@ -21,8 +21,8 @@ import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Items.On
 
 fun OneTimePurchase.setupOneTimePurchaseUI() {
 
-    inAppBillingOneTimePurchaseViewBinding.itemTitleView.setTextColor(requireContext().getColor(R.color.dark))
-    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.setTextColor(requireContext().getColor(R.color.dark))
+    inAppBillingOneTimePurchaseViewBinding.itemTitleView.setTextColor(requireContext().getColor(R.color.light))
+    inAppBillingOneTimePurchaseViewBinding.itemDescriptionView.setTextColor(requireContext().getColor(R.color.light))
 }
 
 fun OneTimePurchase.setScreenshots() = CoroutineScope(Dispatchers.Main).launch {
