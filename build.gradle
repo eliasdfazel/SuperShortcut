@@ -22,12 +22,11 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:8.12.2'
 
-        classpath "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
-        classpath "com.google.firebase:perf-plugin:1.4.2"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:3.0.6"
 
-        classpath "com.google.gms:google-services:4.4.0"
+        classpath "com.google.gms:google-services:4.4.3"
 
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.10"
     }
 }
 
@@ -36,8 +35,4 @@ allprojects {
         google()
         mavenCentral()
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

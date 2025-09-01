@@ -25,7 +25,6 @@ import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactory
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.IndexedFastScroller
-import java.util.Locale
 
 fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
     createdFolderListItem.clear()
@@ -49,7 +48,7 @@ fun FolderShortcuts.loadCreatedFoldersData()  = CoroutineScope(SupervisorJob() +
                             functionsClass.readFileLine(folderName)
                     ))
 
-                    listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).toUpperCase(Locale.getDefault()))
+                    listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).uppercase())
 
                 }
 

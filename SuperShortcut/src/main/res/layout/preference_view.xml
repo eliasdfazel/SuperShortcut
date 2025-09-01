@@ -13,7 +13,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light"
+    android:background="@color/dark"
     android:paddingBottom="7dp"
     tools:context=".Preferences.PreferencesUI">
 
@@ -21,8 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="2dp"
-        android:background="@color/light"
+        android:paddingTop="19dp"
+        android:paddingBottom="19dp"
+        android:background="@color/dark"
         android:cacheColorHint="@android:color/transparent"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="37dp"
@@ -74,7 +75,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="3dp"
                     android:text="@string/smartTitle"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/light"
                     android:textSize="21sp" />
 
                 <TextView
@@ -88,7 +89,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
                     android:text="@string/smartDesc"
-                    android:textColor="@color/dark_transparent"
+                    android:textColor="@color/light_transparent"
                     android:textSize="13sp" />
             </RelativeLayout>
 
@@ -133,7 +134,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="3dp"
                     android:text="@string/splitTitlePref"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/light"
                     android:textSize="21sp" />
 
                 <TextView
@@ -147,7 +148,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
                     android:text="@string/splitPermission"
-                    android:textColor="@color/dark_transparent"
+                    android:textColor="@color/light_transparent"
                     android:textSize="13sp" />
             </RelativeLayout>
 
@@ -192,7 +193,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="3dp"
                     android:text="@string/mixTitle"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/light"
                     android:textSize="21sp" />
 
                 <TextView
@@ -206,7 +207,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
                     android:text="@string/mixDesc"
-                    android:textColor="@color/dark_transparent"
+                    android:textColor="@color/light_transparent"
                     android:textSize="13sp" />
             </RelativeLayout>
 
@@ -240,7 +241,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="3dp"
                     android:text="@string/customIconTitle"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/light"
                     android:textSize="21sp" />
 
                 <TextView
@@ -254,7 +255,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
                     android:text="@string/customIconDesc"
-                    android:textColor="@color/dark_transparent"
+                    android:textColor="@color/light_transparent"
                     android:textSize="13sp" />
             </RelativeLayout>
 
@@ -288,7 +289,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="3dp"
                     android:text="@string/whatsnew"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/light"
                     android:textSize="21sp" />
             </RelativeLayout>
 
@@ -322,7 +323,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="3dp"
                     android:text="@string/supportTitle"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/light"
                     android:textSize="21sp" />
 
                 <TextView
@@ -335,7 +336,7 @@
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
                     android:text="@string/supportDesc"
-                    android:textColor="@color/dark_transparent"
+                    android:textColor="@color/light_transparent"
                     android:textSize="13sp" />
             </RelativeLayout>
 
@@ -350,7 +351,7 @@
                 android:paddingEnd="11dp"
                 android:paddingBottom="1dp"
                 android:text="@string/geeksEmpire"
-                android:textColor="@color/default_color_darker"
+                android:textColor="@color/light_transparent"
                 android:textSize="19sp" />
 
             <RelativeLayout
@@ -381,7 +382,7 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/light"
                     android:textSize="21sp" />
 
                 <TextView
@@ -394,7 +395,7 @@
                     android:paddingTop="1dp"
                     android:paddingEnd="11dp"
                     android:paddingBottom="1dp"
-                    android:textColor="@color/dark_transparent"
+                    android:textColor="@color/light_transparent"
                     android:textSize="13sp" />
             </RelativeLayout>
 
@@ -407,6 +408,13 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/gift"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:padding="3dp"
+                    android:src="@drawable/draw_gift" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/twitter"
@@ -431,5 +439,7 @@
             </LinearLayout>
 
         </RelativeLayout>
+
     </ScrollView>
+
 </RelativeLayout>

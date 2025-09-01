@@ -20,8 +20,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Html
 import android.util.TypedValue
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -252,6 +250,16 @@ class PreferencesUI : AppCompatActivity() {
 
         }
 
+        preferenceViewBinding.gift.setOnClickListener {
+
+            startActivity(Intent(applicationContext, InitializeInAppBilling::class.java)
+                .putExtra(InitializeInAppBilling.Entry.PurchaseType, InitializeInAppBilling.Entry.OneTimePurchase)
+                .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemDonation)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                , ActivityOptions.makeCustomAnimation(applicationContext, R.anim.down_up, android.R.anim.fade_out).toBundle())
+
+        }
+
         preferenceViewBinding.customIconView.setOnClickListener {
 
             val layoutParams = WindowManager.LayoutParams()
@@ -396,64 +404,6 @@ class PreferencesUI : AppCompatActivity() {
         }
 
         this@PreferencesUI.finish()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
-        menu?.let {
-
-            val inflater = menuInflater
-            inflater.inflate(R.menu.preferences_menu, menu)
-
-        }
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        return super.onPrepareOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.facebook -> {
-
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_facebook_app))))
-
-            }
-            R.id.donate -> {
-
-                startActivity(Intent(applicationContext, InitializeInAppBilling::class.java)
-                        .putExtra(InitializeInAppBilling.Entry.PurchaseType, InitializeInAppBilling.Entry.OneTimePurchase)
-                        .putExtra(InitializeInAppBilling.Entry.ItemToPurchase, InAppBillingData.SKU.InAppItemDonation)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        , ActivityOptions.makeCustomAnimation(applicationContext, R.anim.down_up, android.R.anim.fade_out).toBundle())
-
-            }
-            android.R.id.home -> {
-
-                val tabView = getSharedPreferences("ShortcutsModeView", Context.MODE_PRIVATE).getString("TabsView", NormalAppShortcutsSelectionListPhone::class.java.simpleName)
-
-                if (tabView == NormalAppShortcutsSelectionListPhone::class.java.simpleName) {
-                    startActivity(Intent(applicationContext, NormalAppShortcutsSelectionListPhone::class.java),
-                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
-                } else if (tabView == SplitShortcuts::class.java.simpleName) {
-                    startActivity(Intent(applicationContext, SplitShortcuts::class.java),
-                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
-                } else if (tabView == FolderShortcuts::class.java.simpleName) {
-                    startActivity(Intent(applicationContext, FolderShortcuts::class.java),
-                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
-                } else {
-                    startActivity(Intent(applicationContext, NormalAppShortcutsSelectionListPhone::class.java),
-                            ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, R.anim.go_up).toBundle())
-                }
-
-                this@PreferencesUI.finish()
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 
     private fun shareSuperShortcuts() {

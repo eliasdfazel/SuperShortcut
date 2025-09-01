@@ -10,16 +10,19 @@
   -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/temporaryBackground">
+
+    <item
+        android:id="@+id/temporaryBackground"
+        android:height="313dp"
+        android:width="313dp">
         <shape android:shape="oval">
-            <solid android:color="@color/default_color_light" />
+            <solid android:color="@color/default_color" />
         </shape>
     </item>
 
     <item
-        android:top="3dp"
-        android:bottom="3dp"
-        android:left="3dp"
-        android:right="3dp"
+        android:height="253dp"
+        android:width="253dp"
+        android:gravity="center"
         android:drawable="@drawable/ic_gift" />
 </layer-list>

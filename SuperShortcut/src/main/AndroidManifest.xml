@@ -186,7 +186,7 @@
             android:name=".Preferences.PreferencesUI"
             android:label="@string/pref"
             android:exported="true"
-            android:theme="@style/GeeksEmpire">
+            android:theme="@style/GeeksEmpire.Material">
         </activity>
         <activity
             android:name=".Utils.InAppStore.DigitalAssets.InitializeInAppBilling"

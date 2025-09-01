@@ -11,10 +11,11 @@
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts.Extensions
 
 import android.content.res.ColorStateList
-import android.os.Build
 import android.text.Html
-import android.view.View
-import android.view.WindowManager
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.geekstools.supershortcuts.PRO.FoldersShortcuts.FolderShortcuts
@@ -28,20 +29,20 @@ fun FolderShortcuts.setupUI() {
     recyclerViewLayoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
     folderShortcutsViewBinding.recyclerViewList.layoutManager = recyclerViewLayoutManager
 
-    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-    window.statusBarColor = getColor(R.color.light)
-    window.navigationBarColor = getColor(R.color.light)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+    enableEdgeToEdge()
+
+    WindowCompat.setDecorFitsSystemWindows(window, false)
+    WindowInsetsControllerCompat(window, window.decorView).let { controller ->
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+
+        controller.hide(WindowInsetsCompat.Type.statusBars())
+        controller.hide(WindowInsetsCompat.Type.navigationBars())
+
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
-    val typeface = resources.getFont(R.font.upcil)
-
-    folderShortcutsViewBinding.loadingDescription.typeface = typeface
     folderShortcutsViewBinding.loadingProgress.indeterminateTintList = ColorStateList.valueOf(getColor(R.color.default_color))
 
-    folderShortcutsViewBinding.selectedShortcutCounterView.typeface = typeface
     folderShortcutsViewBinding.selectedShortcutCounterView.bringToFront()
 }
 

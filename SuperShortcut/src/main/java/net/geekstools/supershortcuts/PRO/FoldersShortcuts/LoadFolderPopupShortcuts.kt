@@ -10,11 +10,13 @@
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.SecurityServices.Protection
 import net.geekstools.supershortcuts.PRO.SecurityServices.SecurityServicesProcess
@@ -45,10 +47,17 @@ class LoadFolderPopupShortcuts : AppCompatActivity() {
         folderPopupViewBinding = FolderPopupViewBinding.inflate(layoutInflater)
         setContentView(folderPopupViewBinding.root)
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = Color.TRANSPARENT
-        window.navigationBarColor = Color.TRANSPARENT
+        enableEdgeToEdge()
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+
+            controller.hide(WindowInsetsCompat.Type.statusBars())
+            controller.hide(WindowInsetsCompat.Type.navigationBars())
+
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
 
         if (intent != null) {
             if (intent.action != null) {

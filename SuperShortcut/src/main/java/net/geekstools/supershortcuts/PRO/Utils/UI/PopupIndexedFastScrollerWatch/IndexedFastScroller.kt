@@ -24,14 +24,21 @@ import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactory
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.calculateNavigationBarHeight
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.calculateStatusBarHeight
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.convertToDp
 import net.geekstools.supershortcuts.PRO.databinding.FastScrollerIndexViewBinding
-import java.util.*
+import java.util.Locale
 
 /**
  * You Must Enable ViewBinding.
@@ -131,7 +138,7 @@ class IndexedFastScroller(private val context: Context,
 
         mapIndexFirstItem.keys.forEach { indexText ->
             sideIndexItem = layoutInflater.inflate(R.layout.fast_scroller_side_index_item, null) as TextView
-            sideIndexItem.text = indexText.toUpperCase(Locale.getDefault())
+            sideIndexItem.text = indexText.uppercase(Locale.getDefault())
             sideIndexItem.setTextColor(indexedFastScrollerFactory.indexItemTextColor)
             sideIndexItem.typeface = indexedFastScrollerFactory.indexItemFont
             sideIndexItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, indexedFastScrollerFactory.indexItemSize)

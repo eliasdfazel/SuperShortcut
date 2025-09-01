@@ -28,7 +28,6 @@ import net.geekstools.supershortcuts.PRO.Utils.AdapterItemsData.AdapterItemsData
 import net.geekstools.supershortcuts.PRO.Utils.Functions.PublicVariable
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.Factory.IndexedFastScrollerFactory
 import net.geekstools.supershortcuts.PRO.Utils.UI.PopupIndexedFastScrollerWatch.IndexedFastScroller
-import java.util.Locale
 
 fun NormalAppShortcutsSelectionListPhone.loadInstalledAppsData() = CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
     installedAppsListItem.clear()
@@ -54,7 +53,7 @@ fun NormalAppShortcutsSelectionListPhone.loadInstalledAppsData() = CoroutineScop
                 functionsClass.activityIcon(resolveInfo.activityInfo)
             }
 
-            listOfNewCharOfItemsForIndex.add(appName.substring(0, 1).toUpperCase(Locale.getDefault()))
+            listOfNewCharOfItemsForIndex.add(appName.substring(0, 1).uppercase())
 
             installedAppsListItem.add(AdapterItemsData(
                     appName,

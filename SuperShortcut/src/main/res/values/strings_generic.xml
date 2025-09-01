@@ -70,7 +70,7 @@
 
     <string name="rate" translatable="false">Rate Me Five Star</string>
 
-    <string name="link_twitter" translatable="false">https://twitter.com/GeeksEmpire</string>
+    <string name="link_twitter" translatable="false">https://x.com/GeeksEmpire</string>
     <string name="link_facebook" translatable="false">https://www.facebook.com/GeeksEmpire</string>
     <string name="link_facebook_app" translatable="false">https://www.facebook.com/SuperShortcuts</string>
     <string name="link_xda_translator" translatable="false">https://forum.xda-developers.com/showpost.php?p=72735816&amp;postcount=4</string>

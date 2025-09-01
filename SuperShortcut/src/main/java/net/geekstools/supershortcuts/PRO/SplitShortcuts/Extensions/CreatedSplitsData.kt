@@ -49,7 +49,7 @@ fun SplitShortcuts.loadCreatedSplitsData()  = CoroutineScope(SupervisorJob() + D
                             functionsClass.readFileLine(folderName)
                     ))
 
-                    listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).toUpperCase(Locale.getDefault()))
+                    listOfNewCharOfItemsForIndex.add(folderName.substring(0, 1).uppercase(Locale.getDefault()))
 
                 }
 
