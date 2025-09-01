@@ -15,7 +15,7 @@
     android:id="@+id/MainView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light"
+    android:background="@color/dark"
     tools:context=".ApplicationsShortcuts.NormalAppShortcutsSelectionListPhone">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -26,7 +26,7 @@
         android:layout_marginBottom="3dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginHorizontal="13dp"
         android:src="@drawable/draw_pref"/>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:layout_toStartOf="@id/preferencesView"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginHorizontal="13dp"
         android:layout_marginTop="19dp"
         android:layout_marginBottom="3dp"
         android:paddingHorizontal="5dp"
@@ -42,7 +42,7 @@
         android:ellipsize="start"
         android:singleLine="true"
         android:text="@string/app_name"
-        android:textColor="@color/default_color"
+        android:textColor="@color/light"
         android:textSize="23sp" />
 
     <LinearLayout
@@ -52,6 +52,7 @@
         android:layout_below="@id/preferencesView"
         android:layout_centerHorizontal="true"
         android:paddingHorizontal="4dp"
+        android:layout_marginTop="13dp"
         android:visibility="visible"
 
         android:orientation="horizontal"
@@ -69,11 +70,11 @@
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:text="@string/appsEnable"
-            android:textColor="@color/default_color_darker"
+            android:textColor="@color/light_transparent"
             android:textSize="15sp"
 
             apps:rippleColor="@color/default_color"
-            apps:backgroundTint="@color/light"
+            apps:backgroundTint="@color/dark"
             apps:strokeWidth="3dp"
             apps:strokeColor="@color/default_color"
             apps:cornerRadius="51dp"
@@ -186,7 +187,7 @@
 
         android:textAllCaps="false"
         android:text="@string/mixTitle"
-        android:textColor="@color/default_color"
+        android:textColor="@color/light"
         android:textSize="15sp"
         android:textStyle="normal"
 
@@ -195,7 +196,7 @@
         apps:iconSize="29sp"
         apps:iconPadding="0dp"
         apps:iconTint="@color/red"
-        apps:backgroundTint="@color/lighter"
+        apps:backgroundTint="@color/black"
         apps:rippleColor="@color/default_color_transparent"
         apps:cornerRadius="51dp"/>
 

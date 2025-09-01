@@ -17,10 +17,10 @@
         android:left="13dp"
         android:right="13dp">
         <shape android:shape="oval">
-            <solid android:color="@color/light" />
+            <solid android:color="@color/black" />
             <gradient
                 android:angle="270"
-                android:endColor="@color/light"
+                android:endColor="@color/black"
                 android:startColor="@color/dark_transparent_high_twice" />
         </shape>
     </item>

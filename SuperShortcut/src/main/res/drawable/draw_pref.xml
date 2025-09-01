@@ -12,7 +12,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/temporaryBackground">
         <shape android:shape="oval">
-            <solid android:color="@color/default_color_light" />
+            <solid android:color="@color/default_color" />
         </shape>
     </item>
 

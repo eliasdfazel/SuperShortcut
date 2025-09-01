@@ -42,8 +42,8 @@
         android:maxLines="1"
         android:padding="5dp"
         android:singleLine="true"
-        android:textColor="@color/dark"
-        android:textColorHint="@color/dark_transparent_high"
+        android:textColor="@color/light"
+        android:textColorHint="@color/light_transparent"
         android:textSize="17sp"
         android:typeface="sans" />
 
@@ -52,7 +52,6 @@
         android:layout_height="57dp"
         android:layout_below="@id/categoryName"
         android:layout_toEndOf="@id/autoChoice"
-        android:background="@color/light"
         android:cacheColorHint="@android:color/transparent"
         android:fadeScrollbars="true"
         android:fadingEdge="horizontal"

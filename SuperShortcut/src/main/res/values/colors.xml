@@ -35,4 +35,7 @@
     <color name="dark_transparent_high">#4b0a0f18</color>
     <color name="dark_transparent_high_twice">#130a0f18</color>
 
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+
 </resources>

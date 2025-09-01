@@ -52,17 +52,17 @@ fun SplitShortcuts.evaluateShortcutsInfo() {
 
         PublicVariable.SplitShortcutsMaxAppShortcuts= functionsClass.getSystemMaxAppShortcut() - functionsClass.countLine(".mixShortcuts");
 
-        splitShortcutsViewBinding.estimatedShortcutCounterView.text = Html.fromHtml("<small><font color='" + getColor(R.color.default_color) + "'>"
+        splitShortcutsViewBinding.estimatedShortcutCounterView.text = Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>"
                 + getString(R.string.maximum) + "</font>"
-                + "<b><font color='" + getColor(R.color.default_color_darker) + "'> " + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
+                + "<b><font color='" + getColor(R.color.white) + "'> " + PublicVariable.SplitShortcutsMaxAppShortcuts + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
 
     } else {
 
         appShortcutLimitCounter = functionsClass.systemMaxAppShortcut - functionsClass.countLine(".SplitSuperSelected");
 
-        splitShortcutsViewBinding.estimatedShortcutCounterView.text = Html.fromHtml("<small><font color='" + getColor(R.color.default_color) + "'>"
+        splitShortcutsViewBinding.estimatedShortcutCounterView.text = Html.fromHtml("<small><font color='" + getColor(R.color.light) + "'>"
                 + getString(R.string.maximum) + "</font>"
-                + "<b><font color='" + getColor(R.color.default_color_darker) + "'> " + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
+                + "<b><font color='" + getColor(R.color.white) + "'> " + appShortcutLimitCounter + "</font></b></small>", Html.FROM_HTML_MODE_LEGACY)
 
         PublicVariable.SplitShortcutsMaxAppShortcuts = functionsClass.systemMaxAppShortcut
     }

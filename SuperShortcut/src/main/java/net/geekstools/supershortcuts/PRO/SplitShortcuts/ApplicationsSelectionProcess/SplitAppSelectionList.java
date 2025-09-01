@@ -17,7 +17,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -87,18 +86,14 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
 
         splitAppSelectionListBinding.nestedScrollView.setSmoothScrollingEnabled(true);
 
-        splitAppSelectionListBinding.MainView.setBackgroundColor(getColor(R.color.light));
-
         splitAppSelectionListBinding.confirmButtonFolderName.setText(PublicVariable.categoryName.split("_")[0]);
 
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getColor(R.color.light));
-        window.setNavigationBarColor(getColor(R.color.light));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        window.setStatusBarColor(getColor(R.color.dark));
+        window.setNavigationBarColor(getColor(R.color.dark));
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         installedApplicationsList = new ArrayList<AdapterItemsData>();
         listOfNewCharOfItemsForIndex = new ArrayList<String>();
