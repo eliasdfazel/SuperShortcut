@@ -41,6 +41,7 @@
             android:gravity="center_vertical"
             android:text="@string/app_name"
             android:textSize="57sp"
+            android:textColor="@color/light"
             android:fontFamily="@font/upcil"
 
             apps:layout_constraintTop_toTopOf="parent"/>
@@ -55,6 +56,7 @@
             android:linksClickable="true"
             android:autoLink="web"
             android:textColorLink="@color/default_color_light"
+            android:textColor="@color/light"
 
             apps:layout_constraintTop_toBottomOf="@id/itemTitleView"/>
 

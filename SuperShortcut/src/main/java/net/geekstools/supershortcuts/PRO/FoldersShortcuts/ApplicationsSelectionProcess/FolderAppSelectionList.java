@@ -10,6 +10,8 @@
 
 package net.geekstools.supershortcuts.PRO.FoldersShortcuts.ApplicationsSelectionProcess;
 
+import static net.geekstools.supershortcuts.PRO.Utils.UI.Common.CommonsKt.setupUI;
+
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -23,8 +25,6 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -91,11 +91,7 @@ public class FolderAppSelectionList extends AppCompatActivity implements View.On
 
         folderAppsSelectionViewBinding.confirmButtonFolderName.setText(PublicVariable.categoryName.split("_")[0]);
 
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getColor(R.color.dark));
-        window.setNavigationBarColor(getColor(R.color.dark));
+        setupUI(FolderAppSelectionList.this);
 
         installedApplicationsList = new ArrayList<AdapterItemsData>();
         listOfNewCharOfItemsForIndex = new ArrayList<String>();

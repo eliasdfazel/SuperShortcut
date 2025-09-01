@@ -10,6 +10,8 @@
 
 package net.geekstools.supershortcuts.PRO.SplitShortcuts.ApplicationsSelectionProcess;
 
+import static net.geekstools.supershortcuts.PRO.Utils.UI.Common.CommonsKt.setupUI;
+
 import android.app.ActivityOptions;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -22,8 +24,6 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -88,12 +88,7 @@ public class SplitAppSelectionList extends AppCompatActivity implements View.OnC
 
         splitAppSelectionListBinding.confirmButtonFolderName.setText(PublicVariable.categoryName.split("_")[0]);
 
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getColor(R.color.dark));
-        window.setNavigationBarColor(getColor(R.color.dark));
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        setupUI(SplitAppSelectionList.this);
 
         installedApplicationsList = new ArrayList<AdapterItemsData>();
         listOfNewCharOfItemsForIndex = new ArrayList<String>();

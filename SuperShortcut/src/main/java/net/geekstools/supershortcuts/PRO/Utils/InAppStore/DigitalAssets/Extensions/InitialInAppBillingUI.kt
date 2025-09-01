@@ -12,20 +12,15 @@ package net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.Extensi
 
 import android.content.Intent
 import android.net.Uri
-import android.view.View
-import android.view.WindowManager
 import net.geekstools.supershortcuts.PRO.R
 import net.geekstools.supershortcuts.PRO.Utils.InAppStore.DigitalAssets.InitializeInAppBilling
+import net.geekstools.supershortcuts.PRO.Utils.UI.Common.setupUI
 
 fun InitializeInAppBilling.setupInAppBillingUI() {
 
-    inAppBillingViewBinding.root.setBackgroundColor(getColor(R.color.light))
+    inAppBillingViewBinding.root.setBackgroundColor(getColor(R.color.dark))
 
-    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-    window.statusBarColor = getColor(R.color.light)
-    window.navigationBarColor = getColor(R.color.light)
-    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+    setupUI(this@setupInAppBillingUI)
 
     inAppBillingViewBinding.shareFloatIt.setOnClickListener {
 
