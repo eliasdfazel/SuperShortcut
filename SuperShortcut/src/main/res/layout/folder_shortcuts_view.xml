@@ -119,7 +119,7 @@
 
             apps:rippleColor="@color/default_color"
             apps:backgroundTint="@color/dark"
-            apps:strokeWidth="3dp"
+            apps:strokeWidth="1dp"
             apps:strokeColor="@color/default_color"
             apps:cornerRadius="51dp"
             apps:elevation="23dp"/>

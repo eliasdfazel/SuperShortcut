@@ -45,13 +45,13 @@
     <style name="GeeksEmpire.Dialogue.Light" parent="@android:style/Theme.DeviceDefault.Light.Dialog.Alert" tools:targetApi="22">
         <item name="android:colorPrimary">@color/default_color</item>
         <item name="android:colorAccent">@color/default_color_light</item>
-        <item name="android:textColorPrimary">@color/default_color_darker</item>
+        <item name="android:textColorPrimary">@color/light</item>
         <item name="android:colorPrimaryDark">@color/default_color_darker</item>
-        <item name="android:textColorAlertDialogListItem">@color/dark</item>
-        <item name="android:background">@color/light</item>
+        <item name="android:textColorAlertDialogListItem">@color/light</item>
+        <item name="android:background">@color/dark</item>
         <item name="android:colorControlActivated">@color/default_color_light</item>
 
-        <item name="android:popupBackground">@color/light</item>
+        <item name="android:popupBackground">@color/dark</item>
         <item name="android:itemTextAppearance">@style/PopupTextColor.Light</item>
         <item name="android:popupElevation">13dp</item>
 
