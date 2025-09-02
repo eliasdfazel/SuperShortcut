@@ -270,9 +270,9 @@ class PreferencesUI : AppCompatActivity() {
 
             val dialog = Dialog(this@PreferencesUI)
             dialog.setContentView(R.layout.custom_icons)
-            dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.dark) + "'>" + getString(R.string.customIconTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY))
+            dialog.setTitle(Html.fromHtml("<font color='" + getColor(R.color.light) + "'>" + getString(R.string.customIconTitle) + "</font>", Html.FROM_HTML_MODE_LEGACY))
             dialog.window!!.attributes = layoutParams
-            dialog.window!!.decorView.setBackgroundColor(getColor(R.color.light))
+            dialog.window!!.decorView.setBackgroundColor(getColor(R.color.dark))
             dialog.setCancelable(true)
 
             val defaultTheme = dialog.findViewById<View>(R.id.setDefault) as TextView

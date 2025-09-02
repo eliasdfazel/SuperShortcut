@@ -52,17 +52,17 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         dialog.window?.attributes = layoutParams
 
         val dialogueView: View = dialog.findViewById<RelativeLayout>(R.id.dialogueView)
-        dialogueView.backgroundTintList = ColorStateList.valueOf(activity.getColor(R.color.light))
+        dialogueView.backgroundTintList = ColorStateList.valueOf(activity.getColor(R.color.dark))
 
 
         dialogueMessageBinding.dialogueTitle.text = activity.getString(R.string.whatsnew)
         dialogueMessageBinding.dialogueMessage.text = Html.fromHtml(activity.getString(R.string.changelog))
 
         dialogueMessageBinding.rateIt.setBackgroundColor(activity.getColor(R.color.default_color))
-        dialogueMessageBinding.followIt.setBackgroundColor(activity.getColor(R.color.default_color_darker))
+        dialogueMessageBinding.followIt.setBackgroundColor(activity.getColor(R.color.default_color))
 
-        dialogueMessageBinding.dialogueTitle.setTextColor(activity.getColor(R.color.darker))
-        dialogueMessageBinding.dialogueMessage.setTextColor(activity.getColor(R.color.dark))
+        dialogueMessageBinding.dialogueTitle.setTextColor(activity.getColor(R.color.white))
+        dialogueMessageBinding.dialogueMessage.setTextColor(activity.getColor(R.color.light))
 
         dialogueMessageBinding.rateIt.setTextColor(activity.getColor(R.color.light))
         dialogueMessageBinding.followIt.setTextColor(activity.getColor(R.color.light))
@@ -123,68 +123,4 @@ class FunctionsClassDialogues (var activity: AppCompatActivity, var functionsCla
         }
     }
 
-    fun changeLogPreference(betaChangeLog: String, betaVersionCode: String) {
-        val layoutParams = WindowManager.LayoutParams()
-        val dialogueWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 370f, activity.resources.displayMetrics).toInt()
-        val dialogueHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 430f, activity.resources.displayMetrics).toInt()
-
-        layoutParams.width = dialogueWidth
-        layoutParams.height = dialogueHeight
-        layoutParams.windowAnimations = android.R.style.Animation_Dialog
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
-        layoutParams.dimAmount = 0.57f
-
-        val dialogueMessageBinding = DialogueMessageBinding.inflate(activity.layoutInflater)
-
-        val dialog = Dialog(activity)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(dialogueMessageBinding.root)
-        dialog.window!!.attributes = layoutParams
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.decorView.setBackgroundColor(Color.TRANSPARENT)
-        dialog.setCancelable(true)
-
-        val dialogueView: View = dialog.findViewById<RelativeLayout>(R.id.dialogueView)
-        dialogueView.backgroundTintList = ColorStateList.valueOf(activity.getColor(R.color.light))
-
-        dialogueMessageBinding.dialogueTitle.text = activity.getString(R.string.whatsnew)
-        dialogueMessageBinding.dialogueMessage.text = Html.fromHtml(activity.getString(R.string.changelog))
-
-        dialogueMessageBinding.rateIt.setBackgroundColor(activity.getColor(R.color.default_color))
-        dialogueMessageBinding.followIt.setBackgroundColor(activity.getColor(R.color.default_color_darker))
-
-        dialogueMessageBinding.dialogueTitle.setTextColor(activity.getColor(R.color.darker))
-        dialogueMessageBinding.dialogueMessage.setTextColor(activity.getColor(R.color.dark))
-
-        dialogueMessageBinding.rateIt.setTextColor(activity.getColor(R.color.light))
-        dialogueMessageBinding.followIt.setTextColor(activity.getColor(R.color.light))
-
-        dialogueMessageBinding.rateIt.setOnClickListener {
-
-            val shareText = activity.getString(R.string.shareTitle) +
-                    "\n" + activity.getString(R.string.shareSummary) +
-                    "\n" + activity.getString(R.string.play_store_link) + activity.packageName
-            val sharingIntent = Intent(Intent.ACTION_SEND).apply {
-                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                this.putExtra(Intent.EXTRA_TEXT, shareText)
-                this.type = "text/plain"
-            }
-            activity.startActivity(sharingIntent)
-
-        }
-
-        dialogueMessageBinding.followIt.setOnClickListener {
-            dialog.dismiss()
-
-            activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(activity.getString(R.string.link_facebook_app))))
-        }
-
-        dialog.setOnDismissListener {
-            functionsClass.saveFile(".Updated", functionsClass.appVersionCode(activity.packageName).toString())
-        }
-
-        if (!activity.isFinishing) {
-            dialog.show()
-        }
-    }
 }

@@ -82,7 +82,7 @@
         android:textColor="@color/default_color"
 
         apps:rippleColor="@color/default_color"
-        apps:backgroundTint="@color/lighter"
+        apps:backgroundTint="@color/black"
         apps:elevation="23dp"
         apps:cornerRadius="51dp"/>
 

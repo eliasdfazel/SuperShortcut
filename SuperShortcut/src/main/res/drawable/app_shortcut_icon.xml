@@ -13,7 +13,7 @@
     <item
         android:id="@+id/temporaryBackground">
         <shape android:shape="oval">
-            <solid android:color="@color/light" />
+            <solid android:color="@color/dark" />
         </shape>
     </item>
 </layer-list>

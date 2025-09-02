@@ -36,7 +36,7 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:text="@string/defaultTheme"
-        android:textColor="@color/default_color_darker"
+        android:textColor="@color/default_color"
         android:textSize="15sp" />
 
 </RelativeLayout>
