@@ -105,11 +105,6 @@ class InitializeInAppBilling : AppCompatActivity(), PurchaseFlowController {
         }
     }
 
-    override fun onBackPressed() {
-
-        this@InitializeInAppBilling.finish()
-    }
-
     override fun purchaseFlowInitial(billingResult: BillingResult?) {
         Log.d(this@InitializeInAppBilling.javaClass.simpleName, "${billingResult?.debugMessage}")
 

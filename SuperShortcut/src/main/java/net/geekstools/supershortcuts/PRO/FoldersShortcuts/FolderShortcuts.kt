@@ -179,19 +179,6 @@ class FolderShortcuts : AppCompatActivity(),
 
     }
 
-    override fun onBackPressed() {
-        if (functionsClass.UsageAccessEnabled()) {
-            this@FolderShortcuts.finish()
-        } else {
-            val homeScreen = Intent(Intent.ACTION_MAIN).apply {
-                this.addCategory(Intent.CATEGORY_HOME)
-                this.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            startActivity(homeScreen,
-                    ActivityOptions.makeCustomAnimation(applicationContext, android.R.anim.fade_in, android.R.anim.fade_out).toBundle())
-        }
-    }
-
     override fun onSwipeGesture(gestureConstants: GestureConstants, downMotionEvent: MotionEvent, moveMotionEvent: MotionEvent, initVelocityX: Float, initVelocityY: Float) {
         super.onSwipeGesture(gestureConstants, downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
 
