@@ -7,5 +7,21 @@
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+rootProject.name = "Super Shortcuts"
+
 include ':SuperShortcut'
-include ':LoadingSpin'

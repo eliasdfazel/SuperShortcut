@@ -49,7 +49,6 @@ import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureConstants
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerConstants
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.GestureListenerInterface
 import net.geekstools.supershortcuts.PRO.Utils.UI.Gesture.SwipeGestureListener
-import net.geekstools.supershortcuts.PRO.Utils.UI.PopupDialogue.WaitingDialogueLiveData
 import net.geekstools.supershortcuts.PRO.databinding.NormalAppSelectionBinding
 
 class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
@@ -96,8 +95,6 @@ class NormalAppShortcutsSelectionListPhone : AppCompatActivity(),
     }
 
     private lateinit var waitingDialogue: Dialog
-
-    private lateinit var waitingDialogueLiveData: WaitingDialogueLiveData
 
     companion object {
         const val NormalApplicationsShortcutsFile = ".autoSuper"
