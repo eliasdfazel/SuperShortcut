@@ -15,7 +15,7 @@ plugins {
 
     id 'org.jetbrains.kotlin.android'
 
-    id 'com.google.devtools.ksp' version '2.2.0-2.0.2'
+    id 'com.google.devtools.ksp' version '2.3.6'
 
     id 'com.google.gms.google-services'
 
@@ -112,7 +112,7 @@ static def getDateDay() {
 }
 
 dependencies {
-    implementation 'com.android.billingclient:billing-ktx:8.0.0'
+    implementation 'com.android.billingclient:billing-ktx:9.1.0'
 
     implementation 'androidx.core:core-ktx:1.17.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
